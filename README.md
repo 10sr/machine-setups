@@ -12,7 +12,10 @@ Stuffs to Manage My Amazon EC2 machine
 鍵があれば、 `ssh ubuntu@10sr.mydns.jp` でログインできます。
 
 
-References
----------
+TODO
+----
 
-* https://github.com/10sr/junks/tree/master/ec2
+* mydns の IP 通知を cron で回すようにする
+  * https://gist.github.com/10sr/6696565
+* junks レポジトリからものを持ってきて整理する
+  * https://github.com/10sr/junks/tree/master/ec2

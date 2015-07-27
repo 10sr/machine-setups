@@ -1,0 +1,21 @@
+---
+- hosts: all
+  sudo: yes
+  gather_facts: no
+  vars:
+    regtomydns_path: /etc/cron.daily/regtomydns
+    #regtomydns_path: /root/regtomydns
+  # vars_files:
+  #   - mydns/password.yml
+  vars_prompt:
+    - name: "password"
+      prompt: "MyDNS Password? (blank to skip)"
+      default: ""
+      private: yes
+
+  tasks:
+    - name: Place regtomydns
+      template: src=mydns/regtomydns.sh.j2 mode=0755 dest={{regtomydns_path}}
+      when: password != ""
+    - name: Check if regtomydns works
+      command: "{{regtomydns_path}}"

@@ -1,0 +1,5 @@
+#!/bin/sh
+set -e
+
+curl http://ipv4.mydns.jp/login.html --basic --user mydns203622:{{password}} --fail >/dev/null
+logger -t "`basename $0`" "Updating ipv4.mydns.jp succeeded"

@@ -25,5 +25,5 @@ TODO
 License
 -------
 
-Files in this repository is unlicensed unless explicitly specified.
+Files in this repository are unlicensed unless explicitly specified.
 See `LICENSE` for details.

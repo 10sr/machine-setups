@@ -1,0 +1,9 @@
+---
+- hosts: all
+  sudo: yes
+  vars:
+  tasks:
+  - name: install nginx
+    apt: name=nginx state=present
+  - name: start and enable nginx
+    service: name=nginx enabled=yes state=started

@@ -7,7 +7,8 @@ What is This?
 
 自分の持ってる Amazon EC2 のインスタンスを管理するためのレポジトリです。
 
-鍵があれば、 `ssh ubuntu@10sr.mydns.jp` でログインできます。
+動かすには、 `ssh ec2` できる必要があります。
+現在、 `ubuntu` を使っています。
 
 
 Create Machine
@@ -19,11 +20,6 @@ Create Machine
 
 TODO
 ----
-
-* mydns の IP 通知を cron で回すようにする
-  * https://gist.github.com/10sr/6696565
-* junks レポジトリからものを持ってきて整理する
-  * https://github.com/10sr/junks/tree/master/ec2
 
 
 License

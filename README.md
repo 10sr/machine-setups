@@ -1,8 +1,6 @@
 ec2
 ====
 
-Stuffs to Manage My Amazon EC2 machine
-
 
 What is This?
 ------------
@@ -26,3 +24,10 @@ TODO
   * https://gist.github.com/10sr/6696565
 * junks レポジトリからものを持ってきて整理する
   * https://github.com/10sr/junks/tree/master/ec2
+
+
+License
+-------
+
+Files in this repository is unlicensed unless explicitly specified.
+See `LICENSE` for details.

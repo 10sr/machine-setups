@@ -1,0 +1,10 @@
+---
+- hosts: all
+  sudo: yes
+  gather_facts: no
+
+  tasks:
+    - name: Install supervisor
+      apt: name=supervisor state=present
+    - name: Start and enable supervisor
+      service: name=nginx enabled=yes state=started

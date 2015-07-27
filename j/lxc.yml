@@ -1,0 +1,67 @@
+---
+- hosts: all
+  vars:
+  sudo: yes
+  tasks:
+
+  - name: install lxc
+    yum: name=lxc state=present
+  # installing lxc-templates somehow fails
+  # - name: install lxc-templates
+  #   yum: name=lxc-templates state=present
+  - name: adhoc lxc-centos template install
+    copy: src=lxc-centos.template dest=/usr/share/lxc/templates/lxc-centos
+          mode=755
+
+  # network configurations
+  - name: install brctl
+    yum: name=bridge-utils state=present
+  - name: put network scripts for virtual bridge
+    copy: src=lxc.network-scripts/{{item}} dest=/etc/sysconfig/network-scripts
+    with_items: [ifcfg-virbr0]
+  - name: mkdir for iptabels
+    file: path=/etc/iptables state=directory
+  - name: setup iptables
+    command: iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
+             creates=/etc/iptables/rules
+    notify:
+    - save iptables
+  - name: put sysctl for ipforward
+    copy: src=lxc.ip_forward.sysctl.conf dest=/etc/sysctl.d/90-ip_forward.conf
+    notify:
+    - setup ipforward
+
+  # cgroup configs
+  # cgconfig not found
+  # - name: disable cgconfig
+  #   service: name=cgconfig state=stopped
+  # - name: prepare cgroup mountpoint
+  #   file: path=/cgroup state=directory
+    # mounting failed. (mount|grep cgroup already exits?)
+  # - name: setup cgroup
+  #   lineinfile: dest=/etc/fstab line="none /cgroup cgroup defaults 0 0"
+  #   notify:
+  #   - mount cgroup
+
+  - name: install dnsmasq
+    yum: name=dnsmasq state=present
+  - name: install dhclient config
+    copy: src=lxc.dhclient.conf dest=/etc/dhcp/dhclient.d/lxc.conf
+    notify: renew DHCP lease
+  - name: enable dnsmasq
+    service: name=dnsmasq enabled=yes state=started
+  - name: install dnsmasq config
+    copy: src=lxc.dnsmasq.conf dest=/etc/dnsmasq.d/lxc.conf
+    notify: reload dnsmasq confs
+
+  handlers:
+  - name: setup ipforward
+    command: sysctl -w net.ipv4.ip_forward=1
+  - name: save iptables
+    shell: iptables-save >/etc/iptables/rules
+  - name: mount cgroup
+    command: mount -a
+  - name: reload dnsmasq confs
+    service: name=dnsmasq state=restarted
+  - name: renew DHCP lease
+    command: dhclient -e IF_METRIC=100 -pf /var/run/dhclient-eth0.pid -lf /var/lib/dhclient/dhclient.eth0.leases eth0

@@ -1,0 +1,25 @@
+---
+- hosts: all
+  sudo: yes
+  vars:
+  tasks:
+  - name: enable epel
+    yum: name=http://ftp.jaist.ac.jp/pub/Linux/Fedora/epel/beta/7/x86_64/epel-release-7-0.2.noarch.rpm state=present
+  - name: install docker
+    yum: pkg=docker-io state=present
+  - name: start and enable docker
+    service: name=docker enabled=yes state=started
+  - name: install pip
+    easy_install: name=pip
+  - name: install docker-py
+    pip: name=docker-py
+  - name: run nginx docker
+    docker: image=nginx ports=8080
+
+- hosts: all
+  vars:
+    user: "{{ansible_env.USER}}"
+  tasks:
+  - name: add {{user}} to docker group
+    user: name={{user}} groups=docker append=yes
+    sudo: yes

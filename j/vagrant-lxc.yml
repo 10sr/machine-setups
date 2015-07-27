@@ -1,0 +1,10 @@
+---
+- hosts: all
+  vars:
+  tasks:
+  - name: install vagrant-lxc plugin
+    command: vagrant plugin install vagrant-lxc --plugin-version 1.0.0.alpha.2
+  - name: add trusty64-lxc
+    command: vagrant init fgrehm/trusty64-lxc
+  - name: vagrant up
+    command: vagrant up --provider=lxc

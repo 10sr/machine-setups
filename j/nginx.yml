@@ -1,0 +1,12 @@
+---
+- hosts: all
+  sudo: yes
+  vars:
+  tasks:
+  - name: install repos for nginx
+    yum: name=http://nginx.org/packages/rhel/7/noarch/RPMS/nginx-release-rhel-7-0.el7.ngx.noarch.rpm
+         state=present
+  - name: install nginx
+    yum: pkg=nginx
+  - name: start and enable nginx
+    service: name=nginx enabled=yes state=started

@@ -18,6 +18,19 @@ Create Machine
 * セキュリティグループの設定から、 HTTP ポートを開けます
 
 
+Usage
+-----
+
+Issue
+
+    ansible-playbook ansible.yml
+
+Optionally, when you want to update mydns password:
+
+    ansible-playbook ansible.yml --extra-vars=mydns_password=xxxx
+
+
+
 saku
 ----
 

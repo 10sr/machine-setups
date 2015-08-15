@@ -1,0 +1,5 @@
+---
+- apt: name=supervisor state=present
+  become: yes
+- service: name=nginx enabled=yes state=started
+  become: yes

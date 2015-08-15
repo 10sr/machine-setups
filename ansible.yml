@@ -1,6 +1,9 @@
 ---
 - hosts: ec2
+  vars:
+    ubuntu_codename: trusty
   roles:
     - nginx
     - mydns
     - supervisord
+    - dokku

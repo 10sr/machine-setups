@@ -13,3 +13,9 @@
 
 - apt: name=dokku state=present update_cache=yes
   become: yes
+
+- name: Configure domain name
+  template:
+    src=VHOST.j2
+    dest=/home/dokku/VHOST
+  become: yes

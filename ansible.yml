@@ -2,6 +2,7 @@
 - hosts: ec2
   vars:
     ubuntu_codename: trusty
+    domain_name: 10sr.mydns.jp
   roles:
     - nginx
     - mydns

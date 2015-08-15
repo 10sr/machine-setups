@@ -36,10 +36,6 @@ saku
 
 よくわかんないけど 8000 番をコンソールから開けないといけない気がします
 
-TODO
-----
-
-
 dokku
 -----
 
@@ -47,7 +43,11 @@ dokku
 
     cat .ssh/id_rsa.pub |ssh ubuntu@10sr.mydns.jp 'sudo sshcommand acl-add dokku dokkudeploy'
 
-みたいななことをしなきゃいけません。どうにかして自動化したい。
+みたいなことをマシン毎にしなきゃいけません。どうにかして自動化したい。
+
+
+TODO
+----
 
 
 License

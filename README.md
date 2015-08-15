@@ -8,7 +8,7 @@ What is This?
 自分の持ってる Amazon EC2 のインスタンスを管理するためのレポジトリです。
 
 動かすには、 `ssh ec2` できる必要があります。
-現在、 `ubuntu` を使っています。
+現在、 `ubuntu trusty 14.04` を使っています。
 
 
 Create Machine

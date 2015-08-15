@@ -40,6 +40,16 @@ TODO
 ----
 
 
+dokku
+-----
+
+デプロイするには、
+
+    cat .ssh/id_rsa.pub |ssh ubuntu@10sr.mydns.jp 'sudo sshcommand acl-add dokku dokkudeploy'
+
+みたいななことをしなきゃいけません。どうにかして自動化したい。
+
+
 License
 -------
 

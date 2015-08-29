@@ -1,0 +1,7 @@
+lxc.network.type = veth
+lxc.network.link = {{lxc_virbr_name}}
+lxc.network.flags = up
+lxc.network.hwaddr = 00:16:3e:xx:xx:xx
+
+lxc.id_map = u 0 {{lxc_subuid_start}} {{lxc_subuid_range}}
+lxc.id_map = g 0 {{lxc_subgid_start}} {{lxc_subgid_range}}

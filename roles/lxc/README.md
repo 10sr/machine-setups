@@ -1,13 +1,15 @@
----
-- hosts: ec2
-  vars:
-    ubuntu_codename: trusty
-    dokku_domain_name: d.10sr.mydns.jp
+Role - lxc
+===========
+
+Role to setup LXC with unpriveledged container configurations.
+
+
+Example
+-------
+
+```
+- hosts: all
   roles:
-    - nginx
-    - mydns
-    - supervisord
-    #- dokku
     - role: lxc
       lxc_user: "{{ansible_user_id}}"
       lxc_user_dir: "{{ansible_user_dir}}"
@@ -17,3 +19,4 @@
       lxc_subuid_range: 65536
       lxc_subgid_start: 100000
       lxc_subgid_range: 65536
+```

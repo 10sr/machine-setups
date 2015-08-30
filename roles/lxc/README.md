@@ -1,7 +1,7 @@
 Role - lxc
 ===========
 
-Role to setup LXC with unpriveledged container configurations.
+Role to setup LXC with unprivileged container configurations.
 
 
 Example

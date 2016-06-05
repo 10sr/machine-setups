@@ -1,5 +1,7 @@
 = conoha/roles/dokku
 
+Role to install dokku 0.5.7 .
+
 After finish installation, access to `http://d.10sr.mydns.jp` and finish setup.
 
 == Refs

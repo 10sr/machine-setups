@@ -1,0 +1,10 @@
+---
+- apt:
+    name: icecast2
+  become: yes
+
+- service:
+    name: icecast2
+    enabled: yes
+    state: started
+  become: yes

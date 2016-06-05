@@ -1,0 +1,11 @@
+= conoha/icecast
+
+インストールしただけでは、 icecast2 サービスを開始することはできない。
+
+`service icecast2 start` で表示されるメッセージに従い、 `/etc/icecast2/icecast.xml`
+でパスワードを設定する必要がある。
+
+
+== Refs
+
+* http://10sr-p.hateblo.jp/entry/2015/09/05/213958

@@ -3,6 +3,24 @@
     name: nginx
     state: present
   become: yes
+
+- file:
+    dest: /var/nginx/main
+    state: directory
+    recurse: yes
+  become: yes
+
+- copy:
+    src: index.html
+    dest: /var/nginx/main/index.html
+  become: yes
+
+- template:
+    src: main.conf.j2
+    dest: /etc/nginx/conf.d/main.conf
+  become: yes
+  notify: Restart nginx
+
 - service:
     name: nginx
     enabled: yes

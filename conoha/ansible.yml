@@ -5,9 +5,11 @@
     dokku_domain_name: d.10sr.mydns.jp
   roles:
     - apt-upgrade
-    - nginx
+    - role: nginx
+      nginx_main_server_name: 10sr.mydns.jp
     - mydns
     - supervisord
+    - icecast
     #- dokku
     - role: lxc
       lxc_user: "{{ ansible_user_id }}"

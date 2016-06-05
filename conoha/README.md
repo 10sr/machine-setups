@@ -1,0 +1,24 @@
+# conoha/
+
+Ansible playbook for my conoha instance.
+
+
+## Current setups
+
+* Memory: 1GB
+* Disk: SSD 50GB
+* OS: Ubuntu 14.4
+
+
+## Pre configurations
+
+* Add normal user: `adduser NAME`
+  * Add `.ssh/authorized_keys` for the user
+  * Add the user to `sudo` group
+
+
+## Usage
+
+Issue
+
+  ansible-playbook ansible.yml --ask-become-pass

@@ -1,24 +1,23 @@
 ---
-- apt_repository:
-    repo: "deb http://get.docker.io/ubuntu docker main"
-  become: yes
-- name: Add apt-key for docker repository
-  apt_key:
-    url: https://get.docker.io/gpg
+- command: hostname
+  register: hostname
+  changed_when: false
+
+- lineinfile:
+    dest: /etc/hosts
+    regexp: "^127\\.0\\.0\\.1"
+    line: "127.0.0.1 {{ hostname.stdout }} localhost"
   become: yes
 
-- apt_repository:
-    repo: "deb https://packagecloud.io/dokku/dokku/ubuntu/ {{ ubuntu_codename }} main"
-  become: yes
-- name: Add apt-key for dokku repository
-  apt_key:
-    url: https://packagecloud.io/gpg.key
-  become: yes
+- copy:
+    src: bootstrap_0.5.7.sh
+    dest: /tmp/dokku_bootstrap_0.5.7.sh
 
-- apt:
-    name: dokku
-    state: present
-    update_cache: yes
+- command: bash /tmp/dokku_bootstrap_0.5.7.sh
+  args:
+    creates: /usr/local/bin/dokku
+  environment:
+    DOKKU_TAG: v0.5.7
   become: yes
 
 - name: Configure domain name

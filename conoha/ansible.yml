@@ -10,7 +10,7 @@
     - mydns
     - supervisord
     - icecast
-    #- dokku
+    - dokku
     - role: lxc
       lxc_user: "{{ ansible_user_id }}"
       lxc_user_dir: "{{ ansible_user_dir }}"

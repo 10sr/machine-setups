@@ -13,12 +13,12 @@ Ansible playbook for my conoha instance.
 ## Pre configurations
 
 * Add normal user: `adduser NAME`
-  * Add `.ssh/authorized_keys` for the user
-  * Add the user to `sudo` group
+  * Add `.ssh/authorized_keys` file for the user
+  * Add the user to `sudo` group: `gpasswd -a NAME sudo`
 
 
 ## Usage
 
 Issue
 
-  ansible-playbook ansible.yml --ask-become-pass
+    ansible-playbook ansible.yml --ask-become-pass

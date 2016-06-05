@@ -1,21 +1,28 @@
 ---
-- apt_repository: repo="deb http://get.docker.io/ubuntu docker main"
+- apt_repository:
+    repo: "deb http://get.docker.io/ubuntu docker main"
   become: yes
 - name: Add apt-key for docker repository
-  apt_key: url=https://get.docker.io/gpg
+  apt_key:
+    url: https://get.docker.io/gpg
   become: yes
 
-- apt_repository: repo="deb https://packagecloud.io/dokku/dokku/ubuntu/ {{ubuntu_codename}} main"
+- apt_repository:
+    repo: "deb https://packagecloud.io/dokku/dokku/ubuntu/ {{ ubuntu_codename }} main"
   become: yes
 - name: Add apt-key for dokku repository
-  apt_key: url=https://packagecloud.io/gpg.key
+  apt_key:
+    url: https://packagecloud.io/gpg.key
   become: yes
 
-- apt: name=dokku state=present update_cache=yes
+- apt:
+    name: dokku
+    state: present
+    update_cache: yes
   become: yes
 
 - name: Configure domain name
   template:
-    src=VHOST.j2
-    dest=/home/dokku/VHOST
+    src: VHOST.j2
+    dest: /home/dokku/VHOST
   become: yes

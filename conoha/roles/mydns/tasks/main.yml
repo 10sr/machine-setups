@@ -1,8 +1,11 @@
 ---
-- template: src=regtomydns.sh.j2 mode=0755 dest={{mydns_regtomydns_path}}
+- template:
+    src: regtomydns.sh.j2
+    mode: 0755
+    dest: "{{ mydns_regtomydns_path }}"
   when: mydns_password != ""
   become: yes
 - name: Check if regtomydns works
-  command: "{{mydns_regtomydns_path}}"
+  command: "{{ mydns_regtomydns_path }}"
   when: mydns_password != ""
   changed_when: False

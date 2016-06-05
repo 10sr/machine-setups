@@ -10,8 +10,8 @@
     - supervisord
     #- dokku
     - role: lxc
-      lxc_user: "{{ansible_user_id}}"
-      lxc_user_dir: "{{ansible_user_dir}}"
+      lxc_user: "{{ ansible_user_id }}"
+      lxc_user_dir: "{{ ansible_user_dir }}"
       lxc_virbr_name: lxcbr0
       lxc_nic_num: 10
       lxc_subuid_start: 100000

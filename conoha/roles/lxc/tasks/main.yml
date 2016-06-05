@@ -6,16 +6,16 @@
 
 - name: Setup subuid
   lineinfile:
-    line: "{{lxc_user}}:{{lxc_subuid_start}}:{{lxc_subuid_range}}"
-    regexp: ^{{lxc_user}}
+    line: "{{ lxc_user }}:{{ lxc_subuid_start }}:{{ lxc_subuid_range }}"
+    regexp: ^{{ lxc_user }}
     dest: /etc/subuid
     create: yes
   become: yes
 
 - name: Setup subgid
   lineinfile:
-    line: "{{lxc_user}}:{{lxc_subgid_start}}:{{lxc_subgid_range}}"
-    regexp: ^{{lxc_user}}
+    line: "{{ lxc_user }}:{{ lxc_subgid_start }}:{{ lxc_subgid_range }}"
+    regexp: ^{{ lxc_user }}
     dest: /etc/subgid
     create: yes
   become: yes
@@ -36,5 +36,5 @@
 
 - name: Put user config
   template:
-    dest: "{{lxc_user_dir}}/.config/lxc/default.conf"
+    dest: "{{ lxc_user_dir }}/.config/lxc/default.conf"
     src: default.conf.j2

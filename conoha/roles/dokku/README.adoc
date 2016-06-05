@@ -1,0 +1,7 @@
+= conoha/roles/dokku
+
+After finish installation, access to `http://d.10sr.mydns.jp` and finish setup.
+
+== Refs
+
+* http://dokku.viewdocs.io/dokku/application-deployment/

@@ -10,11 +10,11 @@ Ansible playbook for my conoha instance.
 * OS: Ubuntu 14.4
 
 
-|====================
-|Memory| 1GB
-|Disk  | SSD 50GB
-|OS    | Ubuntu 14.4 trusty
-|====================
+|==
+|Memory |1GB
+|Disk   |SSD 50GB
+|OS     |Ubuntu 14.4 trusty
+|==
 
 
 ## Pre configurations

@@ -1,0 +1,11 @@
+[program:saku]
+command={{saku_path}}/saku.py
+directory={{saku_path}}
+numprocs=1
+autostart=true
+autorestart=true
+user={{ansible_env.USER}}
+redirect_stderr=true
+stdout_logfile={{saku_dest}}/saku.log
+stdout_logfile_maxbytes=10MB
+stdout_logfile_backups=10

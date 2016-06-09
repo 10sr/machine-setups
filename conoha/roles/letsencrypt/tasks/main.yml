@@ -1,0 +1,12 @@
+---
+- file:
+    dest: /opt
+    state: directory
+  become: yes
+
+- git:
+    repo: https://github.com/certbot/certbot.git
+    version: v0.8.0
+    dest: /opt/letsencrypt_certbot
+    force: yes
+  become: yes

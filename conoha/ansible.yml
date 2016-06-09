@@ -7,6 +7,7 @@
     - apt-upgrade
     - role: nginx
       nginx_main_server_name: 10sr.mydns.jp
+    - letsencrypt
     - mydns
     - supervisord
     - icecast

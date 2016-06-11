@@ -1,0 +1,8 @@
+= conoha/role/letsencrypt
+
+
+== Refs
+
+* http://qiita.com/ww24/items/9fa19594b4e3a8eb9b6f
+* https://letsencrypt.jp/usage/
+* https://letsencrypt.jp/docs/using.html

@@ -4,6 +4,17 @@ Role to install dokku 0.5.7 .
 
 After finish installation, access to `http://d.10sr.mydns.jp` and finish setup.
 
+
+== Deploying Apps
+
+デプロイするには、
+
+----
+cat .ssh/id_rsa.pub | ssh conoha 'sudo sshcommand acl-add dokku dokkudeploy'
+----
+
+みたいなことをマシン毎にしなきゃいけません。どうにかして自動化したい。
+
 == Refs
 
 * http://dokku.viewdocs.io/dokku/application-deployment/

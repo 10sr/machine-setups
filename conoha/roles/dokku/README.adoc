@@ -33,6 +33,8 @@ git remote add dokku dokku@conoha:python-getting-started
 git push dokku master
 ----
 
+And this app can be available at http://python-getting-started.d.10sr.mydns.jp
+
 
 
 == Refs

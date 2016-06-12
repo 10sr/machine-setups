@@ -2,24 +2,25 @@
 - hosts: default
   vars:
     ubuntu_codename: trusty
-    dokku_domain_name: d.10sr.f5.si
+    domain_name: 10sr.f5.si
+    dokku_domain_name: d.{{ domain_name }}
   roles:
     #- apt-upgrade
     - role: nginx
       nginx_main_server_names:
-        - 10sr.f5.si
+        - {{ domain_name }}
         - 10sr.mydns.jp
       nginx_main_root: /var/nginx/main
     - role: letsencrypt
       letsencrypt_domain_names:
-        - 10sr.f5.si
-        - d.10sr.f5.si
-        - ic.10sr.f5.si
+        - {{ domain_name }}
+        - d.{{ domain_name }}
+        - ic.{{ domain_name }}
       letsencrypt_webroot: /var/nginx/main
     - mydns
     - supervisord
     - role: icecast
-      icecast2_server_name: ic.10sr.f5.si
+      icecast2_server_name: ic.{{ domain_name }}
       icecast2_letsencrypt_access_dir: /.well-known/acme-challenge
       icecast2_letsencrypt_webroot: /var/nginx/main
     - dokku

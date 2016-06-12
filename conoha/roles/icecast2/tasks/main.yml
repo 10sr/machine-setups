@@ -11,6 +11,7 @@
     line: "        <source-password>{{ secret.icecast2_source_password }}</source-password>"
   become: yes
   when: secret.icecast2_source_password != ""
+  notify: Restart icecast2
 
 - lineinfile:
     dest: /etc/icecast2/icecast.xml
@@ -18,6 +19,7 @@
     line: "        <relay-password>{{ secret.icecast2_relay_password }}</relay-password>"
   become: yes
   when: secret.icecast2_relay_password != ""
+  notify: Restart icecast2
 
 - lineinfile:
     dest: /etc/icecast2/icecast.xml
@@ -25,6 +27,21 @@
     line: "        <admin-password>{{ secret.icecast2_admin_password }}</admin-password>"
   become: yes
   when: secret.icecast2_admin_password != ""
+  notify: Restart icecast2
+
+- lineinfile:
+    dest: /etc/icecast2/icecast.xml
+    regexp: "<hostname>.*</hostname>"
+    line: "    <hostname>{{ icecast2_server_name }}</hostname>"
+  become: yes
+  notify: Restart icecast2
+
+- lineinfile:
+    dest: /etc/icecast2/icecast.xml
+    regexp: "<port>.*</port>"
+    line: "        <port>{{ icecast2_server_port }}</port>"
+  become: yes
+  notify: Restart icecast2
 
 - service:
     name: icecast2

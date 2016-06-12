@@ -1,4 +1,10 @@
 ---
+- name: Restart icecast2
+  service:
+    name: icecast2
+    state: restarted
+  failed_when: false
+  
 - name: Restart nginx
   service:
     name: nginx

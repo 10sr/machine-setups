@@ -6,6 +6,29 @@
 でパスワードを設定する必要がある。
 
 
+== Source Client
+
+Icecast は、それ単体ではプレイリストを読む、音を生成するといった機能はなく、
+そのために Source Client が 必要になる。
+
+liquidsoap が管理しやすくて良さそう
+
+----
+apt-get install liquidsoap
+----
+
+
+設定ファイルを以下のように `/etc/liquidsoap` 以下に保存する
+
+.`/etc/liquidsoap/stream1.liq`
+----
+output.icecast (%mp3,
+  host = "localhost", port = 8000,
+  password = "sourcePassword", mount = "stream1",
+  mksafe(playlist("/path/to/playlist1.m3u")))
+----
+
+
 == Refs
 
 * http://10sr-p.hateblo.jp/entry/2015/09/05/213958

@@ -22,6 +22,7 @@
 
     - role: icecast2
       icecast2_server_name: ic.{{ domain_name }}
+      icecast2_server_port: 3389
       icecast2_letsencrypt_access_dir: /.well-known/acme-challenge
       icecast2_letsencrypt_webroot: /var/nginx/main
 

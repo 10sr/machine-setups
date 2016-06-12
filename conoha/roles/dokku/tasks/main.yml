@@ -15,7 +15,7 @@
 
 - command: bash /tmp/dokku_bootstrap_0.5.7.sh
   args:
-    creates: /usr/local/bin/dokku
+    creates: /usr/bin/dokku
   environment:
     DOKKU_TAG: v0.5.7
   become: yes

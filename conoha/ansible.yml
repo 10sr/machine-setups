@@ -32,6 +32,11 @@
       nginx_ssl_key_dir: /etc/letsencrypt/live/{{ domain_name }}
       nginx_ssl_dhparam_path: /etc/ssl/private/dhparam.pem
 
+    # - role: icecast2_ssl
+    #   icecast2_ssl_main_server_name: ic."{{ domain_name }}"
+    #   icecast2_ssl_key_dir: /etc/letsencrypt/live/{{ domain_name }}
+    #   icecast2_ssl_dhparam_path: /etc/ssl/private/dhparam.pem
+
     - supervisord
 
     - role: dokku

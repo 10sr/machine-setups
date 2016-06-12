@@ -1,15 +1,16 @@
 ---
-- template:
-    src: regtomydns.sh.j2
-    mode: 0755
-    dest: /etc/cron.daily/regtomydns
-  when: secret.ddns_mydns_password != ""
-  become: yes
+# Disable for now. 10sr.mdyns.jp is directed to ec2 instance.
+# - template:
+#     src: regtomydns.sh.j2
+#     mode: 0755
+#     dest: /etc/cron.daily/regtomydns
+#   when: secret.ddns_mydns_password != ""
+#   become: yes
 
-- name: Check if regtomydns works
-  command: /etc/cron.daily/regtomydns
-  when: secret.ddns_mydns_password != ""
-  changed_when: False
+# - name: Check if regtomydns works
+#   command: /etc/cron.daily/regtomydns
+#   when: secret.ddns_mydns_password != ""
+#   changed_when: False
 
 
 - template:

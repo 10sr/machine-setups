@@ -21,11 +21,14 @@
     creates: "{{ letsencrypt_key_dir }}"
   become: yes
 
-# - template:
-#     src: letsencrypt.conf.j2
-#     dest: /etc/nginx/conf.d/letsencrypt.conf
-#   become: yes
-#   notify: Restart nginx
+- cron:
+    name: Update letsencrypt cert
+    day: 15
+    hour: 4
+    minute: 10
+    job: /opt/letsencrypt_certbot/certbot-auto renew
+    user: root
+  become: yes
 
 # http://qiita.com/ww24/items/9fa19594b4e3a8eb9b6f
 - command: openssl dhparam -out /etc/ssl/private/dhparam.pem 2048

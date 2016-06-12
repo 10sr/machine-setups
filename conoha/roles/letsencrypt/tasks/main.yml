@@ -11,6 +11,16 @@
     force: yes
   become: yes
 
+- template:
+    src: _certbot-auto.sh.j2
+    dest: /usr/local/bin/_certbot-auto.sh
+  become: yes
+
+- command: sh /usr/local/bin/_certbot-auto.sh
+  args:
+    creates: "{{ letsencrypt_key_dir }}"
+  become: yes
+
 # - template:
 #     src: letsencrypt.conf.j2
 #     dest: /etc/nginx/conf.d/letsencrypt.conf

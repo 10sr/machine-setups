@@ -21,9 +21,10 @@
     - role: letsencrypt
       letsencrypt_domain_names:
         - "{{ domain_name }}"
-        - d.{{ domain_name }}
         - ic.{{ domain_name }}
+        #- d.{{ domain_name }}
       letsencrypt_webroot: /var/nginx/main
+      letsencrypt_key_dir: /etc/letsencrypt/live/{{ domain_name }}
 
     - role: nginx_ssl
       nginx_ssl_main_server_name: "{{ domain_name }}"

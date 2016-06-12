@@ -36,6 +36,8 @@
   become: yes
   notify: Restart icecast2
 
+  # lineinfile can modify only the last one matched, so you may have to edit
+  # icecast.xml by hand
 - lineinfile:
     dest: /etc/icecast2/icecast.xml
     regexp: "<port>.*</port>"

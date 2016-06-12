@@ -4,13 +4,22 @@
     ubuntu_codename: trusty
     dokku_domain_name: d.10sr.mydns.jp
   roles:
-    - apt-upgrade
+    #- apt-upgrade
     - role: nginx
       nginx_main_server_name: 10sr.mydns.jp
-    - letsencrypt
+      nginx_main_root: /var/nginx/main
+    - role: letsencrypt
+      letsencrypt_domain_names:
+        - 10sr.mydns.jp
+        - d.10sr.mydns.jp
+        - ic.10sr.mydns.jp
+      letsencrypt_webroot: /var/nginx/main
     - mydns
     - supervisord
-    - icecast
+    - role: icecast
+      icecast2_server_name: ic.10sr.mydns.jp
+      icecast2_letsencrypt_access_dir: /.well-known/acme-challenge
+      icecast2_letsencrypt_webroot: /var/nginx/main
     - dokku
     - role: lxc
       lxc_user: "{{ ansible_user_id }}"

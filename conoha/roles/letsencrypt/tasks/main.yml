@@ -10,3 +10,14 @@
     dest: /opt/letsencrypt_certbot
     force: yes
   become: yes
+
+# - template:
+#     src: letsencrypt.conf.j2
+#     dest: /etc/nginx/conf.d/letsencrypt.conf
+#   become: yes
+#   notify: Restart nginx
+
+- service:
+    name: nginx
+    state: started
+  become: yes

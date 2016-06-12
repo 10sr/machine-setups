@@ -3,8 +3,19 @@
     name: icecast2
   become: yes
 
+# TODO: Setup password
+
 - service:
     name: icecast2
     enabled: yes
     state: started
   become: yes
+  # service icecast2 start return 1 when icecast2 has been already started
+  # so ignore the exit status. Fearful.
+  failed_when: false
+
+- template:
+    src: icecast2.conf.j2
+    dest: /etc/nginx/conf.d/icecast2.conf
+  become: yes
+  notify: Restart nginx

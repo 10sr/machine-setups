@@ -2,6 +2,6 @@ server {
     listen 80;
     server_name {{ nginx_main_server_name }};
 
-    root /var/nginx/main/;
+    root {{ nginx_main_root }};
     index index.html;
 }

@@ -1,0 +1,6 @@
+---
+- template:
+    src: icecast2_ssl.conf.j2
+    dest: /etc/nginx/conf.d/icecast2_ssl.conf
+  become: yes
+  notify: Restart nginx

@@ -1,0 +1,4 @@
+= conoha/roles/ddns
+
+* mydns
+* f5.si

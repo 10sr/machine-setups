@@ -1,0 +1,11 @@
+---
+- template:
+    src: regtomydns.sh.j2
+    mode: 0755
+    dest: /etc/cron.daily/regtomydns
+  when: ddns_mydns_password != ""
+  become: yes
+- name: Check if regtomydns works
+  command: /etc/cron.daily/regtomydns
+  when: ddns_mydns_password != ""
+  changed_when: False

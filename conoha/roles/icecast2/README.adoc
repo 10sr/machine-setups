@@ -1,4 +1,4 @@
-= conoha/icecast
+= conoha/icecast2
 
 インストールしただけでは、 icecast2 サービスを開始することはできない。
 

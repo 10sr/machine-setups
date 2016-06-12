@@ -5,11 +5,18 @@
     domain_name: 10sr.f5.si
   roles:
     #- apt-upgrade
+    - mydns
+
     - role: nginx
       nginx_main_server_names:
         - "{{ domain_name }}"
         - 10sr.mydns.jp
       nginx_main_root: /var/nginx/main
+
+    - role: icecast
+      icecast2_server_name: ic.{{ domain_name }}
+      icecast2_letsencrypt_access_dir: /.well-known/acme-challenge
+      icecast2_letsencrypt_webroot: /var/nginx/main
 
     - role: letsencrypt
       letsencrypt_domain_names:
@@ -18,14 +25,13 @@
         - ic.{{ domain_name }}
       letsencrypt_webroot: /var/nginx/main
 
-    - mydns
+    - role: nginx_ssl
+      nginx_ssl_main_server_name: "{{ domain_name }}"
+      nginx_ssl_main_root: /var/nginx/main
+      nginx_ssl_key_dir: /etc/letsencrypt/live/{{ domain_name }}
+      nginx_ssl_dhparam_path: /etc/ssl/private/dhparam.pem
 
     - supervisord
-
-    - role: icecast
-      icecast2_server_name: ic.{{ domain_name }}
-      icecast2_letsencrypt_access_dir: /.well-known/acme-challenge
-      icecast2_letsencrypt_webroot: /var/nginx/main
 
     - role: dokku
       dokku_domain_name: d.{{ domain_name }}

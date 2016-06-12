@@ -3,7 +3,6 @@
   vars:
     ubuntu_codename: trusty
     domain_name: 10sr.f5.si
-    dokku_domain_name: d.{{ domain_name }}
   roles:
     #- apt-upgrade
     - role: nginx
@@ -23,7 +22,8 @@
       icecast2_server_name: ic.{{ domain_name }}
       icecast2_letsencrypt_access_dir: /.well-known/acme-challenge
       icecast2_letsencrypt_webroot: /var/nginx/main
-    - dokku
+    - role: dokku
+      dokku_domain_name: d.{{ domain_name }}
     - role: lxc
       lxc_user: "{{ ansible_user_id }}"
       lxc_user_dir: "{{ ansible_user_dir }}"

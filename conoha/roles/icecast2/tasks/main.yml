@@ -31,6 +31,13 @@
 
 - lineinfile:
     dest: /etc/icecast2/icecast.xml
+    regexp: "<sources>.*</sources>"
+    line: "        <sources>{{ 5 }}</sources>"
+  become: yes
+  notify: Restart icecast2
+
+- lineinfile:
+    dest: /etc/icecast2/icecast.xml
     regexp: "<hostname>.*</hostname>"
     line: "    <hostname>{{ icecast2_server_name }}</hostname>"
   become: yes

@@ -10,20 +10,26 @@
         - {{ domain_name }}
         - 10sr.mydns.jp
       nginx_main_root: /var/nginx/main
+
     - role: letsencrypt
       letsencrypt_domain_names:
         - {{ domain_name }}
         - d.{{ domain_name }}
         - ic.{{ domain_name }}
       letsencrypt_webroot: /var/nginx/main
+
     - mydns
+
     - supervisord
+
     - role: icecast
       icecast2_server_name: ic.{{ domain_name }}
       icecast2_letsencrypt_access_dir: /.well-known/acme-challenge
       icecast2_letsencrypt_webroot: /var/nginx/main
+
     - role: dokku
       dokku_domain_name: d.{{ domain_name }}
+
     - role: lxc
       lxc_user: "{{ ansible_user_id }}"
       lxc_user_dir: "{{ ansible_user_dir }}"

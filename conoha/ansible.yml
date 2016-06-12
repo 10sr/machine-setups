@@ -7,13 +7,13 @@
     #- apt-upgrade
     - role: nginx
       nginx_main_server_names:
-        - {{ domain_name }}
+        - "{{ domain_name }}"
         - 10sr.mydns.jp
       nginx_main_root: /var/nginx/main
 
     - role: letsencrypt
       letsencrypt_domain_names:
-        - {{ domain_name }}
+        - "{{ domain_name }}"
         - d.{{ domain_name }}
         - ic.{{ domain_name }}
       letsencrypt_webroot: /var/nginx/main

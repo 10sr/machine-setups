@@ -3,6 +3,13 @@
   vars:
     ubuntu_codename: trusty
     domain_name: 10sr.f5.si
+    secret:
+      # Overwritten by secret.yml
+      ddns_mydns_password: ""
+      ddns_f5_si_password: ""
+      icecast2_source_password: ""
+      icecast2_relay_password: ""
+      icecast2_admin_password: ""
   roles:
     #- apt-upgrade
     - ddns

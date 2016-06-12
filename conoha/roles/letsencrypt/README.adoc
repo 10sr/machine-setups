@@ -1,5 +1,40 @@
 = conoha/role/letsencrypt
 
+----
+./certbot-auto certonly --webroot -w /var/nginx/main/ -d 10sr.mdyns.jp
+
+
+
+
+
+== Tips
+
+=== Webroot について
+
+`./certbot-auto certonly --webroot` コマンドは、 `-w` で与えられたディレクトリに、 `-d` で
+アクセスできる必要がある。
+つまり、例えば `d.10sr.mydns.jp` をリバースプロキシして何か別のアプリを動かしているような場合、
+対応するディレクトリが存在しないなどということがあると認証を通すことができない。
+
+これを回避するには、以下のような方法があると思う
+
+. 一時的に Nginx 自体を落とし、 certbot-auto を standalone で使う
+  * この方法は Web を一時的に止めてしまうのであんまりやりたくない気がする
+. `.well-known/acme-challenge` を`-w` のディレクトリに向ける
+. ヘッダを見て、 LetsEncrypt 系のアクセスだったら `-w` のディレクトリに向ける
+
+
+
+
+
+=== Too many certificates already issued for
+
+----
+There were too many requests of a given type :: Error creating new cert :: Too many certificates already issued for: <Your Domain>
+----
+
+リクエストを短い間にするとこういうエラーが出ることがあるかもしれないから、時間をおいてやると良いかも。
+
 
 == Refs
 

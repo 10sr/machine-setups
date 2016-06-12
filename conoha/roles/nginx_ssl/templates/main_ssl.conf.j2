@@ -7,7 +7,7 @@ server {
     ssl_certificate {{ nginx_ssl_key_dir }}/fullchain.pem;
     ssl_certificate_key {{ nginx_ssl_key_dir }}/privkey.pem;
     ssl_session_timeout 1d;
-    # Disable because it conflicts with existing setting in nginx.conf
+    # Disable because it conflicts with existing setting in dokku.conf
     #ssl_session_cache shared:SSL:50m;
     ssl_session_tickets on;
     ssl_dhparam {{ nginx_ssl_dhparam_path }};

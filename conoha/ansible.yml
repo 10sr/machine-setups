@@ -5,7 +5,7 @@
     domain_name: 10sr.f5.si
   roles:
     #- apt-upgrade
-    - mydns
+    - ddns
 
     - role: nginx
       nginx_main_server_names:
@@ -13,7 +13,7 @@
         - 10sr.mydns.jp
       nginx_main_root: /var/nginx/main
 
-    - role: icecast
+    - role: icecast2
       icecast2_server_name: ic.{{ domain_name }}
       icecast2_letsencrypt_access_dir: /.well-known/acme-challenge
       icecast2_letsencrypt_webroot: /var/nginx/main

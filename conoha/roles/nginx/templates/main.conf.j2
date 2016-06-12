@@ -1,7 +1,9 @@
+{% for name in nginx_main_server_names %}
 server {
     listen 80;
-    server_name {{ nginx_main_server_name }};
+    server_name {{ name }};
 
     root {{ nginx_main_root }};
     index index.html;
 }
+{% endfor %}

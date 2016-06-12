@@ -1,7 +1,7 @@
 = conoha/role/letsencrypt
 
 ----
-./certbot-auto certonly --webroot -w /var/nginx/main/ -d 10sr.mdyns.jp
+./certbot-auto certonly --webroot -w /var/nginx/main/ -d 10sr.f5.si -d ic.10sr.f5.si
 ----
 
 
@@ -22,6 +22,7 @@
 . 一時的に Nginx 自体を落とし、 certbot-auto を standalone で使う
   * この方法は Web を一時的に止めてしまうのであんまりやりたくない気がする
 . `.well-known/acme-challenge` を`-w` のディレクトリに向ける
+  * これを採用してみた
 . ヘッダを見て、 LetsEncrypt 系のアクセスだったら `-w` のディレクトリに向ける
 
 
@@ -35,6 +36,13 @@ There were too many requests of a given type :: Error creating new cert :: Too m
 ----
 
 リクエストを短い間にするとこういうエラーが出ることがあるかもしれないから、時間をおいてやると良いかも。
+
+いつまでたってもできないから別のところでドメイン取り直した。　(2016/06/12)
+
+* そのうちもう一度 mydns でやってみるといいかも
+** `./certbot-auto certonly --webroot -w /var/nginx/main/ -d 10sr.mdyns.jp`
+
+
 
 
 == Refs

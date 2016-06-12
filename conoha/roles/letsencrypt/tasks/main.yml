@@ -17,6 +17,12 @@
 #   become: yes
 #   notify: Restart nginx
 
+# http://qiita.com/ww24/items/9fa19594b4e3a8eb9b6f
+- command: openssl dhparam -out /etc/ssl/private/dhparam.pem 2048
+  args:
+    creates: /etc/ssl/private/dhparam.pem
+  become: yes
+
 - service:
     name: nginx
     state: started

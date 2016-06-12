@@ -31,5 +31,5 @@ ansible-playbook ansible.yml --ask-become-pass
 Optionally, when you also want to update mydns entry:
 
 ----
-ansible-playbook ansible.yml --extra-vars=mydns_password=xxxx
+ansible-playbook ansible.yml --extra-vars=ddns_f5_si_password=xxxx
 ----

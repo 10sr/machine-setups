@@ -10,3 +10,20 @@
   command: /etc/cron.daily/regtomydns
   when: ddns_mydns_password != ""
   changed_when: False
+
+
+- template:
+    src: _update_f5_si.sh.j2
+    dest: /usr/local/bin/_update_f5_si.sh
+  when: ddns_f5_si_password != ""
+  become: yes
+  register: ddns_deploy_f5_si_script
+
+- cron:
+    name: Update f5.si DDNS entry
+    hour: 5
+    minute: 50
+    job: sh /usr/local/bin/_update_f5_si.sh
+    user: root
+  when: ddns_deploy_f5_si_script.skipped is not defined
+  become: yes

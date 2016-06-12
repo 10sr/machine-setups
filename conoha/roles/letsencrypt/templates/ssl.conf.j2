@@ -1,12 +1,12 @@
 # http://qiita.com/ww24/items/9fa19594b4e3a8eb9b6f
-ssl_certificate {{ nginx_ssl_key_dir }}/fullchain.pem;
-ssl_certificate_key {{ nginx_ssl_key_dir }}/privkey.pem;
+ssl_certificate {{ letsencrypt_ssl_key_dir }}/fullchain.pem;
+ssl_certificate_key {{ letsencrypt_ssl_key_dir }}/privkey.pem;
 # Conflicts with dokku.conf
 #ssl_session_timeout 1d;
 # Conflicts with dokku.conf
 #ssl_session_cache shared:SSL:50m;
 ssl_session_tickets on;
-ssl_dhparam {{ nginx_ssl_dhparam_path }};
+ssl_dhparam {{ letsencrypt_ssl_dhparam_path }};
 
 ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
 # Conflicts with dokku.conf

@@ -16,6 +16,11 @@
     dest: /usr/local/bin/_certbot-auto.sh
   become: yes
 
+- service:
+    name: nginx
+    state: started
+  become: yes
+
 - command: sh /usr/local/bin/_certbot-auto.sh
   args:
     creates: "{{ letsencrypt_key_dir }}"
@@ -31,12 +36,13 @@
   become: yes
 
 # http://qiita.com/ww24/items/9fa19594b4e3a8eb9b6f
-- command: openssl dhparam -out /etc/ssl/private/dhparam.pem 2048
+- command: openssl dhparam -out {{ letsencrypt_ssl_dhparam_path }} 2048
   args:
-    creates: /etc/ssl/private/dhparam.pem
+    creates: "{{ letsencrypt_ssl_dhparam_path }}"
   become: yes
 
-- service:
-    name: nginx
-    state: started
+- template:
+    src: ssl.conf.j2
+    dest: /etc/nginx/conf.d/ssl.conf
   become: yes
+  notify: Restart nginx

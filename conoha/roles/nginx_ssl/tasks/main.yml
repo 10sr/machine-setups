@@ -16,8 +16,3 @@
   become: yes
   notify: Restart nginx
 
-- template:
-    src: ssl.conf.j2
-    dest: /etc/nginx/conf.d/ssl.conf
-  become: yes
-  notify: Restart nginx

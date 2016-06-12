@@ -2,6 +2,7 @@
 
 ----
 ./certbot-auto certonly --webroot -w /var/nginx/main/ -d 10sr.mdyns.jp
+----
 
 
 

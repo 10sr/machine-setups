@@ -1,9 +1,11 @@
 = conoha/icecast2
 
-インストールしただけでは、 icecast2 サービスを開始することはできない。
+サービスを起動するには、 source-password, relay-password, admin-password を
+設定する必要があるので、 secret.yml を valut で復号して与える必要がある。
 
-`service icecast2 start` で表示されるメッセージに従い、 `/etc/icecast2/icecast.xml`
-でパスワードを設定する必要がある。
+パスワードが設定された場合のみ、 `/etc/default/icecast2` が更新され、
+`service icecast2 start` でデーモンが開始できるようになる。
+
 
 
 == Source Client
@@ -23,10 +25,15 @@ apt-get install liquidsoap
 .`/etc/liquidsoap/stream1.liq`
 ----
 output.icecast (%mp3,
-  host = "localhost", port = 8000,
+  host = "localhost", port = 3389,
   password = "sourcePassword", mount = "stream1",
   mksafe(playlist("/path/to/playlist1.m3u")))
 ----
+
+
+=== 日本語化
+
+STUB
 
 
 == Refs

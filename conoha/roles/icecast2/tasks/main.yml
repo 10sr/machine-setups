@@ -11,6 +11,7 @@
     line: "        <source-password>{{ secret.icecast2_source_password }}</source-password>"
   become: yes
   when: secret.icecast2_source_password != ""
+  register: update_source_password
   notify: Restart icecast2
 
 - lineinfile:
@@ -19,6 +20,7 @@
     line: "        <relay-password>{{ secret.icecast2_relay_password }}</relay-password>"
   become: yes
   when: secret.icecast2_relay_password != ""
+  register: update_relay_password
   notify: Restart icecast2
 
 - lineinfile:
@@ -27,7 +29,18 @@
     line: "        <admin-password>{{ secret.icecast2_admin_password }}</admin-password>"
   become: yes
   when: secret.icecast2_admin_password != ""
+  register: update_admin_password
   notify: Restart icecast2
+
+- lineinfile:
+    dest: /etc/default/icecast2
+    regexp: "^ENABLE="
+    line: "ENABLE=true"
+  become: yes
+  when:
+    update_source_password.skipped is not defined
+    and update_relay_password.skipped is not defined
+    and update_admin_password.skipped is not defined
 
 - lineinfile:
     dest: /etc/icecast2/icecast.xml

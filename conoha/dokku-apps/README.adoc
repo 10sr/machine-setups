@@ -5,7 +5,7 @@
 ----
 alias dokku="ssh -t dokku@conoha"
 
-cd ../../dokku-apps/python-getting-started
+cd python-getting-started
 
 dokku apps:create python-getting-started
 git remote add dokku dokku@conoha:python-getting-started

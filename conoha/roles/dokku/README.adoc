@@ -1,6 +1,6 @@
 = conoha/roles/dokku
 
-Role to install dokku 0.5.7 .
+Role to install `dokku 0.5.7`.
 
 After finish installation, access to `http://d.10sr.mydns.jp` and finish setup.
 
@@ -22,18 +22,7 @@ cat .ssh/id_rsa.pub | ssh conoha 'sudo sshcommand acl-add dokku dokkudeploy'
 
 === Add Apps
 
-.Add pytohn-getting-started app
-----
-alias dokku="ssh -t dokku@conoha"
-
-cd ../../dokku-apps/python-getting-started
-
-dokku apps:create python-getting-started
-git remote add dokku dokku@conoha:python-getting-started
-git push dokku master
-----
-
-And this app can be available at http://python-getting-started.d.10sr.mydns.jp
+See `../../dokku-apps/`.
 
 
 

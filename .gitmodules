@@ -1,3 +1,6 @@
 [submodule "conoha/apps/python-getting-started"]
 	path = conoha/dokku-apps/python-getting-started
 	url = https://github.com/heroku/python-getting-started.git
+[submodule "conoha/dokku-apps/10sr_bot"]
+	path = conoha/dokku-apps/10sr_bot
+	url = https://github.com/10sr/10sr_bot.git

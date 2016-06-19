@@ -58,3 +58,5 @@
       lxc_subuid_range: 65536
       lxc_subgid_start: 100000
       lxc_subgid_range: 65536
+
+    - role: postfix

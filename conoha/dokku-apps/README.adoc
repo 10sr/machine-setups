@@ -1,5 +1,12 @@
 = conoha/dokku-apps
 
+First you have to run:
+
+----
+cat .ssh/id_rsa.pub | ssh conoha 'sudo sshcommand acl-add dokku dokkudeploy'
+----
+
+
 
 .Add pytohn-getting-started app
 ----

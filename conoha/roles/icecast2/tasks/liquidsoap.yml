@@ -15,7 +15,8 @@
     name: liquidsoap
     state: restarted
   become: yes
-  when: icecast2_liquidsoap_update_source.skipped is not defined
+  # Same as condition for source.liq.j2 template above
+  when: secret.icecast2_source_password != ""
 
 - service:
     name: liquidsoap

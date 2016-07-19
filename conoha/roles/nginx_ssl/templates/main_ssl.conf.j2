@@ -3,4 +3,10 @@ server {
 
     server_name {{ nginx_ssl_main_server_name }};
     root {{ nginx_ssl_main_root }};
+
+    location /ic/ {
+        rewrite /ic/(.*) /$1 break;
+        proxy_pass http://icecast2;
+        proxy_redirect http://icecast2/ /ic/;
+    }
 }

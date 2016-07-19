@@ -11,5 +11,11 @@ server {
 
     root {{ nginx_main_root }};
     index index.html;
+
+    location /ic/ {
+        rewrite /ic/(.*) /$1 break;
+        proxy_pass http://icecast2;
+        proxy_redirect http://icecast2/ /ic/;
+    }
 }
 {% endfor %}

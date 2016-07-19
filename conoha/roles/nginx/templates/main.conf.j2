@@ -17,5 +17,14 @@ server {
         proxy_pass http://icecast2;
         proxy_redirect http://icecast2/ /ic/;
     }
+
+    # Adhoc fix for icecast2 static files, might harmful!
+    location ~ ^/(corner_topleft|corner_bottomleft|corner_topright|corner_bottomright)\.jpg$ {
+        proxy_pass http://icecast2;
+    }
+
+    location ~ ^/(icecast|tunein)\.png$ {
+        proxy_pass http://icecast2;
+    }
 }
 {% endfor %}

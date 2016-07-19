@@ -25,6 +25,9 @@
       icecast2_server_port: 3389
       icecast2_letsencrypt_access_dir: /.well-known/acme-challenge
       icecast2_letsencrypt_webroot: /var/nginx/main
+      icecast2_liquidsoap_sources:
+        - name: ring_all
+          playlist: /var/icecast2/ring/all.m3u
 
     - role: letsencrypt
       letsencrypt_domain_names:

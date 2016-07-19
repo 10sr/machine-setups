@@ -37,3 +37,5 @@
     dest: /etc/nginx/conf.d/icecast2.conf
   become: yes
   notify: Restart nginx
+
+- include: liquidsoap.yml

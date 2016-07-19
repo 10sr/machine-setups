@@ -1,0 +1,24 @@
+---
+- apt:
+    name: liquidsoap
+  become: yes
+
+- template:
+    src: source.liq.j2
+    dest: /etc/liquidsoap/{{ item.name }}.liq
+  with_items: "{{ icecast2_liquidsoap_sources }}"
+  when: secret.icecast2_source_password != ""
+  become: yes
+  register: icecast2_liquidsoap_update_source
+
+- service:
+    name: liquidsoap
+    state: restarted
+  become: yes
+  when: icecast2_liquidsoap_update_source.skipped is not defined
+
+- service:
+    name: liquidsoap
+    state: started
+    enabled: yes
+  become: yes

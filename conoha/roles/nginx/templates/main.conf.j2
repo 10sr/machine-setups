@@ -12,6 +12,10 @@ server {
     root {{ nginx_main_root }};
     index index.html;
 
+    location /ic/admin/ {
+        return 301 https://$host$request_uri;
+    }
+
     location /ic/ {
         rewrite /ic/(.*) /$1 break;
         proxy_pass http://icecast2;

@@ -28,6 +28,12 @@
       icecast2_liquidsoap_sources:
         - name: ring_all
           playlist: /var/icecast2/ring/all.m3u
+        - name: lovelive_all
+          playlist: /var/icecast2/lovelive/all.m3u
+        - name: lovelive_best1
+          playlist: /var/icecast2/lovelive/lovelive_best1/all.m3u
+        - name: lovelive_best2
+          playlist: /var/icecast2/lovelive/lovelive_best2/all.m3u
 
     - role: letsencrypt
       letsencrypt_domain_names:

@@ -1,0 +1,5 @@
+output.icecast (%mp3
+host = "localhost", port = {{ icecast2_server_port }},
+password = "{{}}", mount = "/ic/{{}}",
+mksafe(playllist("{{}}"))
+)

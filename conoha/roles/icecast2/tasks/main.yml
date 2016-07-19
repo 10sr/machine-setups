@@ -5,31 +5,15 @@
 
 # TODO: Setup password
 
-- lineinfile:
+- template:
+    src: icecast.xml.j2
     dest: /etc/icecast2/icecast.xml
-    regexp: "<source-password>.*</source-password>"
-    line: "        <source-password>{{ secret.icecast2_source_password }}</source-password>"
   become: yes
-  when: secret.icecast2_source_password != ""
-  register: update_source_password
-  notify: Restart icecast2
-
-- lineinfile:
-    dest: /etc/icecast2/icecast.xml
-    regexp: "<relay-password>.*</relay-password>"
-    line: "        <relay-password>{{ secret.icecast2_relay_password }}</relay-password>"
-  become: yes
-  when: secret.icecast2_relay_password != ""
-  register: update_relay_password
-  notify: Restart icecast2
-
-- lineinfile:
-    dest: /etc/icecast2/icecast.xml
-    regexp: "<admin-password>.*</admin-password>"
-    line: "        <admin-password>{{ secret.icecast2_admin_password }}</admin-password>"
-  become: yes
-  when: secret.icecast2_admin_password != ""
-  register: update_admin_password
+  when:
+    secret.icecast2_source_password != "" and
+    secret.icecast2_relay_password != "" and
+    secret.icecast2_admin_password != ""
+  register: icecast2_update_config
   notify: Restart icecast2
 
 - lineinfile:
@@ -37,33 +21,7 @@
     regexp: "^ENABLE="
     line: "ENABLE=true"
   become: yes
-  when:
-    update_source_password.skipped is not defined
-    and update_relay_password.skipped is not defined
-    and update_admin_password.skipped is not defined
-
-- lineinfile:
-    dest: /etc/icecast2/icecast.xml
-    regexp: "<sources>.*</sources>"
-    line: "        <sources>{{ 5 }}</sources>"
-  become: yes
-  notify: Restart icecast2
-
-- lineinfile:
-    dest: /etc/icecast2/icecast.xml
-    regexp: "<hostname>.*</hostname>"
-    line: "    <hostname>{{ icecast2_server_name }}</hostname>"
-  become: yes
-  notify: Restart icecast2
-
-  # lineinfile can modify only the last one matched, so you may have to edit
-  # icecast.xml by hand
-- lineinfile:
-    dest: /etc/icecast2/icecast.xml
-    regexp: "<port>.*</port>"
-    line: "        <port>{{ icecast2_server_port }}</port>"
-  become: yes
-  notify: Restart icecast2
+  when: icecast2_update_config.skipped is not defined
 
 - service:
     name: icecast2

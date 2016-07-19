@@ -1,0 +1,5 @@
+[*.xml.j2]
+emacs_mode = xml
+
+[*.conf.j2]
+emacs_mode = nginx

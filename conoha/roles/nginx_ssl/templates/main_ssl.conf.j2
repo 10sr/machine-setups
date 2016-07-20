@@ -10,6 +10,16 @@ server {
         proxy_redirect http://icecast2/ /ic/;
     }
 
+{% for upstream in nginx_ssl_proxy_upstreams %}
+
+    location {{ upstream.path }}/ {
+        rewrite {{ upstream.path }}/(.*) /$1 break;
+        proxy_pass http://127.0.0.1:{{ upstream.port }};
+        proxy_redirect http://127.0.0.1:{{ upstream.port }} {{ upstream.path }}/;
+    }
+
+{% endfor %}
+
     # Adhoc fix for icecast2 static files, might harmful!
     location ~ ^/(corner_topleft|corner_bottomleft|corner_topright|corner_bottomright)\.jpg$ {
         proxy_pass http://icecast2;

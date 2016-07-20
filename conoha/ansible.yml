@@ -48,6 +48,9 @@
     - role: nginx_ssl
       nginx_ssl_main_server_name: "{{ domain_name }}"
       nginx_ssl_main_root: /var/nginx/main
+      nginx_ssl_proxy_upstreams:
+        - path: /wiki
+          port: 4567
 
     - role: icecast2_ssl
       icecast2_ssl_server_name: ic."{{ domain_name }}"

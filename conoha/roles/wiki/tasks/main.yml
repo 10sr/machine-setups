@@ -1,6 +1,7 @@
 ---
 - user:
     name: "{{ wiki_user }}"
+    shell: /bin/bash
   become: yes
 
 - apt:

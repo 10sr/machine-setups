@@ -1,0 +1,5 @@
+[program:gollum]
+command=make start
+autorestart=true
+user={{ wiki_user }}
+directory=/home/{{ wiki_user }}/gollum-site

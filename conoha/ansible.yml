@@ -58,6 +58,11 @@
 
     - supervisord
 
+    - role: wiki
+      wiki_user: wiki
+      wiki_path: /wiki
+      wiki_port: 4567
+
     - role: dokku
       dokku_domain_name: d.{{ domain_name }}
 

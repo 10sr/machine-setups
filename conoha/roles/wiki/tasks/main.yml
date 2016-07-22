@@ -1,0 +1,28 @@
+---
+- user:
+    name: "{{ wiki_user }}"
+  become: yes
+
+- apt:
+    name: bundler
+  become: yes
+
+# Install gollum dependency: for -licui18n error
+- apt:
+    name: libicu-dev
+  become: yes
+
+- template:
+    src: supervisord.conf.j2
+    dest: /etc/supervisor/conf.d/gollum.conf
+  become: yes
+  register: wiki_gollum_supervisord_conf
+
+- command: supervisorctl reload
+  become: yes
+  when: wiki_gollum_supervisord_conf.changed
+
+- supervisorctl:
+    name: gollum
+    state: started
+  become: yes

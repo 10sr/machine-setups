@@ -5,7 +5,7 @@
   become: yes
 
 - service:
-    name: nginx
+    name: supervisor
     enabled: yes
     state: started
   become: yes

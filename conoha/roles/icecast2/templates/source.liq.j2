@@ -1,5 +1,9 @@
-output.icecast (%mp3,
-host = "localhost", port = {{ icecast2_server_port }},
-password = "{{ secret.icecast2_source_password }}", mount = "/ic/{{ item.name }}",
-mksafe(playlist("{{ item.playlist }}"))
+output.icecast (
+    %mp3,
+    host = "localhost",
+    port = {{ icecast2_server_port }},
+    password = "{{ secret.icecast2_source_password }}",
+    mount = "/{{ item.name }}",
+    name = "/{{ item.name }}",
+    mksafe(playlist("{{ item.playlist }}"))
 )

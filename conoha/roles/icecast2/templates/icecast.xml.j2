@@ -90,7 +90,12 @@
     </relay>
     -->
 
-    <mount></mount>
+    <mount>
+{% for source in icecast2_liquidsoap_sources %}
+      <mount-name>/{{ source.name }}</mount-name>
+      <charset>UTF8</charset>
+{% endfor %}
+    </mount>
 
     <!-- Only define a <mount> section if you want to use advanced options,
          like alternative usernames or passwords

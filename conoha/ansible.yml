@@ -1,9 +1,10 @@
+#!/usr/bin/env ansible-playbook --ask-become-pass
 ---
 - hosts: default
   vars:
     # Do not use these variables directly in roles!
     ubuntu_codename: trusty
-    domain_name: 10sr.f5.si
+    domain_name: 3ends.info
     secret:
       # Overwritten by secret.yml
       ddns_mydns_password: ""
@@ -20,6 +21,7 @@
     - role: nginx
       nginx_main_server_names:
         - "{{ domain_name }}"
+        - 10sr.f5.si
         - 10sr.mydns.jp
       nginx_main_root: /var/nginx/main
 

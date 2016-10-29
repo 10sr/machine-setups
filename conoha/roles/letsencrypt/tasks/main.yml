@@ -26,14 +26,18 @@
     creates: "{{ letsencrypt_key_dir }}"
   become: yes
 
-- cron:
-    name: Update letsencrypt cert
-    day: 15
-    hour: 4
-    minute: 10
-    job: /opt/letsencrypt_certbot/certbot-auto renew && service nginx restart
-    user: root
-  become: yes
+# It fails. Why?????????????????
+# Adding like this with sudo crontab -e works anyway.
+# #Ansible: Update letsencrypt cert
+# 10 4 15 * * /opt/letsencrypt_certbot/certbot-auto renew && service nginx restart
+# - cron:
+#     name: Update letsencrypt cert
+#     day: 15
+#     hour: 4
+#     minute: 10
+#     job: /opt/letsencrypt_certbot/certbot-auto renew && service nginx restart
+#     user: root
+#   become: yes
 
 # http://qiita.com/ww24/items/9fa19594b4e3a8eb9b6f
 - command: openssl dhparam -out {{ letsencrypt_ssl_dhparam_path }} 2048

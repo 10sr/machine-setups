@@ -1,7 +1,7 @@
 server {
     listen 80 default_server;
     server_name _;
-    return 301 http://{{ nginx_main_server_names[0] }}$request_uri;
+    return 307 http://{{ nginx_main_server_names[0] }}$request_uri;
 }
 
 {% for name in nginx_main_server_names %}

@@ -1,6 +1,7 @@
 ---
 - hosts: default
   vars:
+    # Do not use these variables directly in roles!
     ubuntu_codename: trusty
     domain_name: 10sr.f5.si
     secret:
@@ -12,7 +13,9 @@
       icecast2_admin_password: ""
   roles:
     #- apt-upgrade
-    - ddns
+    - role: ddns
+      ddns_domain_name: 10sr.f5.si
+      ddns_name: 10sr
 
     - role: nginx
       nginx_main_server_names:

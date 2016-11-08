@@ -61,7 +61,7 @@
       icecast2_ssl_server_name: ic."{{ domain_name }}"
       icecast2_ssl_upstream_name: icecast2
 
-    - supervisord
+    - role: supervisord
 
     - role: wiki
       wiki_user: wiki

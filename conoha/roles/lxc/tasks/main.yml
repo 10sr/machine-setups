@@ -37,4 +37,4 @@
 - name: Put user config
   template:
     dest: "{{ lxc_user_dir }}/.config/lxc/default.conf"
-    src: default.conf.j2
+    src: default-user.conf.j2

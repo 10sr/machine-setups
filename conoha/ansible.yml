@@ -22,6 +22,8 @@
         - "{{ domain_name }}"
         - 10sr.mydns.jp
       nginx_main_root: /var/nginx/main
+      # not used yet
+      nginx_proxy_upstreams: []
 
     - role: icecast2
       icecast2_server_name: ic.{{ domain_name }}

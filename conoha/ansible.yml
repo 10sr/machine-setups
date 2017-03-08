@@ -58,7 +58,7 @@
       nginx_ssl_proxy_upstreams:
         - path: /wiki
           port: 4567
-        - path: minio
+        - path: /minio
           port: 9000
 
     - role: icecast2_ssl

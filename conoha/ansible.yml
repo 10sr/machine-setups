@@ -12,6 +12,9 @@
       icecast2_relay_password: ""
       icecast2_admin_password: ""
   roles:
+    - role: hostname
+      hostname: "{{ domain_name }}"
+
     #- apt-upgrade
     - role: ddns
       ddns_domain_name: 10sr.f5.si

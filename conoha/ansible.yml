@@ -13,6 +13,9 @@
       icecast2_relay_password: ""
       icecast2_admin_password: ""
   roles:
+    - role: hostname
+      hostname: "{{ domain_name }}"
+
     #- apt-upgrade
     - role: ddns
       ddns_domain_name: 10sr.f5.si
@@ -24,6 +27,8 @@
         - 10sr.f5.si
         - 10sr.mydns.jp
       nginx_main_root: /var/nginx/main
+      # not used yet
+      nginx_proxy_upstreams: []
 
     - role: icecast2
       icecast2_server_name: ic.{{ domain_name }}
@@ -58,12 +63,14 @@
       nginx_ssl_proxy_upstreams:
         - path: /wiki
           port: 4567
+        - path: /minio
+          port: 9000
 
     - role: icecast2_ssl
       icecast2_ssl_server_name: ic."{{ domain_name }}"
       icecast2_ssl_upstream_name: icecast2
 
-    - supervisord
+    - role: supervisord
 
     - role: wiki
       wiki_user: wiki

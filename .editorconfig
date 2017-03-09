@@ -14,3 +14,4 @@ indent_style = tab
 [*.conf.j2]
 indent_size = 4
 emacs_mode = nginx
+emacs_mmm_classes = jinja2

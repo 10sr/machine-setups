@@ -37,4 +37,17 @@
 - name: Put user config
   template:
     dest: "{{ lxc_user_dir }}/.config/lxc/default.conf"
+    src: default-user.conf.j2
+
+
+- name: Create global config dir
+  file:
+    dest: /etc/lxc/
+    state: directory
+    mode: "0755"
+
+- name: Put global config
+  template:
+    dest: /etc/lxc/default.conf
     src: default.conf.j2
+  become: yes

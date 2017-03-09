@@ -16,6 +16,13 @@
     - role: hostname
       hostname: "{{ domain_name }}"
 
+    - role: data_dir
+      data_dir_dirs:
+        - mountpoint: /data
+          filepath: /data.fs
+          size_mb: 15000
+      
+
     #- apt-upgrade
     - role: ddns
       ddns_domain_name: 10sr.f5.si

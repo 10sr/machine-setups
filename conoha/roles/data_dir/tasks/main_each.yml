@@ -1,0 +1,33 @@
+---
+- debug:
+    msg: "{{ dir }}"
+
+- command: >-
+    dd
+    if=/dev/zero
+    of={{ dir.filepath }}
+    seek={{ dir.size_mb }}
+    bs=1M
+    count=1
+  args:
+    creates: "{{ dir.filepath }}"
+  become: yes
+  register: dir_file
+
+- shell: >-
+    echo y | mkfs.ext4 "{{ dir.filepath }}"
+  become: yes
+  when: dir_file.changed
+
+- file:
+    path: "{{ dir.mountpoint }}"
+    state: directory
+    mode: "0777"
+  become: yes
+
+- mount:
+    fstype: ext4
+    name: "{{ dir.mountpoint }}"
+    src: "{{ dir.filepath }}"
+    state: mounted
+  become: yes

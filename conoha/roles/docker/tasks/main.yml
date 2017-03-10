@@ -1,0 +1,26 @@
+---
+- apt:
+    name: docker.io
+  become: yes
+
+- apt:
+    name: python3-pip
+  become: yes
+
+- pip:
+    name: docker-compose
+    executable: /usr/bin/pip3
+  become: yes
+
+- file:
+    path: "/root/docker-compose-test/{{ item.name }}"
+    state: directory
+    recurse: yes
+  with_items: "{{ compose_templates }}"
+  become: yes
+
+- template:
+    src: "{{ item.src }}"
+    dest: "/root/docker-compose-test/{{ item.name }}/docker-compose.yml"
+  with_items: "{{ compose_templates }}"
+  become: yes

@@ -84,8 +84,9 @@
       wiki_path: /wiki
       wiki_port: 4567
 
-    - role: dokku
-      dokku_domain_name: d.{{ domain_name }}
+    # disable dokku for now: dokku should be updated!
+    # - role: dokku
+    #   dokku_domain_name: d.{{ domain_name }}
 
     - role: lxc
       lxc_user: "{{ ansible_user_id }}"
@@ -96,5 +97,12 @@
       lxc_subuid_range: 65536
       lxc_subgid_start: 100000
       lxc_subgid_range: 65536
+
+    - role: docker
+      compose_templates:
+        - name: minio
+          src: ./docker-compose/minio.yml.j2
+      minio_access_key: key
+      minio_secret_key: secret
 
     - role: postfix

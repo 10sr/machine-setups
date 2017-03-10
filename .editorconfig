@@ -15,3 +15,10 @@ indent_style = tab
 indent_size = 4
 emacs_mode = nginx
 emacs_mmm_classes = jinja2
+
+[*.yml.j2]
+emacs_mode = yaml
+emacs_mmm_classes = jinja2
+
+[*.py]
+indent_size = 4

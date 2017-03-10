@@ -2,6 +2,12 @@
 - apt:
     name: docker.io
   become: yes
+  register: docker_apt
+
+- service:
+    name: docker
+    state: restarted
+  when: docker_apt.changed
 
 - apt:
     name: python3-pip

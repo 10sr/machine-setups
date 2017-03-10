@@ -4,7 +4,7 @@ minio0:
   container_name: minio0
   command: server /export
   ports:
-    - "9000:9000"
+    - "{{ minio_port }}:9000"
   environment:
     MINIO_ACCESS_KEY: {{ minio_access_key }}
     MINIO_SECRET_KEY: {{ minio_secret_key }}

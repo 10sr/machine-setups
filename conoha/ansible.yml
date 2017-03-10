@@ -104,5 +104,6 @@
           src: ./docker-compose/minio.yml.j2
       minio_access_key: key
       minio_secret_key: secret
+      minio_port: 9000
 
     - role: postfix

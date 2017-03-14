@@ -28,6 +28,7 @@
       ddns_domain_name: 10sr.f5.si
       ddns_name: 10sr
 
+    # TODO: Remove icecast2 specific configs
     - role: nginx
       nginx_main_server_names:
         - "{{ domain_name }}"

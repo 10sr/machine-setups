@@ -73,6 +73,9 @@
           port: 4567
         - path: /minio
           port: 9000
+        - path: /owncloud
+          port: 8808
+          strip_url: yes
 
     - role: icecast2_ssl
       icecast2_ssl_server_name: ic."{{ domain_name }}"
@@ -103,8 +106,11 @@
       compose_templates:
         - name: minio
           src: ./docker-compose/minio.yml.j2
+        - name: owncloud
+          src: ./docker-compose/owncloud.yml.j2
       minio_access_key: key
       minio_secret_key: secret
       minio_port: 9000
+      owncloud_port: 8808
 
     - role: postfix

@@ -1,0 +1,9 @@
+---
+owncloud0:
+  image: "owncloud:8.1"
+  container_name: owncloud0
+  ports:
+    - "{{ owncloud_port }}:80"
+  volumes:
+    - "/data/owncloud/config:/var/www/html/config"
+    - "/data/owncloud/data:/var/www/html/data"

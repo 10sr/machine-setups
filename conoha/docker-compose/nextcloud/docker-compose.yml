@@ -2,8 +2,6 @@
 nextcloud0:
   image: "rootlogin/nextcloud"
   container_name: nextcloud0
-  env_file:
-    - ../nextcloud.env
   ports:
     - "8880:80"
   volumes:
@@ -11,3 +9,15 @@ nextcloud0:
     # - "/var/lib/data/docker/nextcloud0/tmp:/data/tmp"
     # - "/var/lib/data/docker/nextcloud0/userapps:/data/userapps"
     - "./config:/data/config"
+  links:
+    - nextcloud0_mariadb0
+
+nextcloud0_mariadb0:
+  image: "mariadb:10"
+  environment:
+    MYSQL_DATABASE: nextcloud
+    MYSQL_USER: nextcloud
+  env_file:
+    - ../nextcloud.env
+  volumes:
+    - "/var/lib/data/docker/nextcloud0/mariadb:/var/lib/mysql"

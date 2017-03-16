@@ -24,6 +24,7 @@
   become: yes
 
 - template:
-    dest: "/root/docker-compose-test2/local.env"
+    dest: "/root/docker-compose-test2/{{ item.key }}.env"
     src: local.env.j2
+  with_dict: "{{ docker_compose_env }}"
   become: yes

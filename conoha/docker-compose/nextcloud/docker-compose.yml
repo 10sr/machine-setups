@@ -1,0 +1,13 @@
+---
+nextcloud0:
+  image: "rootlogin/nextcloud"
+  container_name: nextcloud0
+  env_file:
+    - ../nextcloud.env
+  ports:
+    - "8880:80"
+  volumes:
+    - "/var/lib/data/docker/nextcloud0/data:/data/data"
+    # - "/var/lib/data/docker/nextcloud0/tmp:/data/tmp"
+    # - "/var/lib/data/docker/nextcloud0/userapps:/data/userapps"
+    - "./config:/data/config"

@@ -75,6 +75,9 @@
         - path: /owncloud
           port: 8808
           strip_url: yes
+        - path: /nextcloud
+          port: 8880
+          strip_url: yes
 
     - role: icecast2_ssl
       icecast2_ssl_server_name: ic."{{ domain_name }}"
@@ -104,7 +107,10 @@
     - role: docker
       docker_compose_path: ./docker-compose
       docker_compose_env:
-        MINIO_ACCESS_KEY: key
-        MINIO_SECRET_KEY: secret
+        minio:
+          MINIO_ACCESS_KEY: key
+          MINIO_SECRET_KEY: secret
+        nextcloud:
+          MYSQL_USER: nextcloud
 
     - role: postfix

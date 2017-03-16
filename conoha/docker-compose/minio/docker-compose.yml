@@ -3,7 +3,7 @@ minio0:
   image: minio/minio
   container_name: minio0
   env_file:
-    - ../local.env
+    - ../minio.env
   command: server /export
   ports:
     - "9000:9000"

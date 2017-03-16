@@ -16,11 +16,11 @@
     - role: hostname
       hostname: "{{ domain_name }}"
 
-    - role: data_dir
-      data_dir_dirs:
-        - mountpoint: /data
-          filepath: /data.fs
-          size_mb: 15000
+    # - role: data_dir
+    #   data_dir_dirs:
+    #     - mountpoint: /data
+    #       filepath: /data.fs
+    #       size_mb: 15000
 
     #- apt-upgrade
     - role: ddns

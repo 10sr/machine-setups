@@ -21,7 +21,6 @@
         - mountpoint: /data
           filepath: /data.fs
           size_mb: 15000
-      
 
     #- apt-upgrade
     - role: ddns

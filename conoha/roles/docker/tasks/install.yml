@@ -1,0 +1,47 @@
+---
+- apt:
+    name: "{{ item }}"
+  with_items:
+    - linux-image-extra-{{ ansible_kernel }}
+    - linux-image-extra-virtual
+    - apt-transport-https
+    - ca-certificates
+    - curl
+    - software-properties-common
+  become: yes
+
+- apt:
+    name: python-pip
+  become: yes
+
+  # Required for adding apt key:
+  # Failed to validate the SSL certificate for download.docker.com:443. Make sure your managed systems have a valid CA certificate installed. If the website serving the url uses SNI you need python >= 2.7.9 on your managed machine or you can install the `urllib3`, `pyopenssl`, `ndg-httpsclient`, and `pyasn1` python modules to perform SNI verification in python >= 2.6. You can use validate_certs=False if you do not need to confirm the servers identity but this is unsafe and not recommended. Paths checked for this platform: /etc/ssl/certs, /etc/pki/ca-trust/extracted/pem, /etc/pki/tls/certs, /usr/share/ca-certificates/cacert.org, /etc/ansible
+- pip:
+    name: "{{ item }}"
+  with_items:
+    - urllib3
+    - pyopenssl
+    - ndg-httpsclient
+    - pyasn1
+  become: yes
+
+- apt_key:
+    url: https://download.docker.com/linux/ubuntu/gpg
+    id: 9DC858229FC7DD38854AE2D88D81803C0EBFCD88
+  become: yes
+
+- apt_repository:
+    repo="deb [arch=amd64] https://download.docker.com/linux/ubuntu trusty stable"
+  become: yes
+
+- apt:
+    name: docker-ce
+    update_cache: yes
+  register: docker_apt
+  become: yes
+
+- service:
+    name: docker
+    state: restarted
+  when: docker_apt.changed
+  become: yes

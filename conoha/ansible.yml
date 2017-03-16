@@ -102,14 +102,9 @@
       lxc_subgid_range: 65536
 
     - role: docker
-      compose_templates:
-        - name: minio
-          src: ./docker-compose/minio.yml.j2
-        - name: owncloud
-          src: ./docker-compose/owncloud.yml.j2
-      minio_access_key: key
-      minio_secret_key: secret
-      minio_port: 9000
-      owncloud_port: 8808
+      docker_compose_path: ./docker-compose
+      docker_compose_env:
+        MINIO_ACCESS_KEY: key
+        MINIO_SECRET_KEY: secret
 
     - role: postfix

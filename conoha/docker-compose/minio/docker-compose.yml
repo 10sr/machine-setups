@@ -1,0 +1,12 @@
+---
+minio0:
+  image: minio/minio
+  container_name: minio0
+  env_file:
+    - ../local.env
+  command: server /export
+  ports:
+    - "9000:9000"
+  volumes:
+    - "/var/lib/data/docker/minio0/export:/export"
+    - "./config:/root/.minio"

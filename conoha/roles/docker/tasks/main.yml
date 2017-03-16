@@ -14,14 +14,16 @@
   become: yes
 
 - file:
-    path: "/root/docker-compose-test/{{ item.name }}"
+    dest: /root/docker-compose-test2/
     state: directory
-    recurse: yes
-  with_items: "{{ compose_templates }}"
+  become: yes
+  
+- copy:
+    dest: /root/docker-compose-test2/
+    src: "{{ docker_compose_path }}/"
   become: yes
 
 - template:
-    src: "{{ item.src }}"
-    dest: "/root/docker-compose-test/{{ item.name }}/docker-compose.yml"
-  with_items: "{{ compose_templates }}"
+    dest: "/root/docker-compose-test2/local.env"
+    src: local.env.j2
   become: yes

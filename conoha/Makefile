@@ -1,7 +1,7 @@
 default:
 
 play:
-	ansible-playbook ansible.yml --ask-become-pass
+	ansible-playbook ansible.yml
 
 facts:
 	ansible -m setup conoha

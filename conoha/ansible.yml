@@ -5,13 +5,16 @@
     # Do not use these variables directly in roles!
     ubuntu_codename: trusty
     domain_name: 3ends.info
-    secret:
-      # Overwritten by secret.yml
-      ddns_mydns_password: ""
-      ddns_f5_si_password: ""
-      icecast2_source_password: ""
-      icecast2_relay_password: ""
-      icecast2_admin_password: ""
+    # secret:
+    #   # Overwritten by secret.yml
+    #   ddns_mydns_password: ""
+    #   ddns_f5_si_password: ""
+    #   icecast2_source_password: ""
+    #   icecast2_relay_password: ""
+    #   icecast2_admin_password: ""
+  vars_files:
+    - ./secret.yml
+    - ./vault/ansible_become_pass.yml
   roles:
     - role: hostname
       hostname: "{{ domain_name }}"

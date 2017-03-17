@@ -10,9 +10,9 @@
     dest: /etc/icecast2/icecast.xml
   become: yes
   when:
-    secret.icecast2_source_password != "" and
-    secret.icecast2_relay_password != "" and
-    secret.icecast2_admin_password != ""
+    icecast2_source_password != "" and
+    icecast2_relay_password != "" and
+    icecast2_admin_password != ""
   register: icecast2_update_config
   notify: Restart icecast2
 

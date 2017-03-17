@@ -28,13 +28,13 @@
 
     <authentication>
         <!-- Sources log in with username 'source' -->
-        <source-password>{{ secret.icecast2_source_password }}</source-password>
+        <source-password>{{ icecast2_source_password }}</source-password>
         <!-- Relays log in username 'relay' -->
-        <relay-password>{{ secret.icecast2_relay_password }}</relay-password>
+        <relay-password>{{ icecast2_relay_password }}</relay-password>
 
         <!-- Admin logs in with the username given below -->
         <admin-user>admin</admin-user>
-        <admin-password>{{ secret.icecast2_admin_password }}</admin-password>
+        <admin-password>{{ icecast2_admin_password }}</admin-password>
     </authentication>
 
     <!-- set the mountpoint for a shoutcast source to use, the default if not

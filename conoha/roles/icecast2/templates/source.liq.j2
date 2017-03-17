@@ -2,7 +2,7 @@ output.icecast (
     %mp3,
     host = "localhost",
     port = {{ icecast2_server_port }},
-    password = "{{ secret.icecast2_source_password }}",
+    password = "{{ icecast2_source_password }}",
     mount = "/{{ item.name }}",
     name = "/{{ item.name }}",
     encoding = "UTF-8",

@@ -7,7 +7,7 @@
     src: source.liq.j2
     dest: /etc/liquidsoap/{{ item.name }}.liq
   with_items: "{{ icecast2_liquidsoap_sources }}"
-  when: secret.icecast2_source_password != ""
+  when: icecast2_source_password != ""
   become: yes
   register: icecast2_liquidsoap_update_source
 
@@ -16,7 +16,7 @@
     state: restarted
   become: yes
   # Same as condition for source.liq.j2 template above
-  when: secret.icecast2_source_password != ""
+  when: icecast2_source_password != ""
 
 - service:
     name: liquidsoap

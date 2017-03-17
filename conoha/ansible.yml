@@ -9,12 +9,12 @@
     #   # Overwritten by secret.yml
     #   ddns_mydns_password: ""
     #   ddns_f5_si_password: ""
-    #   icecast2_source_password: ""
-    #   icecast2_relay_password: ""
-    #   icecast2_admin_password: ""
   vars_files:
-    - ./secret.yml
+    # - ./secret.yml
     - ./vault/ansible_become_pass.yml
+    - ./vault/icecast2_source_password.yml
+    - ./vault/icecast2_admin_password.yml
+    - ./vault/icecast2_relay_password.yml
   roles:
     - role: hostname
       hostname: "{{ domain_name }}"
@@ -26,9 +26,10 @@
     #       size_mb: 15000
 
     #- apt-upgrade
-    - role: ddns
-      ddns_domain_name: 10sr.f5.si
-      ddns_name: 10sr
+
+    # - role: ddns
+    #   ddns_domain_name: 10sr.f5.si
+    #   ddns_name: 10sr
 
     # TODO: Remove icecast2 specific configs
     - role: nginx
@@ -56,6 +57,9 @@
           playlist: /var/icecast2/lovelive/lovelive_best1/all.m3u
         - name: lovelive_best2
           playlist: /var/icecast2/lovelive/lovelive_best2/all.m3u
+      icecase2_admin_password: "{{ icecast2_admin_password }}"
+      icecase2_relay_password: "{{ icecast2_relay_password }}"
+      icecase2_source_password: "{{ icecast2_source_password }}"
 
     - role: letsencrypt
       letsencrypt_domain_names:

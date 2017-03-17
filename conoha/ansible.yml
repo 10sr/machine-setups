@@ -1,4 +1,4 @@
-#!/usr/bin/env ansible-playbook --ask-become-pass
+#!/usr/bin/env ansible-playbook
 ---
 - hosts: default
   vars:

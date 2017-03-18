@@ -1,4 +1,3 @@
-#!/usr/bin/env ansible-playbook
 ---
 - hosts: default
   vars:
@@ -18,6 +17,8 @@
     # - ./vault/minio_secret_key.yml
     - ./vault/nextcloud_mysql_root_password.yml
     - ./vault/nextcloud_mysql_password.yml
+    - ./vault/bot_twitter_secret.yml
+    - ./vault/bot_twitter_token_secret.yml
   roles:
     - role: hostname
       hostname: "{{ domain_name }}"
@@ -82,6 +83,8 @@
           port: 4567
         - path: /minio
           port: 9000
+        - path: /10sr_bot
+          port: 5000
         - path: /owncloud
           port: 8808
           strip_url: yes
@@ -125,5 +128,11 @@
           MYSQL_ROOT_PASSWORD: "{{ nextcloud_mysql_root_password }}"
           MYSQL_DATABASE: nextcloud
           MYSQL_PASSWORD: "{{ nextcloud_mysql_password }}"
+        10sr_bot:
+          TWITTER_KEY: VmHRoeyCxmGisuGPCBADVfo6v
+          TWITTER_SECRET: "{{ bot_twitter_secret }}"
+          TWITTER_TOKEN: 2578716006-LhQWcRQyG5r0uC92yLwy1LYhNIPGMVXAy4CWOpt
+          TWITTER_TOKEN_SECRET: "{{ bot_twitter_token_secret }}"
+          
 
     - role: postfix

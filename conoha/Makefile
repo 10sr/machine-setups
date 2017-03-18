@@ -1,7 +1,7 @@
 default:
 
 play:
-	ansible-playbook ansible.yml
+	ansible-playbook -vv ansible.yml
 
 facts:
 	ansible -m setup conoha

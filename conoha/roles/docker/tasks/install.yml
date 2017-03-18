@@ -36,7 +36,6 @@
 
 - apt:
     name: docker-ce
-    update_cache: yes
   register: docker_apt
   become: yes
 

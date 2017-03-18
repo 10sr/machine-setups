@@ -15,7 +15,7 @@
     - ./vault/icecast2_source_password.yml
     - ./vault/icecast2_admin_password.yml
     - ./vault/icecast2_relay_password.yml
-    - ./vault/minio_secret_key.yml
+    # - ./vault/minio_secret_key.yml
     - ./vault/nextcloud_mysql_root_password.yml
     - ./vault/nextcloud_mysql_password.yml
   roles:
@@ -117,9 +117,9 @@
     - role: docker
       docker_compose_path: ./docker-compose
       docker_compose_env:
-        minio:
-          MINIO_ACCESS_KEY: "10srr"
-          MINIO_SECRET_KEY: "{{ minio_secret_key }}"
+        # minio:
+        #   MINIO_ACCESS_KEY: "10srr"
+        #   MINIO_SECRET_KEY: "{{ minio_secret_key }}"
         nextcloud:
           MYSQL_USER: nextcloud
           MYSQL_ROOT_PASSWORD: "{{ nextcloud_mysql_root_password }}"

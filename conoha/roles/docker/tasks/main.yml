@@ -13,18 +13,33 @@
     - docker-compose
   become: yes
 
+  # TODO: Parametrize group and user name
+- group:
+    name: docker
+  become: yes
+
+- user:
+    name: docker
+    shell: /bin/bash
+    groups: docker
+    append: yes
+  become: yes
+
 - file:
-    dest: /root/docker-compose-test2/
+    dest: /home/docker/docker-compose/
     state: directory
+    owner: docker
   become: yes
   
 - copy:
-    dest: /root/docker-compose-test2/
+    dest: /home/docker/docker-compose/
     src: "{{ docker_compose_path }}/"
+    owner: docker
   become: yes
 
 - template:
-    dest: "/root/docker-compose-test2/{{ item.key }}.env"
+    dest: "/home/docker/docker-compose/{{ item.key }}.env"
     src: local.env.j2
+    owner: docker
   with_dict: "{{ docker_compose_env }}"
   become: yes

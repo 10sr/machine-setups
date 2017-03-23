@@ -1,0 +1,27 @@
+---
+- apt:
+    name: firewalld
+  become: yes
+
+- service:
+    name: firewalld
+    state: started
+    enabled: yes
+  become: yes
+
+- firewalld:
+    permanent: yes
+    immediate: yes
+    port: "{{ item.port }}"
+    state: "{{ item.state }}"
+  with_items: "{{ firewalld_port_states }}"
+  become: yes
+  register: _firewalld_ports
+
+  # docker service have to be restared after firewalld setup
+  # https://docs.docker.com/v1.6/installation/centos/#installing-docker-centos-7
+- service:
+    name: docker
+    state: restarted
+  failed_when: false
+  when: "{{ _firewalld_ports.changed }}"

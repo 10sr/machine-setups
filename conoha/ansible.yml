@@ -98,10 +98,14 @@
           port: 5000
         - path: /owncloud
           port: 8808
-          strip_url: yes
+          additional_directives:
+            - "rewrite /owncloud/(.*) /$1 break"
         - path: /nextcloud
           port: 8880
-          strip_url: yes
+          additional_directives:
+            - "add_header Strict-Transport-Security \"max-age=15552000; includeSubDomains\" always"
+            - "client_max_body_size 1024M"
+            - "rewrite /nextcloud/(.*) /$1 break"
 
     - role: icecast2_ssl
       icecast2_ssl_server_name: ic."{{ domain_name }}"

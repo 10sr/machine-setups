@@ -13,11 +13,9 @@ server {
 {% for upstream in nginx_ssl_proxy_upstreams %}
 
     location {{ upstream.path }}/ {
-        add_header Strict-Transport-Security "max-age=15552000; includeSubDomains" always;
-{% if upstream.strip_url | default(False) %}
-        rewrite {{ upstream.path }}/(.*) /$1 break;
-        # proxy_redirect
-{% endif %}
+{% for directive in upstream.additional_directives | default([]) %}
+        {{ directive }};
+{% endfor %}
         proxy_pass http://127.0.0.1:{{ upstream.port }};
 
     }

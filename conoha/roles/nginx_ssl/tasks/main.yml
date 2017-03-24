@@ -14,5 +14,10 @@
     src: main_ssl.conf.j2
     dest: /etc/nginx/conf.d/main_ssl.conf
   become: yes
-  notify: Restart nginx
+  register: _nginx_ssl_conf
 
+- service:
+    name: nginx
+    state: restarted
+  become: yes
+  when: "{{ _nginx_ssl_conf.changed }}"

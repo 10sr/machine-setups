@@ -6,7 +6,7 @@
 
 - git:
     repo: https://github.com/certbot/certbot.git
-    version: v0.8.0
+    version: v0.12.0
     dest: /opt/letsencrypt_certbot
     force: yes
   become: yes
@@ -30,14 +30,14 @@
 # Adding like this with sudo crontab -e works anyway.
 # #Ansible: Update letsencrypt cert
 # 10 4 15 * * /opt/letsencrypt_certbot/certbot-auto renew && service nginx restart
-# - cron:
-#     name: Update letsencrypt cert
-#     day: 15
-#     hour: 4
-#     minute: 10
-#     job: /opt/letsencrypt_certbot/certbot-auto renew && service nginx restart
-#     user: root
-#   become: yes
+- cron:
+    name: Update letsencrypt cert
+    weekday: 5
+    hour: 4
+    minute: 10
+    job: "/opt/letsencrypt_certbot/certbot-auto renew && service nginx restart"
+    user: root
+  become: yes
 
 # http://qiita.com/ww24/items/9fa19594b4e3a8eb9b6f
 - command: openssl dhparam -out {{ letsencrypt_ssl_dhparam_path }} 2048

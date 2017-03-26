@@ -1,0 +1,6 @@
+FROM monitoringartist/zabbix-xxl:latest
+
+RUN mkdir -p /var/www/ && \
+    touch /var/www/index.html && \
+    ln -s /usr/local/src/zabbix/frontends/php /var/www/zabbix
+RUN sed -ie 's|/usr/local/src/zabbix/frontends/php|/var/www|' /etc/nginx/hosts.d/default.conf

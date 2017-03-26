@@ -1,0 +1,29 @@
+---
+version: '2'
+services:
+  zabbix0:
+    build:
+      context: .
+      dockerfile: Dockerfile.zabbix-xxl
+    container_name: zabbix0
+    ports:
+      - "8008:80"
+      - "11051:10051"
+    volumes:
+      - "./config:/etc/custom-config"
+      - "/etc/localtime:/etc/localtime:ro"
+    environment:
+      ZS_DBHost: zabbix0_mariadb0
+      ZS_DBUser: zabbix
+      ZS_DBPassword: zabbix_password
+    depends_on:
+      - zabbix0_mariadb0
+  zabbix0_mariadb0:
+    image: "monitoringartist/zabbix-db-mariadb"
+    container_name: zabbix0_mariadb0
+    volumes:
+      - "/var/lib/data/docker/zabbix0/mariadb/backups:/backups"
+      - "/var/lib/data/docker/zabbix0/mariadb/mysql:/var/lib/mysql"
+    environment:
+      MARIADB_USER: zabbix
+      MARIADB_PASS: zabbix_password

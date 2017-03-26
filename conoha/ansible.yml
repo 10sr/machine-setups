@@ -23,16 +23,16 @@
     - role: hostname
       hostname: "{{ domain_name }}"
 
-    - role: firewalld
-      firewalld_port_states:
-        - port: 22/tcp
-          state: enabled
-        - port: 80/tcp
-          state: enabled
-        - port: 443/tcp
-          state: enabled
-        - port: 3389/tcp
-          state: enabled
+    # - role: firewalld
+    #   firewalld_port_states:
+    #     - port: 22/tcp
+    #       state: enabled
+    #     - port: 80/tcp
+    #       state: enabled
+    #     - port: 443/tcp
+    #       state: enabled
+    #     - port: 3389/tcp
+    #       state: enabled
 
     # - role: data_dir
     #   data_dir_dirs:

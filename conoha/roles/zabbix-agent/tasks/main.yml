@@ -1,0 +1,39 @@
+---
+
+- apt:
+    name: snmpd
+  become: yes
+
+- service:
+    name: snmpd
+    state: started
+    enabled: yes
+  become: yes
+
+- apt:
+    name: zabbix-agent
+  become: yes
+
+- lineinfile:
+    regexp: "{{ item.regexp }}"
+    line: "{{ item.line }}"
+    dest: /etc/zabbix/zabbix_agentd.conf
+  with_items:
+    - regexp: "^Hostname="
+      line: "Hostname={{ zabbix_agent_hostname }}"
+    - regexp: "^Server="
+      line: "Server={{ zabbix_server_address }}"
+  register: _zabbix_conf
+  become: yes
+
+- service:
+    name: zabbix-agent
+    state: restarted
+  when: "{{ _zabbix_conf.changed }}"
+  become: yes
+
+- service:
+    name: zabbix-agent
+    state: started
+    enabled: yes
+  become: yes

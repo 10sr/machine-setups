@@ -147,5 +147,8 @@
           TWITTER_TOKEN_SECRET: "{{ bot_twitter_token_secret }}"
 
     - role: zabbix-agent
+      zabbix_agent_hostname: "{{ domain_name }}"
+      # Very ad-hoc! How to do about this?
+      zabbix_server_address: "172.19.0.3"
 
     - role: postfix

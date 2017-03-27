@@ -95,10 +95,6 @@
           port: 9000
         - path: /10sr_bot
           port: 5000
-        - path: /owncloud
-          port: 8808
-          additional_directives:
-            - "rewrite /owncloud/(.*) /$1 break"
         - path: /nextcloud
           port: 8880
           additional_directives:
@@ -149,6 +145,5 @@
           TWITTER_SECRET: "{{ bot_twitter_secret }}"
           TWITTER_TOKEN: 2578716006-LhQWcRQyG5r0uC92yLwy1LYhNIPGMVXAy4CWOpt
           TWITTER_TOKEN_SECRET: "{{ bot_twitter_token_secret }}"
-          
 
     - role: postfix

@@ -146,4 +146,6 @@
           TWITTER_TOKEN: 2578716006-LhQWcRQyG5r0uC92yLwy1LYhNIPGMVXAy4CWOpt
           TWITTER_TOKEN_SECRET: "{{ bot_twitter_token_secret }}"
 
+    - role: zabbix-agent
+
     - role: postfix

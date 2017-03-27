@@ -51,7 +51,6 @@
       nginx_main_server_names:
         - "{{ domain_name }}"
         - 10sr.f5.si
-        - 10sr.mydns.jp
       nginx_main_root: /var/nginx/main
       # not used yet
       nginx_proxy_upstreams: []

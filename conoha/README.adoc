@@ -22,14 +22,9 @@ Ansible playbook for my conoha instance.
 
 == Usage
 
-Issue following command: (Vault password can be left blank)
+
+Add `vault_pass.secret` with the vault password in it and issue:
 
 ----
-ansible-playbook ansible.yml --ask-become-pass
-----
-
-Optionally, when you also want to update things with passwords
-
-----
-ansible-playbook ansible.yml --ask-become-pass --extra-vars=@secret.yml
+make play
 ----

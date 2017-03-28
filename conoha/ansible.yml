@@ -103,6 +103,8 @@
             - "rewrite /nextcloud/(.*) /$1 break"
         - path: /zabbix
           port: 8008
+        # - path: /containers
+        #   port: 8080
 
     - role: icecast2_ssl
       icecast2_ssl_server_name: ic."{{ domain_name }}"

@@ -16,6 +16,9 @@ services:
       ZS_DBHost: zabbix0_mariadb0
       ZS_DBUser: zabbix
       ZS_DBPassword: zabbix_password
+    networks:
+      zabbix_net:
+        ipv4_address: 192.168.100.100
     depends_on:
       - zabbix0_mariadb0
   zabbix0_mariadb0:
@@ -27,3 +30,14 @@ services:
     environment:
       MARIADB_USER: zabbix
       MARIADB_PASS: zabbix_password
+    networks:
+      zabbix_net:
+        ipv4_address: 192.168.100.101
+
+networks:
+  zabbix_net:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 192.168.100.0/24

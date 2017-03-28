@@ -148,7 +148,6 @@
 
     - role: zabbix-agent
       zabbix_agent_hostname: "{{ domain_name }}"
-      # Very ad-hoc! How to do about this?
-      zabbix_server_address: "172.19.0.3"
+      zabbix_server_address: "192.168.100.100"
 
     - role: postfix

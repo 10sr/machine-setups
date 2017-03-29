@@ -1,0 +1,5 @@
+[program:{{ item.key }}]
+command={{ item.value.command }}
+autorestart=true
+user=docker
+directory=/home/docker/docker-compose/{{ item.value.path }}

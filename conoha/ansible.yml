@@ -143,6 +143,16 @@
           TWITTER_SECRET: "{{ bot_twitter_secret }}"
           TWITTER_TOKEN: 2578716006-LhQWcRQyG5r0uC92yLwy1LYhNIPGMVXAy4CWOpt
           TWITTER_TOKEN_SECRET: "{{ bot_twitter_token_secret }}"
+      docker_compose_supervisord:
+        nextcloud:
+          path: nextcloud/
+          command: docker-compose up
+        10sr_bot:
+          path: 10sr_bot/
+          command: docker-compose up --build
+        zabbix:
+          path: zabbix/
+          command: docker-compose up --build
 
     - role: zabbix-agent
       zabbix_agent_hostname: "{{ domain_name }}"

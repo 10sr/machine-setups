@@ -43,3 +43,26 @@
     owner: docker
   with_dict: "{{ docker_compose_env }}"
   become: yes
+
+- template:
+    src: supervisord.conf.j2
+    dest: /etc/supervisor/conf.d/{{ item.key }}.conf
+  with_dict: "{{ docker_compose_supervisord }}"
+  become: yes
+  register: _docker_compose_supervisord
+
+- command: supervisorctl update
+  become: yes
+  when: "{{ _docker_compose_supervisord.changed }}"
+
+- supervisorctl:
+    name: "{{ item.key }}"
+    state: present
+  with_dict: "{{ docker_compose_supervisord }}"
+  become: yes
+
+- supervisorctl:
+    name: "{{ item.key }}"
+    state: started
+  with_dict: "{{ docker_compose_supervisord }}"
+  become: yes

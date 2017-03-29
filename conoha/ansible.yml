@@ -4,12 +4,9 @@
     # Do not use these variables directly in roles!
     ubuntu_codename: trusty
     domain_name: 3ends.info
-    # secret:
-    #   # Overwritten by secret.yml
-    #   ddns_mydns_password: ""
-    #   ddns_f5_si_password: ""
   vars_files:
     # - ./secret.yml
+    - ./vault/ddns_f5_si_password.yml
     - ./vault/ansible_become_pass.yml
     - ./vault/icecast2_source_password.yml
     - ./vault/icecast2_admin_password.yml
@@ -42,9 +39,12 @@
 
     #- apt-upgrade
 
-    # - role: ddns
-    #   ddns_domain_name: 10sr.f5.si
-    #   ddns_name: 10sr
+    - role: ddns
+      ddns_domain_name: 10sr.f5.si
+      ddns_name: 10sr
+      # Somehow recursive reference cannot be used in template
+      # So append underscore
+      ddns_f5_si_password_: "{{ ddns_f5_si_password }}"
 
     # TODO: Remove icecast2 specific configs
     - role: nginx

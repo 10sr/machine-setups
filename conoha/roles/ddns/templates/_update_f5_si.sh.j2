@@ -1,5 +1,5 @@
 #!/bin/sh
 set -eux
 
-curl  'http://f5.si/update.php?domain=10sr&password={{ secret.ddns_f5_si_password }}' --fail >/dev/null
+curl  'http://f5.si/update.php?domain=10sr&password={{ ddns_f5_si_password_ }}' --fail >/dev/null
 logger -t "`basename $0`" "updating f5.si succeeded"

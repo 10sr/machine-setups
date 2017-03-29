@@ -117,10 +117,6 @@
       wiki_path: /wiki
       wiki_port: 4567
 
-    # disable dokku for now: dokku should be updated!
-    # - role: dokku
-    #   dokku_domain_name: d.{{ domain_name }}
-
     - role: lxc
       lxc_user: "{{ ansible_user_id }}"
       lxc_user_dir: "{{ ansible_user_dir }}"

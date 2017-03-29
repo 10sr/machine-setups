@@ -4,6 +4,19 @@
     state: present
   become: yes
 
+- lineinfile:
+    regexp: "^chmod="
+    line: "chmod=0755"
+    dest: /etc/supervisor/supervisord.conf
+  become: yes
+  register: _supervisord_conf
+
+- service:
+    name: supervisor
+    state: restarted
+  when: "{{ _supervisord_conf.changed }}"
+  become: yes
+
 - service:
     name: supervisor
     enabled: yes

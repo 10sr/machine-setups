@@ -143,6 +143,7 @@
           TWITTER_SECRET: "{{ bot_twitter_secret }}"
           TWITTER_TOKEN: 2578716006-LhQWcRQyG5r0uC92yLwy1LYhNIPGMVXAy4CWOpt
           TWITTER_TOKEN_SECRET: "{{ bot_twitter_token_secret }}"
+          POST_BEARER_TOKEN: "{{ bot_post_bearer_token }}"
       docker_compose_supervisord:
         nextcloud:
           path: nextcloud/

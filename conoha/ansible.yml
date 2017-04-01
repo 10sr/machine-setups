@@ -16,6 +16,7 @@
     - ./vault/nextcloud_mysql_password.yml
     - ./vault/bot_twitter_secret.yml
     - ./vault/bot_twitter_token_secret.yml
+    - ./vault/bot_post_bearer_token.yml
   roles:
     - role: hostname
       hostname: "{{ domain_name }}"

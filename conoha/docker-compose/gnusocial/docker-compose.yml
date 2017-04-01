@@ -1,0 +1,26 @@
+---
+version: '2'
+services:
+  gnusocial0:
+    build:
+      context: .
+      dockerfile: Dockerfile.gnusocial
+    container_name: gnusocial0
+    ports:
+      - "8765:80"
+    env_file:
+      - ../gnusocial.env
+    depends_on:
+      - gnusocial0_mariadb0
+    volumes:
+      # - "/var/lib/data/docker/gnusocial0/config:/config"
+      - "./config:/config"
+
+  gnusocial0_mariadb0:
+    image: "mariadb:10"
+    container_name: gnusocial0_mariadb0
+    env_file:
+      - ../gnusocial.env
+    volumes:
+      # - "/var/lib/data/docker/gnusocial0/mariadb:/var/lib/mysql"
+      - "./mariadb:/var/lib/mysql"

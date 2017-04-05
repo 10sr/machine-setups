@@ -56,13 +56,13 @@
   when: "{{ _docker_compose_supervisord.changed }}"
 
 - supervisorctl:
-    name: "{{ item.key }}"
+    name: "docker_{{ item.key }}"
     state: present
   with_dict: "{{ docker_compose_supervisord }}"
   become: yes
 
 - supervisorctl:
-    name: "{{ item.key }}"
+    name: "docker_{{ item.key }}"
     state: started
   with_dict: "{{ docker_compose_supervisord }}"
   become: yes

@@ -1,5 +1,16 @@
-[program:{{ item.key }}]
-command={{ item.value.command }}
-autorestart=true
+[program:docker_{{ item.key }}]
 user=docker
 directory=/home/docker/docker-compose/{{ item.value.path }}
+command={{ item.value.command }}
+
+autostart=true
+autorestart=true
+startsecs=15
+
+stdout_logfile=/var/log/supervisor/docker-{{ item.key }}.stdout
+stdout_logfile_backups=10
+stdout_logfile_maxbytes=10MB
+
+stderr_logfile=/var/log/supervisor/docker-{{ item.key }}.stderr
+stderr_logfile_backups=10
+stderr_logfile_maxbytes=10MB

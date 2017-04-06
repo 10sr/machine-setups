@@ -63,15 +63,15 @@
       icecast2_letsencrypt_webroot: /var/nginx/main
       icecast2_liquidsoap_sources:
         - name: the_back_horn
-          playlist: "/var/icecast2/THE BACK HORN/all.m3u"
+          # playlist: "/var/icecast2/THE BACK HORN/all.m3u"
         - name: ring_all
-          playlist: /var/icecast2/ring/all.m3u
+          # playlist: /var/icecast2/ring/all.m3u
         - name: lovelive_all
-          playlist: /var/icecast2/lovelive/all.m3u
+          # playlist: /var/icecast2/lovelive/all.m3u
         - name: lovelive_best1
-          playlist: /var/icecast2/lovelive/lovelive_best1/all.m3u
+          # playlist: /var/icecast2/lovelive/lovelive_best1/all.m3u
         - name: lovelive_best2
-          playlist: /var/icecast2/lovelive/lovelive_best2/all.m3u
+          # playlist: /var/icecast2/lovelive/lovelive_best2/all.m3u
       icecase2_admin_password: "{{ icecast2_admin_password }}"
       icecase2_relay_password: "{{ icecast2_relay_password }}"
       icecase2_source_password: "{{ icecast2_source_password }}"
@@ -159,6 +159,9 @@
           command: docker-compose up --build
         zabbix:
           path: zabbix/
+          command: docker-compose up --build
+        icecast2:
+          path: icecast2/
           command: docker-compose up --build
 
     - role: zabbix-agent

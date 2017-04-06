@@ -8,7 +8,46 @@ services:
     volumes:
       - "/var/icecast2/lovelive:/music:ro"
     environment:
-      LIQUIDSOAP_PLAYLIST: "/music/all.m3u"
-      LIQUIDSOAP_MOUNTPOINT: "lovelive_all_docker"
+      LIQUIDSOAP_MOUNTPOINT: "lovelive_all"
+    env_file:
+      - ../icecast2.env
+  liquidsoap_livelive_best1:
+    build:
+      context: .
+      dockerfile: Dockerfile.liquidsoap
+    volumes:
+      - "/var/icecast2/lovelive/lovelive_best1:/music:ro"
+    environment:
+      LIQUIDSOAP_MOUNTPOINT: "lovelive_best1"
+    env_file:
+      - ../icecast2.env
+  liquidsoap_livelive_best2:
+    build:
+      context: .
+      dockerfile: Dockerfile.liquidsoap
+    volumes:
+      - "/var/icecast2/lovelive/lovelive_best2:/music:ro"
+    environment:
+      LIQUIDSOAP_MOUNTPOINT: "lovelive_best2"
+    env_file:
+      - ../icecast2.env
+  liquidsoap_the_back_horn:
+    build:
+      context: .
+      dockerfile: Dockerfile.liquidsoap
+    volumes:
+      - "/var/icecast2/THE BACK HORN:/music:ro"
+    environment:
+      LIQUIDSOAP_MOUNTPOINT: "the_back_horn"
+    env_file:
+      - ../icecast2.env
+  liquidsoap_ring:
+    build:
+      context: .
+      dockerfile: Dockerfile.liquidsoap
+    volumes:
+      - "/var/icecast2/ring:/music:ro"
+    environment:
+      LIQUIDSOAP_MOUNTPOINT: "ring"
     env_file:
       - ../icecast2.env

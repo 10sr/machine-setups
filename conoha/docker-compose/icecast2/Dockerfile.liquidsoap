@@ -2,9 +2,15 @@ FROM debian
 
 RUN apt-get update && apt-get install -y liquidsoap
 
+RUN chown -R liquidsoap /usr/share/liquidsoap
+# RUN mkdir -p /var/run/liquidsoap
+# RUN chown -R liquidsoap /var/run/liquidsoap
+
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
-RUN mkdir -p /var/run/liquidsoap
+
 USER liquidsoap
+ENV LANG=C.UTF-8
+ENV LIQUIDSOAP_DIRECTORY=/music
 
 CMD ["/entrypoint.sh"]

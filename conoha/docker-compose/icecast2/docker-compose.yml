@@ -1,0 +1,14 @@
+---
+version: "3"
+services:
+  liquidsoap_livelive_all:
+    build:
+      context: .
+      dockerfile: Dockerfile.liquidsoap
+    volumes:
+      - "/var/icecast2/lovelive:/music:ro"
+    environment:
+      LIQUIDSOAP_PLAYLIST: "/music/all.m3u"
+      LIQUIDSOAP_MOUNTPOINT: "lovelive_all_docker"
+    env_file:
+      - ../icecast2.env

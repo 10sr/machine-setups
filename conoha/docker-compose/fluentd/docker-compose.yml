@@ -1,0 +1,16 @@
+---
+version: "3"
+services:
+  fluentd0:
+    build:
+      context: .
+      dockerfile: Dockerfile.fluentd
+    user: root
+    ports:
+      - "24224:24224"
+      - "24224:24224/udp"
+    volumes:
+      - "./config:/fluentd_conf"
+      - "/var/lib/data/docker/fluentd0/log:/fluentd/log"
+    environment:
+      FLUENTD_CONF: fluent.conf

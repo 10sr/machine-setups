@@ -145,6 +145,11 @@
           TWITTER_TOKEN: 2578716006-LhQWcRQyG5r0uC92yLwy1LYhNIPGMVXAy4CWOpt
           TWITTER_TOKEN_SECRET: "{{ bot_twitter_token_secret }}"
           POST_BEARER_TOKEN: "{{ bot_post_bearer_token }}"
+        icecast2:
+          ICECAST2_ADMIN_PASSWORD: "{{ icecast2_admin_password }}"
+          ICECAST2_RELAY_PASSWORD: "{{ icecast2_relay_password }}"
+          ICECAST2_SOURCE_PASSWORD: "{{ icecast2_source_password }}"
+          ICECAST2_SERVER_PORT: 3389
       docker_compose_supervisord:
         nextcloud:
           path: nextcloud/

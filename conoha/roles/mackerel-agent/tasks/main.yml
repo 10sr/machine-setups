@@ -1,0 +1,15 @@
+---
+- apt:
+    deb: https://mackerel.io/file/agent/deb/mackerel-agent_latest.all.deb
+  become: yes
+
+- command: /usr/bin/mackerel-agent init -apikey={{ mackerel_agent_apikey }}
+  args:
+    creates: /etc/mackerel-agent/mackerel-agent.conf
+  become: yes
+
+- service:
+    name: mackerel-agent
+    state: started
+    enabled: yes
+  become: yes

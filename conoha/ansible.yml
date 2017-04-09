@@ -17,6 +17,7 @@
     - ./vault/bot_twitter_secret.yml
     - ./vault/bot_twitter_token_secret.yml
     - ./vault/bot_post_bearer_token.yml
+    - ./vault/mackerel_agent_apikey.yml
   roles:
     - role: hostname
       hostname: "{{ domain_name }}"
@@ -167,5 +168,7 @@
     - role: zabbix-agent
       zabbix_agent_hostname: "{{ domain_name }}"
       zabbix_server_address: "192.168.100.100"
+
+    - role: mackerel-agent
 
     - role: postfix

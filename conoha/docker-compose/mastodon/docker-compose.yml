@@ -1,6 +1,6 @@
-version: '2'
+---
+version: '3'
 services:
-
   db:
     restart: always
     image: postgres:alpine
@@ -17,10 +17,14 @@ services:
 
   web:
     restart: always
-    build:
-      context: .
-      dockerfile: Dockerfile.web
+    image: gargron/mastodon
+    # Stick when run rails assets:precompile here!
+    # build:
+    #   context: .
+    #   dockerfile: Dockerfile.web
+    command: rails s -p 3000 -b 0.0.0.0
     env_file:
+      - common.env
       - ../mastodon.env
     ports:
       - "3000:3000"
@@ -28,13 +32,14 @@ services:
       - db
       - redis
     volumes:
-      - ./public/assets:/mastodon/public/assets
-      - ./public/system:/mastodon/public/system
+      - /var/lib/data/docker/mastodon0/web/public/assets:/mastodon/public/assets
+      - /var/lib/data/docker/mastodon0/web/public/system:/mastodon/public/system
 
   streaming:
     restart: always
     image: gargron/mastodon
     env_file:
+      - common.env
       - ../mastodon.env
     command: npm run start
     ports:
@@ -47,10 +52,11 @@ services:
     restart: always
     image: gargron/mastodon
     env_file:
+      - common.env
       - ../mastodon.env
-    command: bundle exec sidekiq -q default -q mailers -q pull -q push
+    command: sidekiq -q default -q mailers -q pull -q push
     depends_on:
       - db
       - redis
     volumes:
-      - ./public/system:/mastodon/public/system
+      - /var/lib/data/docker/mastodon0/web/public/system:/mastodon/public/system

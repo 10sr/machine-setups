@@ -2,6 +2,6 @@
 
 set -eux
 
-bundle exec rails db:migrate
-bundle exec rails assets:precompile
-exec bundle exec rails s -p 3000 -b 0.0.0.0
+ionice -c 2 -n 7 nice -n 19 rails db:migrate
+ionice -c 2 -n 7 nice -n 19 rails assets:precompile
+exec ionice -c 2 -n 7 nice -n 19 rails s -p 3000 -b 0.0.0.0

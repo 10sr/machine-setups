@@ -21,6 +21,7 @@ services:
         ipv4_address: 192.168.100.100
     depends_on:
       - zabbix0_mariadb0
+
   zabbix0_mariadb0:
     image: "monitoringartist/zabbix-db-mariadb"
     container_name: zabbix0_mariadb0

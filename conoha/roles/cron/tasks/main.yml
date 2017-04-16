@@ -1,0 +1,6 @@
+---
+- cron:
+    env: yes
+    name: MAILTO
+    value: "{{ cron_email_address }}"
+  become: yes

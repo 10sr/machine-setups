@@ -23,6 +23,9 @@
     - role: hostname
       hostname: "{{ domain_name }}"
 
+    - role: cron
+      cron_email_address: 8.slashes@gmail.com
+
     # - role: firewalld
     #   firewalld_port_states:
     #     - port: 22/tcp

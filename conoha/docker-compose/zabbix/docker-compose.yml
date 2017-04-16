@@ -10,7 +10,7 @@ services:
       - "8008:80"
       - "11051:10051"
     volumes:
-      - "./config:/etc/custom-config"
+      - "/var/lib/data/docker/zabbix0/config:/etc/custom-config"
       - "/etc/localtime:/etc/localtime:ro"
     environment:
       ZS_DBHost: zabbix0_mariadb0

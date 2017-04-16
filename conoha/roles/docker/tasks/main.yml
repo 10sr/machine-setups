@@ -66,3 +66,22 @@
     state: started
   with_dict: "{{ docker_compose_supervisord }}"
   become: yes
+
+
+- cron:
+    name: Remove containers
+    weekday: 6
+    hour: 7
+    minute: 20
+    job: "docker ps -a --filter status=exited --quiet | xargs docker rm"
+    user: root
+  become: yes
+
+- cron:
+    name: Remove images
+    weekday: 6
+    hour: 7
+    minute: 50
+    job: "docker images --no-trunc=true --filter dangling=true --quiet | xargs docker rmi"
+    user: root
+  become: yes

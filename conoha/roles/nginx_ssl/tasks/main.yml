@@ -16,8 +16,14 @@
   become: yes
   register: _nginx_ssl_conf
 
+- template:
+    src: proxies.conf.j2
+    dest: /etc/nginx/conf.d/proxies.conf
+  become: yes
+  register: _proxies_conf
+
 - service:
     name: nginx
     state: restarted
   become: yes
-  when: "{{ _nginx_ssl_conf.changed }}"
+  when: "{{ _nginx_ssl_conf.changed or _proxies_conf.changed }}"

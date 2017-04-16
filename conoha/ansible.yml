@@ -12,6 +12,9 @@
     - ./vault/icecast2_admin_password.yml
     - ./vault/icecast2_relay_password.yml
     # - ./vault/minio_secret_key.yml
+    - ./vault/mastodon_otp_secret.yml
+    - ./vault/mastodon_paperclip_secret.yml
+    - ./vault/mastodon_secret_key_base.yml
     - ./vault/nextcloud_mysql_root_password.yml
     - ./vault/nextcloud_mysql_password.yml
     - ./vault/bot_twitter_secret.yml
@@ -111,10 +114,13 @@
           port: 8008
         # - path: /containers
         #   port: 8080
+      nginx_ssl_host_proxies:
+        - name: "ic.{{ domain_name }}"
+          port: 3389
 
-    - role: icecast2_ssl
-      icecast2_ssl_server_name: ic."{{ domain_name }}"
-      icecast2_ssl_upstream_name: icecast2
+    # - role: icecast2_ssl
+    #   icecast2_ssl_server_name: ic."{{ domain_name }}"
+    #   icecast2_ssl_upstream_name: icecast2
 
     - role: supervisord
 
@@ -155,6 +161,11 @@
           ICECAST2_RELAY_PASSWORD: "{{ icecast2_relay_password }}"
           ICECAST2_SOURCE_PASSWORD: "{{ icecast2_source_password }}"
           ICECAST2_SERVER_PORT: 3389
+        mastodon:
+          PAPERCLIP_SECRET: "{{ mastodon_paperclip_secret }}"
+          SECRET_KEY_BASE: "{{ mastodon_secret_key_base }}"
+          OTP_SECRET: "{{ mastodon_otp_secret }}"
+          SMTP_PASSWORD: "{{ postfix_smtp_password }}"
       docker_compose_supervisord:
         nextcloud:
           path: nextcloud/

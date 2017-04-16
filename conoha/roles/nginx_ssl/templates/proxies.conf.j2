@@ -1,0 +1,12 @@
+{% for proxy in nginx_ssl_host_proxies %}
+server {
+    listen 443 ssl http2;
+
+    server_name {{ proxy.name }};
+
+    location / {
+        proxy_pass http://localhost:{{ proxy.port }};
+    }
+}
+
+{% endfor %}

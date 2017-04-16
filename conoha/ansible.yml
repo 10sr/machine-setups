@@ -88,6 +88,7 @@
       letsencrypt_domain_names:
         - "{{ domain_name }}"
         - ic.{{ domain_name }}
+        - st.{{ domain_name }}
         #- d.{{ domain_name }}
       letsencrypt_webroot: /var/nginx/main
       letsencrypt_key_dir: /etc/letsencrypt/live/{{ domain_name }}
@@ -179,6 +180,14 @@
         icecast2:
           path: icecast2/
           command: docker-compose up --build
+        mastodon:
+          path: mastodon/
+          command: nice ionice docker-compose up --build
+
+    - role: mastodon_nginx_proxy
+      mastodon_server_name: st.{{ domain_name }}
+      mastodon_web_port: 3000
+      mastodon_stream_port: 4000
 
     - role: zabbix-agent
       zabbix_agent_hostname: "{{ domain_name }}"

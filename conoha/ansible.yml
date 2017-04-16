@@ -18,6 +18,7 @@
     - ./vault/bot_twitter_token_secret.yml
     - ./vault/bot_post_bearer_token.yml
     - ./vault/mackerel_agent_apikey.yml
+    - ./vault/postfix_smtp_password.yml
   roles:
     - role: hostname
       hostname: "{{ domain_name }}"
@@ -172,3 +173,8 @@
     - role: mackerel-agent
 
     - role: postfix
+      postfix_myhostname: "{{ domain_name }}"
+      postfix_smtp_hostname: smtp.mailgun.org
+      postfix_smtp_port: 587
+      postfix_smtp_login: postmaster@m.3ends.info
+      postfix_smtp_password_: "{{ postfix_smtp_password }}"

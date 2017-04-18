@@ -61,11 +61,11 @@
   with_dict: "{{ docker_compose_supervisord }}"
   become: yes
 
-- supervisorctl:
-    name: "docker_{{ item.key }}"
-    state: started
-  with_dict: "{{ docker_compose_supervisord }}"
-  become: yes
+# - supervisorctl:
+#     name: "docker_{{ item.key }}"
+#     state: started
+#   with_dict: "{{ docker_compose_supervisord }}"
+#   become: yes
 
 
 - cron:

@@ -6,8 +6,25 @@ map $http_upgrade $connection_upgrade {
 server {
   listen 80;
   listen [::]:80;
-  server_name {{ mastodon_server_name }};
-  return 301 https://$host$request_uri;
+  server_name {{ mastodon_server_name }} {{ mastodon_s3_server_name }};
+
+  location {{ mastodon_proxy_letsencrypt_access_dir }} {
+    root {{ mastodon_proxy_letsencrypt_webroot }};
+  }
+
+  location / {
+    return 301 https://$host$request_uri;
+  }
+}
+
+server {
+    listen 443 ssl http2;
+
+    server_name {{ mastodon_s3_server_name }};
+
+    location / {
+        proxy_pass http://localhost:{{ mastodon_s3_port }};
+    }
 }
 
 server {

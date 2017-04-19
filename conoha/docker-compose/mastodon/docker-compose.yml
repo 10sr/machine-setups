@@ -13,6 +13,18 @@ services:
     volumes:
       - /var/lib/data/docker/mastodon0/redis/data:/data
 
+  minio:
+    restart: always
+    image: minio/minio
+    env_file:
+      - ../mastodon.env
+    command: server /export
+    ports:
+      - "9000:9000"
+    volumes:
+      - /var/lib/data/docker/mastodon0/minio/export:/export
+      - ./config:/root/.minio
+
   web:
     restart: always
     image: gargron/mastodon
@@ -25,6 +37,7 @@ services:
     depends_on:
       - db
       - redis
+      - minio
     volumes:
       - /var/lib/data/docker/mastodon0/web/public/assets:/mastodon/public/assets
       - /var/lib/data/docker/mastodon0/web/public/system:/mastodon/public/system
@@ -41,6 +54,7 @@ services:
     depends_on:
       - db
       - redis
+      - minio
 
   sidekiq:
     restart: always
@@ -52,5 +66,6 @@ services:
     depends_on:
       - db
       - redis
+      - minio
     volumes:
       - /var/lib/data/docker/mastodon0/web/public/system:/mastodon/public/system

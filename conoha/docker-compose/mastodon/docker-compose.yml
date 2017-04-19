@@ -16,10 +16,6 @@ services:
   web:
     restart: always
     image: gargron/mastodon
-    # Stick when run rails assets:precompile here!
-    # build:
-    #   context: .
-    #   dockerfile: Dockerfile.web
     command: rails s -p 3000 -b 0.0.0.0
     env_file:
       - common.env

@@ -5,7 +5,8 @@ command={{ item.value.command }}
 
 autostart=true
 autorestart=true
-startsecs=15
+startsecs=10
+stopwaitsecs=20
 
 stdout_logfile=/var/log/supervisor/docker-{{ item.key }}.stdout
 stdout_logfile_backups=10

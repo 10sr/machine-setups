@@ -182,7 +182,7 @@
           command: docker-compose up --build
         mastodon:
           path: mastodon/
-          command: nice ionice docker-compose up --build
+          command: sh ./up.sh
 
     - role: mastodon_nginx_proxy
       mastodon_server_name: st.{{ domain_name }}

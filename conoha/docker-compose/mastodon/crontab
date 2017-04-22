@@ -1,0 +1,1 @@
+45 7 * * * rake mastodon:daily

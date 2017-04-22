@@ -1,0 +1,12 @@
+FROM gargron/mastodon
+
+# Python 2.7
+RUN apk --update add python py-pip && rm -rf /var/cache/apk/*
+
+# 後で自分で作り直したい
+RUN pip install devcron
+
+RUN mkdir -p /cron/
+COPY crontab /cron/crontab
+
+CMD ["/usr/bin/devcron", "-v", "/cron/crontab"]

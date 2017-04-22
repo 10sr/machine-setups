@@ -69,3 +69,20 @@ services:
       - minio
     volumes:
       - /var/lib/data/docker/mastodon0/web/public/system:/mastodon/public/system
+
+  cron:
+    restart: always
+    build:
+      context: .
+      dockerfile: Dockerfile.cron
+    container_name: mastodon_cron
+    env_file:
+      - common.env
+      - ../mastodon.env
+    depends_on:
+      - db
+      - redis
+      - minio
+    volumes:
+      - /var/lib/data/docker/mastodon0/web/public/assets:/mastodon/public/assets
+      - /var/lib/data/docker/mastodon0/web/public/system:/mastodon/public/system

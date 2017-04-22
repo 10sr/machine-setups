@@ -1,1 +1,2 @@
 45 7 * * * rake mastodon:daily
+15 8 * * 1 rake mastodon:media:remove_remote

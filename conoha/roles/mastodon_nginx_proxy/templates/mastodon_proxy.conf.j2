@@ -46,7 +46,7 @@ server {
   gzip_types text/plain text/css application/json application/javascript text/xml application/xml application/xml+rss text/javascript;
 
   add_header Strict-Transport-Security "max-age=31536000";
-  add_header Content-Security-Policy "default-src 'none'; font-src 'self'; media-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self'; img-src *; connect-src 'self' wss://{{ mastodon_server_name }}; frame-ancestors 'none';";
+  add_header Content-Security-Policy "default-src 'none'; font-src 'self'; media-src *; style-src 'self' 'unsafe-inline'; script-src 'self' https://cdnjs.org; img-src * data:; connect-src 'self' wss://{{ mastodon_server_name }}; frame-ancestors 'none';";
 
   root /var/lib/data/docker/mastodon0/web/public;
 

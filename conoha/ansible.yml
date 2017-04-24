@@ -177,16 +177,16 @@
       docker_compose_supervisord:
         nextcloud:
           path: nextcloud/
-          command: docker-compose down && docker-compose up
+          command: docker-compose up --force-recreate
         10sr_bot:
           path: 10sr_bot/
-          command: docker-compose down && docker-compose up --build
+          command: docker-compose up --force-recreate --build
         zabbix:
           path: zabbix/
-          command: docker-compose down && docker-compose up --build
+          command: docker-compose up --force-recreate --build
         icecast2:
           path: icecast2/
-          command: docker-compose down && docker-compose up --build
+          command: docker-compose up --force-recreate --build
         mastodon:
           path: mastodon/
           command: sh ./up.sh

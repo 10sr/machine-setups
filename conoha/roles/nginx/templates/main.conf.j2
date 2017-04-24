@@ -1,5 +1,6 @@
 server {
     listen 80 default_server;
+    listen [::]:80 default_server;
     server_name _;
     return 307 http://{{ nginx_main_server_names[0] }}$request_uri;
 }
@@ -7,6 +8,7 @@ server {
 {% for name in nginx_main_server_names %}
 server {
     listen 80;
+    listen [::]:80;
     server_name {{ name }};
 
     root {{ nginx_main_root }};

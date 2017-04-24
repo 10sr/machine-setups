@@ -39,6 +39,7 @@ services:
       - redis
       - minio
     volumes:
+      - /etc/localtime:/etc/localtime:ro
       - /var/lib/data/docker/mastodon0/web/public/assets:/mastodon/public/assets
       - /var/lib/data/docker/mastodon0/web/public/system:/mastodon/public/system
 
@@ -55,6 +56,8 @@ services:
       - db
       - redis
       - minio
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
 
   sidekiq:
     restart: always
@@ -68,6 +71,7 @@ services:
       - redis
       - minio
     volumes:
+      - /etc/localtime:/etc/localtime:ro
       - /var/lib/data/docker/mastodon0/web/public/system:/mastodon/public/system
 
   cron:
@@ -84,5 +88,6 @@ services:
       - redis
       - minio
     volumes:
+      - /etc/localtime:/etc/localtime:ro
       - /var/lib/data/docker/mastodon0/web/public/assets:/mastodon/public/assets
       - /var/lib/data/docker/mastodon0/web/public/system:/mastodon/public/system

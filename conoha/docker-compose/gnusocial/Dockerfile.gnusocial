@@ -1,10 +1,6 @@
 FROM php:5.6-apache
 
-RUN apt-get update && apt-get install -y git
-# RUN rm -rf /var/www/html
-RUN git clone --depth 1 https://git.gnu.io/gnu/gnu-social.git /var/www/html/gnusocial
-
-RUN apt-get install -y openssl libcurl4-gnutls-dev libpng12-dev libgmp3-dev
+RUN apt-get update && apt-get install -y openssl libcurl4-gnutls-dev libpng12-dev libgmp3-dev
 RUN ln -s /usr/include/x86_64-linux-gnu/gmp.h /usr/include/gmp.h
 # RUN docker-php-ext-configure gmp --help
 # RUN docker-php-ext-configure gmp --with-gmp=/usr/include/x86_64-linux-gnu/
@@ -16,13 +12,17 @@ RUN docker-php-ext-install mysqli
 # Not available in this image
 # RUN docker-php-ext-install mysqlnd
 
+RUN apt-get update && apt-get install -y git
+RUN rm -rf /var/www/html
+RUN git clone --depth 1 https://git.gnu.io/gnu/gnu-social.git /var/www/html
 
-COPY gnusocial.htaccess /var/www/html/gnusocial/.htaccess
+
+COPY gnusocial.htaccess /var/www/html/.htaccess
 COPY config.php /etc/gnusocial/config.php
 
-RUN chmod a+w /var/www/html/gnusocial
+RUN chmod a+w /var/www/html
 RUN a2enmod rewrite
 
-COPY entrypoint.sh /usr/local/bin/gnusocial-entrypoint
+COPY entrypoint.sh /gnusocial-entrypoint.sh
 
-CMD ["gnusocial-entrypoint"]
+CMD ["sh", "/gnusocial-entrypoint.sh"]

@@ -27,8 +27,7 @@
   #   https://social.example.com/        => /
   #   https://example.com/social/ => /social/
   #
-  # RewriteBase /
-  RewriteBase /gnusocial/
+  RewriteBase /
 
   ## Uncomment these if having trouble with API authentication
   ## when PHP is running in CGI or FastCGI mode.

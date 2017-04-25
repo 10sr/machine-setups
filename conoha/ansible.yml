@@ -156,6 +156,7 @@
           MYSQL_ROOT_PASSWORD: "{{ nextcloud_mysql_root_password }}"
           MYSQL_DATABASE: nextcloud
           MYSQL_PASSWORD: "{{ nextcloud_mysql_password }}"
+          VIRTUAL_HOST: "{{ domain_name }}"
         10sr_bot:
           TWITTER_KEY: VmHRoeyCxmGisuGPCBADVfo6v
           TWITTER_SECRET: "{{ bot_twitter_secret }}"

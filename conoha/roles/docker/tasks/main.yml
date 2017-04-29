@@ -69,7 +69,7 @@
 
 
 - cron:
-    name: Remove containers
+    name: Remove exited containers
     weekday: 6
     hour: 7
     minute: 20
@@ -78,10 +78,19 @@
   become: yes
 
 - cron:
-    name: Remove images
+    name: Remove created but not used containers
+    weekday: 6
+    hour: 7
+    minute: 30
+    job: "docker ps -a --filter status=created --quiet | xargs docker rm"
+    user: root
+  become: yes
+
+- cron:
+    name: Remove images (Do after docker rm)
     weekday: 6
     hour: 7
     minute: 50
-    job: "docker images --no-trunc=true --filter dangling=true --quiet | xargs docker rmi"
+    job: "docker images --filter dangling=true --quiet | xargs docker rmi"
     user: root
   become: yes

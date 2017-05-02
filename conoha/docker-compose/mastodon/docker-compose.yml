@@ -27,7 +27,9 @@ services:
 
   web:
     restart: always
-    image: gargron/mastodon
+    image: local/st.3ends.info
+    # build:
+    #   context: "https://github.com/10sr/mastodon.git#st.3ends.info"
     command: rails s -p 3000 -b 0.0.0.0
     env_file:
       - common.env
@@ -45,7 +47,9 @@ services:
 
   streaming:
     restart: always
-    image: gargron/mastodon
+    image: local/st.3ends.info
+    # build:
+    #   context: "https://github.com/10sr/mastodon.git#st.3ends.info"
     env_file:
       - common.env
       - ../mastodon.env
@@ -61,7 +65,9 @@ services:
 
   sidekiq:
     restart: always
-    image: gargron/mastodon
+    image: local/st.3ends.info
+    # build:
+    #   context: "https://github.com/10sr/mastodon.git#st.3ends.info"
     env_file:
       - common.env
       - ../mastodon.env

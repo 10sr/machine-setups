@@ -19,7 +19,7 @@ services:
   gnusocial0_mariadb0:
     image: "mariadb"
     container_name: gnusocial0_mariadb0
-    command: --innodb-buffer-pool-size=65536
+    command: ["--innodb-buffer-pool-size=65536", "--expire-logs-days=5"]
     env_file:
       - ../gnusocial.env
     volumes:

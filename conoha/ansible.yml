@@ -193,6 +193,9 @@
         mastodon:
           path: mastodon/
           command: sh ./up.sh
+        gnusocial:
+          path: gnusocial/
+          command: docker-compose up --force-recreate --build
 
     - role: mastodon_nginx_proxy
       mastodon_server_name: st.{{ domain_name }}

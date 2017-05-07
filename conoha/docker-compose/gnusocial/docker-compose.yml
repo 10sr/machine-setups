@@ -8,6 +8,8 @@ services:
     container_name: gnusocial0
     ports:
       - "8765:80"
+    environment:
+      LC_ALL: C
     env_file:
       - ../gnusocial.env
     depends_on:

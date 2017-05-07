@@ -25,4 +25,6 @@ RUN a2enmod rewrite
 
 COPY entrypoint.sh /gnusocial-entrypoint.sh
 
+ENV LC_ALL C
+
 CMD ["sh", "/gnusocial-entrypoint.sh"]

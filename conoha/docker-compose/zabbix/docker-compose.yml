@@ -31,7 +31,7 @@ services:
     environment:
       MARIADB_USER: zabbix
       MARIADB_PASS: zabbix_password
-      DB_innodb_buffer_pool_size: 65536
+      DB_innodb_buffer_pool_size: 128M
     networks:
       zabbix_net:
         ipv4_address: 192.168.100.101

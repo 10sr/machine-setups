@@ -8,6 +8,8 @@
     # - ./secret.yml
     - ./vault/ddns_f5_si_password.yml
     - ./vault/ansible_become_pass.yml
+    - ./vault/gnusocial_mysql_password.yml
+    - ./vault/gnusocial_mysql_root_password.yml
     - ./vault/icecast2_source_password.yml
     - ./vault/icecast2_admin_password.yml
     - ./vault/icecast2_relay_password.yml
@@ -177,6 +179,11 @@
           MINIO_ACCESS_KEY: 66aa7319
           MINIO_SECRET_KEY: "{{ mastodon_minio_secret_key }}"
           S3_HOSTNAME: minio.st.3ends.info
+        gnusocial:
+          MYSQL_USER: social
+          MYSQL_ROOT_PASSWORD: "{{ gnusocial_mysql_root_password }}"
+          MYSQL_DATABASE: social
+          MYSQL_PASSWORD: "{{ gnusocial_mysql_password }}"
       docker_compose_supervisord:
         nextcloud:
           path: nextcloud/

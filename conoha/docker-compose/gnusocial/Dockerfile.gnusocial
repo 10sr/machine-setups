@@ -16,7 +16,7 @@ RUN apt-get update && apt-get install -y git
 RUN rm -rf /var/www/html
 RUN git clone --depth 1 https://git.gnu.io/gnu/gnu-social.git /var/www/html
 
-RUN git clone --depth 1 https://git.gnu.io/h2p/Qvitter.git /var/www/html/plugins/Qvitter
+# RUN git clone --depth 1 https://git.gnu.io/h2p/Qvitter.git /var/www/html/plugins/Qvitter
 
 
 COPY gnusocial.htaccess /var/www/html/.htaccess

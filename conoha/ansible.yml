@@ -125,7 +125,9 @@
           port: 3389
         - name: "scl.{{ domain_name }}"
           port: 8765
-
+          additional_directives:
+            - "proxy_set_header Host $host"
+            - "proxy_set_header X-Real-IP $remote_addr"
     # - role: icecast2_ssl
     #   icecast2_ssl_server_name: ic."{{ domain_name }}"
     #   icecast2_ssl_upstream_name: icecast2

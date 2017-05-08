@@ -1,4 +1,4 @@
-FROM gargron/mastodon
+FROM local/st.3ends.info
 
 # Python 2.7
 RUN apk --update add python py-pip && rm -rf /var/cache/apk/*

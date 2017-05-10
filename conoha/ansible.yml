@@ -223,6 +223,7 @@
 
     - role: postfix
       postfix_myhostname: "{{ domain_name }}"
+      postfix_myorigin: "m.{{ domain_name }}"
       postfix_smtp_hostname: smtp.mailgun.org
       postfix_smtp_port: 587
       postfix_smtp_login: postmaster@m.3ends.info

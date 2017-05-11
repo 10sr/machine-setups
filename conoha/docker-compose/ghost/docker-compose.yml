@@ -1,0 +1,8 @@
+---
+ghost0:
+  image: ghost:alpine
+  container_name: ghost0
+  ports:
+    - "2368:2368"
+  volumes:
+    - "/var/lib/data/docker/ghost0/data:/var/lib/ghost"

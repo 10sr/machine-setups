@@ -1,0 +1,6 @@
+---
+ikiwiki0:
+  image: jmtd/ikiwiki
+  container_name: ikiwiki0
+  ports:
+    - "8888:80"

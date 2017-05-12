@@ -7,6 +7,7 @@ RUN PERL5LIB=`pwd` PERL_MM_USE_DEFAULT=1 perl -MCPAN -e 'CPAN::Shell->install("T
     PERL5LIB=`pwd` PERL_MM_USE_DEFAULT=1 perl -MCPAN -e 'CPAN::Shell->install("URI")' && \
     PERL5LIB=`pwd` PERL_MM_USE_DEFAULT=1 perl -MCPAN -e 'CPAN::Shell->install("HTML::Parser")' && \
     PERL5LIB=`pwd` PERL_MM_USE_DEFAULT=1 perl -MCPAN -e 'CPAN::Shell->install("CGI")' && \
+    PERL5LIB=`pwd` PERL_MM_USE_DEFAULT=1 perl -MCPAN -e 'CPAN::Shell->install("CGI::Session")' && \
     PERL5LIB=`pwd` PERL_MM_USE_DEFAULT=1 perl -MCPAN -e 'CPAN::Shell->install("HTML::Template")' && \
     PERL5LIB=`pwd` PERL_MM_USE_DEFAULT=1 perl -MCPAN -e 'CPAN::Shell->install("YAML::XS")' && \
     PERL5LIB=`pwd` PERL_MM_USE_DEFAULT=1 perl -MCPAN -e 'CPAN::Shell->install("HTML::Scrubber")'
@@ -16,3 +17,7 @@ RUN perl Makefile.PL && make && make install
 COPY setup.pl /setup.pl
 RUN ikiwiki --setup /setup.pl
 
+RUN apt-get install -y spawn-fcgi fcgiwrap
+RUN mkdir -p /tmp/ikiwiki
+
+CMD ["/usr/bin/spawn-fcgi", "-s", "/tmp/ikiwiki/fcgi.socket", "-M", "777", "-n", "--", "/usr/sbin/fcgiwrap"]

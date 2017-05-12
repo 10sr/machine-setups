@@ -1,6 +1,22 @@
 ---
-ikiwiki0:
-  image: jmtd/ikiwiki
-  container_name: ikiwiki0
-  ports:
-    - "8888:80"
+version: '3'
+services:
+  ikiwiki0:
+    build:
+      context: .
+    container_name: ikiwiki0
+    volumes:
+      - "sock:/tmp/ikiwiki"
+
+  nginx0:
+    image: nginx:alpine
+    depends_on:
+      - ikiwiki0
+    volumes:
+      - "./nginx.conf:/etc/nginx/conf.d/default.conf:ro"
+      - "sock:/tmp/ikiwiki"
+    ports:
+      - "8888:80"
+
+volumes:
+  sock:

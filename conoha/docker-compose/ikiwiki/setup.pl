@@ -23,5 +23,5 @@ IkiWiki::Setup::Automator->import(
   libdir => "$ENV{HOME}/.ikiwiki",
   rss => 1,
   atom => 1,
-  syslog => 1
+  syslog => 0
     )

@@ -1,0 +1,8 @@
+---
+- template:
+    src: apt.conf.j2
+    dest: /etc/apt/apt.conf.d/{{ item.key }}
+  vars:
+    conf: "{{ item.value }}"
+  with_dict: "{{ apt_conf }}"
+  become: yes

@@ -50,6 +50,13 @@
     #       size_mb: 15000
 
     #- apt-upgrade
+    - role: apt
+      apt_conf:
+        "81periodic":
+          "APT::Periodic::BackupArchiveInterval": 0
+          "APT::Periodic::BackupLevel": 0
+          "APT::Periodic::Update-Package-Lists": 0
+          "APT::Periodic::AutocleanInterval": 3
 
     - role: ddns
       ddns_domain_name: 10sr.f5.si

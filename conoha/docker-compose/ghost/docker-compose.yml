@@ -4,5 +4,8 @@ ghost0:
   container_name: ghost0
   ports:
     - "2368:2368"
+  environment:
+    NODE_ENV: production
   volumes:
-    - "/var/lib/data/docker/ghost0/data:/var/lib/ghost"
+    - "./config.js:/var/lib/ghost/config.js"
+    - "/var/lib/data/docker/ghost0/data:/var/lib/ghost/content"

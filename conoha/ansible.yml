@@ -119,6 +119,8 @@
             - "rewrite /nextcloud/(.*) /$1 break"
         - path: /zabbix
           port: 8008
+        - path: /instiki
+          port: 2500
         # - path: /containers
         #   port: 8080
       nginx_ssl_host_proxies:
@@ -146,6 +148,7 @@
       wiki_user: wiki
       wiki_path: /wiki
       wiki_port: 4567
+      when: false
 
     - role: lxc
       lxc_user: "{{ ansible_user_id }}"
@@ -216,6 +219,9 @@
         ghost:
           path: ghost/
           command: docker-compose up --force-recreate
+        instiki:
+          path: instiki/
+          command: docker-compose up --force-recreate --build
 
     - role: mastodon_nginx_proxy
       mastodon_server_name: st.{{ domain_name }}

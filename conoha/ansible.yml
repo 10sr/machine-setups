@@ -201,27 +201,35 @@
         nextcloud:
           path: nextcloud/
           command: docker-compose up --force-recreate
+          autostart: "false"
         10sr_bot:
           path: 10sr_bot/
           command: docker-compose up --force-recreate --build
+          autostart: "true"
         zabbix:
           path: zabbix/
           command: docker-compose up --force-recreate --build
+          autostart: "true"
         icecast2:
           path: icecast2/
           command: docker-compose up --force-recreate --build
+          autostart: "false"
         mastodon:
           path: mastodon/
           command: sh ./up.sh
+          autostart: "true"
         gnusocial:
           path: gnusocial/
           command: docker-compose up --force-recreate --build
+          autostart: "false"
         ghost:
           path: ghost/
           command: docker-compose up --force-recreate
+          autostart: "true"
         instiki:
           path: instiki/
           command: docker-compose up --force-recreate --build
+          autostart: "true"
 
     - role: mastodon_nginx_proxy
       mastodon_server_name: st.{{ domain_name }}

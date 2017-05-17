@@ -64,8 +64,13 @@
         - "{{ domain_name }}"
         - 10sr.f5.si
       nginx_main_root: /var/nginx/main
+      nginx_letsencrypt_access_dir: /.well-known/acme-challenge
+      nginx_letsencrypt_webroot: /var/nginx/main
       # not used yet
       nginx_proxy_upstreams: []
+      nginx_host_proxies:
+        - name: "ca.{{ domain_name }}"
+          port: 8080
 
     - role: icecast2
       icecast2_server_name: ic.{{ domain_name }}
@@ -229,6 +234,10 @@
         instiki:
           path: instiki/
           command: docker-compose up --force-recreate --build
+          autostart: "true"
+        cadvisor:
+          path: cadvisor/
+          command: docker-compose up --force-recreate
           autostart: "true"
 
     - role: mastodon_nginx_proxy

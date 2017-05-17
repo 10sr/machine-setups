@@ -114,7 +114,7 @@
         - path: /nextcloud
           port: 8880
           additional_directives:
-            - "add_header Strict-Transport-Security \"max-age=15552000; includeSubDomains\" always"
+            - "add_header Strict-Transport-Security max-age=15552000 always"
             - "client_max_body_size 1024M"
             - "rewrite /nextcloud/(.*) /$1 break"
         - path: /zabbix

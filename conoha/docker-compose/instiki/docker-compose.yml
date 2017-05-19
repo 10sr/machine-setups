@@ -1,0 +1,14 @@
+---
+version: "3"
+services:
+  instiki0:
+    build:
+      context: https://github.com/parasew/instiki.git
+    container_name: instiki0
+    command: ["./instiki", "--path=/instiki"]
+    ports:
+      - 2500:2500
+    volumes:
+      - "./database.yml:/usr/src/app/config/database.yml:ro"
+      - "/var/lib/data/docker/instiki0/db:/db"
+      - "/var/lib/data/docker/instiki0/webs:/usr/src/app/webs"

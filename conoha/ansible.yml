@@ -110,8 +110,6 @@
       nginx_ssl_main_server_name: "{{ domain_name }}"
       nginx_ssl_main_root: /var/nginx/main
       nginx_ssl_proxy_upstreams:
-        - path: /wiki
-          port: 4567
         - path: /minio
           port: 9000
         - path: /10sr_bot
@@ -124,7 +122,7 @@
             - "rewrite /nextcloud/(.*) /$1 break"
         - path: /zabbix
           port: 8008
-        - path: /instiki
+        - path: /wiki
           port: 2500
         # - path: /containers
         #   port: 8080
@@ -149,11 +147,11 @@
 
     - role: supervisord
 
-    - role: wiki
-      wiki_user: wiki
-      wiki_path: /wiki
-      wiki_port: 4567
-      when: false
+    # - role: wiki
+    #   wiki_user: wiki
+    #   wiki_path: /wiki
+    #   wiki_port: 4567
+    #   when: false
 
     - role: lxc
       lxc_user: "{{ ansible_user_id }}"

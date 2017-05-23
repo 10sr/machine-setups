@@ -5,7 +5,7 @@ services:
     build:
       context: https://github.com/parasew/instiki.git
     container_name: instiki0
-    command: ["./instiki", "--path=/instiki"]
+    command: ["./instiki", "--path=/wiki"]
     ports:
       - 2500:2500
     volumes:

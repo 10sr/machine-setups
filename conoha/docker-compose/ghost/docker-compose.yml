@@ -1,6 +1,6 @@
 ---
 ghost0:
-  image: ghost:alpine
+  image: ghost:0.11.9-alpine
   container_name: ghost0
   ports:
     - "2368:2368"

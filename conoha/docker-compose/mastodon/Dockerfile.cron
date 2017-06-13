@@ -5,4 +5,6 @@ RUN npm install -g cron-cli
 RUN mkdir -p /cron/
 COPY crontab /cron/crontab
 
+RUN apk add --update tini && rm -rf /var/cache/apk/*
+ENTRYPOINT ["/sbin/tini", "--"]
 CMD ["/usr/bin/cron", "/cron/crontab"]

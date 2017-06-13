@@ -195,6 +195,11 @@
           MINIO_ACCESS_KEY: 66aa7319
           MINIO_SECRET_KEY: "{{ mastodon_minio_secret_key }}"
           S3_HOSTNAME: minio.st.3ends.info
+          CRON_JS_MAILTO: 8.slashes@gmail.com
+          CRON_JS_SMTP_HOST: smtp.mailgun.org
+          CRON_JS_SMTP_PORT: 587
+          CRON_JS_SMTP_USER: postmaster@m.3ends.info
+          CRON_JS_SMTP_PASS: "{{ postfix_smtp_password }}"
         gnusocial:
           MYSQL_USER: social
           MYSQL_ROOT_PASSWORD: "{{ gnusocial_mysql_root_password }}"

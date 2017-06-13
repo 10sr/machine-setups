@@ -1,17 +1,19 @@
-[program:docker_{{ item.key }}]
+{% for key, value in programs.items() %}
+[program:docker_{{ key }}]
 user=docker
-directory=/home/docker/docker-compose/{{ item.value.path }}
-command={{ item.value.command }}
+directory=/home/docker/docker-compose/{{ value.path }}
+command={{ value.command }}
 
-autostart={{ item.value.autostart }}
+autostart={{ value.autostart }}
 autorestart=true
 startsecs=10
 stopwaitsecs=20
 
-stdout_logfile=/var/log/supervisor/docker-{{ item.key }}.stdout
+stdout_logfile=/var/log/supervisor/docker-{{ key }}.stdout
 stdout_logfile_backups=5
 stdout_logfile_maxbytes=10MB
 
-stderr_logfile=/var/log/supervisor/docker-{{ item.key }}.stderr
+stderr_logfile=/var/log/supervisor/docker-{{ key }}.stderr
 stderr_logfile_backups=5
 stderr_logfile_maxbytes=10MB
+{% endfor %}

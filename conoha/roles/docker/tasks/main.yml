@@ -41,13 +41,16 @@
     dest: "/home/docker/docker-compose/{{ item.key }}.env"
     src: local.env.j2
     owner: docker
+  vars:
+    variables: "{{ item.value }}"
   with_dict: "{{ docker_compose_env }}"
   become: yes
 
 - template:
     src: supervisord.conf.j2
-    dest: /etc/supervisor/conf.d/{{ item.key }}.conf
-  with_dict: "{{ docker_compose_supervisord }}"
+    dest: /etc/supervisor/conf.d/docker_programs.conf
+  vars:
+    programs: "{{ docker_compose_supervisord }}"
   become: yes
   register: _docker_compose_supervisord
 

@@ -14,14 +14,7 @@
 
 
 - template:
-    src: _update_f5_si.sh.j2
-    dest: /usr/local/bin/_update_f5_si.sh
-  become: yes
-
-- cron:
-    name: Update f5.si DDNS entry
-    hour: 5
-    minute: 50
-    job: sh /usr/local/bin/_update_f5_si.sh
-    user: root
+    src: update_f5_si.sh.j2
+    dest: /etc/cron.daily/update_f5_si.sh
+    mode: "0755"
   become: yes

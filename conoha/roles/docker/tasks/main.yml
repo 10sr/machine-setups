@@ -70,30 +70,8 @@
 #   with_dict: "{{ docker_compose_supervisord }}"
 #   become: yes
 
-
-- cron:
-    name: Remove exited containers
-    weekday: 6
-    hour: 7
-    minute: 20
-    job: "docker ps -a --filter status=exited --quiet | xargs docker rm"
-    user: root
-  become: yes
-
-- cron:
-    name: Remove created but not used containers
-    weekday: 6
-    hour: 7
-    minute: 30
-    job: "docker ps -a --filter status=created --quiet | xargs docker rm"
-    user: root
-  become: yes
-
-- cron:
-    name: Remove images (Do after docker rm)
-    weekday: 6
-    hour: 7
-    minute: 50
-    job: "docker images --filter dangling=true --quiet | xargs docker rmi"
-    user: root
+- template:
+    src: docker_weekly_removal.sh.j2
+    dest: /etc/cron.weekly/docker_weekly_removal.sh
+    mode: "0755"
   become: yes

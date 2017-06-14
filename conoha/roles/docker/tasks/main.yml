@@ -72,6 +72,6 @@
 
 - template:
     src: docker_weekly_removal.sh.j2
-    dest: /etc/cron.weekly/docker_weekly_removal.sh
+    dest: /etc/cron.weekly/docker-weekly-removal
     mode: "0755"
   become: yes

@@ -28,7 +28,7 @@
 
 - template:
     src: update_letsencrypt_cert.sh.j2
-    dest: /etc/cron.weekly/update_letsencrypt_cert.sh
+    dest: /etc/cron.weekly/update-letsencrypt-cert
     mode: "0755"
   become: yes
 

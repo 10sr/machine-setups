@@ -242,6 +242,10 @@
           path: cadvisor/
           command: docker-compose up --force-recreate
           autostart: "true"
+        fluentd:
+          path: fluentd/
+          command: docker-compose up --force-recreate --build
+          autostart: "true"
 
     - role: mastodon_nginx_proxy
       mastodon_server_name: st.{{ domain_name }}

@@ -70,6 +70,12 @@
 #   with_dict: "{{ docker_compose_supervisord }}"
 #   become: yes
 
+- npm:
+    name: pm2
+    global: yes
+  become: yes
+  become_user: docker
+
 - template:
     src: docker_weekly_removal.sh.j2
     dest: /etc/cron.weekly/docker-weekly-removal

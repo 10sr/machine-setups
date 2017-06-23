@@ -1,0 +1,13 @@
+{
+  "apps" : [{
+    "name": "10sr_bot",
+    "script": "docker-compose",
+    "args": ["up", "--force-recreate", "--build"],
+    "exec_interpreter": "none",
+    "watch": false,
+    "exec_mode": "fork",
+    "combine_logs": true,
+    "retain": 10,
+    "max_size": "10M"
+  }]
+}

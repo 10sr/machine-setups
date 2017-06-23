@@ -213,7 +213,7 @@
         10sr_bot:
           path: 10sr_bot/
           command: docker-compose up --force-recreate --build
-          autostart: "true"
+          autostart: "false"
         zabbix:
           path: zabbix/
           command: docker-compose up --force-recreate --build

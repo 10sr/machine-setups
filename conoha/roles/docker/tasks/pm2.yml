@@ -1,0 +1,34 @@
+---
+- apt_key:
+    url: https://deb.nodesource.com/gpgkey/nodesource.gpg.key
+  become: yes
+
+- apt_repository:
+    repo: 'deb https://deb.nodesource.com/node_6.x {{ ansible_distribution_release }} main' 
+    update_cache: yes
+  become: yes
+
+- apt_repository:
+    repo: 'deb-src https://deb.nodesource.com/node_6.x {{ ansible_distribution_release }} main' 
+    update_cache: yes
+  become: yes
+
+- apt:
+    name: nodejs
+    state: latest
+  become: yes
+
+- npm:
+    name: "{{ item }}"
+    path: /home/docker/_pm2
+  with_items:
+    - pm2
+    - pm2-logrotate
+  become: yes
+  become_user: docker
+
+# - file:
+#     dest: /home/docker/docker-logs/
+#     state: directory
+#     owner: docker
+#   become: yes

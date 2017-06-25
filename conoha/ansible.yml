@@ -92,6 +92,7 @@
         - st.{{ domain_name }}
         - minio.st.{{ domain_name }}
         - scl.{{ domain_name }}
+        - nc.{{ domain_name }}
         #- d.{{ domain_name }}
       letsencrypt_webroot: /var/nginx/main
       letsencrypt_key_dir: /etc/letsencrypt/live/{{ domain_name }}
@@ -123,6 +124,8 @@
           port: 3389
         - name: "scl.{{ domain_name }}"
           port: 8765
+        - name: "nc.{{ domain_name }}"
+          port: 8888
 
     # - role: icecast2_ssl
     #   icecast2_ssl_server_name: ic."{{ domain_name }}"

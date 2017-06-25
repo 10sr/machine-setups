@@ -5,7 +5,7 @@ services:
     image: nginx
     container_name: nextcloud0_nginx0
     ports:
-      - "8880:8880"
+      - "8888:8888"
     volumes_from:
       - nextcloud0
     volumes:
@@ -20,21 +20,22 @@ services:
     container_name: nextcloud0
     env_file:
       - ../nextcloud.env
-    depends_on:
-      - nextcloud0_mariadb0
+    # depends_on:
+    #   - nextcloud0_mariadb0
     volumes:
       - "/var/lib/data/docker/nextcloud0/data:/var/www/html/data"
       # - "/var/lib/data/docker/nextcloud0/tmp:/data/tmp"
       - "/var/lib/data/docker/nextcloud0/userapps:/var/www/html/apps"
       - "./config:/var/www/html/config"
+      - "/var/lib/data/docker/nextcloud0/sqlite:/sqlite"
 
-  nextcloud0_mariadb0:
-    image: "mariadb:10"
-    container_name: nextcloud0_mariadb0
-    env_file:
-      - ../nextcloud.env
-    volumes:
-      - "/var/lib/data/docker/nextcloud0/mariadb:/var/lib/mysql"
+  # nextcloud0_mariadb0:
+  #   image: "mariadb:10"
+  #   container_name: nextcloud0_mariadb0
+  #   env_file:
+  #     - ../nextcloud.env
+  #   volumes:
+  #     - "/var/lib/data/docker/nextcloud0/mariadb:/var/lib/mysql"
 
   nextcloud0_cron0:
     image: nextcloud:11-fpm

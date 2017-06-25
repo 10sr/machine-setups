@@ -42,19 +42,13 @@ services:
   #     - "/var/lib/data/docker/nextcloud0/mariadb:/var/lib/mysql"
 
   nextcloud0_cron0:
-    image: nextcloud:11-fpm
+    build:
+      context: .
+      dockerfile: Dockerfile.cron
     container_name: nextcloud0_cron0
     env_file:
       - ../nextcloud.env
-    depends_on:
-      - nextcloud0_mariadb0
+    # depends_on:
+    #   - nextcloud0_mariadb0
     volumes_from:
       - nextcloud0
-    command: |
-      bash -c 'bash -s <<EOF
-      trap "break;exit" SIGHUP SIGINT SIGTERM
-      while /bin/true; do
-        /usr/local/bin/php /var/www/html/cron.php
-        sleep 900
-      done
-      EOF'

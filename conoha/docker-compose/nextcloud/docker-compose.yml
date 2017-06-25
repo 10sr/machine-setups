@@ -32,6 +32,10 @@ services:
   # nextcloud0_mariadb0:
   #   image: "mariadb:10"
   #   container_name: nextcloud0_mariadb0
+  #   command: ["--innodb-buffer-pool-size=128M", "--expire-logs-days=5"]
+  # nextcloud0_mariadb0:
+  #   image: "mariadb:10"
+  #   container_name: nextcloud0_mariadb0
   #   env_file:
   #     - ../nextcloud.env
   #   volumes:

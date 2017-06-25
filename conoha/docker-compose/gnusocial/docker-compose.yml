@@ -8,6 +8,8 @@ services:
     container_name: gnusocial0
     ports:
       - "8765:80"
+    environment:
+      LC_ALL: C
     env_file:
       - ../gnusocial.env
     depends_on:
@@ -19,7 +21,7 @@ services:
   gnusocial0_mariadb0:
     image: "mariadb"
     container_name: gnusocial0_mariadb0
-    command: --innodb-buffer-pool-size=65536
+    command: ["--innodb-buffer-pool-size=128M", "--expire-logs-days=5"]
     env_file:
       - ../gnusocial.env
     volumes:

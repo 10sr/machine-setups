@@ -10,7 +10,9 @@ services:
       - "24224:24224"
       - "24224:24224/udp"
     volumes:
-      - "./config:/fluentd_conf"
+      - "./config:/fluentd/etc"
       - "/var/lib/data/docker/fluentd0/log:/fluentd/log"
+      - "/var/lib/data/docker/fluentd0/pos_file:/fluentd/pos_file"
+      - "/var/log:/rootfs/var_log:ro"
     environment:
-      FLUENTD_CONF: fluent.conf
+      FLUENTD_CONF: fluentd.conf

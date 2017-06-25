@@ -41,13 +41,16 @@
     dest: "/home/docker/docker-compose/{{ item.key }}.env"
     src: local.env.j2
     owner: docker
+  vars:
+    variables: "{{ item.value }}"
   with_dict: "{{ docker_compose_env }}"
   become: yes
 
 - template:
     src: supervisord.conf.j2
-    dest: /etc/supervisor/conf.d/{{ item.key }}.conf
-  with_dict: "{{ docker_compose_supervisord }}"
+    dest: /etc/supervisor/conf.d/docker_programs.conf
+  vars:
+    programs: "{{ docker_compose_supervisord }}"
   become: yes
   register: _docker_compose_supervisord
 
@@ -67,21 +70,33 @@
 #   with_dict: "{{ docker_compose_supervisord }}"
 #   become: yes
 
-
-- cron:
-    name: Remove containers
-    weekday: 6
-    hour: 7
-    minute: 20
-    job: "docker ps -a --filter status=exited --quiet | xargs docker rm"
-    user: root
+- apt_key:
+    url: https://deb.nodesource.com/gpgkey/nodesource.gpg.key
   become: yes
 
-- cron:
-    name: Remove images
-    weekday: 6
-    hour: 7
-    minute: 50
-    job: "docker images --no-trunc=true --filter dangling=true --quiet | xargs docker rmi"
-    user: root
+- apt_repository:
+    repo: 'deb https://deb.nodesource.com/node_6.x {{ ansible_distribution_release }} main' 
+    update_cache: yes
+  become: yes
+
+- apt_repository:
+    repo: 'deb-src https://deb.nodesource.com/node_6.x {{ ansible_distribution_release }} main' 
+    update_cache: yes
+  become: yes
+
+- apt:
+    name: nodejs
+    state: latest
+  become: yes
+
+- npm:
+    name: pm2
+    path: /home/docker/_pm2
+  become: yes
+  become_user: docker
+
+- template:
+    src: docker_weekly_removal.sh.j2
+    dest: /etc/cron.weekly/docker-weekly-removal
+    mode: "0755"
   become: yes

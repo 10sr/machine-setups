@@ -8,6 +8,8 @@
     # - ./secret.yml
     - ./vault/ddns_f5_si_password.yml
     - ./vault/ansible_become_pass.yml
+    - ./vault/gnusocial_mysql_password.yml
+    - ./vault/gnusocial_mysql_root_password.yml
     - ./vault/icecast2_source_password.yml
     - ./vault/icecast2_admin_password.yml
     - ./vault/icecast2_relay_password.yml
@@ -27,8 +29,8 @@
     - role: hostname
       hostname: "{{ domain_name }}"
 
-    - role: cron
-      cron_email_address: 8.slashes@gmail.com
+    # - role: cron
+    #   cron_email_address: 8.slashes@gmail.com
 
     # - role: firewalld
     #   firewalld_port_states:
@@ -62,8 +64,13 @@
         - "{{ domain_name }}"
         - 10sr.f5.si
       nginx_main_root: /var/nginx/main
+      nginx_letsencrypt_access_dir: /.well-known/acme-challenge
+      nginx_letsencrypt_webroot: /var/nginx/main
       # not used yet
       nginx_proxy_upstreams: []
+      nginx_host_proxies:
+        - name: "ca.{{ domain_name }}"
+          port: 8080
 
     - role: icecast2
       icecast2_server_name: ic.{{ domain_name }}
@@ -93,6 +100,7 @@
         - minio.st.{{ domain_name }}
         - scl.{{ domain_name }}
         - nc.{{ domain_name }}
+        - b.{{ domain_name }}
         #- d.{{ domain_name }}
       letsencrypt_webroot: /var/nginx/main
       letsencrypt_key_dir: /etc/letsencrypt/live/{{ domain_name }}
@@ -103,8 +111,6 @@
       nginx_ssl_main_server_name: "{{ domain_name }}"
       nginx_ssl_main_root: /var/nginx/main
       nginx_ssl_proxy_upstreams:
-        - path: /wiki
-          port: 4567
         - path: /minio
           port: 9000
         - path: /10sr_bot
@@ -112,11 +118,13 @@
         - path: /nextcloud
           port: 8880
           additional_directives:
-            - "add_header Strict-Transport-Security \"max-age=15552000; includeSubDomains\" always"
+            - "add_header Strict-Transport-Security max-age=15552000 always"
             - "client_max_body_size 1024M"
             - "rewrite /nextcloud/(.*) /$1 break"
         - path: /zabbix
           port: 8008
+        - path: /wiki
+          port: 2500
         # - path: /containers
         #   port: 8080
       nginx_ssl_host_proxies:
@@ -124,8 +132,18 @@
           port: 3389
         - name: "scl.{{ domain_name }}"
           port: 8765
+          additional_directives:
+            - "proxy_set_header Host $host"
+            - "proxy_set_header X-Real-IP $remote_addr"
         - name: "nc.{{ domain_name }}"
           port: 8888
+        - name: "b.{{ domain_name }}"
+          port: 2368
+          additional_directives:
+            - "proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for"
+            - "proxy_set_header Host $host"
+            - "proxy_set_header X-Forwarded-Proto $scheme"
+            - "proxy_set_header X-Real-IP $remote_addr"
 
     # - role: icecast2_ssl
     #   icecast2_ssl_server_name: ic."{{ domain_name }}"
@@ -133,10 +151,11 @@
 
     - role: supervisord
 
-    - role: wiki
-      wiki_user: wiki
-      wiki_path: /wiki
-      wiki_port: 4567
+    # - role: wiki
+    #   wiki_user: wiki
+    #   wiki_path: /wiki
+    #   wiki_port: 4567
+    #   when: false
 
     - role: lxc
       lxc_user: "{{ ansible_user_id }}"
@@ -181,22 +200,57 @@
           MINIO_ACCESS_KEY: 66aa7319
           MINIO_SECRET_KEY: "{{ mastodon_minio_secret_key }}"
           S3_HOSTNAME: minio.st.3ends.info
+          CRON_JS_MAILTO: 8.slashes@gmail.com
+          CRON_JS_SMTP_HOST: smtp.mailgun.org
+          CRON_JS_SMTP_PORT: 587
+          CRON_JS_SMTP_USER: postmaster@m.3ends.info
+          CRON_JS_SMTP_PASS: "{{ postfix_smtp_password }}"
+        gnusocial:
+          MYSQL_USER: social
+          MYSQL_ROOT_PASSWORD: "{{ gnusocial_mysql_root_password }}"
+          MYSQL_DATABASE: social
+          MYSQL_PASSWORD: "{{ gnusocial_mysql_password }}"
       docker_compose_supervisord:
         nextcloud:
           path: nextcloud/
           command: docker-compose up --force-recreate
+          autostart: "false"
         10sr_bot:
           path: 10sr_bot/
           command: docker-compose up --force-recreate --build
+          autostart: "true"
         zabbix:
           path: zabbix/
           command: docker-compose up --force-recreate --build
+          autostart: "true"
         icecast2:
           path: icecast2/
           command: docker-compose up --force-recreate --build
+          autostart: "false"
         mastodon:
           path: mastodon/
           command: sh ./up.sh
+          autostart: "true"
+        gnusocial:
+          path: gnusocial/
+          command: docker-compose up --force-recreate --build
+          autostart: "false"
+        ghost:
+          path: ghost/
+          command: docker-compose up --force-recreate
+          autostart: "true"
+        instiki:
+          path: instiki/
+          command: docker-compose up --force-recreate --build
+          autostart: "true"
+        cadvisor:
+          path: cadvisor/
+          command: docker-compose up --force-recreate
+          autostart: "true"
+        fluentd:
+          path: fluentd/
+          command: docker-compose up --force-recreate --build
+          autostart: "true"
 
     - role: mastodon_nginx_proxy
       mastodon_server_name: st.{{ domain_name }}
@@ -215,6 +269,7 @@
 
     - role: postfix
       postfix_myhostname: "{{ domain_name }}"
+      postfix_myorigin: "m.{{ domain_name }}"
       postfix_smtp_hostname: smtp.mailgun.org
       postfix_smtp_port: 587
       postfix_smtp_login: postmaster@m.3ends.info

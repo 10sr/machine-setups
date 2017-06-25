@@ -9,6 +9,7 @@
     line: "{{ item.key }} = {{ item.value }}"
   with_dict:
     myhostname: "{{ postfix_myhostname }}"
+    myorigin: "{{ postfix_myorigin }}"
     relayhost: "[{{ postfix_smtp_hostname }}]:{{ postfix_smtp_port }}"
     smtp_sasl_auth_enable: "yes"
     smtp_sasl_password_maps: hash:/etc/postfix/sasl_password

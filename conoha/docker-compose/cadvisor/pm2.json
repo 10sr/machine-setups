@@ -1,0 +1,13 @@
+{
+  "apps" : [{
+    "name": "cadvisor",
+    "script": "docker-compose",
+    "args": ["up", "--force-recreate"],
+    "exec_interpreter": "none",
+    "watch": false,
+    "exec_mode": "fork",
+    "combine_logs": true,
+    "retain": 10,
+    "max_size": "10M"
+  }]
+}

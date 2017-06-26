@@ -241,7 +241,7 @@
         cadvisor:
           path: cadvisor/
           command: docker-compose up --force-recreate
-          autostart: "true"
+          autostart: "false"
         fluentd:
           path: fluentd/
           command: docker-compose up --force-recreate --build

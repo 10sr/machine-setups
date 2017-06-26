@@ -142,6 +142,8 @@
             - "proxy_set_header Host $host"
             - "proxy_set_header X-Forwarded-Proto $scheme"
             - "proxy_set_header X-Real-IP $remote_addr"
+        - name: "ca.{{ domain_name }}"
+          port: 8080
     # - role: icecast2_ssl
     #   icecast2_ssl_server_name: ic."{{ domain_name }}"
     #   icecast2_ssl_upstream_name: icecast2

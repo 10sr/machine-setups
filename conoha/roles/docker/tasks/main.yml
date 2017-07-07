@@ -70,8 +70,6 @@
 #   with_dict: "{{ docker_compose_supervisord }}"
 #   become: yes
 
-- include: install.yml
-
 - template:
     src: docker_weekly_removal.sh.j2
     dest: /etc/cron.weekly/docker-weekly-removal

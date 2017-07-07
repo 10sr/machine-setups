@@ -249,6 +249,13 @@
           path: fluentd/
           command: docker-compose up --force-recreate --build
           autostart: "true"
+      docker_pm2:
+        10sr_bot:
+          json: 10sr_bot/pm2.json
+          state: started
+        cadvisor:
+          json: cadvisor/pm2.json
+          state: started
 
     - role: mastodon_nginx_proxy
       mastodon_server_name: st.{{ domain_name }}

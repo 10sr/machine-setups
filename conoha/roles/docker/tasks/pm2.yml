@@ -23,12 +23,20 @@
     path: /home/docker/_pm2
   with_items:
     - pm2
-    - pm2-logrotate
   become: yes
   become_user: docker
 
-# - file:
-#     dest: /home/docker/docker-logs/
-#     state: directory
-#     owner: docker
-#   become: yes
+- file:
+    dest: /var/log/docker-pm2
+    state: directory
+    owner: docker
+  become: yes
+
+- pm2:
+    name: "{{ item.key }}"
+    config: "/home/docker/docker-compose/{{ item.value.json }}"
+    state: "{{ item.value.state }}"
+    executable: /home/docker/_pm2/node_modules/.bin/pm2
+  with_dict: "{{ docker_pm2 }}"
+  become: yes
+  become_user: docker

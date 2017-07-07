@@ -236,7 +236,7 @@
         ghost:
           path: ghost/
           command: docker-compose up --force-recreate
-          autostart: "true"
+          autostart: "false"
         instiki:
           path: instiki/
           command: docker-compose up --force-recreate --build
@@ -255,6 +255,9 @@
           state: started
         cadvisor:
           json: cadvisor/pm2.json
+          state: started
+        ghost:
+          json: ghost/pm2.json
           state: started
 
     - role: mastodon_nginx_proxy

@@ -1,0 +1,42 @@
+---
+- apt_key:
+    url: https://deb.nodesource.com/gpgkey/nodesource.gpg.key
+  become: yes
+
+- apt_repository:
+    repo: 'deb https://deb.nodesource.com/node_6.x {{ ansible_distribution_release }} main' 
+    update_cache: yes
+  become: yes
+
+- apt_repository:
+    repo: 'deb-src https://deb.nodesource.com/node_6.x {{ ansible_distribution_release }} main' 
+    update_cache: yes
+  become: yes
+
+- apt:
+    name: nodejs
+    state: latest
+  become: yes
+
+- npm:
+    name: "{{ item }}"
+    path: /home/docker/_pm2
+  with_items:
+    - pm2
+  become: yes
+  become_user: docker
+
+- file:
+    dest: /var/log/docker-pm2
+    state: directory
+    owner: docker
+  become: yes
+
+- pm2:
+    name: "{{ item.key }}"
+    config: "/home/docker/docker-compose/{{ item.value.json }}"
+    state: "{{ item.value.state }}"
+    executable: /home/docker/_pm2/node_modules/.bin/pm2
+  with_dict: "{{ docker_pm2 }}"
+  become: yes
+  become_user: docker

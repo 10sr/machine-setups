@@ -70,30 +70,7 @@
 #   with_dict: "{{ docker_compose_supervisord }}"
 #   become: yes
 
-- apt_key:
-    url: https://deb.nodesource.com/gpgkey/nodesource.gpg.key
-  become: yes
-
-- apt_repository:
-    repo: 'deb https://deb.nodesource.com/node_6.x {{ ansible_distribution_release }} main' 
-    update_cache: yes
-  become: yes
-
-- apt_repository:
-    repo: 'deb-src https://deb.nodesource.com/node_6.x {{ ansible_distribution_release }} main' 
-    update_cache: yes
-  become: yes
-
-- apt:
-    name: nodejs
-    state: latest
-  become: yes
-
-- npm:
-    name: pm2
-    path: /home/docker/_pm2
-  become: yes
-  become_user: docker
+- include: pm2.yml
 
 - template:
     src: docker_weekly_removal.sh.j2

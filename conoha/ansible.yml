@@ -101,6 +101,7 @@
         - scl.{{ domain_name }}
         - nc.{{ domain_name }}
         - b.{{ domain_name }}
+        - ca.{{ domain_name }}
         #- d.{{ domain_name }}
       letsencrypt_webroot: /var/nginx/main
       letsencrypt_key_dir: /etc/letsencrypt/live/{{ domain_name }}
@@ -144,7 +145,8 @@
             - "proxy_set_header Host $host"
             - "proxy_set_header X-Forwarded-Proto $scheme"
             - "proxy_set_header X-Real-IP $remote_addr"
-
+        - name: "ca.{{ domain_name }}"
+          port: 8080
     # - role: icecast2_ssl
     #   icecast2_ssl_server_name: ic."{{ domain_name }}"
     #   icecast2_ssl_upstream_name: icecast2
@@ -218,7 +220,7 @@
         10sr_bot:
           path: 10sr_bot/
           command: docker-compose up --force-recreate --build
-          autostart: "true"
+          autostart: "false"
         zabbix:
           path: zabbix/
           command: docker-compose up --force-recreate --build
@@ -238,7 +240,7 @@
         ghost:
           path: ghost/
           command: docker-compose up --force-recreate
-          autostart: "true"
+          autostart: "false"
         instiki:
           path: instiki/
           command: docker-compose up --force-recreate --build
@@ -246,11 +248,21 @@
         cadvisor:
           path: cadvisor/
           command: docker-compose up --force-recreate
-          autostart: "true"
+          autostart: "false"
         fluentd:
           path: fluentd/
           command: docker-compose up --force-recreate --build
           autostart: "true"
+      docker_pm2:
+        10sr_bot:
+          json: 10sr_bot/pm2.json
+          state: started
+        cadvisor:
+          json: cadvisor/pm2.json
+          state: started
+        ghost:
+          json: ghost/pm2.json
+          state: started
 
     - role: mastodon_nginx_proxy
       mastodon_server_name: st.{{ domain_name }}

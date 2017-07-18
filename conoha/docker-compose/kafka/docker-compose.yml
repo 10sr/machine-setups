@@ -2,7 +2,6 @@ version: '3'
 services:
   zoo1:
     image: zookeeper:3.4
-    container_name: zoo1
     restart: always
     ports:
       - 2181:2181
@@ -15,7 +14,6 @@ services:
 
   zoo2:
     image: zookeeper:3.4
-    container_name: zoo2
     restart: always
     ports:
       - 2182:2181
@@ -28,7 +26,6 @@ services:
 
   zoo3:
     image: zookeeper:3.4
-    container_name: zoo3
     restart: always
     ports:
       - 2183:2181

@@ -142,7 +142,7 @@ class _Pm2(object):
 
 def do_pm2(module, name, config, script, state, chdir, executable):
     pm2 = _Pm2(module, name, executable)
-    if state == "running" or state == "started":
+    if state == "started":
         if pm2.is_started():
             return {
                 "changed": False,
@@ -199,9 +199,10 @@ def main():
             script=dict(type='path'),
             executable=dict(type='path'),
             chdir=dict(type='path'),
-            state=dict(choices=['running', 'started',
+            state=dict(choices=['started',
                                 'stopped',
-                                'restarted', 'reloaded',
+                                'restarted',
+                                'reloaded',
                                 'absent', 'deleted']),
             name=dict(required=True)
         ),

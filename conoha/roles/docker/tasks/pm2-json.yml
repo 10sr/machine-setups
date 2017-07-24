@@ -1,6 +1,9 @@
 ---
-template:
-  src: pm2.json.j2
-  dest:
+- template:
+    src: pm2.json.j2
+    dest: "/home/docker/docker-compose/{{ values.json }}"
+    owner: docker
   vars:
     command: "{{ values.command }}"
+  become: yes
+  register: _pm2.json

@@ -25,7 +25,7 @@ class _Pm2(object):
         else:
             self.pm2_executable = pm2_executable
 
-        rc, out, err = self._run_pm2(["-v"])
+        rc, out, err = self._run_pm2(["--version"])
         if rc != 0:
             # raise _TaskFailedException(rc=rc, msg=err.strip())
             raise _TaskFailedException(rc=rc, msg=out.strip())

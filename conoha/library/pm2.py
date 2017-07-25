@@ -152,7 +152,7 @@ def do_pm2(module, name, config, script, state, chdir, executable):
         if target is None:
             raise _TaskFailedException(
                 rc=1,
-                msg="Neigher config nor script args is given for start command"
+                msg="Neigher CONFIG nor SCRIPT is given for start command"
             )
         result = pm2.start(target=target, chdir=chdir)
         return dict(result,

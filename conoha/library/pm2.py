@@ -223,6 +223,7 @@ def main():
 
     except _TaskFailedException as e:
         module.fail_json(
+            failed=True,
             rc=e.rc,
             msg=e.msg
         )

@@ -157,7 +157,7 @@ def do_pm2(module, name, config, script, state, chdir, executable):
         if module.check_mode:
             return {
                 "chagned": True,
-                "msg": "Changing application enablement"
+                "msg": "Started {}".format(name)
             }
         result = pm2.start(target=target, chdir=chdir)
         return dict(result,
@@ -172,7 +172,7 @@ def do_pm2(module, name, config, script, state, chdir, executable):
         if module.check_mode:
             return {
                 "chagned": True,
-                "msg": "Changing application enablement"
+                "msg": "Stopped {}".format(name)
             }
         result = pm2.stop()
         return dict(result,
@@ -183,7 +183,7 @@ def do_pm2(module, name, config, script, state, chdir, executable):
         if module.check_mode:
             return {
                 "chagned": True,
-                "msg": "Changing application enablement"
+                "msg": "Restarted {}".format(name)
             }
         result = pm2.restart(target=target, chdir=chdir)
         return dict(result,
@@ -193,7 +193,7 @@ def do_pm2(module, name, config, script, state, chdir, executable):
         if module.check_mode:
             return {
                 "chagned": True,
-                "msg": "Changing application enablement"
+                "msg": "Reloaded {}".format(name)
             }
         result = pm2.reload(config=config, chdir=chdir)
         return dict(result,
@@ -208,7 +208,7 @@ def do_pm2(module, name, config, script, state, chdir, executable):
         if module.check_mode:
             return {
                 "chagned": True,
-                "msg": "Changing application enablement"
+                "msg": "Deleted {}".format(name)
             }
         result = pm2.delete()
         return dict(result,

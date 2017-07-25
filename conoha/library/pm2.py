@@ -154,41 +154,66 @@ def do_pm2(module, name, config, script, state, chdir, executable):
                 rc=1,
                 msg="Neigher CONFIG nor SCRIPT is given for start command"
             )
+        if module.check_mode:
+            return {
+                "chagned": True,
+                "msg": "Changing application enablement"
+            }
         result = pm2.start(target=target, chdir=chdir)
         return dict(result,
                     changed=True,
                     msg="Started {}".format(name))
     elif state == "stopped":
-        if pm2.is_started():
-            result = pm2.stop()
-            return dict(result,
-                        changed=True,
-                        msg="Stopped {}".format(name))
-        return {
-            "changed": False,
-            "msg": "{} already stopped/absent".format(name)
-        }
+        if not pm2.is_started():
+            return {
+                "changed": False,
+                "msg": "{} already stopped/absent".format(name)
+            }
+        if module.check_mode:
+            return {
+                "chagned": True,
+                "msg": "Changing application enablement"
+            }
+        result = pm2.stop()
+        return dict(result,
+                    changed=True,
+                    msg="Stopped {}".format(name))
     elif state == "restarted":
         target = config or script
+        if module.check_mode:
+            return {
+                "chagned": True,
+                "msg": "Changing application enablement"
+            }
         result = pm2.restart(target=target, chdir=chdir)
         return dict(result,
                     changed=True,
                     msg="Restarted {}".format(name))
     elif state == "reloaded":
+        if module.check_mode:
+            return {
+                "chagned": True,
+                "msg": "Changing application enablement"
+            }
         result = pm2.reload(config=config, chdir=chdir)
         return dict(result,
                     changed=True,
                     msg="Reloaded {}".format(name))
     elif state == "absent" or state == "deleted":
-        if pm2.exists():
-            result = pm2.delete()
-            return dict(result,
-                        changed=True,
-                        msg="Deleted {}".format(name))
-        return {
-            "changed": False,
-            "msg": "{} not exists".format(name)
-        }
+        if not pm2.exists():
+            return {
+                "changed": False,
+                "msg": "{} not exists".format(name)
+            }
+        if module.check_mode:
+            return {
+                "chagned": True,
+                "msg": "Changing application enablement"
+            }
+        result = pm2.delete()
+        return dict(result,
+                    changed=True,
+                    msg="Deleted {}".format(name))
     raise _TaskFailedException(msg="Unknown state: {]".format(state), rc=1)
 
 

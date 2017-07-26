@@ -12,8 +12,8 @@ services:
       KAFKA_BROKER_ID: 0
       ZOOKEEPER_CONNECTION_STRING: "zoo1:2181"
       KAFKA_HEAP_OPTS: -Xmx256M -Xms256M
-      KFFKA_ADVERTISED_HOST_NAME: 127.0.0.1
-      KFFKA_ADVERTISED_PORT: 9092
+      KAFKA_ADVERTISED_HOST_NAME: 127.0.0.1
+      KAFKA_ADVERTISED_PORT: 9092
     user: root
     volumes:
       - "/var/lib/data/docker/kafka/kafka0/data:/data"

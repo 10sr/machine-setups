@@ -1,0 +1,11 @@
+
+/var/log/docker-pm2/*.stdout /var/log/docker-pm2/*.stderr {
+        size 10M
+        rotate 5
+        weekly
+        missingok
+        notifempty
+        compress
+        delaycompress
+        create 0644 docker users
+}

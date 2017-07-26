@@ -46,3 +46,8 @@
   with_dict: "{{ docker_pm2 }}"
   become: yes
   become_user: docker
+
+- template:
+    src: docker-pm2.logrotate.j2
+    dest: /etc/logrotate.d/docker-pm2
+  become: yes

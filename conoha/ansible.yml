@@ -262,6 +262,10 @@
           json: ghost/pm2.json
           state: started
           command: docker-compose up --force-recreate
+        kafka:
+          json: kafka/pm2.json
+          state: started
+          command: docker-compose up --force-recreate
 
     - role: mastodon_nginx_proxy
       mastodon_server_name: st.{{ domain_name }}

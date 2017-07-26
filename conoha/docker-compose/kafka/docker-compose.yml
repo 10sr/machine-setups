@@ -10,46 +10,12 @@ services:
       - 7203:7203
     environment:
       KAFKA_BROKER_ID: 0
-      ZOOKEEPER_CONNECTION_STRING: "zoo1:2181,zoo2:2181,zoo3:2181"
+      ZOOKEEPER_CONNECTION_STRING: "zoo1:2181"
       KAFKA_HEAP_OPTS: -Xmx256M -Xms256M
     user: root
     volumes:
       - "/var/lib/data/docker/kafka/kafka0/data:/data"
       - "/var/lib/data/docker/kafka/kafka0/logs:/logs"
-
-  kafka1:
-    image: ches/kafka
-    restart: always
-    ports:
-      # broker port
-      - 9093:9092
-      # JMX publishing
-      - 7204:7203
-    environment:
-      KAFKA_BROKER_ID: 1
-      ZOOKEEPER_CONNECTION_STRING: "zoo1:2181,zoo2:2181,zoo3:2181"
-      KAFKA_HEAP_OPTS: -Xmx256M -Xms256M
-    user: root
-    volumes:
-      - "/var/lib/data/docker/kafka/kafka1/data:/data"
-      - "/var/lib/data/docker/kafka/kafka1/logs:/logs"
-
-  kafka2:
-    image: ches/kafka
-    restart: always
-    ports:
-      # broker port
-      - 9094:9092
-      # JMX publishing
-      - 7205:7203
-    environment:
-      KAFKA_BROKER_ID: 2
-      ZOOKEEPER_CONNECTION_STRING: "zoo1:2181,zoo2:2181,zoo3:2181"
-      KAFKA_HEAP_OPTS: -Xmx256M -Xms256M
-    user: root
-    volumes:
-      - "/var/lib/data/docker/kafka/kafka2/data:/data"
-      - "/var/lib/data/docker/kafka/kafka2/logs:/logs"
 
   zoo1:
     image: zookeeper:3.4
@@ -58,31 +24,7 @@ services:
       - 2181:2181
     environment:
       ZOO_MY_ID: 1
-      ZOO_SERVERS: server.1=zoo1:2888:3888 server.2=zoo2:2888:3888 server.3=zoo3:2888:3888
+      ZOO_SERVERS: server.1=zoo1:2888:3888
     volumes:
       - "/var/lib/data/docker/kafka/zoo1/data:/data"
       - "/var/lib/data/docker/kafka/zoo1/datalog:/datalog"
-
-  zoo2:
-    image: zookeeper:3.4
-    restart: always
-    ports:
-      - 2182:2181
-    environment:
-      ZOO_MY_ID: 2
-      ZOO_SERVERS: server.1=zoo1:2888:3888 server.2=zoo2:2888:3888 server.3=zoo3:2888:3888
-    volumes:
-      - "/var/lib/data/docker/kafka/zoo2/data:/data"
-      - "/var/lib/data/docker/kafka/zoo2/datalog:/datalog"
-
-  zoo3:
-    image: zookeeper:3.4
-    restart: always
-    ports:
-      - 2183:2181
-    environment:
-      ZOO_MY_ID: 3
-      ZOO_SERVERS: server.1=zoo1:2888:3888 server.2=zoo2:2888:3888 server.3=zoo3:2888:3888
-    volumes:
-      - "/var/lib/data/docker/kafka/zoo3/data:/data"
-      - "/var/lib/data/docker/kafka/zoo3/datalog:/datalog"

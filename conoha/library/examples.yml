@@ -39,7 +39,7 @@
     script: /path/to/myapp/myapp.json
     executable: /path/to/myapp/node_modules/.bin/pm2
 
-# Specify pm2 executable path and working directory where running pm2 command
+# Also specify working directory where running pm2 command
 - pm2:
     name: myapp
     state: started

@@ -222,16 +222,17 @@ def do_pm2(module, name, config, script, state, chdir, executable):
 def main():
     module = AnsibleModule(
         argument_spec=dict(
-            config=dict(type='path'),
-            script=dict(type='path'),
-            executable=dict(type='path'),
-            chdir=dict(type='path'),
+            name=dict(required=True),
             state=dict(choices=['started',
                                 'stopped',
                                 'restarted',
                                 'reloaded',
-                                'absent', 'deleted']),
-            name=dict(required=True)
+                                'absent', 'deleted'],
+                       default='started'),
+            config=dict(type='path'),
+            script=dict(type='path'),
+            executable=dict(type='path'),
+            chdir=dict(type='path')
         ),
         supports_check_mode=True,
         mutually_exclusive=[['config', 'script']],
@@ -239,13 +240,13 @@ def main():
 
     try:
         result = do_pm2(
+            name=module.params['name'],
+            state=module.params['state'],
             module=module,
             config=module.params['config'],
             script=module.params['script'],
             executable=module.params['executable'],
-            chdir=module.params['chdir'],
-            state=module.params['state'],
-            name=module.params['name']
+            chdir=module.params['chdir']
         )
 
     except _TaskFailedException as e:

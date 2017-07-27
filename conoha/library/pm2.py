@@ -25,7 +25,7 @@ class _Pm2(object):
         else:
             self.pm2_executable = pm2_executable
 
-        rc, out, err = self._run_pm2(["--version"], check_rc=True)
+        self._run_pm2(["--version"], check_rc=True)
         return
 
     def start(self, target, chdir=None):

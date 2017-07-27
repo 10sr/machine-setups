@@ -1,0 +1,48 @@
+---
+# Example action to start myapp with process config file, if not running
+- pm2:
+    name: myapp
+    script: /path/to/myapp/myapp.json
+    state: started
+
+# Example action to start myapp.js, if not running
+- pm2:
+    name: myapp
+    script: /path/to/myapp/myapp.js
+    state: started
+
+# Example action to stop process named myapp, if running
+- pm2:
+    name: myapp
+    state: stopped
+
+# Example action to restart myapp, in all cases
+- pm2:
+    name: myapp
+    state: restarted
+
+# Example action to reload myapp config file, in all cases
+- pm2:
+    name: myapp
+    state: reloaded
+    config: /path/to/myapp/myapp.json
+
+# Example action to delete myapp, if exists
+- pm2:
+    name: myapp
+    state: absent
+
+# Specify pm2 executable path
+- pm2:
+    name: myapp
+    state: started
+    script: /path/to/myapp/myapp.json
+    executable: /path/to/myapp/node_modules/.bin/pm2
+
+# Specify pm2 executable path and working directory where running pm2 command
+- pm2:
+    name: myapp
+    state: started
+    script: /path/to/myapp/myapp.json
+    executable: /path/to/myapp/node_modules/.bin/pm2
+    chdir: /path/to/working/directory

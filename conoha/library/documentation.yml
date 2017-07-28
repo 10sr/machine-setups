@@ -19,23 +19,23 @@ options:
         default: started
         description:
             - C(started)/C(stopped)/C(absent)/C(deleted) are idempotent actions
-              that will not run commands unless necessary.  C(restarted) will
-              always bounce the service.  C(reloaded) will always reload.
-              B(At least one of state and enabled are required.) Note that
-              reloaded will start the service if it is not already started.
+              that will not run commands unless necessary.
+            - C(restarted) will always bounce the service.
+            - C(reloaded) will always reload (Note that C(reloaded) will start
+              the service if it is not already started).
     config:
         required: false
         default: null
         description:
             - Process configuration file, in JSON or YAML format.
-            - Either C(config) or C(script) is required when C(state) is started
-            - Required when C(state) is reloaded
+            - Either I(config) or I(script) is required when I(state=started)
+            - Required when I(state=reloaded)
     script:
         required: false
         default: null
         description:
             - Script file to start, usually JavaScript file.
-            - Either C(config) or C(script) is required when C(state) is started
+            - Either I(config) or I(script) is required when I(state=started)
     executable:
         required: false
         default: null
@@ -46,7 +46,8 @@ options:
         default: null
         description:
             - Change into this directory before running pm2 start command.
-            - By default use the directory where C(config) or C(script) exists.
+            - When I(state=started) and this option is omitted, use the
+              directory where I(config) or I(script) exists
 
 requirements: []
 notes: []

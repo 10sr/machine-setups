@@ -34,9 +34,9 @@ from ansible.module_utils.basic import AnsibleModule
 
 
 class _TaskFailedException(Exception):
-    def __init__(self, rc, msg):
-        self.rc = rc
+    def __init__(self, msg, **kargs):
         self.msg = msg
+        self.kargs = kargs
         return
 
 
@@ -100,7 +100,6 @@ class _Pm2(object):
     def reload(self, config=None, chdir=None):
         if config is None:
             raise _TaskFailedException(
-                rc=1,
                 msg="config args is given for reload command"
             )
         if chdir is None:
@@ -132,7 +131,6 @@ class _Pm2(object):
                     return app["pm2_env"]["status"]
         except KeyError as e:
             raise _TaskFailedException(
-                rc=1,
                 msg="Unexpected pm2 jlist output: {}".format(out)
             )
         return None
@@ -153,7 +151,6 @@ def do_pm2(module, name, config, script, state, chdir, executable):
         target = config or script
         if target is None:
             raise _TaskFailedException(
-                rc=1,
                 msg="Neigher CONFIG nor SCRIPT is given for start command"
             )
         if module.check_mode:
@@ -216,7 +213,7 @@ def do_pm2(module, name, config, script, state, chdir, executable):
         return dict(result,
                     changed=True,
                     msg="Deleted {}".format(name))
-    raise _TaskFailedException(msg="Unknown state: {]".format(state), rc=1)
+    raise _TaskFailedException(msg="Unknown state: {]".format(state))
 
 
 def main():
@@ -252,8 +249,8 @@ def main():
     except _TaskFailedException as e:
         module.fail_json(
             failed=True,
-            rc=e.rc,
-            msg=e.msg
+            msg=e.msg,
+            **e.kargs
         )
         return
 

@@ -21,8 +21,9 @@ options:
             - C(started)/C(stopped)/C(absent)/C(deleted) are idempotent actions
               that will not run commands unless necessary.
             - C(restarted) will always bounce the service.
-            - C(reloaded) will always reload (Note that C(reloaded) will start
-              the service if it is not already started).
+            - C(reloaded) will always reload (
+            - Note that C(restarted) and C(reloaded) will start the service if
+              it is not already started).
     config:
         required: false
         default: null

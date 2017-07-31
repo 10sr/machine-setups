@@ -2,7 +2,7 @@
   "apps" : [{
     "name": "{{ name }}",
     "script": "sh",
-    "args": ["-c", "{{ command }}"],
+    "args": ["-c", "exec {{ command }}"],
     "exec_interpreter": "none",
     "watch": false,
     "exec_mode": "fork",

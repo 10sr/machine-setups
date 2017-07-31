@@ -125,7 +125,7 @@ class _Pm2(object):
     def exists(self):
         return self.get_status() is not None
 
-    def get_status(self):
+    def get_info(self):
         rc, out, err = self._run_pm2(["jlist"], check_rc=True)
         try:
             apps = self.module.from_json(out)
@@ -134,10 +134,22 @@ class _Pm2(object):
         try:
             for app in apps:
                 if app["name"] == self.name:
-                    return app["pm2_env"]["status"]
-        except KeyError as e:
+                    return app
+        except KeyError:
             raise _TaskFailedException(
-                msg="Unexpected pm2 jlist output: {}".format(out)
+                msg="Unexpected pm2 jlist output format: {}".format(out)
+            )
+        return None
+
+    def get_status(self):
+        app = self.get_info()
+        if app is None:
+            return None
+        try:
+            return app["pm2_env"]["status"]
+        except KeyError:
+            raise _TaskFailedException(
+                msg="Unexpected pm2 jlist output: {}".format(app)
             )
         return None
 

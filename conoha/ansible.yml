@@ -229,10 +229,6 @@
           path: gnusocial/
           command: docker-compose up --force-recreate --build
           autostart: "false"
-        instiki:
-          path: instiki/
-          command: docker-compose up --force-recreate --build
-          autostart: "true"
         fluentd:
           path: fluentd/
           command: docker-compose up --force-recreate --build
@@ -250,6 +246,10 @@
           json: ghost/pm2.json
           state: started
           command: docker-compose up --force-recreate
+        instiki:
+          json: instiki/pm2.json
+          state: started
+          command: docker-compose up --force-recreate --build
         kafka:
           json: kafka/pm2.json
           state: started

@@ -142,14 +142,14 @@ class _Pm2(object):
         return None
 
     def get_status(self):
-        app = self.get_info()
-        if app is None:
+        info = self.get_info()
+        if info is None:
             return None
         try:
-            return app["pm2_env"]["status"]
+            return info["pm2_env"]["status"]
         except KeyError:
             raise _TaskFailedException(
-                msg="Unexpected pm2 jlist output: {}".format(app)
+                msg="Unexpected pm2 jlist output: {}".format(info)
             )
         return None
 

@@ -59,6 +59,7 @@ class _Pm2(object):
         rc, out, err = self._run_pm2(["start", target, "--name", self.name],
                                      check_rc=True, cwd=chdir)
         return {
+            "rc": rc,
             "stdout": out,
             "stderr": err
         }
@@ -67,6 +68,7 @@ class _Pm2(object):
         rc, out, err = self._run_pm2(["stop", self.name],
                                      check_rc=True)
         return {
+            "rc": rc,
             "stdout": out,
             "stderr": err
         }
@@ -75,6 +77,7 @@ class _Pm2(object):
         rc, out, err = self._run_pm2(["delete", self.name],
                                      check_rc=True)
         return {
+            "rc": rc,
             "stdout": out,
             "stderr": err
         }
@@ -84,6 +87,7 @@ class _Pm2(object):
             rc, out, err = self._run_pm2(["restart", self.name],
                                          check_rc=True)
             return {
+                "rc": rc,
                 "stdout": out,
                 "stderr": err
             }
@@ -93,6 +97,7 @@ class _Pm2(object):
         rc, out, err = self._run_pm2(["restart", target, "--name", self.name],
                                      check_rc=True, cwd=chdir)
         return {
+            "rc": rc,
             "stdout": out,
             "stderr": err
         }
@@ -108,6 +113,7 @@ class _Pm2(object):
         rc, out, err = self._run_pm2(["startOrReload", config, "--name", self.name],
                                      check_rc=True, cwd=chdir)
         return {
+            "rc": rc,
             "stdout": out,
             "stderr": err
         }
@@ -255,7 +261,6 @@ def main():
         return
 
     module.exit_json(
-        rc=0,
         failed=False,
         **result
     )

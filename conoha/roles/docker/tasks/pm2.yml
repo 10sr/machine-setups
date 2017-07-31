@@ -32,20 +32,11 @@
     owner: docker
   become: yes
 
-- include: pm2-json.yml
+- include: pm2-app.yml
   vars:
     name: "{{ item.key }}"
     values: "{{ item.value }}"
   with_dict: "{{ docker_pm2 }}"
-
-- pm2:
-    name: "{{ item.key }}"
-    config: "/home/docker/docker-compose/{{ item.value.json }}"
-    state: "{{ item.value.state }}"
-    executable: /home/docker/_pm2/node_modules/.bin/pm2
-  with_dict: "{{ docker_pm2 }}"
-  become: yes
-  become_user: docker
 
 - template:
     src: docker-pm2.logrotate.j2

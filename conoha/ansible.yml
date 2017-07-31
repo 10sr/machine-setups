@@ -213,10 +213,6 @@
           path: nextcloud/
           command: docker-compose up --force-recreate
           autostart: "false"
-        10sr_bot:
-          path: 10sr_bot/
-          command: docker-compose up --force-recreate --build
-          autostart: "false"
         zabbix:
           path: zabbix/
           command: docker-compose up --force-recreate --build
@@ -233,18 +229,10 @@
           path: gnusocial/
           command: docker-compose up --force-recreate --build
           autostart: "false"
-        ghost:
-          path: ghost/
-          command: docker-compose up --force-recreate
-          autostart: "false"
         instiki:
           path: instiki/
           command: docker-compose up --force-recreate --build
           autostart: "true"
-        cadvisor:
-          path: cadvisor/
-          command: docker-compose up --force-recreate
-          autostart: "false"
         fluentd:
           path: fluentd/
           command: docker-compose up --force-recreate --build

@@ -41,6 +41,10 @@ class _TaskFailedException(Exception):
 
 
 class _Pm2(object):
+    id = -1
+    pid = -1
+    status = None
+
     def __init__(self, module, name, pm2_executable):
         self.module = module
         self.name = name
@@ -50,6 +54,8 @@ class _Pm2(object):
             self.pm2_executable = pm2_executable
 
         self._run_pm2(["--version"], check_rc=True)
+        # TODO
+        # self._update_status()
         return
 
     def start(self, target, chdir=None):

@@ -3,14 +3,14 @@ pm2_state:
     description: Pm2 application status
     returned: success
     type: string
-    example: online
+    sample: online
 pm_id:
     description: Pm2 application id
     returned: success
     type: int
-    example: 3
+    sample: 3
 pid:
     description: Application process id
     returned: success
     type: int
-    example: 514
+    sample: 514

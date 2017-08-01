@@ -205,11 +205,6 @@ def do_pm2(module, name, config, script, state, chdir, executable):
                 changed=True,
                 msg="Started {}".format(name)
             )
-        result.update(
-            pm_id=pm2.pm_id,
-            pid=pm2.pid,
-            pm2_status=pm2.pm2_status
-        )
     elif state == "stopped":
         if not pm2.is_started():
             result.update(
@@ -228,11 +223,6 @@ def do_pm2(module, name, config, script, state, chdir, executable):
                 changed=True,
                 msg="Stopped {}".format(name)
             )
-        result.update(
-            pm_id=pm2.pm_id,
-            pid=pm2.pid,
-            pm2_status=pm2.pm2_status
-        )
     elif state == "restarted":
         target = config or script
         if module.check_mode:
@@ -247,11 +237,6 @@ def do_pm2(module, name, config, script, state, chdir, executable):
                 changed=True,
                 msg="Restarted {}".format(name)
             )
-        result.update(
-            pm_id=pm2.pm_id,
-            pid=pm2.pid,
-            pm2_status=pm2.pm2_status
-        )
     elif state == "reloaded":
         if module.check_mode:
             result.update(
@@ -265,11 +250,6 @@ def do_pm2(module, name, config, script, state, chdir, executable):
                 changed=True,
                 msg="Reloaded {}".format(name)
             )
-        result.update(
-            pm_id=pm2.pm_id,
-            pid=pm2.pid,
-            pm2_status=pm2.pm2_status
-        )
     elif state == "absent" or state == "deleted":
         if not pm2.exists():
             result.update(
@@ -290,6 +270,11 @@ def do_pm2(module, name, config, script, state, chdir, executable):
             )
     else:
         raise _TaskFailedException(msg="Unknown state: {]".format(state))
+    result.update(
+        pm_id=pm2.pm_id,
+        pid=pm2.pid,
+        pm2_status=pm2.pm2_status
+    )
     return result
 
 

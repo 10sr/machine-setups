@@ -41,9 +41,12 @@ class _TaskFailedException(Exception):
 
 
 class _Pm2(object):
-    id = -1
+    # application info
+    info_raw = None
+    pm_id = -1
     pid = -1
-    status = None
+    # None if app is not registered to pm2
+    pm2_status = None
 
     def __init__(self, module, name, pm2_executable):
         self.module = module
@@ -54,8 +57,7 @@ class _Pm2(object):
             self.pm2_executable = pm2_executable
 
         self._run_pm2(["--version"], check_rc=True)
-        # TODO
-        # self._update_status()
+        self._update_info()
         return
 
     def start(self, target, chdir=None):
@@ -64,6 +66,7 @@ class _Pm2(object):
             chdir = os.path.dirname(target)
         rc, out, err = self._run_pm2(["start", target, "--name", self.name],
                                      check_rc=True, cwd=chdir)
+        self._update_info()
         return {
             "rc": rc,
             "stdout": out,
@@ -73,6 +76,7 @@ class _Pm2(object):
     def stop(self):
         rc, out, err = self._run_pm2(["stop", self.name],
                                      check_rc=True)
+        self._update_info()
         return {
             "rc": rc,
             "stdout": out,
@@ -82,6 +86,7 @@ class _Pm2(object):
     def delete(self):
         rc, out, err = self._run_pm2(["delete", self.name],
                                      check_rc=True)
+        self._update_info()
         return {
             "rc": rc,
             "stdout": out,
@@ -92,6 +97,7 @@ class _Pm2(object):
         if target is None:
             rc, out, err = self._run_pm2(["restart", self.name],
                                          check_rc=True)
+            self._update_info()
             return {
                 "rc": rc,
                 "stdout": out,
@@ -102,6 +108,7 @@ class _Pm2(object):
             chdir = os.path.dirname(target)
         rc, out, err = self._run_pm2(["restart", target, "--name", self.name],
                                      check_rc=True, cwd=chdir)
+        self._update_info()
         return {
             "rc": rc,
             "stdout": out,
@@ -111,13 +118,15 @@ class _Pm2(object):
     def reload(self, config=None, chdir=None):
         if config is None:
             raise _TaskFailedException(
-                msg="config args is given for reload command"
+                msg="config args is not given for reload command"
             )
         if chdir is None:
             config = os.path.abspath(config)
             chdir = os.path.dirname(config)
-        rc, out, err = self._run_pm2(["startOrReload", config, "--name", self.name],
+        rc, out, err = self._run_pm2(["startOrReload", config,
+                                      "--name", self.name],
                                      check_rc=True, cwd=chdir)
+        self._update_info()
         return {
             "rc": rc,
             "stdout": out,
@@ -125,13 +134,21 @@ class _Pm2(object):
         }
 
     def is_started(self):
-        status = self.get_status()
-        return status is not None and status == "online"
+        return self.pm2_status == "online"
 
     def exists(self):
-        return self.get_status() is not None
+        return self.pm2_status is not None
 
-    def get_info(self):
+    def _run_pm2(self, args, check_rc=False, cwd=None):
+        return self.module.run_command(args=([self.pm2_executable] + args),
+                                       check_rc=check_rc, cwd=cwd)
+
+    def _update_info(self):
+        self.info_raw = None
+        self.pm_id = -1
+        self.pid = -1
+        self.pm2_status = None
+
         rc, out, err = self._run_pm2(["jlist"], check_rc=True)
         try:
             apps = self.module.from_json(out)
@@ -140,104 +157,140 @@ class _Pm2(object):
         try:
             for app in apps:
                 if app["name"] == self.name:
-                    return app
+                    self.info_raw = app
+                    break
         except KeyError:
             raise _TaskFailedException(
                 msg="Unexpected pm2 jlist output format: {}".format(out)
             )
-        return None
 
-    def get_status(self):
-        info = self.get_info()
-        if info is None:
-            return None
+        if self.info_raw is None:
+            # app is not registered
+            return
+
         try:
-            return info["pm2_env"]["status"]
+            self.pm_id = self.info_raw["pm_id"]
+            self.pid = self.info_raw["pid"]
+            self.pm2_status = self.info_raw["pm2_env"]["status"]
         except KeyError:
             raise _TaskFailedException(
-                msg="Unexpected pm2 jlist output: {}".format(info)
+                msg="Unexpected pm2 jlist output: {}".format(self.info_raw)
             )
-        return None
-
-    def _run_pm2(self, args, check_rc=False, cwd=None):
-        return self.module.run_command(args=([self.pm2_executable] + args),
-                                       check_rc=check_rc, cwd=cwd)
+        return
 
 
 def do_pm2(module, name, config, script, state, chdir, executable):
+    result = {}
     pm2 = _Pm2(module, name, executable)
     if state == "started":
-        if pm2.is_started():
-            return {
-                "changed": False,
-                "msg": "{} already started".format(name)
-            }
         target = config or script
         if target is None:
             raise _TaskFailedException(
                 msg="Neigher CONFIG nor SCRIPT is given for start command"
             )
-        if module.check_mode:
-            return {
-                "chagned": True,
-                "msg": "Started {}".format(name)
-            }
-        result = pm2.start(target=target, chdir=chdir)
-        return dict(result,
-                    changed=True,
-                    msg="Started {}".format(name))
+        if pm2.is_started():
+            result.update(
+                chagned=False,
+                msg="{} already started".format(name)
+            )
+        elif module.check_mode:
+            result.update(
+                changed=True,
+                msg="Started {}".format(name)
+            )
+        else:
+            cmd_result = pm2.start(target=target, chdir=chdir)
+            result.update(
+                cmd_result,
+                changed=True,
+                msg="Started {}".format(name)
+            )
+        result.update(
+            pm_id=pm2.pm_id,
+            pid=pm2.pid,
+            pm2_status=pm2.pm2_status
+        )
     elif state == "stopped":
         if not pm2.is_started():
-            return {
-                "changed": False,
-                "msg": "{} already stopped/absent".format(name)
-            }
-        if module.check_mode:
-            return {
-                "chagned": True,
-                "msg": "Stopped {}".format(name)
-            }
-        result = pm2.stop()
-        return dict(result,
-                    changed=True,
-                    msg="Stopped {}".format(name))
+            result.update(
+                changed=False,
+                msg="{} already stopped/absent".format(name)
+            )
+        elif module.check_mode:
+            result.update(
+                changed=True,
+                msg="Stopped {}".format(name)
+            )
+        else:
+            cmd_result = pm2.stop()
+            result.update(
+                cmd_result,
+                changed=True,
+                msg="Stopped {}".format(name)
+            )
+        result.update(
+            pm_id=pm2.pm_id,
+            pid=pm2.pid,
+            pm2_status=pm2.pm2_status
+        )
     elif state == "restarted":
         target = config or script
         if module.check_mode:
-            return {
-                "chagned": True,
-                "msg": "Restarted {}".format(name)
-            }
-        result = pm2.restart(target=target, chdir=chdir)
-        return dict(result,
-                    changed=True,
-                    msg="Restarted {}".format(name))
+            result.update(
+                chagned=True,
+                msg="Restarted {}".format(name)
+            )
+        else:
+            cmd_result = pm2.restart(target=target, chdir=chdir)
+            result.update(
+                cmd_result,
+                changed=True,
+                msg="Restarted {}".format(name)
+            )
+        result.update(
+            pm_id=pm2.pm_id,
+            pid=pm2.pid,
+            pm2_status=pm2.pm2_status
+        )
     elif state == "reloaded":
         if module.check_mode:
-            return {
-                "chagned": True,
-                "msg": "Reloaded {}".format(name)
-            }
-        result = pm2.reload(config=config, chdir=chdir)
-        return dict(result,
-                    changed=True,
-                    msg="Reloaded {}".format(name))
+            result.update(
+                chagned=True,
+                msg="Reloaded {}".format(name)
+            )
+        else:
+            cmd_result = pm2.reload(config=config, chdir=chdir)
+            result.update(
+                cmd_result,
+                changed=True,
+                msg="Reloaded {}".format(name)
+            )
+        result.update(
+            pm_id=pm2.pm_id,
+            pid=pm2.pid,
+            pm2_status=pm2.pm2_status
+        )
     elif state == "absent" or state == "deleted":
         if not pm2.exists():
-            return {
-                "changed": False,
-                "msg": "{} not exists".format(name)
-            }
-        if module.check_mode:
-            return {
-                "chagned": True,
-                "msg": "Deleted {}".format(name)
-            }
-        result = pm2.delete()
-        return dict(result,
-                    changed=True,
-                    msg="Deleted {}".format(name))
-    raise _TaskFailedException(msg="Unknown state: {]".format(state))
+            result.update(
+                changed=False,
+                msg="{} not exists".format(name)
+            )
+        elif module.check_mode:
+            result.update(
+                changed=True,
+                msg="Deleted {}".format(name)
+            )
+        else:
+            cmd_result = pm2.delete()
+            result.update(
+                cmd_result,
+                changed=True,
+                msg="Delted {}".format(name)
+            )
+    else:
+        raise _TaskFailedException(msg="Unknown state: {]".format(state))
+    return result
 
 
 def main():

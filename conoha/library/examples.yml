@@ -1,33 +1,33 @@
 ---
-# Example action to start myapp with process config file, if not running
+# Start myapp with process config file, if not running
 - pm2:
     name: myapp
-    script: /path/to/myapp/myapp.json
+    config: /path/to/myapp/myapp.json
     state: started
 
-# Example action to start myapp.js, if not running
+# Start myapp.js, if not running
 - pm2:
     name: myapp
     script: /path/to/myapp/myapp.js
     state: started
 
-# Example action to stop process named myapp, if running
+# Stop process named myapp, if running
 - pm2:
     name: myapp
     state: stopped
 
-# Example action to restart myapp, in all cases
+# Restart myapp, in all cases
 - pm2:
     name: myapp
     state: restarted
 
-# Example action to reload myapp config file, in all cases
+# Reload myapp config file, in all cases
 - pm2:
     name: myapp
     state: reloaded
     config: /path/to/myapp/myapp.json
 
-# Example action to delete myapp, if exists
+# Delete myapp, if exists
 - pm2:
     name: myapp
     state: absent

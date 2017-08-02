@@ -183,6 +183,7 @@ class _Pm2(object):
 def do_pm2(module, name, config, script, state, chdir, executable):
     result = {}
     pm2 = _Pm2(module, name, executable)
+
     if state == "started":
         target = config or script
         if target is None:
@@ -194,92 +195,77 @@ def do_pm2(module, name, config, script, state, chdir, executable):
                 chagned=False,
                 msg="{} already started".format(name)
             )
-        elif module.check_mode:
-            result.update(
-                changed=True,
-                msg="Started {}".format(name)
-            )
         else:
-            cmd_result = pm2.start(target=target, chdir=chdir)
+            if not module.check_mode:
+                cmd_result = pm2.start(target=target, chdir=chdir)
+                result.update(cmd_result)
             result.update(
-                cmd_result,
                 changed=True,
                 msg="Started {}".format(name)
             )
+
     elif state == "stopped":
         if not pm2.is_started():
             result.update(
                 changed=False,
                 msg="{} already stopped/absent".format(name)
             )
-        elif module.check_mode:
-            result.update(
-                changed=True,
-                msg="Stopped {}".format(name)
-            )
         else:
-            cmd_result = pm2.stop()
+            if not module.check_mode:
+                cmd_result = pm2.stop()
+                result.update(cmd_result)
             result.update(
-                cmd_result,
                 changed=True,
                 msg="Stopped {}".format(name)
             )
+
     elif state == "restarted":
         target = config or script
-        if module.check_mode:
-            result.update(
-                chagned=True,
-                msg="Restarted {}".format(name)
-            )
-        else:
+        if not module.check_mode:
             cmd_result = pm2.restart(target=target, chdir=chdir)
-            result.update(
-                cmd_result,
-                changed=True,
-                msg="Restarted {}".format(name)
-            )
+            result.update(cmd_result)
+        result.update(
+            chagned=True,
+            msg="Restarted {}".format(name)
+        )
+
     elif state == "reloaded":
         if config is None:
             raise _TaskFailedException(
                 msg="CONFIG is not given for reload command"
             )
-        if module.check_mode:
-            result.update(
-                chagned=True,
-                msg="Reloaded {}".format(name)
-            )
-        else:
+        if not module.check_mode:
             cmd_result = pm2.reload(config=config, chdir=chdir)
-            result.update(
-                cmd_result,
-                changed=True,
-                msg="Reloaded {}".format(name)
-            )
+            result.update(cmd_result)
+        result.update(
+            chagned=True,
+            msg="Reloaded {}".format(name)
+        )
+
     elif state == "absent" or state == "deleted":
         if not pm2.exists():
             result.update(
                 changed=False,
                 msg="{} not exists".format(name)
             )
-        elif module.check_mode:
+        else:
+            if not module.check_mode:
+                cmd_result = pm2.delete()
+                result.update(cmd_result)
             result.update(
                 changed=True,
                 msg="Deleted {}".format(name)
             )
-        else:
-            cmd_result = pm2.delete()
-            result.update(
-                cmd_result,
-                changed=True,
-                msg="Delted {}".format(name)
-            )
+
     else:
         raise _TaskFailedException(msg="Unknown state: {]".format(state))
+
     result.update(
         pm_id=pm2.pm_id,
         pid=pm2.pid,
         pm2_status=pm2.pm2_status
     )
+
     return result
 
 

@@ -290,9 +290,9 @@ def main():
 
     try:
         result = do_pm2(
+            module=module,
             name=module.params['name'],
             state=module.params['state'],
-            module=module,
             config=module.params['config'],
             script=module.params['script'],
             executable=module.params['executable'],

@@ -125,7 +125,8 @@ class _Pm2(object):
             config = os.path.abspath(config)
             chdir = os.path.dirname(config)
         rc, out, err = self._run_pm2(["startOrReload", config,
-                                      "--name", self.name],
+                                      "--name", self.name,
+                                      "--update-env"],
                                      check_rc=True, cwd=chdir)
         self._update_info()
         return {

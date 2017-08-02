@@ -229,10 +229,6 @@
           path: gnusocial/
           command: docker-compose up --force-recreate --build
           autostart: "false"
-        fluentd:
-          path: fluentd/
-          command: docker-compose up --force-recreate --build
-          autostart: "true"
       docker_pm2:
         10sr_bot:
           json: 10sr_bot/pm2.json
@@ -254,6 +250,10 @@
           json: kafka/pm2.json
           state: started
           command: docker-compose up --force-recreate
+        fluentd:
+          json: fluentd/pm2.json
+          state: started
+          command: docker-compose up --force-recreate --build
 
     - role: mastodon_nginx_proxy
       mastodon_server_name: st.{{ domain_name }}

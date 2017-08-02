@@ -12,7 +12,7 @@ services:
       KAFKA_BROKER_ID: 0
       ZOOKEEPER_CONNECTION_STRING: "zoo1:2181"
       KAFKA_HEAP_OPTS: -Xmx256M -Xms256M
-      KAFKA_ADVERTISED_HOST_NAME: 3ends.info
+      KAFKA_ADVERTISED_HOST_NAME: ""
       KAFKA_ADVERTISED_PORT: 9092
     user: root
     volumes:

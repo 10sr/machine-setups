@@ -1,2 +1,3 @@
 [*.conf]
+indent_size = 4
 emacs_mode = apache

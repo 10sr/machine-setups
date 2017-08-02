@@ -64,6 +64,7 @@ class _Pm2(object):
         return
 
     def start(self, target, chdir=None):
+        assert target is not None
         if chdir is None:
             target = os.path.abspath(target)
             chdir = os.path.dirname(target)
@@ -118,11 +119,8 @@ class _Pm2(object):
             "stderr": err
         }
 
-    def reload(self, config=None, chdir=None):
-        if config is None:
-            raise _TaskFailedException(
-                msg="config args is not given for reload command"
-            )
+    def reload(self, config, chdir=None):
+        assert config is not None
         if chdir is None:
             config = os.path.abspath(config)
             chdir = os.path.dirname(config)
@@ -241,6 +239,10 @@ def do_pm2(module, name, config, script, state, chdir, executable):
                 msg="Restarted {}".format(name)
             )
     elif state == "reloaded":
+        if config is None:
+            raise _TaskFailedException(
+                msg="CONFIG is not given for reload command"
+            )
         if module.check_mode:
             result.update(
                 chagned=True,

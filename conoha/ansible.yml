@@ -99,6 +99,7 @@
         - st.{{ domain_name }}
         - minio.st.{{ domain_name }}
         - scl.{{ domain_name }}
+        - nc.{{ domain_name }}
         - b.{{ domain_name }}
         - ca.{{ domain_name }}
         #- d.{{ domain_name }}
@@ -135,6 +136,8 @@
           additional_directives:
             - "proxy_set_header Host $host"
             - "proxy_set_header X-Real-IP $remote_addr"
+        - name: "nc.{{ domain_name }}"
+          port: 8888
         - name: "b.{{ domain_name }}"
           port: 2368
           additional_directives:
@@ -177,6 +180,7 @@
           MYSQL_ROOT_PASSWORD: "{{ nextcloud_mysql_root_password }}"
           MYSQL_DATABASE: nextcloud
           MYSQL_PASSWORD: "{{ nextcloud_mysql_password }}"
+          VIRTUAL_HOST: "{{ domain_name }}"
         10sr_bot:
           TWITTER_KEY: VmHRoeyCxmGisuGPCBADVfo6v
           TWITTER_SECRET: "{{ bot_twitter_secret }}"

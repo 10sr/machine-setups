@@ -320,6 +320,8 @@ def main():
         )
         return
 
+    assert "changed" in result
+    assert "msg" in result
     module.exit_json(
         failed=False,
         **result

@@ -1,46 +1,46 @@
 ---
-# Start myapp with process config file, if not running
-- pm2:
+- name: Start myapp with process config file, if not running
+  pm2:
     name: myapp
     config: /path/to/myapp/myapp.json
     state: started
 
-# Start myapp.js, if not running
-- pm2:
+- name: Start myapp.js, if not running
+  pm2:
     name: myapp
     script: /path/to/myapp/myapp.js
     state: started
 
-# Stop process named myapp, if running
-- pm2:
+- name: Stop process named myapp, if running
+  pm2:
     name: myapp
     state: stopped
 
-# Restart myapp, in all cases
-- pm2:
+- name: Restart myapp, in all cases
+  pm2:
     name: myapp
     state: restarted
 
-# Reload myapp config file, in all cases
-- pm2:
+- name: Reload myapp config file, in all cases
+  pm2:
     name: myapp
     state: reloaded
     config: /path/to/myapp/myapp.json
 
-# Delete myapp, if exists
-- pm2:
+- name: Delete myapp, if exists
+  pm2:
     name: myapp
     state: absent
 
-# Specify pm2 executable path
-- pm2:
+- name: Specify pm2 executable path
+  pm2:
     name: myapp
     state: started
     script: /path/to/myapp/myapp.json
     executable: /path/to/myapp/node_modules/.bin/pm2
 
-# Also specify working directory where running pm2 command
-- pm2:
+- name: Also specify working directory where running pm2 command
+  pm2:
     name: myapp
     state: started
     script: /path/to/myapp/myapp.json

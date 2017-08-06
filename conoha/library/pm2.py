@@ -246,7 +246,7 @@ def do_pm2(module, name, config, script, state, chdir, executable):
             cmd_result = pm2.reload(config=config, chdir=chdir)
             result.update(cmd_result)
         result.update(
-            chagned=True,
+            changed=True,
             msg="Reloaded {}".format(name)
         )
 

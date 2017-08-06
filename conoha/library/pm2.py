@@ -185,6 +185,13 @@ def do_pm2(module, name, config, script, state, chdir, executable):
     result = {}
     pm2 = _Pm2(module, name, executable)
 
+    result["diff"] = {}
+    result["diff"]["before"] = {
+        "pm_id": pm2.pm_id,
+        "pid": pm2.pid,
+        "pm2_status": pm2.pm2_status
+    }
+
     if state == "started":
         target = config or script
         if target is None:
@@ -266,6 +273,11 @@ def do_pm2(module, name, config, script, state, chdir, executable):
         pid=pm2.pid,
         pm2_status=pm2.pm2_status
     )
+    result["diff"]["after"] = {
+        "pm_id": pm2.pm_id,
+        "pid": pm2.pid,
+        "pm2_status": pm2.pm2_status
+    }
 
     return result
 

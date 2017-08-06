@@ -1,46 +1,46 @@
 ---
 module: pm2
 author:
-    - "10sr (@10sr)"
+  - "10sr (@10sr)"
 version_added: "2.4"
 short_description: Manage processes via pm2
 description:
-    - Manage the state of processes via pm2 process manager.
-    - Start/Stop/Restart/Reload/Delete applications.
+  - Manage the state of processes via pm2 process manager.
+  - Start/Stop/Restart/Reload/Delete applications.
 
 options:
-    name:
-        required: true
-        description:
-            - Name of the application.
-    state:
-        choices: [started, stopped, restarted, reloaded, absent, deleted]
-        default: started
-        description:
-            - C(started)/C(stopped)/C(absent)/C(deleted) are idempotent actions
-              that will not run commands unless necessary.
-            - C(restarted) will always restart the process.
-            - C(reloaded) will always reload.
-            - Note that C(restarted) and C(reloaded) will start the service if
-              it is not already started.
-    config:
-        default: null
-        description:
-            - Process configuration file, in JSON or YAML format.
-            - Either I(config) or I(script) is required when I(state=started).
-            - Required when I(state=reloaded).
-    script:
-        default: null
-        description:
-            - Script file to start, usually JavaScript file.
-            - Either I(config) or I(script) is required when I(state=started).
-    executable:
-        default: null
-        description:
-            - Path to pm2 executable.
-    chdir:
-        default: null
-        description:
-            - Change into this directory before running pm2 start command.
-            - When I(state=started) and this option is omitted, use the
-              directory where I(config) or I(script) exists.
+  name:
+    required: true
+    description:
+      - Name of the application.
+  state:
+    choices: [started, stopped, restarted, reloaded, absent, deleted]
+    default: started
+    description:
+      - C(started)/C(stopped)/C(absent)/C(deleted) are idempotent actions
+        that will not run commands unless necessary.
+      - C(restarted) will always restart the process.
+      - C(reloaded) will always reload.
+      - Note that C(restarted) and C(reloaded) will start the service if
+        it is not already started.
+  config:
+    default: null
+    description:
+      - Process configuration file, in JSON or YAML format.
+      - Either I(config) or I(script) is required when I(state=started).
+      - Required when I(state=reloaded).
+  script:
+    default: null
+    description:
+      - Script file to start, usually JavaScript file.
+      - Either I(config) or I(script) is required when I(state=started).
+  executable:
+    default: null
+    description:
+      - Path to pm2 executable.
+  chdir:
+    default: null
+    description:
+      - Change into this directory before running pm2 start command.
+      - When I(state=started) and this option is omitted, use the
+        directory where I(config) or I(script) exists.

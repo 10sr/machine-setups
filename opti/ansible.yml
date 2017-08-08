@@ -1,0 +1,6 @@
+---
+- hosts: default
+  vars: {}
+  vars_files:
+    - ./vault/ansible_become_pass.yml
+  roles: []

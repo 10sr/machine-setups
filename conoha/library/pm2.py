@@ -19,21 +19,138 @@
 # along with Ansible.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-ANSIBLE_METADATA = {'status': ['preview'],
-                    'supported_by': 'community',
-                    'metadata_version': '1.0'}
+from __future__ import absolute_import, division, print_function
+
+ANSIBLE_METADATA = {
+    'status': ['preview'],
+    'supported_by': 'community',
+    'metadata_version': '1.0'
+}
 
 DOCUMENTATION = '''
+---
+module: pm2
+author:
+  - "10sr (@10sr)"
+version_added: "2.4"
+short_description: Manage processes via pm2
+description:
+  - Manage the state of processes via pm2 process manager.
+  - Start/Stop/Restart/Reload/Delete applications.
+
+options:
+  name:
+    required: true
+    description:
+      - Name of the application.
+  state:
+    choices: [started, stopped, restarted, reloaded, absent, deleted]
+    default: started
+    description:
+      - C(started)/C(stopped)/C(absent)/C(deleted) are idempotent actions
+        that will not run commands unless necessary.
+      - C(restarted) will always restart the process.
+      - C(reloaded) will always reload.
+      - Note that C(restarted) and C(reloaded) will start the service if
+        it is not already started.
+  config:
+    default: null
+    description:
+      - Process configuration file, in JSON or YAML format.
+      - Either I(config) or I(script) is required when I(state=started).
+      - Required when I(state=reloaded).
+  script:
+    default: null
+    description:
+      - Script file to start, usually JavaScript file.
+      - Either I(config) or I(script) is required when I(state=started).
+  executable:
+    default: null
+    description:
+      - Path to pm2 executable.
+  chdir:
+    default: null
+    description:
+      - Change into this directory before running pm2 start command.
+      - When I(state=started) and this option is omitted, use the
+        directory where I(config) or I(script) exists.
 '''
 
 EXAMPLES = '''
+---
+- name: Start myapp with process config file, if not running
+  pm2:
+    name: myapp
+    config: /path/to/myapp/myapp.json
+    state: started
+
+- name: Start myapp.js, if not running
+  pm2:
+    name: myapp
+    script: /path/to/myapp/myapp.js
+    state: started
+
+- name: Stop process named myapp, if running
+  pm2:
+    name: myapp
+    state: stopped
+
+- name: Restart myapp, in all cases
+  pm2:
+    name: myapp
+    state: restarted
+
+- name: Reload myapp config file, in all cases
+  pm2:
+    name: myapp
+    state: reloaded
+    config: /path/to/myapp/myapp.json
+
+- name: Delete myapp, if exists
+  pm2:
+    name: myapp
+    state: absent
+
+- name: Specify pm2 executable path
+  pm2:
+    name: myapp
+    state: started
+    config: /path/to/myapp/myapp.json
+    executable: /path/to/myapp/node_modules/.bin/pm2
+
+- name: Also specify working directory where running pm2 command
+  pm2:
+    name: myapp
+    state: started
+    config: /path/to/myapp/myapp.json
+    executable: /path/to/myapp/node_modules/.bin/pm2
+    chdir: /path/to/working/directory
 '''
 
 RETURN = '''
+---
+pm2_state:
+  description: Pm2 application status
+  returned: success
+  type: string
+  sample: online
+pm_id:
+  description: Pm2 application id
+  returned: success
+  type: int
+  sample: 3
+pid:
+  description: Application process id
+  returned: success
+  type: int
+  sample: 514
 '''
+
 
 import os
 from ansible.module_utils.basic import AnsibleModule
+
+__metaclass__ = type
 
 
 class _TaskFailedException(Exception):
@@ -233,7 +350,7 @@ def do_pm2(module, name, config, script, state, chdir, executable):
             cmd_result = pm2.restart(target=target, chdir=chdir)
             result.update(cmd_result)
         result.update(
-            chagned=True,
+            changed=True,
             msg="Restarted {}".format(name)
         )
 
@@ -246,7 +363,7 @@ def do_pm2(module, name, config, script, state, chdir, executable):
             cmd_result = pm2.reload(config=config, chdir=chdir)
             result.update(cmd_result)
         result.update(
-            changed=True,
+            chagned=True,
             msg="Reloaded {}".format(name)
         )
 

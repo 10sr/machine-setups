@@ -240,7 +240,7 @@
           command: docker-compose up --build
         cadvisor:
           json: cadvisor/pm2.json
-          state: started
+          state: stopped
           command: docker-compose up --force-recreate
         ghost:
           json: ghost/pm2.json

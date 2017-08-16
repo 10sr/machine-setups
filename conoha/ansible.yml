@@ -51,12 +51,12 @@
 
     #- apt-upgrade
 
-    - role: ddns
-      ddns_domain_name: 10sr.f5.si
-      ddns_name: 10sr
-      # Somehow recursive reference cannot be used in template
-      # So append underscore
-      ddns_f5_si_password_: "{{ ddns_f5_si_password }}"
+    # - role: ddns
+    #   ddns_domain_name: 10sr.f5.si
+    #   ddns_name: 10sr
+    #   # Somehow recursive reference cannot be used in template
+    #   # So append underscore
+    #   ddns_f5_si_password_: "{{ ddns_f5_si_password }}"
 
     # TODO: Remove icecast2 specific configs
     - role: nginx

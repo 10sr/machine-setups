@@ -3,4 +3,9 @@
   vars: {}
   vars_files:
     - ./vault/ansible_become_pass.yml
-  roles: []
+    - ./vault/ddns_f5_si_password.yml
+  roles:
+    - role: ddns_f5_si
+      ddns_domain_name: 10sr.f5.si
+      ddns_f5_si_name: 10sr
+      ddns_f5_si_password_: "{{ ddns_f5_si_password }}"

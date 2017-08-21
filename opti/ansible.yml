@@ -9,3 +9,12 @@
       ddns_domain_name: 10sr.f5.si
       ddns_f5_si_name: 10sr
       ddns_f5_si_password_: "{{ ddns_f5_si_password }}"
+
+    - role: mail
+
+  tasks:
+    - name: Install some utilities
+      yum: "{{ item }}"
+      with_items:
+        - yum-utils
+      become: yes

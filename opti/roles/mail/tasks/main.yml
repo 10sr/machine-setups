@@ -1,0 +1,9 @@
+---
+- yum:
+    name: mailx
+  become: yes
+
+# I have no idea if this is requried, but install anyway
+- yum:
+    name: postfix
+  become: yes

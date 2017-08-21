@@ -4,6 +4,12 @@ opti
 Ansible playbook for my opti machine.
 
 
+### Ports
+
+- HTTP: `5520`
+- SSH: `9622`
+
+
 Pre configurations
 ------------------
 

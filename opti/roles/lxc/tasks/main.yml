@@ -1,0 +1,21 @@
+---
+- yum:
+    name: "{{ item }}"
+  with_items: [lxc, lxc-extra]
+  become: yes
+
+- yum:
+    # required for lxc-python2 installation
+    name: "{{ item }}"
+  with_items: [python-devel, lxc-devel]
+  become: yes
+
+- pip:
+    name: lxc-python2
+    executable: /usr/bin/pip2
+  become: yes
+
+- lxc_container:
+    name: "{{ item }}"
+  with_items: "{{ lxc_containers }}"
+  become: yes

@@ -4,6 +4,15 @@
   vars_files:
     - ./vault/ansible_become_pass.yml
     - ./vault/ddns_f5_si_password.yml
+
+  pre_tasks:
+    - yum:
+        name: "@Development Tools"
+      become: yes
+    - yum:
+        name: python2-pip
+      become: yes
+
   roles:
     - role: ddns_f5_si
       ddns_domain_name: 10sr.f5.si
@@ -12,9 +21,13 @@
 
     - role: mail
 
+    - role: lxc
+      lxc_containers: [cm01, dn01, dn02, dn03, nn01, nn02, nn03]
+
   tasks:
     - name: Install some utilities
-      yum: "{{ item }}"
+      yum:
+        name: "{{ item }}"
       with_items:
         - yum-utils
       become: yes

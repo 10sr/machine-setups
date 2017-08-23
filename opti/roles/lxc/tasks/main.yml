@@ -16,6 +16,6 @@
   become: yes
 
 - lxc_container:
-    name: "{{ item }}"
-  with_items: "{{ lxc_containers }}"
+    name: "{{ item.key }}"
+  with_dict: "{{ lxc_containers }}"
   become: yes

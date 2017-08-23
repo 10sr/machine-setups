@@ -22,7 +22,14 @@
     - role: mail
 
     - role: lxc
-      lxc_containers: [cm01, dn01, dn02, dn03, nn01, nn02, nn03]
+      lxc_containers:
+        cm01: {}
+        dn01: {}
+        dn02: {}
+        dn03: {}
+        nn01: {}
+        nn02: {}
+        nn03: {}
 
   tasks:
     - name: Install some utilities

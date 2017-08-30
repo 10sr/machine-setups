@@ -1,4 +1,6 @@
 ---
+- include: bridge.yml
+
 - yum:
     name: "{{ item }}"
   with_items: [lxc, lxc-extra]

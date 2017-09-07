@@ -16,3 +16,16 @@ services:
       - "/var/log:/rootfs/var_log:ro"
     environment:
       FLUENTD_CONF: fluentd.conf
+    extra_hosts:
+      - "kafka0:192.168.101.100"
+    networks:
+      fluentd_net:
+        ipv4_address: 192.168.102.100
+
+networks:
+  fluentd_net:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 192.168.102.0/24

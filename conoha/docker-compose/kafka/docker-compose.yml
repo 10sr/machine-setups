@@ -12,12 +12,15 @@ services:
       KAFKA_BROKER_ID: 0
       ZOOKEEPER_CONNECTION_STRING: "zoo1:2181"
       KAFKA_HEAP_OPTS: -Xmx256M -Xms256M
-      KAFKA_ADVERTISED_HOST_NAME: ""
+      KAFKA_ADVERTISED_HOST_NAME: "3ends.info"
       KAFKA_ADVERTISED_PORT: 9092
     user: root
     volumes:
       - "/var/lib/data/docker/kafka/kafka0/data:/data"
       - "/var/lib/data/docker/kafka/kafka0/logs:/logs"
+    networks:
+      kafka_net:
+        ipv4_address: 192.168.101.100
 
   zoo1:
     image: zookeeper:3.4
@@ -30,3 +33,15 @@ services:
     volumes:
       - "/var/lib/data/docker/kafka/zoo1/data:/data"
       - "/var/lib/data/docker/kafka/zoo1/datalog:/datalog"
+    networks:
+      kafka_net:
+        ipv4_address: 192.168.101.150
+
+networks:
+  kafka_net:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 192.168.101.0/24
+

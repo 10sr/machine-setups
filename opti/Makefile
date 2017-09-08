@@ -3,10 +3,10 @@ default:
 play: play-opti play-lxc
 
 play-opti:
-	ansible-playbook -vv opti.yml --diff
+	ansible-playbook -vv --diff opti.yml
 
 play-lxc:
-	rsync -av --delete ./ opti:./.machine-setups-opti/
+	ansible -vv --diff opti -m synchronize -a "src=./ dest=./.machine-setups-opti/ delete=yes"
 	# Any way other than to use sudo ?
 	ssh -t opti "cd .machine-setups-opti/ && sudo ansible-playbook -vv lxc.yml --diff"
 

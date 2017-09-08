@@ -1,7 +1,10 @@
 default:
 
-play:
+play: play-opti
+
+play-opti:
 	ansible-playbook -vv ansible.yml --diff
+
 
 facts:
 	ansible -m setup conoha

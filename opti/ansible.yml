@@ -6,6 +6,7 @@
     - ./vault/ddns_f5_si_password.yml
 
   pre_tasks:
+    # すべての role の前提として見込まれるもの
     - yum:
         name: "@Development Tools"
       become: yes
@@ -52,3 +53,9 @@
       with_items:
         - yum-utils
       become: yes
+
+    - name: Transfer repository to remote
+      synchronize:
+        src: ./
+        dest: ./.machine-setups-opti/
+        delete: yes

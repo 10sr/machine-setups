@@ -1,5 +1,5 @@
 ---
-- hosts: default
+- hosts: opti
   vars: {}
   vars_files:
     - ./vault/ansible_become_pass.yml
@@ -59,3 +59,9 @@
         src: ./
         dest: ./.machine-setups-opti/
         delete: yes
+
+    - name: Install ansible
+      pip:
+        name: ansible
+        executable: /usr/bin/pip2
+      become: yes

@@ -1,9 +1,12 @@
 default:
 
-play: play-opti
+play: play-opti play-lxc
 
 play-opti:
-	ansible-playbook -vv ansible.yml --diff
+	ansible-playbook -vv opti.yml --diff
+
+play-lxc:
+	ssh opti "cd .machine-setups-opti/ && ansible-playbook --help"
 
 
 facts:

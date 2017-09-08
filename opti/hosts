@@ -1,2 +1,5 @@
 [default]
 opti
+
+[lxc]
+cm01 ansible_connection=lxc

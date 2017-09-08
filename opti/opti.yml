@@ -54,12 +54,6 @@
         - yum-utils
       become: yes
 
-    - name: Transfer repository to remote
-      synchronize:
-        src: ./
-        dest: ./.machine-setups-opti/
-        delete: yes
-
     - name: Install ansible
       pip:
         name: ansible

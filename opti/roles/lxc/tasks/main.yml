@@ -23,7 +23,7 @@
     backup: yes
   vars:
     name: "{{ item.key }}"
-    configs: "{{ item.value }}"
+    configs: "{{ item.value.configs }}"
   with_dict: "{{ lxc_containers }}"
   become: yes
 

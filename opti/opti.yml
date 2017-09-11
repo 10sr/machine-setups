@@ -1,8 +1,9 @@
 ---
 - hosts: opti
-  vars: {}
+  vars:
+    ansible_become_pass: "{{ opti_become_pass }}"
   vars_files:
-    - ./vault/ansible_become_pass.yml
+    - ./vault/opti_become_pass.yml
     - ./vault/ddns_f5_si_password.yml
     - ./vault/lxc_ssh_secret_key.yml
 

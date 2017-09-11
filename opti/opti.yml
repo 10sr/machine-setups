@@ -4,6 +4,7 @@
   vars_files:
     - ./vault/ansible_become_pass.yml
     - ./vault/ddns_f5_si_password.yml
+    - ./vault/lxc_ssh_secret_key.yml
 
   pre_tasks:
     # すべての role の前提として見込まれるもの
@@ -59,3 +60,10 @@
         name: ansible
         executable: /usr/bin/pip2
       become: yes
+
+    - name: Put ssh secret key
+      copy:
+        content: "{{ lxc_ssh_secret_key }}"
+        dest: ./.ssh/lxc
+        mode: "0600"
+      no_log: yes

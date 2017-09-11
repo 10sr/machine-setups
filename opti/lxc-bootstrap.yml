@@ -1,6 +1,8 @@
 ---
 - hosts: lxc-bootstrap
-  vars: {}
+  vars:
+    lxc_ssh_public_key: ssh-dss AAAAB3NzaC1kc3MAAACBALp+Ahr1iIKl/Hc2VlmonbhiEAcqT4dAAliKQ/4eB+GZfVaUV9xvdEpvcJKfdwiPb2UCbq5mhsK1amEav0Ha5tGBjc1+XAoLgV+hgwX++SCxOYx/RsAlTGfp0xMjz5JFyNNzJbUulnkWp0oiCA/I7SpTrY6Em1SATYZl5a69LSPNAAAAFQDboAAPW2469HePZl2/exo+ozrHLQAAAIAA00LSNffvcmLuefM9gg3j/ndabhu2+7hYqcOzxXuWhp+wxNPuwFKpzF+IQjyG1WUPPhHN1LMwybSjy9iD8A2hlMAhHSSYjd7HM/j3orI6I8ZEex4F1HgUI/jw9dFznrdTuKa/+PCzoy2qhgBnE3Fqa+gRzKQOJD6ZbQhmyfK39AAAAIAh4WvNC77//Z1QydqDMoT/zAu2DQRlIw2z+ynvA+kWY7QDRY5cQBDJTtiaTtUr2HD1a4B7K/kOCZ45vCpGMtS3Yr6sSO12DSelNgehI4C+6tyZLbGoRapwDsUln43CR4AQAvzsMzyoSy3bXeI7uWy81bJISDkQxQBIaTM22bcF4A== lxc_ssh_public_key
+
 
   pre_tasks:
     # すべての role の前提として見込まれるもの
@@ -14,3 +16,25 @@
 
   roles:
     - role: sshd
+
+  tasks:
+    - name: Create cdh user
+      user:
+        name: cdh
+        groups: wheel
+        append: yes
+
+    - name: Create .ssh dir
+      file:
+        dest: /home/cdh/.ssh
+        state: directory
+        owner: cdh
+        mode: "0700"
+    
+    - name: Put ssh private key
+      lineinfile:
+        line: "{{ lxc_ssh_public_key }}"
+        dest: /home/cdh/.ssh/authorized_keys
+        create: yes
+        owner: cdh
+        mode: "0600"

@@ -31,3 +31,5 @@
     name: "{{ item.key }}"
   with_dict: "{{ lxc_containers }}"
   become: yes
+
+- include: hosts.yml

@@ -9,3 +9,12 @@ nn03 ansible_connection=lxc
 dn01 ansible_connection=lxc
 dn02 ansible_connection=lxc
 dn03 ansible_connection=lxc
+
+[lxc]
+cm01
+nn01
+nn02
+nn03
+dn01
+dn02
+dn03

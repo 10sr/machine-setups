@@ -1,7 +1,0 @@
----
-- hosts: lxc
-  vars: {}
-
-  tasks:
-    - debug:
-        msg: hoge

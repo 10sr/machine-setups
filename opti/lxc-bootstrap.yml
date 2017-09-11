@@ -1,0 +1,20 @@
+---
+- hosts: lxc
+  vars: {}
+
+  pre_tasks:
+    # すべての role の前提として見込まれるもの
+    - yum:
+        name: sudo
+    - yum:
+        name: epel-release
+    - yum:
+        name: python2-pip
+        update_cache: yes
+
+  tasks:
+    - debug:
+        msg: hoge
+
+  roles:
+    - role: sshd

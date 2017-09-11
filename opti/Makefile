@@ -5,10 +5,12 @@ play: play-opti play-lxc
 play-opti:
 	ansible-playbook -vv --diff opti.yml
 
-play-lxc:
-	ansible -vv --diff opti -m synchronize -a "src=./ dest=./.machine-setups-opti/ delete=yes"
+play-lxc-bootstrap: transfer-repository
 	# Any way other than to use sudo ?
-	ssh -t opti "cd .machine-setups-opti/ && sudo ansible-playbook -vv lxc.yml --diff"
+	ssh -t opti "cd .machine-setups-opti/ && sudo ansible-playbook -vv lxc-bootstrap.yml --diff"
+
+transfer-repository:
+	ansible -vv --diff opti -m synchronize -a "src=./ dest=./.machine-setups-opti/ delete=yes"
 
 
 facts:

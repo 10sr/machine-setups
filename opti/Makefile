@@ -16,10 +16,8 @@ transfer-repository:
 facts:
 	ansible -m setup conoha
 
-
-encrypt_all:
+encrypt-all:
 	-find vault/ -type f | xargs -n 1 ansible-vault encrypt
 
-
-decrypt_all:
+decrypt-all:
 	-find vault/ -type f | xargs -n 1 ansible-vault decrypt

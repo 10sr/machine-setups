@@ -57,7 +57,7 @@
             lxc.network.hwaddr: fe:80:ac:ce:2d:9a
             lxc.network.ipv4: 172.16.1.42/24
         nn03:
-          ip_address: 172.16.1.430
+          ip_address: 172.16.1.43
           configs:
             lxc.network.hwaddr: fe:b4:30:cd:75:98
             lxc.network.ipv4: 172.16.1.43/24

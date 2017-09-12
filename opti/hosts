@@ -1,15 +1,6 @@
 [default]
 opti
 
-[lxc-bootstrap]
-cm01 ansible_connection=lxc
-nn01 ansible_connection=lxc
-nn02 ansible_connection=lxc
-nn03 ansible_connection=lxc
-dn01 ansible_connection=lxc
-dn02 ansible_connection=lxc
-dn03 ansible_connection=lxc
-
 [lxc]
 cm01
 nn01

@@ -1,11 +1,7 @@
 [default]
 opti
 
+[local]
+localhost
+
 [lxc]
-cm01
-nn01
-nn02
-nn03
-dn01
-dn02
-dn03

@@ -1,4 +1,16 @@
 ---
+- hosts: local
+  vars:
+    ansible_connection: local
+  vars_files:
+    - vars.yml
+  tasks:
+    - add_host:
+        name: "{{ item.key }}"
+        groups: lxc
+      with_dict: "{{ containers }}"
+
+
 - hosts: lxc
   vars:
     ansible_become_pass: "{{ lxc_become_pass }}"

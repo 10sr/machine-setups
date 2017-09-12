@@ -3,6 +3,7 @@
   vars:
     ansible_become_pass: "{{ opti_become_pass }}"
   vars_files:
+    - vars.yml
     - ./vault/opti_become_pass.yml
     - ./vault/ddns_f5_si_password.yml
     - ./vault/lxc_ssh_secret_key.yml
@@ -25,42 +26,7 @@
     - role: mail
 
     - role: lxc
-      lxc_containers:
-        cm01:
-          ip_address: 172.16.1.20
-          configs:
-            lxc.network.hwaddr: fe:db:c9:89:ff:e1
-            lxc.network.ipv4: 172.16.1.20/24
-        dn01:
-          ip_address: 172.16.1.31
-          configs:
-            lxc.network.hwaddr: fe:61:bf:4d:3d:d7
-            lxc.network.ipv4: 172.16.1.31/24
-        dn02:
-          ip_address: 172.16.1.32
-          configs:
-            lxc.network.hwaddr: fe:8f:14:73:35:e1
-            lxc.network.ipv4: 172.16.1.32/24
-        dn03:
-          ip_address: 172.16.1.33
-          configs:
-            lxc.network.hwaddr: fe:e0:5e:81:04:d5
-            lxc.network.ipv4: 172.16.1.33/24
-        nn01:
-          ip_address: 172.16.1.41
-          configs:
-            lxc.network.hwaddr: fe:bb:d2:70:f5:2f
-            lxc.network.ipv4: 172.16.1.41/24
-        nn02:
-          ip_address: 172.16.1.42
-          configs:
-            lxc.network.hwaddr: fe:80:ac:ce:2d:9a
-            lxc.network.ipv4: 172.16.1.42/24
-        nn03:
-          ip_address: 172.16.1.43
-          configs:
-            lxc.network.hwaddr: fe:b4:30:cd:75:98
-            lxc.network.ipv4: 172.16.1.43/24
+      lxc_containers: "{{ containers }}"
 
   tasks:
     - name: Install some utilities

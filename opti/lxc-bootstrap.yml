@@ -21,17 +21,16 @@
     - ./vault/lxc_become_pass.yml
 
 
-  pre_tasks: []
+  pre_tasks:
     # すべての role の前提として見込まれるもの
+    - name: Install sudo
+      yum:
+        name: sudo
 
   roles:
     - role: sshd
 
   tasks:
-    - name: Install sudo
-      yum:
-        name: sudo
-
     - name: Create cdh user
       user:
         name: cdh

@@ -5,6 +5,11 @@ containers:
     configs:
       lxc.network.hwaddr: fe:db:c9:89:ff:e1
       lxc.network.ipv4: 172.16.1.20/24
+  cdh-dns:
+    ip_address: 172.16.1.21
+    configs:
+      lxc.network.hwaddr: fe:43:24:18:20:9d
+      lxc.network.ipv4: 172.16.1.21/24
   dn01:
     ip_address: 172.16.1.31
     configs:

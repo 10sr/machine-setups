@@ -20,20 +20,17 @@
     - ./vault/lxc_become_pass.yml
 
 
-  pre_tasks:
+  pre_tasks: []
     # すべての role の前提として見込まれるもの
-    - yum:
-        name: sudo
-    # - yum:
-    #     name: epel-release
-    # - yum:
-    #     name: python2-pip
-    #     update_cache: yes
 
   roles:
     - role: sshd
 
   tasks:
+    - name: Install sudo
+      yum:
+        name: sudo
+
     - name: Create cdh user
       user:
         name: cdh

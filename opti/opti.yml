@@ -28,6 +28,8 @@
     - role: lxc
       lxc_containers: "{{ containers }}"
 
+    - role: docker
+
   tasks:
     - name: Install some utilities
       yum:

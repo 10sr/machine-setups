@@ -9,6 +9,7 @@
         name: "{{ item.key }}"
         groups: lxc
       with_dict: "{{ containers }}"
+      changed_when: no
 
 - hosts: lxc
   vars:

@@ -1,0 +1,10 @@
+---
+- name: Install mariadb
+  yum:
+    name: mariadb-server
+  become: yes
+# - name: Put mariadb confifg file
+#   templates:
+#     src: my.cnf.j2
+#     dest: /XXX
+  

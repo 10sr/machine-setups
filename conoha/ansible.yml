@@ -25,6 +25,8 @@
     - ./vault/bot_post_bearer_token.yml
     - ./vault/mackerel_agent_apikey.yml
     - ./vault/postfix_smtp_password.yml
+    - ./vault/fluentd_twitter_consumer_secret.yml
+    - ./vault/fluentd_twitter_access_token_secret.yml
   roles:
     - role: hostname
       hostname: "{{ domain_name }}"
@@ -212,6 +214,11 @@
           MYSQL_ROOT_PASSWORD: "{{ gnusocial_mysql_root_password }}"
           MYSQL_DATABASE: social
           MYSQL_PASSWORD: "{{ gnusocial_mysql_password }}"
+        fluentd:
+          TWITTER_CONSUMER_KEY: SclaCETsK2skHnc17ehAnOKq5
+          TWITTER_CONSUMER_SECRET: "{{ fluentd_twitter_consumer_secret }}"
+          TWITTER_ACCESS_TOKEN: 73722749-ohbKjD8i5czlajjgFmOzLDzzQse2EZ8uDpA3mdBol
+          TWITTER_ACCESS_TOKEN_SECRET: "{{ fluentd_twitter_access_token_secret }}"
       docker_compose_supervisord:
         nextcloud:
           path: nextcloud/

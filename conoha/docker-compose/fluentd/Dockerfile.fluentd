@@ -7,3 +7,4 @@ RUN gem install ruby-kafka -v 0.3.16
 RUN gem install zookeeper -v 1.4.11
 RUN gem install fluent-plugin-kafka -v 0.5.3
 RUN gem install fluent-plugin-retag
+RUN gem install fluent-plugin-twitter

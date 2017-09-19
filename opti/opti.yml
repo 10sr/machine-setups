@@ -29,6 +29,13 @@
       lxc_containers: "{{ containers }}"
 
     - role: docker
+      docker_compose_path: ./docker-compose
+      docker_compose_env: {}
+      docker_pm2:
+        kafka:
+          json: kafka/pm2.json
+          state: started
+          command: docker-compose up --force-recreate
 
   tasks:
     - name: Install some utilities

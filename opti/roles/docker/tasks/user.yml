@@ -1,4 +1,10 @@
 ---
+  # TODO: Parametrize group and user name
+- name: Create docker group
+  group:
+    name: docker
+  become: yes
+
 - name: Create docker user
   user:
     name: docker

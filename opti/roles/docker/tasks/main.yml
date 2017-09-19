@@ -28,9 +28,31 @@
     enabled: yes
   become: yes
 
+- name: Install python3 pip
+  yum:
+    name: python34-pip
+  become: yes
+
+- name: Install python docker packages
+  pip:
+    name: "{{ item }}"
+    executable: /usr/bin/pip3
+  with_items:
+    - docker
+    - docker-compose
+  become: yes
+
 - include: user.yml
 
 - include: pm2.yml
+
+- include: apps.yml
+
+- include: pm2-app.yml
+  vars:
+    name: "{{ item.key }}"
+    values: "{{ item.value }}"
+  with_dict: "{{ docker_pm2 }}"
 
 - name: Add docker_weekly_removal cron
   template:

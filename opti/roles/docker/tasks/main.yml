@@ -27,3 +27,14 @@
     state: started
     enabled: yes
   become: yes
+
+- include: user.yml
+
+- include: pm2.yml
+
+- name: Add docker_weekly_removal cron
+  template:
+    src: docker_weekly_removal.sh.j2
+    dest: /etc/cron.weekly/docker-weekly-removal
+    mode: "0755"
+  become: yes

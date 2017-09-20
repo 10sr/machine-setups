@@ -1,0 +1,10 @@
+#!/bin/sh
+set -eux
+
+cd /opt/letsencrypt_certbot
+./certbot-auto certonly --webroot \
+               -w {{ letsencrypt_webroot }} \
+{% for domain in letsencrypt_domain_names %}
+               -d {{ domain }} \
+{% endfor %}
+

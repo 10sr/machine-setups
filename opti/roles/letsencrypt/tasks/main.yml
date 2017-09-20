@@ -1,0 +1,13 @@
+---
+- name: Create /opt directory
+  file:
+    dest: /opt
+    state: directory
+  become: yes
+
+- name: Fetch certbot repository
+  git:
+    repo: https://github.com/certbot/certbot.git
+    dest: /opt/letsencrypt_certbot
+    force: yes
+  become: yes

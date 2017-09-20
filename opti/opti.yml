@@ -37,6 +37,8 @@
           state: started
           command: docker-compose up --force-recreate
 
+    - role: letsencrypt
+
   tasks:
     - name: Install some utilities
       yum:

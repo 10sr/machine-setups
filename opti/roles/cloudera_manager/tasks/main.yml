@@ -1,0 +1,21 @@
+---
+- name: Put cloudera repo file
+  template:
+    src: cloudera-manager.repo.j2
+    dest: /etc/yum.repos.d/cloudera-manager.repo
+  become: yes
+
+- name: Install oracle jdk
+  yum:
+    name: oracle-j2sdk1.7
+    update_cache: yes
+  become: yes
+
+- name: Install cloudera manager packages
+  yum:
+    name: "{{ item }}"
+    update_cache: yes
+  with_items:
+    - cloudera-manager-server
+    - cloudera-manager-daemons
+  become: yes

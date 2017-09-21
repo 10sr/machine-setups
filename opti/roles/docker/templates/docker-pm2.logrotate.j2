@@ -8,6 +8,6 @@
         create 0644 docker users
         sharedscripts
         postrotate
-                sudo -u docker /home/docker/_pm2 reloadLogs
+                sudo -u docker /home/docker/pm2 reloadLogs
         endscript
 }

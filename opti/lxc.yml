@@ -16,14 +16,21 @@
         # http://qiita.com/taka379sy/items/331a294d67e02e18d68d
         ansible_ssh_extra_args: "-o ControlMaster=auto -o ControlPersist=60s -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null"
       with_dict: "{{ containers }}"
+      no_log: true
       changed_when: no
 
 
 - hosts: lxc
+  vars_files:
+    - vars.yml
   tasks:
     - debug:
         msg: hoe
       become: yes
+
+  roles:
+    - role: hosts
+      hosts_hosts: "{{ containers }}"
 
 - hosts: cdh-db
   roles:

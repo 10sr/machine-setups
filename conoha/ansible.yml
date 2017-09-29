@@ -265,6 +265,10 @@
           json: fluentd/pm2.json
           state: started
           command: docker-compose up --force-recreate --build
+        mastodon:
+          json: mastodon/pm2.json
+          state: started
+          command: sh ./up.sh
 
     - role: mastodon_nginx_proxy
       mastodon_server_name: st.{{ domain_name }}

@@ -1,0 +1,32 @@
+---
+- name: Install nodjs
+  yum:
+    name: nodejs
+  become: yes
+
+- name: Install pm2
+  npm:
+    name: "{{ item }}"
+    path: /home/docker/_pm2
+  with_items:
+    - pm2
+  become: yes
+  become_user: docker
+
+- name: Create log directory
+  file:
+    dest: /var/log/docker-pm2
+    state: directory
+    owner: docker
+  become: yes
+
+# - include: pm2-app.yml
+#   vars:
+#     name: "{{ item.key }}"
+#     values: "{{ item.value }}"
+#   with_dict: "{{ docker_pm2 }}"
+
+- template:
+    src: docker-pm2.logrotate.j2
+    dest: /etc/logrotate.d/docker-pm2
+  become: yes

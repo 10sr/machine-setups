@@ -1,0 +1,24 @@
+---
+- name: Create directory for docker-compose files
+  file:
+    dest: /home/docker/docker-compose/
+    state: directory
+    owner: docker
+  become: yes
+  
+
+- name: Transfer docker-compose files
+  copy:
+    dest: /home/docker/docker-compose/
+    src: "{{ docker_compose_path }}/"
+    owner: docker
+  become: yes
+
+- template:
+    dest: "/home/docker/docker-compose/{{ item.key }}.env"
+    src: local.env.j2
+    owner: docker
+  vars:
+    variables: "{{ item.value }}"
+  with_dict: "{{ docker_compose_env }}"
+  become: yes

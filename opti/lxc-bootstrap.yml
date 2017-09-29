@@ -1,0 +1,53 @@
+---
+- hosts: local
+  vars:
+    ansible_connection: local
+  vars_files:
+    - vars.yml
+  tasks:
+    - add_host:
+        name: "{{ item.key }}"
+        groups: lxc
+      with_dict: "{{ containers }}"
+      changed_when: no
+
+- hosts: lxc
+  vars:
+    # lxc connection requires root execution
+    ansible_connection: lxc
+  vars_files:
+    - vars.yml
+    - ./vault/lxc_become_pass.yml
+
+
+  pre_tasks:
+    # すべての role の前提として見込まれるもの
+    - name: Install sudo
+      yum:
+        name: sudo
+
+  roles:
+    - role: sshd
+
+  tasks:
+    - name: Create cdh user
+      user:
+        name: cdh
+        groups: wheel
+        append: yes
+        password: "{{ lxc_become_pass | password_hash('sha512', 'passwordsalt') }}"
+
+    - name: Create .ssh dir
+      file:
+        dest: /home/cdh/.ssh
+        state: directory
+        owner: cdh
+        mode: "0700"
+    
+    - name: Put ssh public key
+      lineinfile:
+        line: "{{ sshkey.lxc.public }}"
+        dest: /home/cdh/.ssh/authorized_keys
+        create: yes
+        owner: cdh
+        mode: "0600"

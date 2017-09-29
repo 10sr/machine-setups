@@ -2,11 +2,11 @@ FROM fluent/fluentd:latest
 
 USER root
 
-RUN apk add --update --virtual .build-deps build-base ruby-dev \
-    && gem install ruby-kafka -v 0.3.16 \
-    && gem install zookeeper -v 1.4.11 \
-    && gem install fluent-plugin-kafka -v 0.5.3 \
-    && gem install fluent-plugin-retag \
-    && gem sources --clear-all \
-    && apk del .build-deps \
-    && rm -rf /var/cache/apk/* /home/fluent/.gem/ruby/2.3.0/cache/*.gem
+RUN apk add --update --virtual .build-deps build-base ruby-dev
+RUN gem install ruby-kafka -v 0.3.16
+RUN gem install zookeeper -v 1.4.11
+RUN gem install fluent-plugin-kafka -v 0.5.3
+RUN gem install fluent-plugin-retag
+
+RUN gem install eventmachine
+RUN gem install fluent-plugin-twitter

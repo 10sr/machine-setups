@@ -2,7 +2,7 @@ version: '3'
 services:
   kafka0:
     image: ches/kafka:0.10.2.1
-    restart: on-failure
+    restart: always
     ports:
       # broker port
       - 9092:9092
@@ -12,7 +12,7 @@ services:
       KAFKA_BROKER_ID: 0
       ZOOKEEPER_CONNECTION_STRING: "zoo1:2181"
       KAFKA_HEAP_OPTS: -Xmx256M -Xms256M
-      KAFKA_ADVERTISED_HOST_NAME: "3ends.info"
+      KAFKA_ADVERTISED_HOST_NAME: "10sr.f5.si"
       KAFKA_ADVERTISED_PORT: 9092
     user: root
     volumes:
@@ -22,17 +22,17 @@ services:
       kafka_net:
         ipv4_address: 192.168.101.100
 
-  console_consumer_from_fluentd:
-    image: ches/kafka:0.10.2.1
-    restart: on-failure
-    command: ./bin/kafka-console-consumer.sh --topic from_fluentd --bootstrap-server 3ends.info:9092
-    networks:
-      kafka_net:
-        ipv4_address: 192.168.101.50
+  # console_consumer_from_fluentd:
+  #   image: ches/kafka:0.10.2.1
+  #   restart: always
+  #   command: ./bin/kafka-console-consumer.sh --topic from_fluentd --bootstrap-server 3ends.info:9092
+  #   networks:
+  #     kafka_net:
+  #       ipv4_address: 192.168.101.50
 
   zoo1:
     image: zookeeper:3.4
-    restart: on-failure
+    restart: always
     ports:
       - 2181:2181
     environment:

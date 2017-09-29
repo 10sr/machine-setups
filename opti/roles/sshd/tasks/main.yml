@@ -1,0 +1,10 @@
+---
+- yum:
+    name: openssh-server
+  become: yes
+
+- service:
+    name: sshd
+    state: started
+    enabled: yes
+  become: yes

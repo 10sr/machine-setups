@@ -1,0 +1,8 @@
+---
+jdk_version: 7u55
+jdk_build_versions:
+  7u55: b13
+
+jdk_build_version: "{{jdk_build_versions[jdk_version]}}"
+jdk_rpm_url: http://download.oracle.com/otn-pub/java/jdk/{{jdk_version}}-{{jdk_build_version}}/jdk-{{jdk_version}}-linux-x64.rpm
+jdk_rpm_path: "jdk-{{jdk_version}}-linux-x64.rpm"

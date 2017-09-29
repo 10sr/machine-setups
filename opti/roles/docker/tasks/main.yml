@@ -1,0 +1,62 @@
+---
+
+- name: Install utilities for docker
+  yum:
+    name: "{{ item }}"
+  with_items:
+    - yum-utils
+    - device-mapper-persistent-data
+    - lvm2
+  become: yes
+
+- name: Add docker repository
+  command: yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+  args:
+    creates: /etc/yum.repos.d/docker-ce.repo
+  become: yes
+
+- name: Install docker
+  yum:
+    name: docker-ce
+    update_cache: yes
+  become: yes
+
+- name: Start docker
+  service:
+    name: docker
+    state: started
+    enabled: yes
+  become: yes
+
+- name: Install python3 pip
+  yum:
+    name: python34-pip
+  become: yes
+
+- name: Install python docker packages
+  pip:
+    name: "{{ item }}"
+    executable: /usr/bin/pip3
+  with_items:
+    - docker
+    - docker-compose
+  become: yes
+
+- include: user.yml
+
+- include: pm2.yml
+
+- include: apps.yml
+
+- include: pm2-app.yml
+  vars:
+    name: "{{ item.key }}"
+    values: "{{ item.value }}"
+  with_dict: "{{ docker_pm2 }}"
+
+- name: Add docker_weekly_removal cron
+  template:
+    src: docker_weekly_removal.sh.j2
+    dest: /etc/cron.weekly/docker-weekly-removal
+    mode: "0755"
+  become: yes

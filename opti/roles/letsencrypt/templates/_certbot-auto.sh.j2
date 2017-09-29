@@ -1,0 +1,12 @@
+#!/bin/sh
+set -eux
+
+cd /opt/letsencrypt_certbot
+
+systemctl stop nginx.service
+
+./certbot-auto certonly --standalone \
+               --preferred-challenges http-01 \
+               {% for domain in domain_names %}-d {{ domain }} {% endfor %}
+
+systemctl start nginx.service

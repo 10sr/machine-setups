@@ -1,0 +1,8 @@
+---
+- name: Add hosts entries
+  lineinfile:
+    dest: /etc/hosts
+    line: "{{ item.value.ip_address }} {{ item.value.fqdn }} {{ item.key }}"
+    regexp: "^{{ item.value.ip_address }}"
+  with_dict: "{{ hosts_hosts }}"
+  become: yes

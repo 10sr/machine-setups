@@ -1,0 +1,35 @@
+---
+- include: bridge.yml
+
+- yum:
+    name: "{{ item }}"
+  with_items: [lxc, lxc-extra]
+  become: yes
+
+- yum:
+    # required for lxc-python2 installation
+    name: "{{ item }}"
+  with_items: [python-devel, lxc-devel]
+  become: yes
+
+- pip:
+    name: lxc-python2
+    executable: /usr/bin/pip2
+  become: yes
+
+- template:
+    src: config.j2
+    dest: "{{ lxc_dir }}/{{ item.key }}/config"
+    backup: yes
+  vars:
+    name: "{{ item.key }}"
+    configs: "{{ item.value.configs }}"
+  with_dict: "{{ lxc_containers }}"
+  become: yes
+
+- lxc_container:
+    name: "{{ item.key }}"
+  with_dict: "{{ lxc_containers }}"
+  become: yes
+
+- include: hosts.yml

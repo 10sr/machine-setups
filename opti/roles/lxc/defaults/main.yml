@@ -1,0 +1,7 @@
+lxc_dir: /var/lib/lxc
+
+lxc_bridge: virbr0
+lxc_bridge_ipaddr: 172.16.1.1
+lxc_bridge_gateway: 192.168.10.154
+
+lxc_bridge_route_subnet: 172.16.1.0/24

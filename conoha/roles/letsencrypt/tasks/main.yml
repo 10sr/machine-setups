@@ -6,7 +6,6 @@
 
 - git:
     repo: https://github.com/certbot/certbot.git
-    version: v0.12.0
     dest: /opt/letsencrypt_certbot
     force: yes
   become: yes

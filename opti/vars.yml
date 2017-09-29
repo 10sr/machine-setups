@@ -1,0 +1,59 @@
+---
+sshkey:
+  lxc:
+    public: ssh-dss AAAAB3NzaC1kc3MAAACBALp+Ahr1iIKl/Hc2VlmonbhiEAcqT4dAAliKQ/4eB+GZfVaUV9xvdEpvcJKfdwiPb2UCbq5mhsK1amEav0Ha5tGBjc1+XAoLgV+hgwX++SCxOYx/RsAlTGfp0xMjz5JFyNNzJbUulnkWp0oiCA/I7SpTrY6Em1SATYZl5a69LSPNAAAAFQDboAAPW2469HePZl2/exo+ozrHLQAAAIAA00LSNffvcmLuefM9gg3j/ndabhu2+7hYqcOzxXuWhp+wxNPuwFKpzF+IQjyG1WUPPhHN1LMwybSjy9iD8A2hlMAhHSSYjd7HM/j3orI6I8ZEex4F1HgUI/jw9dFznrdTuKa/+PCzoy2qhgBnE3Fqa+gRzKQOJD6ZbQhmyfK39AAAAIAh4WvNC77//Z1QydqDMoT/zAu2DQRlIw2z+ynvA+kWY7QDRY5cQBDJTtiaTtUr2HD1a4B7K/kOCZ45vCpGMtS3Yr6sSO12DSelNgehI4C+6tyZLbGoRapwDsUln43CR4AQAvzsMzyoSy3bXeI7uWy81bJISDkQxQBIaTM22bcF4A== lxc_ssh_public_key
+containers:
+  cm01:
+    ip_address: 172.16.1.20
+    fqdn: cm01.cdh.10sr.f5.si
+    configs:
+      lxc.network.hwaddr: fe:db:c9:89:ff:e1
+      lxc.network.ipv4: 172.16.1.20/24
+  cdh-dns:
+    ip_address: 172.16.1.21
+    fqdn: cdh-dns.cdh.10sr.f5.si
+    configs:
+      lxc.network.hwaddr: fe:43:24:18:20:9d
+      lxc.network.ipv4: 172.16.1.21/24
+  cdh-db:
+    ip_address: 172.16.1.22
+    fqdn: cdh-db.cdh.10sr.f5.si
+    configs:
+      lxc.network.hwaddr: fe:43:24:18:20:9e
+      lxc.network.ipv4: 172.16.1.22/24
+  dn01:
+    ip_address: 172.16.1.31
+    fqdn: dn01.cdh.10sr.f5.si
+    configs:
+      lxc.network.hwaddr: fe:61:bf:4d:3d:d7
+      lxc.network.ipv4: 172.16.1.31/24
+  dn02:
+    ip_address: 172.16.1.32
+    fqdn: dn02.cdh.10sr.f5.si
+    configs:
+      lxc.network.hwaddr: fe:8f:14:73:35:e1
+      lxc.network.ipv4: 172.16.1.32/24
+  dn03:
+    ip_address: 172.16.1.33
+    fqdn: dn03.cdh.10sr.f5.si
+    configs:
+      lxc.network.hwaddr: fe:e0:5e:81:04:d5
+      lxc.network.ipv4: 172.16.1.33/24
+  nn01:
+    ip_address: 172.16.1.41
+    fqdn: nn01.cdh.10sr.f5.si
+    configs:
+      lxc.network.hwaddr: fe:bb:d2:70:f5:2f
+      lxc.network.ipv4: 172.16.1.41/24
+  nn02:
+    ip_address: 172.16.1.42
+    fqdn: nn02.cdh.10sr.f5.si
+    configs:
+      lxc.network.hwaddr: fe:80:ac:ce:2d:9a
+      lxc.network.ipv4: 172.16.1.42/24
+  nn03:
+    ip_address: 172.16.1.43
+    fqdn: nn03.cdh.10sr.f5.si
+    configs:
+      lxc.network.hwaddr: fe:b4:30:cd:75:98
+      lxc.network.ipv4: 172.16.1.43/24

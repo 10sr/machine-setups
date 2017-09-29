@@ -1,0 +1,26 @@
+---
+- name: Install mariadb
+  yum:
+    name: mariadb-server
+  become: yes
+
+- name: Put mariadb confifg file
+  template:
+    src: my.cnf.j2
+    dest: /etc/my.cnf
+  become: yes
+  register: _my_cnf
+
+- name: Restart maridb
+  service:
+    name: mariadb
+    state: restarted
+  become: yes
+  when: _my_cnf.changed
+
+- name: Start mariadb
+  service:
+    name: mariadb
+    state: started
+    enabled: yes
+  become: yes

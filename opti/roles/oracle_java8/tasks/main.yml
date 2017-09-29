@@ -1,0 +1,8 @@
+---
+- name: Download rpm
+  uri:
+    HEADER_Cookie: oraclelicense=a
+    dest: "{{ oracle_java8_rpm_path }}"
+    follow_redirects: all
+    method: GET
+    url: "{{ oracle_java8_rpm_url }}"

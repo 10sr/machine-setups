@@ -1,0 +1,63 @@
+---
+- hosts: opti
+  vars:
+    ansible_become_pass: "{{ opti_become_pass }}"
+  vars_files:
+    - vars.yml
+    - ./vault/opti_become_pass.yml
+    - ./vault/ddns_f5_si_password.yml
+    - ./vault/lxc_ssh_secret_key.yml
+
+  pre_tasks:
+    # すべての role の前提として見込まれるもの
+    - yum:
+        name: "@Development Tools"
+      become: yes
+    - yum:
+        name: python2-pip
+      become: yes
+
+  roles:
+    - role: ddns_f5_si
+      ddns_domain_name: 10sr.f5.si
+      ddns_f5_si_name: 10sr
+      ddns_f5_si_password_: "{{ ddns_f5_si_password }}"
+
+    - role: mail
+
+    - role: lxc
+      lxc_containers: "{{ containers }}"
+
+    - role: docker
+      docker_compose_path: ./docker-compose
+      docker_compose_env: {}
+      docker_pm2:
+        kafka:
+          json: kafka/pm2.json
+          state: started
+          command: docker-compose up --force-recreate
+
+    - role: letsencrypt
+      letsencrypt_domain_names:
+        - 10sr.f5.si:5520
+
+  tasks:
+    - name: Install some utilities
+      yum:
+        name: "{{ item }}"
+      with_items:
+        - yum-utils
+      become: yes
+
+    - name: Install ansible
+      pip:
+        name: ansible
+        executable: /usr/bin/pip2
+      become: yes
+
+    - name: Put ssh secret key
+      copy:
+        content: "{{ lxc_ssh_secret_key }}"
+        dest: ./.ssh/lxc
+        mode: "0600"
+      no_log: yes

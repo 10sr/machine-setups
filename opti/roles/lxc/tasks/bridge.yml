@@ -1,0 +1,14 @@
+---
+- yum:
+    name: bridge-utils
+  become: yes
+
+- template:
+    dest: /etc/sysconfig/network-scripts/ifcfg-{{ lxc_bridge }}
+    src: ifcfg.j2
+  become: yes
+        
+- template:
+    dest: /etc/sysconfig/network-scripts/route-{{ lxc_bridge }}
+    src: route.j2
+  become: yes

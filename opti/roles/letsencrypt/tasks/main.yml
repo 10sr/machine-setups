@@ -1,0 +1,23 @@
+---
+- name: Create /opt directory
+  file:
+    dest: /opt
+    state: directory
+  become: yes
+
+- name: Fetch certbot repository
+  git:
+    repo: https://github.com/certbot/certbot.git
+    dest: /opt/letsencrypt_certbot
+    force: yes
+  become: yes
+
+- name: Put letsencrypt script
+  template:
+    src: _certbot-auto.sh.j2
+    dest: /usr/local/bin/_certbo_auto.sh
+    mode: "0755"
+  vars:
+    domain_names: "{{ letsencrypt_domain_names }}"
+    # http_01_port: "{{ letsencrypt_http_01_port }}"
+  become: yes

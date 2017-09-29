@@ -2,19 +2,16 @@
 version: '3'
 services:
   db:
-    restart: on-failure
     image: postgres:alpine
     volumes:
       - /var/lib/data/docker/mastodon0/postgres/data:/var/lib/postgresql/data
 
   redis:
-    restart: on-failure
     image: redis:alpine
     volumes:
       - /var/lib/data/docker/mastodon0/redis/data:/data
 
   minio:
-    restart: on-failure
     image: minio/minio
     env_file:
       - ../mastodon.env
@@ -26,7 +23,6 @@ services:
       - /var/lib/data/docker/mastodon0/minio/config:/root/.minio
 
   web:
-    restart: on-failure
     image: local/st.3ends.info
     # build:
     #   context: "https://github.com/10sr/mastodon.git#st.3ends.info"
@@ -47,7 +43,6 @@ services:
       - /var/lib/data/docker/mastodon0/web/public/system:/mastodon/public/system
 
   streaming:
-    restart: on-failure
     image: local/st.3ends.info
     # build:
     #   context: "https://github.com/10sr/mastodon.git#st.3ends.info"
@@ -65,7 +60,6 @@ services:
       - /etc/localtime:/etc/localtime:ro
 
   sidekiq:
-    restart: on-failure
     image: local/st.3ends.info
     # build:
     #   context: "https://github.com/10sr/mastodon.git#st.3ends.info"

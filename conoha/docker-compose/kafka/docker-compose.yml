@@ -2,7 +2,7 @@ version: '3'
 services:
   kafka0:
     image: ches/kafka:0.10.2.1
-    restart: always
+    restart: on-failure
     ports:
       # broker port
       - 9092:9092
@@ -24,7 +24,7 @@ services:
 
   console_consumer_from_fluentd:
     image: ches/kafka:0.10.2.1
-    restart: always
+    restart: on-failure
     command: ./bin/kafka-console-consumer.sh --topic from_fluentd --bootstrap-server 3ends.info:9092
     networks:
       kafka_net:
@@ -32,7 +32,7 @@ services:
 
   zoo1:
     image: zookeeper:3.4
-    restart: always
+    restart: on-failure
     ports:
       - 2181:2181
     environment:

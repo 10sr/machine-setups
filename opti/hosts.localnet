@@ -1,0 +1,7 @@
+[default]
+opti ansible_host=192.168.10.155 ansible_port=2222
+
+[local]
+localhost
+
+[lxc]

@@ -267,7 +267,7 @@
           command: docker-compose up --force-recreate --build
         mastodon:
           json: mastodon/pm2.json
-          state: stopped
+          state: started
           command: sh ./up.sh
 
     - role: mastodon_nginx_proxy

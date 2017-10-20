@@ -32,6 +32,7 @@ services:
 
   zoo1:
     image: zookeeper:3.4
+    hostname: zoo1
     restart: on-failure
     ports:
       - 2181:2181

@@ -227,7 +227,7 @@
         zabbix:
           path: zabbix/
           command: docker-compose up --force-recreate --build
-          autostart: "true"
+          autostart: "false"
         icecast2:
           path: icecast2/
           command: docker-compose up --force-recreate --build
@@ -269,6 +269,10 @@
           json: mastodon/pm2.json
           state: started
           command: sh ./up.sh
+        zabbix:
+          json: zabbix/pm2.json
+          state: started
+          command: docker-compose up --force-recreate --build
 
     - role: mastodon_nginx_proxy
       mastodon_server_name: st.{{ domain_name }}

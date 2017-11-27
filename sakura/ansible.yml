@@ -2,11 +2,18 @@
 - hosts: default
   vars:
     # Do not use these variables directly in roles!
-    ubuntu_codename: trusty
+    ubuntu_codename: xenial
     # domain_name: 3ends.info
     domain_name: "160.16.142.176"
   vars_files:
     - ./vault/ansible_become_pass.yml
+
+  pre_tasks:
+    - name: Check codename
+      assert:
+        that:
+          - ubuntu_codename == ansible_lsb.codename
+
   roles:
     # - role: hostname
     #   hostname: "{{ domain_name }}"

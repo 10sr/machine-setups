@@ -1,23 +1,16 @@
-= conoha/
+= sakura/
 
-Ansible playbook for my conoha instance.
+Ansible playbook for my sakura instance.
 
 
 == Current setups
 
 
 |====
-|Memory |1GB
-|Disk   |SSD 50GB
-|OS     |Ubuntu 14.4 trusty
+|Memory |2GB
+|Disk   |HDD 200GB
+|OS     |Ubuntu 16.04 Xenial
 |====
-
-
-== Pre configurations
-
-* Add normal user: `adduser NAME`
-** Add `.ssh/authorized_keys` file for the user
-** Add the user to `sudo` group: `gpasswd -a NAME sudo`
 
 
 == Usage

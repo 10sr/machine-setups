@@ -1,0 +1,32 @@
+{% for name in nginx_main_server_names %}
+server {
+    listen 80;
+    listen [::]:80;
+    server_name {{ name }};
+
+    root {{ nginx_main_root }};
+    index index.html;
+}
+{% endfor %}
+{% for proxy in nginx_host_proxies | default([]) %}
+
+server {
+    listen 80;
+    listen [::]:80;
+
+    client_max_body_size 0;
+
+    server_name {{ proxy.name }};
+
+    location {{ nginx_letsencrypt_access_dir }} {
+        root {{ nginx_letsencrypt_webroot }};
+    }
+
+    location / {
+{% for directive in proxy.additional_directives | default([]) %}
+        {{ directive }};
+{% endfor %}
+        proxy_pass http://localhost:{{ proxy.port }};
+    }
+}
+{% endfor %}

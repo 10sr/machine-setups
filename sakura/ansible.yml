@@ -1,0 +1,19 @@
+---
+- hosts: default
+  vars:
+    # Do not use these variables directly in roles!
+    ubuntu_codename: trusty
+    # domain_name: 3ends.info
+    domain_name: "160.16.142.176"
+  vars_files:
+    - ./vault/ansible_become_pass.yml
+  roles:
+    # - role: hostname
+    #   hostname: "{{ domain_name }}"
+
+    - role: nginx
+      nginx_main_server_names:
+        - "{{ domain_name }}"
+      nginx_main_root: /var/nginx/main
+      nginx_letsencrypt_access_dir: /.well-known/acme-challenge
+      nginx_letsencrypt_webroot: /var/nginx/main

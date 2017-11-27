@@ -4,7 +4,7 @@
     # Do not use these variables directly in roles!
     ubuntu_codename: xenial
     # domain_name: 3ends.info
-    domain_name: "160.16.142.176"
+    domain_name: "tk2-407-44672.vs.sakura.ne.jp"
   vars_files:
     - ./vault/ansible_become_pass.yml
 

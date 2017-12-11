@@ -1,0 +1,26 @@
+---
+- template:
+    src: pm2.json.j2
+    dest: "/home/docker/docker-compose/{{ values.json }}"
+    owner: docker
+  vars:
+    command: "{{ values.command }}"
+  become: yes
+  register: _pm2_json
+
+  # Remove app once for force reload json
+- pm2:
+    name: "{{ name }}"
+    state: absent
+    executable: /home/docker/_pm2/node_modules/.bin/pm2
+  become: yes
+  become_user: docker
+  when: _pm2_json.changed
+
+- pm2:
+    name: "{{ name }}"
+    config: "/home/docker/docker-compose/{{ values.json }}"
+    state: "{{ values.state }}"
+    executable: /home/docker/_pm2/node_modules/.bin/pm2
+  become: yes
+  become_user: docker

@@ -1,0 +1,61 @@
+---
+- include: install.yml
+
+- service:
+    name: docker
+    state: restarted
+  when: docker_apt.changed
+  become: yes
+
+- apt:
+    name: python3-pip
+  become: yes
+
+- pip:
+    name: "{{ item }}"
+    executable: /usr/bin/pip3
+  with_items:
+    - docker
+    - docker-compose
+  become: yes
+
+  # TODO: Parametrize group and user name
+- group:
+    name: docker
+  become: yes
+
+- user:
+    name: docker
+    shell: /bin/bash
+    groups: docker
+    append: yes
+  become: yes
+
+- file:
+    dest: /home/docker/docker-compose/
+    state: directory
+    owner: docker
+  become: yes
+
+- copy:
+    dest: /home/docker/docker-compose/
+    src: "{{ docker_compose_path }}/"
+    owner: docker
+  become: yes
+
+- template:
+    dest: "/home/docker/docker-compose/{{ item.key }}.env"
+    src: local.env.j2
+    owner: docker
+  vars:
+    variables: "{{ item.value }}"
+  with_dict: "{{ docker_compose_env }}"
+  become: yes
+
+- include: pm2.yml
+
+- template:
+    src: docker_weekly_removal.sh.j2
+    dest: /etc/cron.weekly/docker-weekly-removal
+    mode: "0755"
+  become: yes

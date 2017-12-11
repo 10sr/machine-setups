@@ -1,0 +1,9 @@
+#!/bin/sh
+set -ux
+# {{ ansible_managed }}
+
+docker ps -a --filter status=exited --quiet | xargs -t -r docker rm
+docker ps -a --filter status=created --quiet | xargs -t -r docker rm
+docker images --filter dangling=true --quiet | xargs -t -r docker rmi
+docker volume ls --filter dangling=true --quiet | xargs -t -r docker volume rm
+docker system prune -af

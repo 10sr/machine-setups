@@ -1,0 +1,23 @@
+---
+- apt:
+    name: "{{ item }}"
+  with_items:
+    - apt-transport-https
+    - ca-certificates
+    - curl
+    - software-properties-common
+  become: yes
+
+- apt_key:
+    url: https://download.docker.com/linux/ubuntu/gpg
+    id: 9DC858229FC7DD38854AE2D88D81803C0EBFCD88
+  become: yes
+
+- apt_repository:
+    repo="deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ docker_ubuntu_codename }} stable"
+  become: yes
+
+- apt:
+    name: docker-ce
+  register: docker_apt
+  become: yes

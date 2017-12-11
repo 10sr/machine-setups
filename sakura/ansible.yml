@@ -13,6 +13,7 @@
       assert:
         that:
           - ubuntu_codename == ansible_lsb.codename
+          - ubuntu_codename == ansible_distribution_release
 
   roles:
     # - role: hostname
@@ -24,3 +25,9 @@
       nginx_main_root: /var/nginx/main
       nginx_letsencrypt_access_dir: /.well-known/acme-challenge
       nginx_letsencrypt_webroot: /var/nginx/main
+
+    - role: docker
+      docker_ubuntu_codename: "{{ ubuntu_codename }}"
+      docker_compose_path: ./docker-compose
+      docker_compose_env: {}
+      docker_pm2: {}

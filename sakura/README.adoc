@@ -2,6 +2,8 @@
 
 Ansible playbook for my sakura instance.
 
+http://tk2-407-44672.vs.sakura.ne.jp
+
 
 == Current setups
 

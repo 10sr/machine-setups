@@ -21,11 +21,29 @@
   become: yes
   register: _main_conf
 
+- template:
+    src: main_proxies.conf.j2
+    dest: /etc/nginx/conf.d/main_proxies.conf
+  become: yes
+  register: _main_proxies_conf
+
+- template:
+    src: main_ssl.conf.j2
+    dest: /etc/nginx/conf.d/main_ssl.conf
+  become: yes
+  register: _main_ssl_conf
+
+- template:
+    src: main_ssl_proxies.conf.j2
+    dest: /etc/nginx/conf.d/main_ssl_proxies.conf
+  become: yes
+  register: _main_ssl_proxies_conf
+
 - service:
     name: nginx
     state: restarted
   become: yes
-  when: _main_conf | changed
+  # when: _main_conf | changed
 
 - service:
     name: nginx

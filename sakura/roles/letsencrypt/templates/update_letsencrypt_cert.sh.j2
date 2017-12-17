@@ -1,0 +1,7 @@
+#!/bin/sh
+set -eux
+# {{ ansible_managed }}
+
+/opt/letsencrypt_certbot/certbot-auto renew \
+                                      --pre-hook "service nginx stop" \
+                                      --post-hook "service nginx start"

@@ -1,0 +1,17 @@
+#!/bin/sh
+set -eux
+# {{ ansible_managed }}
+
+# CAUTION: This script requires nginx is installed and started.
+
+cd /opt/letsencrypt_certbot
+
+./certbot-auto --os-packages-only --noninteractive
+
+systemctl stop nginx
+
+./certbot-auto certonly --standalone --agree-tos -m {{ letsencrypt_register_email }} --test-cert \
+    -w {{ letsencrypt_webroot }} \
+    {% for domain in letsencrypt_domain_names %}-d {{ domain }} {% endfor %}
+
+systemctl start nginx

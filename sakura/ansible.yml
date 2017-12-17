@@ -19,12 +19,23 @@
     # - role: hostname
     #   hostname: "{{ domain_name }}"
 
+    - role: letsencrypt
+      letsencrypt_register_email: 8.slashes@gmail.com
+      letsencrypt_domain_names:
+        - "{{ domain_name }}"
+      letsencrypt_webroot: /var/nginx/main
+      letsencrypt_key_dir: /etc/letsencrypt/live/{{ domain_name }}
+      letsencrypt_ssl_key_dir: /etc/letsencrypt/live/{{ domain_name }}
+      letsencrypt_ssl_dhparam_path: /etc/ssl/private/dhparam.pem
+
     - role: nginx
       nginx_main_server_names:
         - "{{ domain_name }}"
       nginx_main_root: /var/nginx/main
+      nginx_ssl_main_root: /var/nginx/main
       nginx_letsencrypt_access_dir: /.well-known/acme-challenge
       nginx_letsencrypt_webroot: /var/nginx/main
+      nginx_ssl_main_server_name: "{{ domain_name }}"
 
     - role: docker
       docker_ubuntu_codename: "{{ ubuntu_codename }}"

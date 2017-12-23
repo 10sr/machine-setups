@@ -290,9 +290,9 @@
     - role: mackerel-agent
 
     - role: postfix
-      postfix_myhostname: "{{ domain_name }}"
-      postfix_myorigin: "m.{{ domain_name }}"
+      postfix_myhostname: v133-130-91-27.a020.g.tyo1.static.cnode.io
+      postfix_myorigin: mail.v133-130-91-27.a020.g.tyo1.static.cnode.io
       postfix_smtp_hostname: smtp.mailgun.org
       postfix_smtp_port: 587
-      postfix_smtp_login: postmaster@m.3ends.info
+      postfix_smtp_login: postmaster@mail.v133-130-91-27.a020.g.tyo1.static.cnode.io
       postfix_smtp_password_: "{{ postfix_smtp_password }}"

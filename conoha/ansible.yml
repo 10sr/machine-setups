@@ -219,27 +219,6 @@
           TWITTER_CONSUMER_SECRET: "{{ fluentd_twitter_consumer_secret }}"
           TWITTER_ACCESS_TOKEN: 73722749-ohbKjD8i5czlajjgFmOzLDzzQse2EZ8uDpA3mdBol
           TWITTER_ACCESS_TOKEN_SECRET: "{{ fluentd_twitter_access_token_secret }}"
-      docker_compose_supervisord:
-        nextcloud:
-          path: nextcloud/
-          command: docker-compose up --force-recreate
-          autostart: "false"
-        zabbix:
-          path: zabbix/
-          command: docker-compose up --force-recreate --build
-          autostart: "false"
-        icecast2:
-          path: icecast2/
-          command: docker-compose up --force-recreate --build
-          autostart: "false"
-        mastodon:
-          path: mastodon/
-          command: sh ./up.sh
-          autostart: "false"
-        gnusocial:
-          path: gnusocial/
-          command: docker-compose up --force-recreate --build
-          autostart: "false"
       docker_pm2:
         10sr_bot:
           json: 10sr_bot/pm2.json

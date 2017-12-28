@@ -10,6 +10,11 @@ cd /opt/letsencrypt_certbot
 
 systemctl stop nginx
 
+# https://github.com/certbot/certbot/issues/3104#issuecomment-224078564 fix
+LC_ALL=C
+
+mkdir -p {{ letsencrypt_webroot }}
+
 ./certbot-auto certonly --standalone --agree-tos -m {{ letsencrypt_register_email }} --test-cert \
     -w {{ letsencrypt_webroot }} \
     {% for domain in letsencrypt_domain_names %}-d {{ domain }} {% endfor %}

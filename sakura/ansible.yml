@@ -15,6 +15,14 @@
           - ubuntu_codename == ansible_lsb.codename
           - ubuntu_codename == ansible_distribution_release
 
+    - name: Install some prerequisite packages
+      apt:
+        name: "{{ item }}"
+      with_items:
+        - git
+        - nginx
+      become: yes
+
   roles:
     # - role: hostname
     #   hostname: "{{ domain_name }}"

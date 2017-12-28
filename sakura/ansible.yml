@@ -42,3 +42,7 @@
       docker_compose_path: ./docker-compose
       docker_compose_env: {}
       docker_pm2: {}
+        # ghost:
+        #   json: ghost/pm2.json
+        #   state: started
+        #   command: docker-compose up --force-recreate

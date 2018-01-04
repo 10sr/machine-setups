@@ -7,6 +7,9 @@
     domain_name: "tk2-407-44672.vs.sakura.ne.jp"
   vars_files:
     - ./vault/ansible_become_pass.yml
+    - ./vault/bot_post_bearer_token.yml
+    - ./vault/bot_twitter_secret.yml
+    - ./vault/bot_twitter_token_secret.yml
 
   pre_tasks:
     - name: Check codename
@@ -48,8 +51,18 @@
     - role: docker
       docker_ubuntu_codename: "{{ ubuntu_codename }}"
       docker_compose_path: ./docker-compose
-      docker_compose_env: {}
-      docker_pm2: {}
+      docker_compose_env:
+        10sr_bot0:
+          TWITTER_KEY: VmHRoeyCxmGisuGPCBADVfo6v
+          TWITTER_SECRET: "{{ bot_twitter_secret }}"
+          TWITTER_TOKEN: 2578716006-LhQWcRQyG5r0uC92yLwy1LYhNIPGMVXAy4CWOpt
+          TWITTER_TOKEN_SECRET: "{{ bot_twitter_token_secret }}"
+          POST_BEARER_TOKEN: "{{ bot_post_bearer_token }}"
+      docker_pm2:
+        10sr_bot0:
+          json: 10sr_bot0/pm2.json
+          state: started
+          command: docker-compose up --build
         # ghost:
         #   json: ghost/pm2.json
         #   state: started

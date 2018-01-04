@@ -173,6 +173,7 @@
 
     - role: docker
       docker_compose_path: ./docker-compose
+      docker_compose_supervisord: {}
       docker_compose_env:
         # minio:
         #   MINIO_ACCESS_KEY: "10srr"
@@ -222,7 +223,7 @@
       docker_pm2:
         10sr_bot:
           json: 10sr_bot/pm2.json
-          state: started
+          state: stopped
           command: docker-compose up --build
         cadvisor:
           json: cadvisor/pm2.json

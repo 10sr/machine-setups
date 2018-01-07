@@ -1,0 +1,18 @@
+---
+- name: Install postfix
+  apt:
+    name: postfix
+  become: yes
+
+- name: Add alias to root
+  lineinfile:
+    dest: /etc/aliases
+    regexp: "^root"
+    line: "root: {{ postfix_root_alias }},root"
+  become: yes
+  register: _postfix_aliases
+
+- name: Update aliases.db
+  command: newaliases
+  become: yes
+  when: _postfix_aliases | changed

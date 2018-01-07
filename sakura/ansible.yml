@@ -67,3 +67,6 @@
         #   json: ghost/pm2.json
         #   state: started
         #   command: docker-compose up --force-recreate
+
+    - role: postfix
+      postfix_root_alias: 8.slashes@gmail.com

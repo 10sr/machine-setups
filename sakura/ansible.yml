@@ -52,8 +52,6 @@
         - "{{ domain_name }}"
       nginx_main_root: /var/nginx/main
       nginx_ssl_main_root: /var/nginx/main
-      nginx_letsencrypt_access_dir: /.well-known/acme-challenge
-      nginx_letsencrypt_webroot: /var/nginx/main
       nginx_ssl_main_server_name: "{{ domain_name }}"
       nginx_ssl_proxy_upstreams:
         - path: /10sr_bot

@@ -11,7 +11,7 @@ config = {
     // When running Ghost in the wild, use the production environment.
     // Configure your URL and mail settings here
     production: {
-        url: 'https://b.3ends.info',
+        url: 'http://tk2-407-44672.vs.sakura.ne.jp:2368/',
         mail: {},
         database: {
             client: 'sqlite3',

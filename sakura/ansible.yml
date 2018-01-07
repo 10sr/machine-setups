@@ -63,10 +63,10 @@
           json: 10sr_bot0/pm2.json
           state: started
           command: docker-compose up --build
-        # ghost:
-        #   json: ghost/pm2.json
-        #   state: started
-        #   command: docker-compose up --force-recreate
+        ghost0:
+          json: ghost0/pm2.json
+          state: started
+          command: docker-compose up --force-recreate
 
     - role: postfix
       postfix_root_alias: 8.slashes@gmail.com

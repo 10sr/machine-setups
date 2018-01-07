@@ -235,7 +235,7 @@
           command: docker-compose up --force-recreate
         instiki:
           json: instiki/pm2.json
-          state: started
+          state: stopped
           command: docker-compose up --force-recreate --build
         kafka:
           json: kafka/pm2.json
@@ -247,7 +247,7 @@
           command: docker-compose up --force-recreate --build
         mastodon:
           json: mastodon/pm2.json
-          state: started
+          state: stopped
           command: sh ./up.sh
         zabbix:
           json: zabbix/pm2.json

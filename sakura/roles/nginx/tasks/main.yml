@@ -5,14 +5,14 @@
   become: yes
 
 - file:
-    dest: "{{ nginx_main_root }}"
+    dest: "{{ nginx_default_root }}"
     state: directory
     recurse: yes
   become: yes
 
 - copy:
     src: index.html
-    dest: "{{ nginx_main_root }}/index.html"
+    dest: "{{ nginx_default_root }}/index.html"
   become: yes
 
 - template:

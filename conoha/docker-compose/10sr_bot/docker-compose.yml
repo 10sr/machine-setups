@@ -1,8 +1,0 @@
----
-10sr_bot:
-  build: https://github.com/10sr/10sr_bot.git
-  container_name: 10sr_bot
-  env_file:
-    - ../10sr_bot.env
-  ports:
-    - "5000:5000"

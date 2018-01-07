@@ -1,0 +1,78 @@
+---
+version: '3'
+services:
+  db:
+    image: postgres:9-alpine
+    volumes:
+      - /var/lib/data/docker/mastodon0/postgres/data:/var/lib/postgresql/data
+
+  redis:
+    image: redis:4-alpine
+    volumes:
+      - /var/lib/data/docker/mastodon0/redis/data:/data
+
+  minio:
+    image: minio/minio
+    env_file:
+      - common.env
+      - ../mastodon0.env
+    command: server /export
+    ports:
+      - "9000:9000"
+    volumes:
+      - /var/lib/data/docker/mastodon0/minio/export:/export
+      - /var/lib/data/docker/mastodon0/minio/config:/root/.minio
+
+  web:
+    image: local/st.3ends.info
+    # build:
+    #   context: "https://github.com/10sr/mastodon.git#st.3ends.info"
+    command: rails s -p 3000 -b 0.0.0.0
+    env_file:
+      - common.env
+      - ../mastodon0.env
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+      - redis
+      - minio
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /var/lib/data/docker/mastodon0/web/public/assets:/mastodon/public/assets
+      - /var/lib/data/docker/mastodon0/web/public/packs:/mastodon/public/packs
+      - /var/lib/data/docker/mastodon0/web/public/system:/mastodon/public/system
+
+  streaming:
+    image: local/st.3ends.info
+    # build:
+    #   context: "https://github.com/10sr/mastodon.git#st.3ends.info"
+    env_file:
+      - common.env
+      - ../mastodon0.env
+    command: npm run start
+    ports:
+      - "4000:4000"
+    depends_on:
+      - db
+      - redis
+      - minio
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+
+  sidekiq:
+    image: local/st.3ends.info
+    # build:
+    #   context: "https://github.com/10sr/mastodon.git#st.3ends.info"
+    env_file:
+      - common.env
+      - ../mastodon0.env
+    command: sidekiq -c 2 -q default -q mailers -q pull -q push
+    depends_on:
+      - db
+      - redis
+      - minio
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /var/lib/data/docker/mastodon0/web/public/system:/mastodon/public/system
+      - /var/lib/data/docker/mastodon0/web/public/packs:/mastodon/public/packs

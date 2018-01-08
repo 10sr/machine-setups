@@ -51,8 +51,6 @@
       nginx_default_root: /var/nginx/main
       nginx_name_ssl_only:
         - "b.{{ domain_name }}"
-        - "st.{{ domain_name }}"
-        - "minio.{{ domain_name }}"
       nginx_ssl_default_root: /var/nginx/main
       nginx_ssl_proxy_upstreams:
         - path: /10sr_bot

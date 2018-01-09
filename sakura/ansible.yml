@@ -15,6 +15,7 @@
     - ./vault/mastodon_paperclip_secret.yml
     - ./vault/mastodon_secret_key_base.yml
     - ./vault/postfix_smtp_password.yml
+    - ./vault/mackerel_agent_apikey.yml
 
   pre_tasks:
     - name: Check codename
@@ -121,3 +122,5 @@
 
     - role: postfix
       postfix_root_alias: 8.slashes@gmail.com
+
+    - role: mackerel_agent

@@ -1,0 +1,57 @@
+---
+version: '2'
+services:
+  nextcloud0_nginx0:
+    image: nginx
+    container_name: nextcloud0_nginx0
+    ports:
+      - "8888:8888"
+    volumes_from:
+      - nextcloud0
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - nextcloud0
+    env_file:
+      - ../nextcloud.env
+
+  nextcloud0:
+    build:
+      context: .
+      dockerfile: Dockerfile.nextcloud
+    container_name: nextcloud0
+    env_file:
+      - ../nextcloud.env
+    # depends_on:
+    #   - nextcloud0_mariadb0
+    volumes:
+      - "/var/lib/data/docker/nextcloud0/data:/var/www/html/data"
+      # - "/var/lib/data/docker/nextcloud0/tmp:/data/tmp"
+      - "/var/lib/data/docker/nextcloud0/userapps:/var/www/html/apps"
+      - "./local.config.php:/local.config.php:ro"
+      - "/var/lib/data/docker/nextcloud0/config:/var/www/html/config"
+      - "/var/lib/data/docker/nextcloud0/sqlite:/sqlite"
+
+  # nextcloud0_mariadb0:
+  #   image: "mariadb:10"
+  #   container_name: nextcloud0_mariadb0
+  #   command: ["--innodb-buffer-pool-size=128M", "--expire-logs-days=5"]
+  # nextcloud0_mariadb0:
+  #   image: "mariadb:10"
+  #   container_name: nextcloud0_mariadb0
+  #   env_file:
+  #     - ../nextcloud.env
+  #   volumes:
+  #     - "/var/lib/data/docker/nextcloud0/mariadb:/var/lib/mysql"
+
+  nextcloud0_cron0:
+    build:
+      context: .
+      dockerfile: Dockerfile.cron
+    container_name: nextcloud0_cron0
+    env_file:
+      - ../nextcloud.env
+    # depends_on:
+    #   - nextcloud0_mariadb0
+    volumes_from:
+      - nextcloud0

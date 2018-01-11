@@ -43,6 +43,7 @@
         - "b.{{ domain_name }}"
         - "st.{{ domain_name }}"
         - "minio.st.{{ domain_name }}"
+        - "nc.{{ domain_name }}"
       letsencrypt_webroot: /var/nginx/main
       letsencrypt_key_dir: /etc/letsencrypt/live/{{ domain_name }}
       letsencrypt_ssl_key_dir: /etc/letsencrypt/live/{{ domain_name }}
@@ -52,6 +53,7 @@
       nginx_default_root: /var/nginx/main
       nginx_name_ssl_only:
         - "b.{{ domain_name }}"
+        - "nc.{{ domain_name }}"
       nginx_ssl_default_root: /var/nginx/main
       nginx_ssl_proxy_upstreams:
         - path: /10sr_bot
@@ -66,6 +68,8 @@
             - "proxy_set_header Host $host"
             - "proxy_set_header X-Forwarded-Proto $scheme"
             - "proxy_set_header X-Real-IP $remote_addr"
+        - name: "nc.{{ domain_name }}"
+          port: 8888
 
     - role: docker
       docker_ubuntu_codename: "{{ ubuntu_codename }}"
@@ -92,6 +96,12 @@
           # CRON_JS_SMTP_PORT: 587
           # CRON_JS_SMTP_USER: postmaster@m.3ends.info
           # CRON_JS_SMTP_PASS: "{{ postfix_smtp_password }}"
+        nextcloud:
+          # MYSQL_USER: nextcloud
+          # MYSQL_ROOT_PASSWORD: "{{ nextcloud_mysql_root_password }}"
+          # MYSQL_DATABASE: nextcloud
+          # MYSQL_PASSWORD: "{{ nextcloud_mysql_password }}"
+          VIRTUAL_HOST: "nc.{{ domain_name }}"
       docker_pm2:
         10sr_bot0:
           json: 10sr_bot0/pm2.json

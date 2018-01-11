@@ -96,7 +96,7 @@
           # CRON_JS_SMTP_PORT: 587
           # CRON_JS_SMTP_USER: postmaster@m.3ends.info
           # CRON_JS_SMTP_PASS: "{{ postfix_smtp_password }}"
-        nextcloud:
+        nextcloud0:
           # MYSQL_USER: nextcloud
           # MYSQL_ROOT_PASSWORD: "{{ nextcloud_mysql_root_password }}"
           # MYSQL_DATABASE: nextcloud

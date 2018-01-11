@@ -13,7 +13,7 @@ services:
     depends_on:
       - nextcloud0
     env_file:
-      - ../nextcloud.env
+      - ../nextcloud0.env
 
   nextcloud0:
     build:
@@ -21,7 +21,7 @@ services:
       dockerfile: Dockerfile.nextcloud
     container_name: nextcloud0
     env_file:
-      - ../nextcloud.env
+      - ../nextcloud0.env
     # depends_on:
     #   - nextcloud0_mariadb0
     volumes:
@@ -49,8 +49,9 @@ services:
       context: .
       dockerfile: Dockerfile.cron
     container_name: nextcloud0_cron0
+    user: www-data
     env_file:
-      - ../nextcloud.env
+      - ../nextcloud0.env
     # depends_on:
     #   - nextcloud0_mariadb0
     volumes_from:

@@ -1,6 +1,16 @@
 ---
 version: '3'
 services:
+  # nginx:
+  #   image: nginx
+  #   ports:
+  #     - "8888:8888"
+  #   volumes:
+  #     - ./nginx.conf.envsubst:/etc/nginx/nginx.conf.envsubst:ro
+  #   env_file:
+  #     - ../mastodon0.env
+  # command: /bin/sh -c "envsubst </etc/nginx/nginx.conf.envsubst >/etc/nginx/nginx.conf && nginx -g 'daemon off;'"
+
   db:
     image: postgres:9-alpine
     volumes:

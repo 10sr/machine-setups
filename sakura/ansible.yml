@@ -16,6 +16,8 @@
     - ./vault/mastodon_secret_key_base.yml
     - ./vault/postfix_smtp_password.yml
     - ./vault/mackerel_agent_apikey.yml
+    - ./vault/nextcloud_mysql_password.yml
+    - ./vault/nextcloud_mysql_root_password.yml
 
   pre_tasks:
     - name: Check codename
@@ -97,10 +99,10 @@
           # CRON_JS_SMTP_USER: postmaster@m.3ends.info
           # CRON_JS_SMTP_PASS: "{{ postfix_smtp_password }}"
         nextcloud0:
-          # MYSQL_USER: nextcloud
-          # MYSQL_ROOT_PASSWORD: "{{ nextcloud_mysql_root_password }}"
-          # MYSQL_DATABASE: nextcloud
-          # MYSQL_PASSWORD: "{{ nextcloud_mysql_password }}"
+          MYSQL_USER: nextcloud
+          MYSQL_ROOT_PASSWORD: "{{ nextcloud_mysql_root_password }}"
+          MYSQL_DATABASE: nextcloud
+          MYSQL_PASSWORD: "{{ nextcloud_mysql_password }}"
           VIRTUAL_HOST: "nc.{{ domain_name }}"
       docker_pm2:
         10sr_bot0:
@@ -119,6 +121,10 @@
           json: mastodon0/pm2.json
           state: started
           command: sh ./up.sh
+        nextcloud0:
+          json: nextcloud0/pm2.json
+          state: started
+          command: docker-compose up --build
 
     - role: mastodon_nginx_proxy
       mastodon_server_name: st.{{ domain_name }}

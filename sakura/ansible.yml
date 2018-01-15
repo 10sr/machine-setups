@@ -84,6 +84,10 @@
           TWITTER_TOKEN_SECRET: "{{ bot_twitter_token_secret }}"
           POST_BEARER_TOKEN: "{{ bot_post_bearer_token }}"
         mastodon0:
+          NGINX_SERVER_NAME: "st.{{ domain_name }}"
+          NGINX_S3_SERVER_NAME: "minio.st.{{ domain_name }}"
+          NGINX_SERVER_PORT: 3000
+          NGINX_S3_SERVER_PORT: 9000
           PAPERCLIP_SECRET: "{{ mastodon_paperclip_secret }}"
           SECRET_KEY_BASE: "{{ mastodon_secret_key_base }}"
           OTP_SECRET: "{{ mastodon_otp_secret }}"
@@ -92,7 +96,7 @@
           AWS_SECRET_ACCESS_KEY: "{{ mastodon_minio_secret_key }}"
           MINIO_ACCESS_KEY: 66aa7319
           MINIO_SECRET_KEY: "{{ mastodon_minio_secret_key }}"
-          S3_HOSTNAME: minio.st.3ends.info
+          S3_HOSTNAME: minio.st.{{ domain_name }}
           # CRON_JS_MAILTO: 8.slashes@gmail.com
           # CRON_JS_SMTP_HOST: smtp.mailgun.org
           # CRON_JS_SMTP_PORT: 587

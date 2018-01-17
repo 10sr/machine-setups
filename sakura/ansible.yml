@@ -77,6 +77,8 @@
       docker_ubuntu_codename: "{{ ubuntu_codename }}"
       docker_compose_path: ./docker-compose
       docker_compose_env:
+        ghost0:
+          NGINX_SERVER_NAME: "b.{{ domain_name }}"
         10sr_bot0:
           TWITTER_KEY: VmHRoeyCxmGisuGPCBADVfo6v
           TWITTER_SECRET: "{{ bot_twitter_secret }}"

@@ -16,10 +16,10 @@ services:
     ports:
       - "2369:2369"
     volumes:
-      - ./nginx.conf:/etc/nginx/nginx.conf:ro
-      # - ./nginx_cmd.sh:/nginx_cmd.sh:ro
-    # env_file:
-    #   - ../mastodon0.env
-    # command: sh /nginx_cmd.sh
+      - ./nginx.conf.envsubst:/etc/nginx/nginx.conf.envsubst:ro
+      - ./nginx_cmd.sh:/nginx_cmd.sh:ro
+    env_file:
+      - ../ghost0.env
+    command: sh /nginx_cmd.sh
     depends_on:
       - app

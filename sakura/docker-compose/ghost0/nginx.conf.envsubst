@@ -29,7 +29,7 @@ http {
 
   server {
     listen 2369;
-    server_name $NIGNX_SERVER_NAME;
+    server_name $NGINX_SERVER_NAME;
 
     location / {
       # proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;

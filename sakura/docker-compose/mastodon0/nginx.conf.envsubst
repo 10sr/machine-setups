@@ -37,7 +37,7 @@ http {
   server {
     listen ${NGINX_S3_SERVER_PORT};
 
-    server_name $NIGNX_S3_SERVER_NAME;
+    server_name $NGINX_S3_SERVER_NAME;
 
     location / {
       proxy_pass http://minio:9000;

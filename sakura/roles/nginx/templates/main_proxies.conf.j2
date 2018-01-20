@@ -18,6 +18,7 @@ server {
 
 server {
     listen 80;
+    listen [::]:80;
     server_name  {{ nginx_name_ssl_only | default([]) | join(" ") }};
     return 303 https://$host$request_uri;
 }

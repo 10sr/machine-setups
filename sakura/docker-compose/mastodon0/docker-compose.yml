@@ -67,7 +67,7 @@ services:
     env_file:
       - common.env
       - ../mastodon0.env
-    command: sidekiq -c 2 -q default -q mailers -q pull -q push
+    command: sidekiq -q default -q mailers -q pull -q push
     depends_on:
       - db
       - redis

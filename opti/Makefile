@@ -1,3 +1,7 @@
+SSH_CONFIG ?= ssh_config
+SSH_ARGS := -F ${SSH_CONFIG}
+
+
 default: help
 
 help:
@@ -8,18 +12,18 @@ help:
 play: play-opti play-lxc  ## Run play-opti and play-lxc
 
 play-opti:  ## Set up opti (lxc host)
-	ansible-playbook -vv --diff opti.yml
+	ansible-playbook -vv --ssh-common-args='${SSH_ARGS}' --diff opti.yml
 
 play-lxc: transfer-repository  ## Set up lxc containers
 	# Any way other than to use sudo ?
-	ssh -t opti "cd .machine-setups-opti/ && ansible-playbook -vv lxc.yml --diff"
+	ssh ${SSH_ARGS} -t opti "cd .machine-setups-opti/ && ansible-playbook -vv lxc.yml --diff"
 
 play-lxc-bootstrap: transfer-repository  ## Set up lxc containers (requires sudo password)
 	# Any way other than to use sudo ?
-	ssh -t opti "cd .machine-setups-opti/ && sudo ansible-playbook -vv lxc-bootstrap.yml --diff"
+	ssh ${SSH_ARGS} -t opti "cd .machine-setups-opti/ && sudo ansible-playbook -vv lxc-bootstrap.yml --diff"
 
 transfer-repository:  ## Transfer this repository to opti
-	ansible -vv --diff opti -m synchronize -a "src=./ dest=./.machine-setups-opti/ delete=yes"
+	ansible -vv --ssh-common-args='${SSH_ARGS}' --diff opti -m synchronize -a "src=./ dest=./.machine-setups-opti/ delete=yes use_ssh_args=yes"
 
 
 facts:

@@ -1,5 +1,5 @@
-SSH_CONFIG ?= ssh_config
-SSH_ARGS := -F ${SSH_CONFIG}
+ssh_config ?= ssh_config
+SSH_ARGS := -F ${ssh_config}
 
 
 default: help

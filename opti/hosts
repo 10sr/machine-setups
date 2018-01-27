@@ -1,5 +1,5 @@
 [default]
-opti
+opti ansible_host=10sr.f5.si ansible_port=9622
 
 [local]
 localhost

@@ -33,6 +33,11 @@
       hosts_hosts: "{{ containers }}"
 
 - hosts: cdh-db
+  vars:
+    cdh_mariadb_user_username: cdh
+  vars_files:
+    - ./vault/cdh_mariadb_root_password.yml
+    - ./vault/cdh_mariadb_user_password.yml
   roles:
     - role: cdh-mariadb
 

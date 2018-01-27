@@ -19,6 +19,7 @@ server {
 
 server {
     listen 443 ssl http2;
+    listen [::]:443 ssl http2;
 
     server_name {{ mastodon_s3_server_name }};
 
@@ -28,8 +29,8 @@ server {
 }
 
 server {
-  listen 443 ssl;
-  listen [::]:443 ssl;
+  listen 443 ssl http2;
+  listen [::]:443 ssl http2;
   server_name {{ mastodon_server_name }};
 
   keepalive_timeout    70;

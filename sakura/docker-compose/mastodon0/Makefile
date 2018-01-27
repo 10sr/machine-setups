@@ -1,6 +1,6 @@
 DC_RUN := docker-compose --verbose run --rm
 
-build:
+build-image:
 	docker build  -t local/st.3ends.info \
 		"https://github.com/10sr/mastodon.git#st.3ends.info"
 

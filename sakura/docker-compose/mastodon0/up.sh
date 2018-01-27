@@ -4,8 +4,7 @@ set -eux
 set 2>&1
 
 docker-compose down
-docker build  -t local/st.3ends.info \
-     "https://github.com/10sr/mastodon.git#st.3ends.info"
+make build-image
 #docker-compose --verbose build --pull
 while true
 do

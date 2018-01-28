@@ -26,6 +26,9 @@ transfer-repository:  ## Transfer this repository to opti
 	ansible -vv --ssh-common-args='${SSH_ARGS}' --diff opti -m synchronize -a "src=./ dest=./.machine-setups-opti/ delete=yes use_ssh_args=yes"
 
 
+ssh:
+	exec ssh ${SSH_ARGS} opti
+
 facts:
 	ansible -m setup conoha
 

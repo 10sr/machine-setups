@@ -20,12 +20,6 @@
     owner: docker
   become: yes
 
-# - include: pm2-app.yml
-#   vars:
-#     name: "{{ item.key }}"
-#     values: "{{ item.value }}"
-#   with_dict: "{{ docker_pm2 }}"
-
 - template:
     src: docker-pm2.logrotate.j2
     dest: /etc/logrotate.d/docker-pm2

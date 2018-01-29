@@ -42,13 +42,14 @@
     - docker-compose
   become: yes
 
-- include: user.yml
+- import_tasks: user.yml
 
-- include: pm2.yml
+- import_tasks: pm2.yml
 
-- include: apps.yml
+- import_tasks: apps.yml
 
-- include: pm2-app.yml
+  # import_tasks cannot be used with loop
+- include_tasks: pm2-app.yml
   vars:
     name: "{{ item.key }}"
     values: "{{ item.value }}"

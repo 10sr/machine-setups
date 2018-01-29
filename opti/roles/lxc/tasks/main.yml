@@ -1,5 +1,5 @@
 ---
-- include: bridge.yml
+- import_tasks: bridge.yml
 
 - yum:
     name: "{{ item }}"
@@ -32,4 +32,4 @@
   with_dict: "{{ lxc_containers }}"
   become: yes
 
-- include: hosts.yml
+- import_tasks: hosts.yml

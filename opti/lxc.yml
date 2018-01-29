@@ -50,7 +50,7 @@
   vars_files:
     - ./vault/cdh_mariadb_root_password.yml
     - ./vault/cdh_mariadb_user_password.yml
-    - ./vault/lxc_become_pass.ypml
+    - ./vault/lxc_become_pass.yml
 
   roles:
     - role: cloudera_manager

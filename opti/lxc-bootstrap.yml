@@ -51,3 +51,10 @@
         create: yes
         owner: cdh
         mode: "0600"
+
+    - lineinfile:
+        path: /etc/sudoers
+        state: present
+        regexp: '%wheel\s.*NOPASSWD'
+        line: '%wheel ALL=(ALL) NOPASSWD: ALL'
+        validate: 'visudo -cf %s'

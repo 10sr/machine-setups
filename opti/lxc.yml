@@ -34,7 +34,8 @@
 
 - hosts: cdh-db
   vars:
-    cdh_mariadb_user_username: cdh
+    cdh_mariadb_user_username: scm
+    cdh_mariadb_cmf_dbname: scm
   vars_files:
     - ./vault/cdh_mariadb_root_password.yml
     - ./vault/cdh_mariadb_user_password.yml
@@ -43,9 +44,14 @@
 
 
 - hosts: cm01
+  vars:
+    cdh_mariadb_user_username: scm
+    cdh_mariadb_cmf_dbname: scm
   vars_files:
-    - ./vault/lxc_become_pass.yml
+    - ./vault/cdh_mariadb_root_password.yml
+    - ./vault/cdh_mariadb_user_password.yml
+    - ./vault/lxc_become_pass.ypml
 
   roles:
     - role: cloudera_manager
-
+      cdh_mariadb_db_host: cdh-db

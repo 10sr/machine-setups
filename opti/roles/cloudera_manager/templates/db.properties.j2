@@ -1,0 +1,29 @@
+# {{ ansible_managed }}
+
+# Copyright (c) 2012 Cloudera, Inc. All rights reserved.
+#
+# This file describes the database connection.
+#
+
+# The database type
+# Currently 'mysql', 'postgresql' and 'oracle' are valid databases.
+com.cloudera.cmf.db.type=mysql
+
+# The database host
+# If a non standard port is needed, use 'hostname:port'
+com.cloudera.cmf.db.host={{ cdh_mariadb_db_host }}
+
+# The database name
+com.cloudera.cmf.db.name={{ cdh_mariadb_cmf_dbname }}
+
+# The database user
+com.cloudera.cmf.db.user={{ cdh_mariadb_user_username }}
+
+# The database user's password
+com.cloudera.cmf.db.password={{ cdh_mariadb_user_password }}
+
+# The db setup type
+# By default, it is set to INIT
+# If scm-server uses Embedded DB then it is set to EMBEDDED
+# If scm-server uses External DB then it is set to EXTERNAL
+com.cloudera.cmf.db.setupType=EXTERNAL

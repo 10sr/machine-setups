@@ -11,6 +11,12 @@
     update_cache: yes
   become: yes
 
+- name: Install mysql-connector
+  yum:
+    name: mysql-connector-java
+    update_cache: yes
+  become: yes
+
 - name: Install cloudera manager packages
   yum:
     name: "{{ item }}"
@@ -19,3 +25,10 @@
     - cloudera-manager-server
     - cloudera-manager-daemons
   become: yes
+
+#   # https://www.cloudera.com/documentation/enterprise/5-10-x/topics/cm_ig_installing_configuring_dbs.html#concept_i2r_m3m_hn
+# - name: Put db.properties
+#   template:
+#     src: db.properties.j2
+#     dest: /etc/cloudera-scm-server/db.properties
+#   become: yes

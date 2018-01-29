@@ -1,0 +1,24 @@
+---
+- name: Install nginx
+  yum:
+    name: nginx
+  become: yes
+
+- name: Put port_proxies.conf
+  template:
+    src: port_proxies.conf.j2
+    dest: port_proxies.conf
+  become: yes
+  register: _port_proxies_conf
+
+- service:
+    name: nginx
+    state: restarted
+  become: yes
+  when: _port_proxies_conf | changed
+
+- service:
+    name: nginx
+    enabled: yes
+    state: started
+  become: yes

@@ -41,6 +41,11 @@
       letsencrypt_domain_names:
         - 10sr.f5.si:5520
 
+    # - role: nginx
+    #   nginx_port_proxies:
+    #     - listen: 7180
+    #       upstream: cm01:7180
+
   tasks:
     - name: Install some utilities
       yum:

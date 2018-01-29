@@ -6,3 +6,10 @@
     regexp: "^{{ item.value.ip_address }}"
   with_dict: "{{ hosts_hosts }}"
   become: yes
+
+- name: Remove hostname from loopback address
+  lineinfile:
+    dest: /etc/hosts
+    line: "127.0.0.1 localhost"
+    regexp: "^127\\.0\\.0\\.1"
+  become: yes

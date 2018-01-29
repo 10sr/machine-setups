@@ -11,9 +11,15 @@
     update_cache: yes
   become: yes
 
-- name: Install mysql-connector
+- name: Install mysql-connector for /usr/share/cmf/schema/scm_prepare_database.sh
   yum:
     name: mysql-connector-java
+    update_cache: yes
+  become: yes
+
+- name: Install pstree, required for cloudera-scm-server start
+  yum:
+    name: psmisc
     update_cache: yes
   become: yes
 

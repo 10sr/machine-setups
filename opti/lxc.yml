@@ -27,6 +27,12 @@
     - debug:
         msg: hoe
       become: yes
+    - name: Install required packages
+      yum:
+        name: "{{ item }}"
+      with_items:
+        - which
+      become: yes
 
   roles:
     - role: hosts

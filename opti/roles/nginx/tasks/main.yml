@@ -7,7 +7,7 @@
 - name: Put port_proxies.conf
   template:
     src: port_proxies.conf.j2
-    dest: port_proxies.conf
+    dest: /etc/nginx/conf.d/port_proxies.conf
   become: yes
   register: _port_proxies_conf
 

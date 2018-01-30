@@ -32,6 +32,7 @@
         name: "{{ item }}"
       with_items:
         - which
+        - mysql-connector-java
       become: yes
 
   roles:

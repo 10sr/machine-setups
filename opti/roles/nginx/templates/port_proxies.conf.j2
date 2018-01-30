@@ -1,0 +1,17 @@
+{% for proxy in nginx_port_proxies | default([]) %}
+server {
+    listen {{ proxy.listen }};
+    listen [::]:{{ proxy.listen }};
+
+    client_max_body_size 0;
+
+    server_name _;
+
+    location / {
+{% for directive in proxy.additional_directives | default([]) %}
+        {{ directive }};
+{% endfor %}
+        proxy_pass http://{{ proxy.upstream }};
+    }
+}
+{% endfor %}

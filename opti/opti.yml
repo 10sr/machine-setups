@@ -37,14 +37,19 @@
           state: started
           command: docker-compose up --force-recreate
 
-    - role: letsencrypt
-      letsencrypt_domain_names:
-        - 10sr.f5.si:5520
+    # - role: letsencrypt
+    #   letsencrypt_domain_names:
+    #     - 10sr.f5.si:5520
 
-    # - role: nginx
-    #   nginx_port_proxies:
-    #     - listen: 7180
-    #       upstream: cm01:7180
+    - role: nginx
+      nginx_port_proxies:
+        - listen: 7180
+          upstream: cm01:7180
+          additional_directives:
+            - "proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for"
+            - "proxy_set_header Host $host"
+            - "proxy_set_header X-Forwarded-Proto $scheme"
+            - "proxy_set_header X-Real-IP $remote_addr"
 
   tasks:
     - name: Install some utilities

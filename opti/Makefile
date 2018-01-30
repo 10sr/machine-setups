@@ -29,6 +29,9 @@ transfer-repository:  ## Transfer this repository to opti
 ssh:
 	exec ssh ${SSH_ARGS} opti
 
+ssh-l:
+	exec ssh ${SSH_ARGS} -L 7180:cm01:7180 opti
+
 facts:
 	ansible -m setup conoha
 

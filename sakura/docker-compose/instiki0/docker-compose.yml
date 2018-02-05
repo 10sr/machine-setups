@@ -1,14 +1,27 @@
 ---
 version: "3"
 services:
-  instiki0:
+  app:
     build:
       context: https://github.com/parasew/instiki.git
     container_name: instiki0
     command: ["./instiki", "--path=/wiki"]
-    ports:
-      - 2500:2500
+    # ports:
+    #   - 2500:2500
     volumes:
       - "./database.yml:/usr/src/app/config/database.yml:ro"
       - "/var/lib/data/docker/instiki0/db:/db"
       - "/var/lib/data/docker/instiki0/webs:/usr/src/app/webs"
+
+  nginx:
+    image: nginx
+    ports:
+      - "2501:2501"
+    volumes:
+      - ./nginx.conf.envsubst:/etc/nginx/nginx.conf.envsubst:ro
+      - ./nginx_cmd.sh:/nginx_cmd.sh:ro
+    env_file:
+      - ../ghost0.env
+    command: sh /nginx_cmd.sh
+    depends_on:
+      - app

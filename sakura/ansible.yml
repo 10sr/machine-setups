@@ -61,7 +61,7 @@
         - path: /10sr_bot
           port: 5000
         - path: /wiki
-          port: 2500
+          port: 2501
       nginx_ssl_host_proxies:
         - name: "b.{{ domain_name }}"
           port: 2368
@@ -79,6 +79,8 @@
       docker_compose_env:
         ghost0:
           NGINX_SERVER_NAME: "b.{{ domain_name }}"
+        instiki0:
+          NGINX_SERVER_NAME: "{{ domain_name }}"
         10sr_bot0:
           TWITTER_KEY: VmHRoeyCxmGisuGPCBADVfo6v
           TWITTER_SECRET: "{{ bot_twitter_secret }}"
@@ -118,11 +120,11 @@
         ghost0:
           json: ghost0/pm2.json
           state: started
-          command: docker-compose up --force-recreate
+          command: docker-compose up --build
         instiki0:
           json: instiki0/pm2.json
           state: started
-          command: docker-compose up --force-recreate --build
+          command: docker-compose up --build
         mastodon0:
           json: mastodon0/pm2.json
           state: started

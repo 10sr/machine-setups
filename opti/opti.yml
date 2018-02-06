@@ -43,6 +43,8 @@
 
     - role: nginx
       nginx_port_proxies:
+        - listen: 8888
+          upstream: nn01:8888
         - listen: 7180
           upstream: cm01:7180
           additional_directives:

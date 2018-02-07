@@ -1,15 +1,20 @@
+pipenv := env PIPENV_VENV_IN_PROJECT=1 pipenv
+
 default:
 
-play:
-	ansible-playbook -vv ansible.yml --diff
+.venv:
+	${pipenv} install --ignore-pipfile
 
-facts:
-	ansible -m setup sakura
+play: .venv
+	${pipenv} run ansible-playbook -vv ansible.yml --diff
+
+facts: .venv
+	${pipenv} run ansible -m setup sakura
 
 
-encrypt_all:
-	-find vault/ -type f | xargs -n 1 ansible-vault encrypt
+encrypt_all: .venv
+	-find vault/ -type f | xargs -n 1 ${pipenv} run ansible-vault encrypt
 
 
-decrypt_all:
-	-find vault/ -type f | xargs -n 1 ansible-vault decrypt
+decrypt_all: .venv
+	-find vault/ -type f | xargs -n 1 ${pipenv} run ansible-vault decrypt

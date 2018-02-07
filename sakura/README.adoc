@@ -17,7 +17,6 @@ http://tk2-407-44672.vs.sakura.ne.jp
 
 == Usage
 
-
 Add `vault_pass.secret` with the vault password in it and issue:
 
 ----

@@ -1,12 +1,3 @@
 = Machine Setups
 
 My server configurations.
-
-
-== Initial setup
-
-Issue:
-
-----
-pipenv install --ignore-pipfile
-----

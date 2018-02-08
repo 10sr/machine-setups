@@ -16,7 +16,7 @@ services:
   nginx:
     image: nginx
     ports:
-      - "2501:2501"
+      - "127.0.0.1:2501:2501"
     volumes:
       - ./nginx.conf.envsubst:/etc/nginx/nginx.conf.envsubst:ro
       - ./nginx_cmd.sh:/nginx_cmd.sh:ro

@@ -6,8 +6,10 @@ services:
       context: https://github.com/parasew/instiki.git
     container_name: instiki0
     command: ["./instiki", "--path=/wiki"]
-    # ports:
-    #   - 2500:2500
+    ports:
+      - "127.0.0.1:2500:2500"
+    environment:
+      RAILS_ENV: production
     volumes:
       - "./database.yml:/usr/src/app/config/database.yml:ro"
       - "/var/lib/data/docker/instiki0/db:/db"

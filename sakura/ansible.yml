@@ -61,7 +61,13 @@
         - path: /10sr_bot
           port: 5000
         - path: /wiki
-          port: 2501
+          port: 2500
+          additional_directives:
+            - "proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for"
+            - "proxy_set_header Host $host"
+            - "proxy_set_header X-Forwarded-Proto $scheme"
+            - "proxy_set_header X-Real-IP $remote_addr"
+            # - "proxy_redirect default"
       nginx_ssl_host_proxies:
         - name: "b.{{ domain_name }}"
           port: 2368

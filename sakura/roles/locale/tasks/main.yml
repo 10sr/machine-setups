@@ -1,0 +1,14 @@
+---
+- name: Update locale.gen
+  lineinfile:
+    regexp: "{{ item }}"
+    line: "{{ item }}"
+    dest: /etc/locale.gen
+  with_items: "{{ locale_locales }}"
+  become: yes
+  register: _locale_gen
+
+- name: Run locale-gen
+  command: locale-gen
+  when: _locale_gen | changed
+  become: yes

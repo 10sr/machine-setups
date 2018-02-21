@@ -37,6 +37,9 @@
   roles:
     # - role: hostname
     #   hostname: "{{ domain_name }}"
+    - role: locale
+      locale_locales:
+        - ja_JP.UTF-8 UTF-8
 
     - role: letsencrypt
       letsencrypt_register_email: 8.slashes@gmail.com

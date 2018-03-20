@@ -5,21 +5,13 @@
     ubuntu_codename: xenial
     domain_name: 3ends.info
     # domain_name: "tk2-407-44672.vs.sakura.ne.jp"
-  vars_files:
-    - ./vault/ansible_become_pass.yml
-    - ./vault/bot_post_bearer_token.yml
-    - ./vault/bot_twitter_secret.yml
-    - ./vault/bot_twitter_token_secret.yml
-    - ./vault/mastodon_minio_secret_key.yml
-    - ./vault/mastodon_otp_secret.yml
-    - ./vault/mastodon_paperclip_secret.yml
-    - ./vault/mastodon_secret_key_base.yml
-    - ./vault/postfix_smtp_password.yml
-    - ./vault/mackerel_agent_apikey.yml
-    - ./vault/nextcloud_mysql_password.yml
-    - ./vault/nextcloud_mysql_root_password.yml
 
   pre_tasks:
+    - name: Include all valut variables
+      include_vars:
+        dir: ./vault/
+        # TODO: use `name'
+
     - name: Check codename
       assert:
         that:

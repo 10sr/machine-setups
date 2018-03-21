@@ -6,7 +6,7 @@ default:
 	${pipenv} install --ignore-pipfile
 
 play: .venv
-	${pipenv} run ansible-playbook -vv ansible.yml --diff
+	${pipenv} run ansible-playbook -vv ansible.yml
 
 facts: .venv
 	${pipenv} run ansible -m setup sakura

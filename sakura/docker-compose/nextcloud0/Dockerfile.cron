@@ -1,4 +1,4 @@
-FROM nextcloud:12.0.5-fpm
+FROM nextcloud:13.0.1-fpm
 
 # Requred for https source
 RUN apt-get update && apt-get install -y apt-transport-https

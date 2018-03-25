@@ -1,4 +1,4 @@
-FROM nextcloud:12.0.5-fpm
+FROM nextcloud:13.0.1-fpm
 
 COPY start.sh /
 RUN chmod 755 /start.sh

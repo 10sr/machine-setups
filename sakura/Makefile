@@ -3,7 +3,7 @@ pipenv := env PIPENV_VENV_IN_PROJECT=1 pipenv
 default:
 
 .venv:
-	${pipenv} install --ignore-pipfile
+	${pipenv} install
 
 play: .venv
 	${pipenv} run ansible-playbook -vv ansible.yml

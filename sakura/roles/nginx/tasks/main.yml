@@ -49,7 +49,7 @@
     name: nginx
     state: restarted
   become: yes
-  # when: _main_conf | changed
+  # when: _main_conf is changed
 
 - service:
     name: nginx

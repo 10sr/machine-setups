@@ -8,5 +8,5 @@
 - service:
     name: nginx
     state: restarted
-  when: _mastodon_proxy.changed
+  when: _mastodon_proxy is changed
   become: yes

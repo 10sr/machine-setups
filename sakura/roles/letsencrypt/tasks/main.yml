@@ -20,7 +20,7 @@
   # args:
   #   creates: "{{ letsencrypt_key_dir }}"
   become: yes
-  when: _certbot_auto_sh | changed
+  when: _certbot_auto_sh is changed
 
 - template:
     src: update_letsencrypt_cert.sh.j2
@@ -44,4 +44,4 @@
     name: nginx
     state: restarted
   become: yes
-  when: _ssl_conf | changed
+  when: _ssl_conf is changed

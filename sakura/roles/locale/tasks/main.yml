@@ -10,5 +10,5 @@
 
 - name: Run locale-gen
   command: locale-gen
-  when: _locale_gen | changed
+  when: _locale_gen is changed
   become: yes

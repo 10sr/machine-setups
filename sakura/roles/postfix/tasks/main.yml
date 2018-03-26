@@ -15,4 +15,4 @@
 - name: Update aliases.db
   command: newaliases
   become: yes
-  when: _postfix_aliases | changed
+  when: _postfix_aliases is changed

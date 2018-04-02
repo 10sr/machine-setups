@@ -18,3 +18,7 @@ encrypt_all: .venv
 
 decrypt_all: .venv
 	-find vault/ -type f | xargs -n 1 ${pipenv} run ansible-vault decrypt
+
+
+ansible-lint: .venv
+	${pipenv} run ansible-lint ansible.yml

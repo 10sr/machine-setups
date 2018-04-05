@@ -21,4 +21,4 @@ decrypt_all: .venv
 
 
 ansible-lint: .venv
-	${pipenv} run ansible-lint ansible.yml
+	${pipenv} run ansible-lint ansible.yml --nocolor -p

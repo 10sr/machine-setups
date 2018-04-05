@@ -1,0 +1,6 @@
+---
+verbosity: 2
+skip_list:
+  - ANSIBLE0004  # Git checkouts must contain explicit version
+  - ANSIBLE0011  # All tasks should be named
+  - ANSIBLE0016  # Tasks that run when changed should likely be handlers

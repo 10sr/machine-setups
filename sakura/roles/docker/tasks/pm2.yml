@@ -4,18 +4,17 @@
   become: yes
 
 - apt_repository:
-    repo: 'deb https://deb.nodesource.com/node_6.x {{ docker_ubuntu_codename }} main' 
+    repo: 'deb https://deb.nodesource.com/node_6.x {{ docker_ubuntu_codename }} main'
     update_cache: yes
   become: yes
 
 - apt_repository:
-    repo: 'deb-src https://deb.nodesource.com/node_6.x {{ docker_ubuntu_codename }} main' 
+    repo: 'deb-src https://deb.nodesource.com/node_6.x {{ docker_ubuntu_codename }} main'
     update_cache: yes
   become: yes
 
 - apt:
     name: nodejs
-    state: latest
   become: yes
 
 - npm:

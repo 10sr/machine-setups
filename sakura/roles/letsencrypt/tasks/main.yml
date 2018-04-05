@@ -8,6 +8,7 @@
     repo: https://github.com/certbot/certbot.git
     dest: /opt/letsencrypt_certbot
     force: yes
+    version: HEAD
   become: yes
 
 - template:

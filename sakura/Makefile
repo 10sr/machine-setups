@@ -2,6 +2,8 @@ pipenv := env PIPENV_VENV_IN_PROJECT=1 pipenv
 
 default:
 
+check: ansible-lint
+
 .venv:
 	${pipenv} install
 

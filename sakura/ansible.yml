@@ -57,6 +57,7 @@
       nginx_name_ssl_only:
         - "b.{{ domain_name }}"
         - "nc.{{ domain_name }}"
+      nginx_proxy_upstreams: []
       nginx_ssl_default_root: /var/nginx/main
       nginx_ssl_proxy_upstreams:
         - path: /10sr_bot
@@ -162,3 +163,10 @@
 
     - role: mackerel_agent
       mackerel_agent_apikey: "{{ _vault.mackerel_agent_apikey }}"
+
+  post_tasks:
+    - file:
+        state: link
+        src: /var/lib/data/docker/nextcloud0/html/data/10sr/files/www
+        dest: /var/nginx/main/nc
+      become: yes

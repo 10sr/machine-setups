@@ -15,7 +15,7 @@ services:
   app:
     build:
       context: .
-      dockerfile: Dockerfile.nextcloud
+      dockerfile: nextcloud.Dockerfile
     volumes:
       - nextcloud:/var/www/html
       - ./local.config.php:/local.config.php:ro
@@ -41,7 +41,7 @@ services:
   cron:
     build:
       context: .
-      dockerfile: Dockerfile.cron
+      dockerfile: cron.Dockerfile
     user: www-data
     env_file:
       - ../nextcloud0.env

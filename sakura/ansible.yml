@@ -2,8 +2,8 @@
 - hosts: default
   vars:
     # Do not use these variables directly in roles!
-    ubuntu_codename: xenial
-    domain_name: 3ends.info
+    _ubuntu_codename: xenial
+    _domain_name: 3ends.info
     # domain_name: "tk2-407-44672.vs.sakura.ne.jp"
 
   pre_tasks:
@@ -20,8 +20,8 @@
     - name: Check codename
       assert:
         that:
-          - ubuntu_codename == ansible_lsb.codename
-          - ubuntu_codename == ansible_distribution_release
+          - _ubuntu_codename == ansible_lsb.codename
+          - _ubuntu_codename == ansible_distribution_release
 
     - name: Install some prerequisite packages
       apt:
@@ -33,7 +33,7 @@
 
   roles:
     # - role: hostname
-    #   hostname: "{{ domain_name }}"
+    #   hostname: "{{ _domain_name }}"
     - role: locale
       locale_locales:
         - ja_JP.UTF-8 UTF-8
@@ -41,22 +41,22 @@
     - role: letsencrypt
       letsencrypt_register_email: 8.slashes@gmail.com
       letsencrypt_domain_names:
-        - "{{ domain_name }}"
-        - "b.{{ domain_name }}"
-        - "st.{{ domain_name }}"
-        - "minio.st.{{ domain_name }}"
-        - "nc.{{ domain_name }}"
-        - "px.{{ domain_name }}"
+        - "{{ _domain_name }}"
+        - "b.{{ _domain_name }}"
+        - "st.{{ _domain_name }}"
+        - "minio.st.{{ _domain_name }}"
+        - "nc.{{ _domain_name }}"
+        - "px.{{ _domain_name }}"
       letsencrypt_webroot: /var/nginx/main
-      letsencrypt_key_dir: /etc/letsencrypt/live/{{ domain_name }}
-      letsencrypt_ssl_key_dir: /etc/letsencrypt/live/{{ domain_name }}
+      letsencrypt_key_dir: /etc/letsencrypt/live/{{ _domain_name }}
+      letsencrypt_ssl_key_dir: /etc/letsencrypt/live/{{ _domain_name }}
       letsencrypt_ssl_dhparam_path: /etc/ssl/private/dhparam.pem
 
     - role: nginx
       nginx_default_root: /var/nginx/main
       nginx_name_ssl_only:
-        - "b.{{ domain_name }}"
-        - "nc.{{ domain_name }}"
+        - "b.{{ _domain_name }}"
+        - "nc.{{ _domain_name }}"
       nginx_proxy_upstreams: []
       nginx_ssl_default_root: /var/nginx/main
       nginx_ssl_proxy_upstreams:
@@ -71,26 +71,26 @@
             - "proxy_set_header X-Real-IP $remote_addr"
             # - "proxy_redirect default"
       nginx_ssl_host_proxies:
-        - name: "b.{{ domain_name }}"
+        - name: "b.{{ _domain_name }}"
           port: 2368
           additional_directives:
             - "proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for"
             - "proxy_set_header Host $host"
             - "proxy_set_header X-Forwarded-Proto $scheme"
             - "proxy_set_header X-Real-IP $remote_addr"
-        - name: "nc.{{ domain_name }}"
+        - name: "nc.{{ _domain_name }}"
           port: 8888
-        - name: "px.{{ domain_name }}"
+        - name: "px.{{ _domain_name }}"
           port: 32400
 
     - role: docker
-      docker_ubuntu_codename: "{{ ubuntu_codename }}"
+      docker_ubuntu_codename: "{{ _ubuntu_codename }}"
       docker_compose_path: ./docker-compose
       docker_compose_env:
         ghost0:
-          NGINX_SERVER_NAME: "b.{{ domain_name }}"
+          NGINX_SERVER_NAME: "b.{{ _domain_name }}"
         instiki0:
-          NGINX_SERVER_NAME: "{{ domain_name }}"
+          NGINX_SERVER_NAME: "{{ _domain_name }}"
         10sr_bot0:
           TWITTER_KEY: VmHRoeyCxmGisuGPCBADVfo6v
           TWITTER_SECRET: "{{ _vault.bot_twitter_secret }}"
@@ -98,8 +98,8 @@
           TWITTER_TOKEN_SECRET: "{{ _vault.bot_twitter_token_secret }}"
           POST_BEARER_TOKEN: "{{ _vault.bot_post_bearer_token }}"
         mastodon0:
-          NGINX_SERVER_NAME: "st.{{ domain_name }}"
-          NGINX_S3_SERVER_NAME: "minio.st.{{ domain_name }}"
+          NGINX_SERVER_NAME: "st.{{ _domain_name }}"
+          NGINX_S3_SERVER_NAME: "minio.st.{{ _domain_name }}"
           NGINX_SERVER_PORT: 3000
           NGINX_S3_SERVER_PORT: 9000
           PAPERCLIP_SECRET: "{{ _vault.mastodon_paperclip_secret }}"
@@ -110,7 +110,7 @@
           AWS_SECRET_ACCESS_KEY: "{{ _vault.mastodon_minio_secret_key }}"
           MINIO_ACCESS_KEY: 66aa7319
           MINIO_SECRET_KEY: "{{ _vault.mastodon_minio_secret_key }}"
-          S3_HOSTNAME: minio.st.{{ domain_name }}
+          S3_HOSTNAME: minio.st.{{ _domain_name }}
           # CRON_JS_MAILTO: 8.slashes@gmail.com
           # CRON_JS_SMTP_HOST: smtp.mailgun.org
           # CRON_JS_SMTP_PORT: 587
@@ -121,7 +121,7 @@
           MYSQL_ROOT_PASSWORD: "{{ _vault.nextcloud_mysql_root_password }}"
           MYSQL_DATABASE: nextcloud
           MYSQL_PASSWORD: "{{ _vault.nextcloud_mysql_password }}"
-          VIRTUAL_HOST: "nc.{{ domain_name }}"
+          VIRTUAL_HOST: "nc.{{ _domain_name }}"
       docker_pm2:
         10sr_bot0:
           json: 10sr_bot0/pm2.json
@@ -149,7 +149,7 @@
           command: docker-compose up --build
 
     - role: mastodon_nginx_proxy
-      mastodon_server_name: st.{{ domain_name }}
+      mastodon_server_name: st.{{ _domain_name }}
       mastodon_s3_server_name: minio.st.3ends.info
       mastodon_s3_port: 9000
       mastodon_web_port: 3000

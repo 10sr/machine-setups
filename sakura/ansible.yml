@@ -164,7 +164,7 @@
     - role: mackerel_agent
       mackerel_agent_apikey: "{{ _vault.mackerel_agent_apikey }}"
 
-    - role: java
+    - role: java_jre
 
     - role: jenkins
 

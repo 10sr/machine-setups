@@ -1,5 +1,5 @@
 ---
-- name: Install java
+- name: Install JRE
   apt:
     name: openjdk-8-jre
   become: yes

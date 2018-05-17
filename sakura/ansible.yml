@@ -164,6 +164,10 @@
     - role: mackerel_agent
       mackerel_agent_apikey: "{{ _vault.mackerel_agent_apikey }}"
 
+    - role: java
+
+    - role: jenkins
+
   post_tasks:
     - file:
         state: link

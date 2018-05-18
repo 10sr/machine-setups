@@ -47,6 +47,7 @@
         - "minio.st.{{ _domain_name }}"
         - "nc.{{ _domain_name }}"
         - "px.{{ _domain_name }}"
+        - "jk.{{ _domain_name }}"
       letsencrypt_webroot: /var/nginx/main
       letsencrypt_key_dir: /etc/letsencrypt/live/{{ _domain_name }}
       letsencrypt_ssl_key_dir: /etc/letsencrypt/live/{{ _domain_name }}
@@ -82,6 +83,8 @@
           port: 8888
         - name: "px.{{ _domain_name }}"
           port: 32400
+        - name: "jk.{{ _domain_name }}"
+          port: 8080
 
     - role: docker
       docker_ubuntu_codename: "{{ _ubuntu_codename }}"

@@ -2,6 +2,8 @@ pipenv := env PIPENV_VENV_IN_PROJECT=1 pipenv
 
 default: help
 
+.PHONY: help check play facts hosts
+
 help:
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | \
 		awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
@@ -16,6 +18,9 @@ play: .venv  ## Invoke ansible-playbook
 
 facts: .venv  ## Show fact
 	${pipenv} run ansible -m setup sakura
+
+hosts:
+	${pipenv} run ansible all --list-hosts
 
 
 encrypt_all: .venv  ## Encrypt all files in vault/

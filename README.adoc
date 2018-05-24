@@ -1,3 +1,5 @@
 = Machine Setups
 
+image:https://travis-ci.org/10sr/machine-setups.svg?branch=master["Build Status", link="https://travis-ci.org/10sr/machine-setups"]
+
 My server configurations.

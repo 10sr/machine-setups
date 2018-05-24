@@ -1,4 +1,4 @@
-directories := $(shell find . -type d -depth 1)
+directories := $(shell find . -depth 1 -type d)
 
 .PHONY: check $(directories)
 

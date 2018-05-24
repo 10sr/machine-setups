@@ -11,11 +11,13 @@
       include_vars:
         dir: ./vault/
         name: _vault
+      no_log: yes
 
     - name: Set ansible_become_pass
       set_fact:
         ansible_become_pass: "{{ _vault.ansible_become_pass }}"
         cachable: yes
+      no_log: yes
 
     - name: Check codename
       assert:

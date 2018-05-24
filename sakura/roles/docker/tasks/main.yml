@@ -51,6 +51,7 @@
     variables: "{{ item.value }}"
   with_dict: "{{ docker_compose_env }}"
   become: yes
+  no_log: yes
 
 - include: pm2.yml
 

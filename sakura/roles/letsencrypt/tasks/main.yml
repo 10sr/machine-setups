@@ -10,6 +10,7 @@
     force: yes
     version: HEAD
   become: yes
+  no_log: yes
 
 - template:
     src: _certbot-auto.sh.j2

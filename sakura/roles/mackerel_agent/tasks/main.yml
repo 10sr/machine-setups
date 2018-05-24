@@ -7,6 +7,7 @@
   args:
     creates: /etc/mackerel-agent/mackerel-agent.conf
   become: yes
+  no_log: yes
 
 - service:
     name: mackerel-agent

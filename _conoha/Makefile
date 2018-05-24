@@ -1,5 +1,7 @@
 default:
 
+check:
+
 play:
 	ansible-playbook -vv ansible.yml --diff
 

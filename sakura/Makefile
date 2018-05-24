@@ -2,7 +2,7 @@ pipenv := env PIPENV_VENV_IN_PROJECT=1 pipenv
 
 default: help
 
-.PHONY: help check play facts hosts
+.PHONY: help check play facts hosts install
 
 help:
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | \
@@ -11,6 +11,9 @@ help:
 check: ansible-lint  # Run check
 
 .venv:
+	${pipenv} install
+
+install:
 	${pipenv} install
 
 play: .venv  ## Invoke ansible-playbook

@@ -1,0 +1,12 @@
+---
+- template:
+    src: jenkins_proxy.conf.j2
+    dest: /etc/nginx/conf.d/jenkins_proxy.conf
+  become: yes
+  register: _jenkins_proxy
+
+- service:
+    name: nginx
+    state: restarted
+  when: _jenkins_proxy is changed
+  become: yes

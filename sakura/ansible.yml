@@ -60,7 +60,6 @@
       nginx_name_ssl_only:
         - "b.{{ _domain_name }}"
         - "nc.{{ _domain_name }}"
-        - "jk.{{ _domain_name }}"
       nginx_proxy_upstreams: []
       nginx_ssl_default_root: /var/nginx/main
       nginx_ssl_proxy_upstreams:
@@ -86,8 +85,6 @@
           port: 8888
         - name: "px.{{ _domain_name }}"
           port: 32400
-        - name: "jk.{{ _domain_name }}"
-          port: 8080
 
     - role: docker
       docker_ubuntu_codename: "{{ _ubuntu_codename }}"
@@ -173,6 +170,10 @@
     - role: java_jre
 
     - role: jenkins
+
+    - role: jenkins_nginx_proxy
+      jenkins_nginx_proxy_port: 8080
+      jenkins_nginx_proxy_server_name: "jk.{{ _domain_name }}"
 
   post_tasks:
     - file:

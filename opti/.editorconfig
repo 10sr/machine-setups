@@ -1,0 +1,27 @@
+root = true
+
+[*]
+indent_size = 2
+indent_style = space
+
+charset = utf-8
+end_of_line = lf
+max_line_length = 80
+
+[.gitmodules]
+indent_style = tab
+
+[*.conf.j2]
+indent_size = 4
+emacs_mode = nginx
+emacs_mmm_classes = jinja2
+
+[*.yml.j2]
+emacs_mode = yaml
+emacs_mmm_classes = jinja2
+
+[*.py]
+indent_size = 4
+
+[Makefile]
+indent_style = tab

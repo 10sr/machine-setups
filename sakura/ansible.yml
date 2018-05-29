@@ -7,7 +7,7 @@
     # domain_name: "tk2-407-44672.vs.sakura.ne.jp"
 
   pre_tasks:
-    - name: Include all valut variables
+    - name: Include all vault variables
       include_vars:
         dir: ./vault/
         name: _vault

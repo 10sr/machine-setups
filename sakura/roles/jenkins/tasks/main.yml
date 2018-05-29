@@ -14,3 +14,52 @@
   apt:
     name: jenkins
   become: yes
+
+- name: Create custom init scripts directory
+  file:
+    path: "{{ jenkins_home }}/init.groovy.d"
+    state: directory
+    owner: jenkins
+    group: jenkins
+    recurse: yes
+  become: yes
+
+- name: Add scirpt to setup login user
+  template:
+    src: basic-security.groovy.j2
+    dest: "{{ jenkins_home }}/init.groovy.d/basic-security.groovy"
+    owner: jenkins
+    group: jenkins
+  become: yes
+  no_log: yes
+  register: _jenkins_basic_security_script
+
+
+- name: Restart jenkins
+  service:
+    name: jenkins
+    state: restarted
+  when: _jenkins_basic_security_script is changed
+  become: yes
+
+- name: Start jenkins
+  service:
+    name: jenkins
+  become: yes
+
+
+- name: Install jenkins plugins
+  jenkins_plugin:
+    name: ansicolor
+    jenkins_home: "{{ jenkins_home }}"
+    url_username: "{{ jenkins_admin_username }}"
+    url_password: "{{ jenkins_admin_password }}"
+  no_log: yes
+  register: _jenkins_plugin
+
+- name: Restart jenkins
+  service:
+    name: jenkins
+    state: restarted
+  when: _jenkins_plugin is changed
+  become: yes

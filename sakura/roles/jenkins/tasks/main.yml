@@ -63,3 +63,13 @@
     state: restarted
   when: _jenkins_plugin is changed
   become: yes
+
+# https://support.cloudbees.com/hc/en-us/articles/219257077-CSRF-Protection-Explained
+# - name: Restart jenkins safely
+#   uri:
+#     url: http://localhost:8080/safeRestart
+#     method: POST
+#     force_basic_auth: yes
+#     user: "{{ jenkins_admin_username }}"
+#     password: "{{ jenkins_admin_password }}"
+#   when: _jenkins_plugin is changed

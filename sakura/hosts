@@ -2,4 +2,4 @@
 ---
 default:
   hosts:
-    sakura:
+    sakura: null

@@ -26,11 +26,11 @@ hosts:
 	${pipenv} run ansible all --list-hosts
 
 
-encrypt_all: .venv  ## Encrypt all files in vault/
+encrypt-all: .venv  ## Encrypt all files in vault/
 	-find vault/ -type f | xargs -n 1 ${pipenv} run ansible-vault encrypt
 
 
-decrypt_all: .venv  ## Decrypt all files in vault/
+decrypt-all: .venv  ## Decrypt all files in vault/
 	-find vault/ -type f | xargs -n 1 ${pipenv} run ansible-vault decrypt
 
 

@@ -6,12 +6,14 @@ upstream jenkins {
 
 server {
   listen 80;
+  listen [::]:80;
   server_name {{ jenkins_nginx_proxy_server_name }};
   return 301 https://$host$request_uri;
 }
 
 server {
   listen 443 ssl;
+  listen [::]:443 ssl;
   server_name {{ jenkins_nginx_proxy_server_name }};
 
   # ssl_certificate /etc/nginx/ssl/server.crt;

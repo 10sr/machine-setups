@@ -1,5 +1,5 @@
 ---
-- include: install.yml
+- include: install.yaml
 
 - service:
     name: docker
@@ -53,7 +53,7 @@
   become: yes
   no_log: yes
 
-- include: pm2.yml
+- include: pm2.yaml
 
 - template:
     src: docker_weekly_removal.sh.j2

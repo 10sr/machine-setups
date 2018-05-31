@@ -31,7 +31,7 @@
     owner: docker
   become: yes
 
-- include: pm2-app.yml
+- include: pm2-app.yaml
   vars:
     name: "{{ item.key }}"
     values: "{{ item.value }}"

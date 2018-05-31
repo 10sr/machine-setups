@@ -17,7 +17,7 @@ install:  ## Install depending packages
 	${pipenv} install
 
 play: .venv  ## Invoke ansible-playbook
-	${pipenv} run ansible-playbook -vv ansible.yml
+	${pipenv} run ansible-playbook -vv ansible.yaml
 
 facts: .venv  ## Show fact
 	${pipenv} run ansible -m setup sakura
@@ -35,4 +35,4 @@ decrypt_all: .venv  ## Decrypt all files in vault/
 
 
 ansible-lint: .venv  ## Run ansible-lint
-	${pipenv} run ansible-lint ansible.yml --nocolor -p
+	${pipenv} run ansible-lint ansible.yaml --nocolor -p

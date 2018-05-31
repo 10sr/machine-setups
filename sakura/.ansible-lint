@@ -1,3 +1,4 @@
+# -*- mode: yaml; -*-
 ---
 verbosity: 2
 skip_list:

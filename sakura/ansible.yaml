@@ -171,7 +171,10 @@
 
     - role: jenkins
       jenkins_admin_username: 10sr
+      # web 経由のログインパスワード
       jenkins_admin_password: "{{ _vault.jenkins_admin_password}}"
+      # マシン上のログインパスワード
+      jenkins_user_password: "{{ _vault.jenkins_user_password }}"
 
     - role: jenkins_nginx_proxy
       jenkins_nginx_proxy_port: 8080

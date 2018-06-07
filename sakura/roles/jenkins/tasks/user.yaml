@@ -1,0 +1,9 @@
+---
+- name: Setup jenkins user
+  user:
+    name: jenkins
+    password: "{{ jenkins_user_password | password_hash('sha512') }}"
+    groups: sudo
+    append: yes
+  # no_log: yes
+  become: yes

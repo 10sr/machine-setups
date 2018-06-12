@@ -32,7 +32,7 @@ jobs:
       - run:
           name: Install pipenv
           command: |
-            python3 -m venv venv
+            python -m venv venv
             . venv/bin/activate
             pip install pipenv
 

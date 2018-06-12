@@ -29,12 +29,12 @@ jobs:
       #     # fallback to using the latest cache if no exact match is found
       #     - v1-dependencies-
 
-      - run:
-          name: Install pipenv
-          command: |
-            python -m venv venv
-            . venv/bin/activate
-            pip install pipenv
+      # - run:
+      #     name: Install pipenv
+      #     command: |
+      #       python -m venv venv
+      #       . venv/bin/activate
+      #       pip install pipenv
 
       # - save_cache:
       #     paths:
@@ -44,8 +44,8 @@ jobs:
       - run:
           name: Run tests
           command: |
-            . venv/bin/activate
             PIPENV_IGNORE_VIRTUALENVS=1 make check
+            # . venv/bin/activate
 
       # - store_artifacts:
       #     path: test-reports

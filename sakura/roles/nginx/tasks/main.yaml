@@ -1,7 +1,6 @@
 ---
 - apt:
     name: nginx
-    state: present
   become: yes
 
 - file:
@@ -22,34 +21,25 @@
   register: _remove_site_default
 
 - template:
-    src: main.conf.j2
-    dest: /etc/nginx/conf.d/main.conf
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
   become: yes
-  register: _main_conf
-
-- template:
-    src: main_proxies.conf.j2
-    dest: /etc/nginx/conf.d/main_proxies.conf
-  become: yes
-  register: _main_proxies_conf
-
-- template:
-    src: main_ssl.conf.j2
-    dest: /etc/nginx/conf.d/main_ssl.conf
-  become: yes
-  register: _main_ssl_conf
-
-- template:
-    src: main_ssl_proxies.conf.j2
-    dest: /etc/nginx/conf.d/main_ssl_proxies.conf
-  become: yes
-  register: _main_ssl_proxies_conf
+  with_items:
+    - src: main.conf.j2
+      dest: /etc/nginx/conf.d/main.conf
+    - src: main_proxies.conf.j2
+      dest: /etc/nginx/conf.d/main_proxies.conf
+    - src: main_ssl.conf.j2
+      dest: /etc/nginx/conf.d/main_ssl.conf
+    - src: main_ssl_proxies.conf.j2
+      dest: /etc/nginx/conf.d/main_ssl_proxies.conf
+  register: _nginx_confs
 
 - service:
     name: nginx
     state: restarted
   become: yes
-  # when: _main_conf is changed
+  when: _remove_site_default is changed or _nginx_confs is changed
 
 - service:
     name: nginx

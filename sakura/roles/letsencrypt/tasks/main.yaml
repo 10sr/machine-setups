@@ -1,4 +1,8 @@
 ---
+- name: Assert nginx installed
+  command: nginx -v
+  changed_when: false
+
 - file:
     dest: /opt
     state: directory

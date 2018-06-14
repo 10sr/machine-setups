@@ -1,4 +1,8 @@
 ---
+- name: Assert nginx installed
+  command: nginx -v
+  changed_when: false
+
 - template:
     src: mastodon_proxy.conf.j2
     dest: /etc/nginx/conf.d/mastodon_proxy.conf

@@ -2,8 +2,7 @@
 - name: Setup jenkins user
   user:
     name: jenkins
-    password: "{{ jenkins_user_password | password_hash('sha512') }}"
+    password: "{{ jenkins_user_password | password_hash('sha512', jenkins_user_password_salt) }}"
     groups: sudo
     append: yes
-  # no_log: yes
   become: yes

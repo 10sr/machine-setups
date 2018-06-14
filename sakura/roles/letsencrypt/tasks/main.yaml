@@ -3,6 +3,10 @@
   command: nginx -v
   changed_when: false
 
+- name: Assert git installed
+  command: git --version
+  changed_when: false
+
 - file:
     dest: /opt
     state: directory

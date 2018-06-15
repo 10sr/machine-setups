@@ -1,8 +1,21 @@
 ---
+- name: Assert groups exists
+  command: getent group docker sudo
+  changed_when: no
+
 - name: Setup jenkins user
   user:
     name: jenkins
     password: "{{ jenkins_user_password | password_hash('sha512', jenkins_user_password_salt) }}"
-    groups: sudo
+    groups: sudo,docker
     append: yes
   become: yes
+  register: _jenkins_user
+
+
+- name: Restart jenkins
+  service:
+    name: jenkins
+    state: restarted
+  become: yes
+  when: _jenkins_user is changed

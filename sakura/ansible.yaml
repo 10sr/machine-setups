@@ -50,6 +50,7 @@
         - name: Check revision timestamp
           assert:
             that:
+              # Somehow previsou_revision.timestamp is stored as a string
               - _previous_revision.timestamp|int <= _this_revision.timestamp|int
 
 

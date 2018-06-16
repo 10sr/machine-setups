@@ -9,6 +9,17 @@ help:
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | \
 		awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
+
+THIS_REVISION_ID := $(shell git describe --always --long --dirty)
+THIS_REVISION_TIMESTAMP := $(shell git log --pretty=tformat:%ct -n1)
+THIS_REVISION_SUBJECT := $(shell git log --pretty=tformat:%s -n1)
+env_this_revision := \
+	THIS_REVISION_ID=$(THIS_REVISION_ID) \
+	THIS_REVISION_TIMESTAMP=$(THIS_REVISION_TIMESTAMP) \
+	THIS_REVISION_SUBJECT="$(THIS_REVISION_SUBJECT)"
+
+
+
 check: ansible-lint  ## Run check
 
 .venv:
@@ -18,7 +29,7 @@ install:  ## Install depending packages
 	${pipenv} install
 
 play: .venv  ## Invoke ansible-playbook
-	${pipenv} run ansible-playbook -vv ansible.yaml
+	${pipenv} run env $(env_this_revision) ansible-playbook -vv ansible.yaml
 
 facts: .venv  ## Show fact
 	${pipenv} run ansible -m setup sakura

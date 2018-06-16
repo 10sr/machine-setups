@@ -5,6 +5,11 @@
     _ubuntu_codename: xenial
     _domain_name: 3ends.info
     # domain_name: "tk2-407-44672.vs.sakura.ne.jp"
+    _revision_yaml: /machine_setups_revision.yaml
+    _this_revision:
+      id: "{{ lookup('env', 'THIS_REVISION_ID') }}"
+      timestamp: "{{ lookup('env', 'THIS_REVISION_TIMESTAMP') | int }}"
+      subject: "{{ lookup('env', 'THIS_REVISION_SUBJECT') }}"
 
   pre_tasks:
     - name: Include all vault variables
@@ -18,6 +23,35 @@
         ansible_become_pass: "{{ _vault.ansible_become_pass }}"
         cachable: yes
       no_log: yes
+
+    - name: Check revision data are set
+      assert:
+        that:
+          - _this_revision.id
+          - _this_revision.timestamp
+
+    - name: Check revision file existence
+      stat:
+        path: "{{ _revision_yaml }}"
+      register: _revision_yaml_file
+
+    - name: Check previous revision
+      when: _revision_yaml_file.stat.exists
+      block:
+        - name: Load previous machine_setups_revision
+          slurp:
+            src: "{{ _revision_yaml }}"
+          register: _previous_revision_slurped
+
+        - name: Set facts of machine_setups_revision
+          set_fact:
+            _previous_revision: "{{ _previous_revision_slurped.content | b64decode | from_yaml }}"
+
+        - name: Check revision timestamp
+          assert:
+            that:
+              - _previous_revision.timestamp|int <= _this_revision.timestamp|int
+
 
     - name: Check codename
       assert:
@@ -186,4 +220,10 @@
         state: link
         src: /var/lib/data/docker/nextcloud0/html/data/10sr/files/www
         dest: /var/nginx/main/nc
+      become: yes
+
+    - name: Create last revision file
+      copy:
+        dest: "{{ _revision_yaml }}"
+        content: "{{ _this_revision | to_nice_yaml }}"
       become: yes

@@ -4,7 +4,7 @@
   changed_when: false
 
 - name: Assert git installed
-  command: git --version
+  command: whereis git
   changed_when: false
 
 - file:

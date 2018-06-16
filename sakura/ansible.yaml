@@ -10,6 +10,7 @@
       id: "{{ lookup('env', 'THIS_REVISION_ID') }}"
       timestamp: "{{ lookup('env', 'THIS_REVISION_TIMESTAMP') | int }}"
       subject: "{{ lookup('env', 'THIS_REVISION_SUBJECT') }}"
+      repository_url: https://github.com/10sr/machine_setups.git
 
   pre_tasks:
     - name: Include all vault variables

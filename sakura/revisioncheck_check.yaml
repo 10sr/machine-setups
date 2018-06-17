@@ -1,0 +1,29 @@
+---
+- name: Check revision data are set
+  assert:
+    that:
+      - revisioncheck_this.timestamp
+      - revisioncheck_this.id
+
+- name: Check revision file existence
+  stat:
+    path: "{{ revisioncheck_yaml }}"
+  register: _revisioncheck_yaml_file
+
+- name: Check previous revision
+  when: _revisioncheck_yaml_file.stat.exists
+  block:
+    - name: Load previous machine_setups_revision
+      slurp:
+        src: "{{ revisioncheck_yaml }}"
+      register: _revisioncheck_previous_slurped
+
+    - name: Set facts of machine_setups_revision
+      set_fact:
+        _revisioncheck_previous: "{{ _revisioncheck_previous_slurped.content | b64decode | from_yaml }}"
+
+    - name: Check revision timestamp
+      assert:
+        that:
+          # Somehow previsou_revision.timestamp is stored as a string
+          - _revisioncheck_previous.timestamp|int <= revisioncheck_this.timestamp|int

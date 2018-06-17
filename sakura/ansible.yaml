@@ -25,35 +25,10 @@
         cachable: yes
       no_log: yes
 
-    - name: Check revision data are set
-      assert:
-        that:
-          - _this_revision.id
-          - _this_revision.timestamp
-
-    - name: Check revision file existence
-      stat:
-        path: "{{ _revision_yaml }}"
-      register: _revision_yaml_file
-
-    - name: Check previous revision
-      when: _revision_yaml_file.stat.exists
-      block:
-        - name: Load previous machine_setups_revision
-          slurp:
-            src: "{{ _revision_yaml }}"
-          register: _previous_revision_slurped
-
-        - name: Set facts of machine_setups_revision
-          set_fact:
-            _previous_revision: "{{ _previous_revision_slurped.content | b64decode | from_yaml }}"
-
-        - name: Check revision timestamp
-          assert:
-            that:
-              # Somehow previsou_revision.timestamp is stored as a string
-              - _previous_revision.timestamp|int <= _this_revision.timestamp|int
-
+    - import_tasks: ./revisioncheck_check.yaml
+      vars:
+        revisioncheck_yaml: "{{ _revision_yaml }}"
+        revisioncheck_this: "{{ _this_revision }}"
 
     - name: Check codename
       assert:
@@ -224,8 +199,7 @@
         dest: /var/nginx/main/nc
       become: yes
 
-    - name: Create last revision file
-      copy:
-        dest: "{{ _revision_yaml }}"
-        content: "{{ _this_revision | to_nice_yaml }}"
-      become: yes
+    - import_tasks: ./revisioncheck_save.yaml
+      vars:
+        revisioncheck_yaml: "{{ _revision_yaml }}"
+        revisioncheck_this: "{{ _this_revision }}"

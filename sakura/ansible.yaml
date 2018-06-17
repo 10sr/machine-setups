@@ -29,6 +29,7 @@
       vars:
         revisioncheck_yaml: "{{ _revision_yaml }}"
         revisioncheck_this: "{{ _this_revision }}"
+      become: yes
 
     - name: Check codename
       assert:
@@ -203,3 +204,4 @@
       vars:
         revisioncheck_yaml: "{{ _revision_yaml }}"
         revisioncheck_this: "{{ _this_revision }}"
+      become: yes

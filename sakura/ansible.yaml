@@ -52,6 +52,8 @@
       locale_locales:
         - ja_JP.UTF-8 UTF-8
 
+    - role: sosreport
+
     - role: letsencrypt
       letsencrypt_register_email: 8.slashes@gmail.com
       letsencrypt_domain_names:

@@ -1,0 +1,5 @@
+---
+- name: Install sosreport
+  apt:
+    name: sosreport
+  become: yes

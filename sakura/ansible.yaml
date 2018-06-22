@@ -5,10 +5,11 @@
     _ubuntu_codename: xenial
     _domain_name: 3ends.info
     # domain_name: "tk2-407-44672.vs.sakura.ne.jp"
+    _revision_timestamp_file: /machine_setups_revision_timestamp.txt
+    _this_revision_timestamp: "{{ lookup('env', 'THIS_REVISION_TIMESTAMP') | int }}"
     _revision_yaml: /machine_setups_revision.yaml
     _this_revision:
       id: "{{ lookup('env', 'THIS_REVISION_ID') }}"
-      timestamp: "{{ lookup('env', 'THIS_REVISION_TIMESTAMP') | int }}"
       subject: "{{ lookup('env', 'THIS_REVISION_SUBJECT') }}"
       repository_url: https://github.com/10sr/machine_setups.git
 
@@ -25,11 +26,16 @@
         cachable: yes
       no_log: yes
 
-    - import_tasks: ./revisioncheck_check.yaml
-      vars:
-        revisioncheck_yaml: "{{ _revision_yaml }}"
-        revisioncheck_this: "{{ _this_revision }}"
-      become: yes
+    - name: Load previous revision
+      # Do nothing when the file does not exist
+      shell: "! test -f {{ _revision_timestamp_file }} || cat {{ _revision_timestamp_file }}"
+      register: _shell_previous_revision_timestamp
+      changed_when: no
+
+    - name: Check revision timestamp
+      assert:
+        that:
+          - _shell_previous_revision_timestamp.stdout|int <= _this_revision_timestamp|int
 
     - name: Check codename
       assert:
@@ -202,8 +208,14 @@
         dest: /var/nginx/main/nc
       become: yes
 
-    - import_tasks: ./revisioncheck_save.yaml
-      vars:
-        revisioncheck_yaml: "{{ _revision_yaml }}"
-        revisioncheck_this: "{{ _this_revision }}"
+    - name: Write timestamp file
+      copy:
+        content: "{{ _this_revision_timestamp }}"
+        dest: "{{ _revision_timestamp_file }}"
+      become: yes
+
+    - name: Create last revision file
+      copy:
+        dest: "{{ _revision_yaml }}"
+        content: "{{ _this_revision | to_nice_yaml }}"
       become: yes

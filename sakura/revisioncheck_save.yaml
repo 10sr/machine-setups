@@ -1,6 +1,0 @@
----
-- name: Create last revision file
-  copy:
-    dest: "{{ revisioncheck_yaml }}"
-    content: "{{ revisioncheck_this | to_nice_yaml }}"
-  become: yes

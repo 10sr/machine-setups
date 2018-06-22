@@ -35,6 +35,7 @@
     - name: Check revision timestamp
       assert:
         that:
+          - _this_revision_timestamp|int > 0
           - _shell_previous_revision_timestamp.stdout|int <= _this_revision_timestamp|int
 
     - name: Check codename

@@ -1,5 +1,6 @@
 ---
-- hosts: default
+- name: Setup sakura
+  hosts: default
   vars:
     # Do not use these variables directly in roles!
     _ubuntu_codename: xenial

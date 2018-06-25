@@ -13,6 +13,7 @@
       id: "{{ lookup('env', 'THIS_REVISION_ID') }}"
       subject: "{{ lookup('env', 'THIS_REVISION_SUBJECT') }}"
       repository_url: https://github.com/10sr/machine_setups.git
+      ansible_version: "{{ ansible_version.full }}"
 
   pre_tasks:
     - name: Include all vault variables

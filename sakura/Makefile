@@ -2,7 +2,7 @@ pipenv := env PIPENV_VENV_IN_PROJECT=1 pipenv
 
 default: help
 
-.PHONY: help check play facts hosts install
+.PHONY: help check play facts hosts install check-ansible-version
 
 help:
 	@echo sakura ansible | (figlet || cat) | (lolcat || cat)
@@ -19,6 +19,8 @@ env_this_revision := \
 	THIS_REVISION_SUBJECT="$(THIS_REVISION_SUBJECT)"
 
 
+ANSIBLE_INSTALLED_VERSION := $(shell $(pipenv) run ansible --version | awk '/^ansible/ {print $$2 }')
+
 
 check: ansible-lint  ## Run check
 
@@ -28,7 +30,7 @@ check: ansible-lint  ## Run check
 install:  ## Install depending packages
 	${pipenv} install
 
-play: .venv  ## Invoke ansible-playbook
+play: .venv check-ansible-version  ## Invoke ansible-playbook
 	${pipenv} run env $(env_this_revision) ansible-playbook -vv ansible.yaml
 
 facts: .venv  ## Show fact
@@ -48,3 +50,6 @@ decrypt-all: .venv  ## Decrypt all files in vault/
 
 ansible-lint: .venv  ## Run ansible-lint
 	${pipenv} run ansible-lint ansible.yaml --nocolor -p
+
+check-ansible-version:
+	grep '^ansible = "==$(ANSIBLE_INSTALLED_VERSION)"$$' Pipfile

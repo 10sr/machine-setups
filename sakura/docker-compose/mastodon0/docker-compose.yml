@@ -18,7 +18,7 @@ services:
       - ../mastodon0.env
     command: server /export
     ports:
-      - "9000:9000"
+      - "127.0.0.1:9000:9000"
     volumes:
       - /var/lib/data/docker/mastodon0/minio/export:/export
       - /var/lib/data/docker/mastodon0/minio/config:/root/.minio
@@ -32,7 +32,7 @@ services:
       - common.env
       - ../mastodon0.env
     ports:
-      - "3000:3000"
+      - "127.0.0.1:3000:3000"
     depends_on:
       - db
       - redis
@@ -52,7 +52,7 @@ services:
       - ../mastodon0.env
     command: npm run start
     ports:
-      - "4000:4000"
+      - "127.0.0.1:4000:4000"
     depends_on:
       - db
       - redis
@@ -80,8 +80,8 @@ services:
   nginx:
     image: nginx
     ports:
-      - "3001:3000"
-      - "9001:9000"
+      - "127.0.0.1:3001:3000"
+      - "127.0.0.1:9001:9000"
     volumes:
       - ./nginx.conf.envsubst:/etc/nginx/nginx.conf.envsubst:ro
       - ./nginx_cmd.sh:/nginx_cmd.sh:ro

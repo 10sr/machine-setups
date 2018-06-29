@@ -2,6 +2,8 @@ default:
 
 check:
 
+install:
+
 play:
 	ansible-playbook -vv ansible.yml --diff
 

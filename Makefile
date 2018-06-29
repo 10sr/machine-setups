@@ -1,8 +1,8 @@
 directories := $(shell find * -maxdepth 0 -type d)
 
-.PHONY: check $(directories)
+.PHONY: install check $(directories)
 
-check: $(directories)
+install check: $(directories)
 
 $(directories):
-	! test -r $@/Makefile || make check -C $@
+	! test -r $@/Makefile || $(MAKE) $(MAKECMDGOALS) -C $@

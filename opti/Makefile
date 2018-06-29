@@ -13,6 +13,8 @@ help:
 
 check:  ## Run check
 
+install:
+
 .venv:
 	${pipenv} install --ignore-pipfile
 

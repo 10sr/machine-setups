@@ -16,9 +16,8 @@
     repo: https://github.com/certbot/certbot.git
     dest: /opt/letsencrypt_certbot
     force: yes
-    version: HEAD
+    update: no
   become: yes
-  no_log: yes
 
 - template:
     src: _certbot-auto.sh.j2

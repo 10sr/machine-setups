@@ -16,19 +16,24 @@ _test-python: &test-python
   steps:
     - checkout
     - run:
-        name: Install dependent things
-        command: make install
+        name: Run tests (sakura)
+        working_directory: sakura
+        command: make install check
     - run:
-        name: Run tests
-        command: make check
+        name: Run tests (opti)
+        working_directory: opti
+        command: make install check
 
 _test-java: &test-java
   working_directory: ~/repo
   steps:
     - checkout
     - run:
-        name: Run tests
-        command: cd jenkins-jobs && TERM=dumb ./gradlew test
+        name: Run tests (jenkins-jobs)
+        environment:
+          TERM: dumb
+        working_directory: jenkins-jobs
+        command: ./gradlew test
 
 jobs:
   test-py27:

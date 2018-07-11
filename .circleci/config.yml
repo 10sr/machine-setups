@@ -10,6 +10,7 @@ workflows:
       - test-py36
       - test-java8
 
+# TOOD: Fix commands
 _test-python: &test-python
   working_directory: ~/repo
   steps:

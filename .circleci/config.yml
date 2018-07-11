@@ -28,7 +28,7 @@ _test-java: &test-java
     - checkout
     - run:
         name: Run tests
-        command: cd jenkins-jobs && ./gradlew test
+        command: cd jenkins-jobs && TERM=dumb ./gradlew test
 
 jobs:
   test-py27:

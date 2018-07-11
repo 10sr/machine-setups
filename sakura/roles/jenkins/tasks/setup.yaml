@@ -50,10 +50,11 @@
 
 - name: Install jenkins plugins
   jenkins_plugin:
-    name: ansicolor
+    name: "{{ item }}"
     jenkins_home: "{{ jenkins_home }}"
     url_username: "{{ jenkins_admin_username }}"
     url_password: "{{ jenkins_admin_password }}"
+  with_items: "{{ jenkins_plugins }}"
   no_log: yes
   register: _jenkins_plugin
 

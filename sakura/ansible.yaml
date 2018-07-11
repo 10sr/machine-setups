@@ -199,6 +199,9 @@
       # マシン上のログインパスワード
       jenkins_user_password: "{{ _vault.jenkins_user_password }}"
       jenkins_user_password_salt: "{{ ansible_mounts.0.uuid.replace('-', '')[:16] }}"
+      jenkins_plugins:
+        - ansicolor
+        - job-dsl
 
     - role: jenkins_nginx_proxy
       jenkins_nginx_proxy_port: 8080

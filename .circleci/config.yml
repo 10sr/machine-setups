@@ -1,5 +1,5 @@
 ---
-# Check https://circleci.com/docs/2.0/language-python/ for more details
+# Check https://circleci.com/docs/2.0 for more details
 version: 2
 workflows:
   version: 2
@@ -51,4 +51,4 @@ jobs:
   test-java8:
     <<: *test-java
     docker:
-      - image: circleci/openjdk:8-jdk-node-browsers
+      - image: circleci/openjdk:8-jdk

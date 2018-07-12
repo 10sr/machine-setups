@@ -33,7 +33,7 @@ _test-java: &test-java
         environment:
           TERM: dumb
         working_directory: jenkins-jobs
-        command: ./gradlew test
+        command: make test
 
 jobs:
   test-py27:

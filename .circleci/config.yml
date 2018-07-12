@@ -29,6 +29,9 @@ _test-java: &test-java
   steps:
     - checkout
     - run:
+        name: Install prerequisite
+        command: sudo apt-get update && sudo apt-get install -y make
+    - run:
         name: Run tests (jenkins-jobs)
         environment:
           TERM: dumb

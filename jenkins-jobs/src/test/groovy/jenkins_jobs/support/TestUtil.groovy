@@ -1,4 +1,4 @@
-package com.dslexample.support
+package jenkins_jobs.support
 
 import groovy.io.FileType
 

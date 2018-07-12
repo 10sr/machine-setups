@@ -1,4 +1,4 @@
-import com.dslexample.builder.GradleCiJobBuilder
+import jenkins_jobs.builder.GradleCiJobBuilder
 
 String basePath = 'example7'
 List developers = ['dev1@example.com', 'dev2@example.com']

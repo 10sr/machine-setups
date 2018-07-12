@@ -1,4 +1,4 @@
-package com.dslexample.util
+package jenkins_jobs.util
 
 class StepsUtil {
 

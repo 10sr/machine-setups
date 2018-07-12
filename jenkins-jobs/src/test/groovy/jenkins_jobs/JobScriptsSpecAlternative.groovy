@@ -1,6 +1,6 @@
-package com.dslexample
+package jenkins_jobs
 
-import com.dslexample.support.TestUtil
+import jenkins_jobs.support.TestUtil
 import groovy.io.FileType
 import javaposse.jobdsl.dsl.DslScriptLoader
 import javaposse.jobdsl.dsl.JobManagement

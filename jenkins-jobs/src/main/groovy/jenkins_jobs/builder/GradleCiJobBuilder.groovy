@@ -1,4 +1,4 @@
-package com.dslexample.builder
+package jenkins_jobs.builder
 
 import groovy.transform.builder.Builder
 import groovy.transform.builder.SimpleStrategy

@@ -1,6 +1,6 @@
-package com.dslexample
+package jenkins_jobs
 
-import com.dslexample.support.TestUtil
+import jenkins_jobs.support.TestUtil
 import hudson.model.Item
 import hudson.model.View
 import javaposse.jobdsl.dsl.DslScriptLoader

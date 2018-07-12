@@ -1,4 +1,4 @@
-import com.dslexample.util.StepsUtil
+import jenkins_jobs.util.StepsUtil
 
 String basePath = 'example5'
 

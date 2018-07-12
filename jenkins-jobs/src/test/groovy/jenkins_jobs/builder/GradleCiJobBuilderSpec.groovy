@@ -1,6 +1,6 @@
-package com.dslexample.builder
+package jenkins_jobs.builder
 
-import com.dslexample.support.MockJobParent
+import jenkins_jobs.support.MockJobParent
 import javaposse.jobdsl.dsl.Job
 import javaposse.jobdsl.dsl.JobParent
 import spock.lang.Specification

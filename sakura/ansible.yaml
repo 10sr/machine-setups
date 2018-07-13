@@ -193,6 +193,7 @@
     - role: java_jre
 
     - role: jenkins
+      # TODO: jenkins_machineuser_password / jenkins_web_password ?
       jenkins_admin_username: 10sr
       # web 経由のログインパスワード
       jenkins_admin_password: "{{ _vault.jenkins_admin_password}}"
@@ -202,6 +203,12 @@
       jenkins_plugins:
         - ansicolor
         - job-dsl
+
+    - role: kick_jenkins_jobs
+      kick_jenkins_jobs_name: kick-jenkins-jobs
+      kick_jenkins_jobs_web_username: 10sr
+      kick_jenkins_jobs_web_password: "{{ _vault.jenkins_admin_password }}"
+      kick_jenkins_jobs_jobdsl_target: jenkins-jobs/src/jobs/example1Jobs.groovy
 
     - role: jenkins_nginx_proxy
       jenkins_nginx_proxy_port: 8080

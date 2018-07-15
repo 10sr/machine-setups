@@ -1,0 +1,14 @@
+Enables secure cookie
+
+--- a/config/environment.rb	2018-07-15 19:23:45.000000000 +0900
++++ b/config/environment.rb	2018-07-15 20:14:53.000000000 +0900
+@@ -27,7 +27,8 @@
+   end  
+   config.action_controller.session = { 
+     :key => "instiki_session",
+-    :secret => secret
++    :secret => secret,
++    :secure => Rails.env.production?
+    } 
+ 
+   # Don't do file system STAT calls to check to see if the templates have changed.

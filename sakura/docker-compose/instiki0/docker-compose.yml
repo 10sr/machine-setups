@@ -5,12 +5,14 @@ services:
     build:
       context: https://github.com/parasew/instiki.git
     container_name: instiki0
-    command: ["./instiki", "--path=/wiki"]
+    command: sh /start.sh ./instiki --path=/wiki
     ports:
       - "127.0.0.1:2500:2500"
     environment:
       RAILS_ENV: production
     volumes:
+      - "./start.sh:/start.sh:ro"
+      - "./secure_cookie.patch:/secure_cookie.patch:ro"
       - "./database.yml:/usr/src/app/config/database.yml:ro"
       - "/var/lib/data/docker/instiki0/db:/db"
       - "/var/lib/data/docker/instiki0/webs:/usr/src/app/webs"

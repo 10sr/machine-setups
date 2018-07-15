@@ -5,7 +5,7 @@ services:
     build:
       context: https://github.com/parasew/instiki.git
     container_name: instiki0
-    command: sh /start.sh ./instiki --path=/wiki
+    command: sh /start.sh ./instiki --path=/wiki --environment=production
     ports:
       - "127.0.0.1:2500:2500"
     environment:

@@ -203,6 +203,7 @@
       jenkins_plugins:
         - ansicolor
         - job-dsl
+        - authorize-project
 
     - role: kick_jenkins_jobs
       kick_jenkins_jobs_name: kick-jenkins-jobs

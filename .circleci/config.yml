@@ -1,7 +1,5 @@
 ---
-version: 2
 workflows:
-  version: 2
   test:
     jobs:
       - test-2.7

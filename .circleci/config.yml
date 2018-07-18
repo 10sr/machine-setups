@@ -7,19 +7,20 @@ workflows:
       - test-2.7
       - test-3.6
 
-_test-body: &test-body
-  steps:
-    - checkout
-    - run:
-        name: Run tests
-        command: cd sakura && make install check
-
 jobs:
   test-2.7:
-    <<: *test-body
     docker:
       - image: circleci/python:2.7
+    steps:
+      - checkout
+      - run:
+          name: Run tests
+          command: cd sakura && make install check
   test-3.6:
-    <<: *test-body
     docker:
       - image: circleci/python:3.6
+    steps:
+      - checkout
+      - run:
+          name: Run tests
+          command: cd sakura && make install check

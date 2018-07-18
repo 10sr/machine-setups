@@ -1,57 +1,26 @@
 ---
-# Check https://circleci.com/docs/2.0 for more details
 version: 2
 workflows:
   version: 2
   test:
     jobs:
-      - test-py27
-      - test-py35
-      - test-py36
-      - test-java8
-
-# TOOD: Fix commands
-_test-python: &test-python
-  working_directory: ~/repo
-  steps:
-    - checkout
-    - run:
-        name: Run tests (sakura)
-        working_directory: sakura
-        command: make install check
-    - run:
-        name: Run tests (opti)
-        working_directory: opti
-        command: make install check
-
-_test-java: &test-java
-  working_directory: ~/repo
-  steps:
-    - checkout
-    - run:
-        name: Install prerequisite
-        command: sudo apt-get update && sudo apt-get install -y make
-    - run:
-        name: Run tests (jenkins-jobs)
-        environment:
-          TERM: dumb
-        working_directory: jenkins-jobs
-        command: make test
+      - test-2.7
+      - test-3.6
 
 jobs:
-  test-py27:
-    <<: *test-python
+  test-2.7:
     docker:
       - image: circleci/python:2.7
-  test-py35:
-    <<: *test-python
-    docker:
-      - image: circleci/python:3.5
-  test-py36:
-    <<: *test-python
+    steps:
+      - checkout
+      - run:
+          name: Run tests
+          command: cd sakura && make install check
+  test-3.6:
     docker:
       - image: circleci/python:3.6
-  test-java8:
-    <<: *test-java
-    docker:
-      - image: circleci/openjdk:8-jdk
+    steps:
+      - checkout
+      - run:
+          name: Run tests
+          command: cd sakura && make install check

@@ -55,6 +55,8 @@
       become: yes
 
   roles:
+    - role: timezone
+      timezone_name: UTC
     # - role: hostname
     #   hostname: "{{ _domain_name }}"
     - role: locale

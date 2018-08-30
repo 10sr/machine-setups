@@ -11,6 +11,6 @@ url = "https://pypi.python.org/simple"
 
 [packages]
 
-ansible = "==2.6.0"
+ansible = "==2.6.3"
 ansible-lint = "*"
 passlib = "*"

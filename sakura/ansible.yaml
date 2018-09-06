@@ -157,7 +157,7 @@
           command: docker-compose up --build
         ghost0:
           json: ghost0/pm2.json
-          state: stopped
+          state: started
           command: docker-compose up --build
         instiki0:
           json: instiki0/pm2.json

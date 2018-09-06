@@ -8,7 +8,7 @@ services:
     environment:
       NODE_ENV: production
     volumes:
-      - "./config.js:/var/lib/ghost/config.js:ro"
+      - "./config.production.json:/var/lib/ghost/config.production.json:ro"
       - "/var/lib/data/docker/ghost0/data:/var/lib/ghost/content"
 
   nginx:

@@ -1,0 +1,18 @@
+{
+    "url": "https://b.3ends.info/",
+    "server": {
+        "host": "0.0.0.0",
+        "port": "2368"
+    },
+    "database": {
+        "client": "sqlite3",
+        "connection": {
+            "filename": "content/data/ghost.db"
+        },
+        "useNullAsDefault": true,
+        "debug": false
+    },
+    "paths": {
+        "contentPath": "content/"
+    }
+}

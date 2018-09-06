@@ -2,13 +2,13 @@
 version: '3'
 services:
   app:
-    image: ghost:0.11.12-alpine
+    image: ghost:1.25-alpine
     ports:
       - "127.0.0.1:2368:2368"
     environment:
       NODE_ENV: production
     volumes:
-      - "./config.js:/var/lib/ghost/config.js"
+      - "./config.js:/var/lib/ghost/config.js:ro"
       - "/var/lib/data/docker/ghost0/data:/var/lib/ghost/content"
 
   nginx:

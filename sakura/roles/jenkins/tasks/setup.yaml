@@ -57,6 +57,7 @@
   with_items: "{{ jenkins_plugins }}"
   no_log: yes
   register: _jenkins_plugin
+  ignore_errors: yes
 
 - name: Restart jenkins
   service:

@@ -28,7 +28,7 @@ indent_size = 4
 indent_style = tab
 
 [Pipfile]
-file_type_emacs = toml
+file_type_ext = toml
 
 [Pipfile.lock]
-file_type_emacs = json
+file_type_ext = json

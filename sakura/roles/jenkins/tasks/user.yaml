@@ -10,12 +10,4 @@
     groups: sudo,docker
     append: yes
   become: yes
-  register: _jenkins_user
-
-
-- name: Restart jenkins
-  service:
-    name: jenkins
-    state: restarted
-  become: yes
-  when: _jenkins_user is changed
+  notify: JENKINS_RESTART

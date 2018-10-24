@@ -32,15 +32,8 @@
     group: jenkins
   become: yes
   no_log: yes
-  register: _jenkins_basic_security_script
+  notify: JENKINS_RESTART
 
-
-- name: Restart jenkins
-  service:
-    name: jenkins
-    state: restarted
-  when: _jenkins_basic_security_script is changed
-  become: yes
 
 - name: Start jenkins
   service:
@@ -48,6 +41,7 @@
   become: yes
 
 
+  # TODO: Install plugins in init script
 - name: Install jenkins plugins
   jenkins_plugin:
     name: "{{ item }}"
@@ -56,15 +50,8 @@
     url_password: "{{ jenkins_admin_password }}"
   with_items: "{{ jenkins_plugins }}"
   no_log: yes
-  register: _jenkins_plugin
+  notify: JENKINS_RESTART
   ignore_errors: yes
-
-- name: Restart jenkins
-  service:
-    name: jenkins
-    state: restarted
-  when: _jenkins_plugin is changed
-  become: yes
 
 # https://support.cloudbees.com/hc/en-us/articles/219257077-CSRF-Protection-Explained
 # - name: Restart jenkins safely

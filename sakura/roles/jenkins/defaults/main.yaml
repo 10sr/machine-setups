@@ -1,2 +1,3 @@
 ---
 jenkins_home: /var/lib/jenkins
+jenkins_cli_path: /var/cache/jenkins/war/WEB-INF/jenkins-cli.jar

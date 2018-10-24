@@ -209,6 +209,7 @@
         - ansicolor
         - job-dsl
         - authorize-project
+        - simple-theme-plugin
 
     - role: kick_jenkins_jobs
       kick_jenkins_jobs_name: kick-jenkins-jobs

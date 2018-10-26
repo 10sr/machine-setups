@@ -16,6 +16,8 @@ if ("{{ jenkins_admin_username }}" in users_s) {
     def user = hudson.model.User.get('{{ jenkins_admin_username }}');
     def password = hudson.security.HudsonPrivateSecurityRealm.Details.fromPlainPassword('{{ jenkins_admin_password }}')
     user.addProperty(password)
+    // TODO: Set public key: https://github.com/hayderimran7/useful-jenkins-groovy-init-scripts/blob/master/useful_groovy_snippets.groovy
+
     user.save()
 }
 else {
@@ -28,3 +30,10 @@ else {
     instance.setAuthorizationStrategy(strategy)
     instance.save()
 }
+
+
+// https://pghalliday.com/jenkins/groovy/sonar/chef/configuration/management/2014/09/21/some-useful-jenkins-groovy-scripts.html
+// https://github.com/edx/jenkins-configuration/tree/master/src/main/groovy
+// https://github.com/jenkinsci/docker/blob/587b2856cd225bb152c4abeeaaa24934c75aa460/Dockerfile
+// https://wiki.jenkins.io/display/JENKINS/Jenkins+Script+Console
+// https://github.com/hayderimran7/useful-jenkins-groovy-init-scripts/blob/master/useful_groovy_snippets.groovy

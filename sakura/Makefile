@@ -41,11 +41,11 @@ hosts:
 
 
 encrypt-all: .venv  ## Encrypt all files in vault/
-	-find vault/ -type f | xargs -n 1 ${pipenv} run ansible-vault encrypt
+	find vault/ -type f | xargs grep -L 'ANSIBLE_VAULT;' | xargs -n 1 ${pipenv} run ansible-vault encrypt
 
 
 decrypt-all: .venv  ## Decrypt all files in vault/
-	-find vault/ -type f | xargs -n 1 ${pipenv} run ansible-vault decrypt
+	find vault/ -type f | xargs grep -l 'ANSIBLE_VAULT;' | xargs -n 1 ${pipenv} run ansible-vault decrypt
 
 
 ansible-lint: .venv  ## Run ansible-lint

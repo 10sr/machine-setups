@@ -1,4 +1,5 @@
 ---
+# TODO: Use safeRestart
 - name: Restart jenkins
   service:
     name: jenkins

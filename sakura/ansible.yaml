@@ -198,10 +198,19 @@
     - role: java_jre
 
     - role: jenkins
-      # TODO: jenkins_machineuser_password / jenkins_web_password ?
+      # TODO: jenkins_machineuser_name / jenkins_webuser_name
+      # jenkins_webaccount_name
+      # jenkins_weblogin_name / jenkins_machinelogin_name
+      # jenkins_linuxuser_name
+      # jenkins_localuser_name
+      # jenkins_daemonuser_name
+      # jenkins_serveruser_name
       jenkins_admin_username: 10sr
       # web 経由のログインパスワード
       jenkins_admin_password: "{{ _vault.jenkins_admin_password}}"
+      # TODO: This value is too big so separete file
+      jenkins_admin_ssh_publickey:
+        - ssh-dss AAAAB3NzaC1kc3MAAACBAPCPLZTNmb6QBrrERXD3gulK346Ik4SluA0YiXK//h4OSBEv22eAG9/prLviDxHVNYpViYLMFGGYAlbCl2m6O5bzN0BRKZVEaCug8WzSkYGUfFK4aXdWbJ1pzGZbWWp/kFOSTrv+oCz8BRvaEME2sC7boTWmhjV4PyJWMaoLOn4xAAAAFQDoyQ/E/PRdSAfmNcM+CM7iq9AReQAAAIEA6f8HI2HsrF2a9OC2m/RDAHDLC06hzLa4yMdWRsnyFIFtaccMpWA+z44H1pax4olQ20FS7RRuE6BLLYUUTTeFQ0NJiG+d+PPViozhV7tkpStcqGSBEULpWALCEB+CAmsGAPhQG+Niu/xHdl5RVPsyIiSNPn/LC6yGgNOJVy12b94AAACBAJqjG305JHNqFOA93+j+1lpYigJyL1YR5rQWTEFtM+ibCJgmykrk6LYfxCpi2ZzQAmWlph6ZFy9aSovdXfyIzQxA89LA46nmhHTCVLGZ9Xc2JgJeazQUMSAXPfIJ6Ru/6xuUjL9cmSv8AN8pDXQ49oNEMZETrNohCxLSx3fR37zM yuk@darwin-mba.local
       # マシン上のログインパスワード
       jenkins_user_password: "{{ _vault.jenkins_user_password }}"
       jenkins_user_password_salt: "{{ ansible_mounts.0.uuid.replace('-', '')[:16] }}"

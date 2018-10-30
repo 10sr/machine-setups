@@ -9,33 +9,27 @@ def webuserSshPublickey = '''{% for key in jenkins_admin_ssh_publickey %}
 // https://github.com/geerlingguy/ansible-role-jenkins/blob/c9e043335a3f2b61c48d27a173c5b3975f07b6fa/templates/basic-security.groovy
 
 import hudson.security.HudsonPrivateSecurityRealm
+// import hudson.security.captcha.CaptchaSupport
 import hudson.security.FullControlOnceLoggedInAuthorizationStrategy
 import jenkins.model.Jenkins
 
 def instance = Jenkins.getInstance()
-def hudsonRealm = new HudsonPrivateSecurityRealm(false)
-def users = hudsonRealm.getAllUsers()
-users_s = users.collect { it.toString() }
 
-// TODO: Refactor
+// SecurityRealm that performs authentication by looking up User
+// def captcha = new CaptchaSupport()
+println "--> Set SecurityRealm to HudsonPrivateSecurityRealm(false, false, null)"
+def hudsonRealm = new HudsonPrivateSecurityRealm(false, false, null)
+instance.setSecurityRealm(hudsonRealm)
 
-// Create the admin user account if it doesn't already exist.
-if (webuserName in users_s) {
-    println "Admin user ${webuserName} already exists - Updating password and other properties"
-}
-else {
-    println "--> creating web admin user ${webuserName}"
+// AuthorizationStrategy that grants full-control to authenticated user and optionally read access to anonymous users
+println "--> Set AuthorizationStrategy to FullControlOnceLoggedInAuthorizationStrategy without anonymous read"
+def strategy = new FullControlOnceLoggedInAuthorizationStrategy()
+strategy.setAllowAnonymousRead(false)
+instance.setAuthorizationStrategy(strategy)
 
-    // TODO: Generate random password here
-    hudsonRealm.createAccount(webuserName, webuserPassword)
-    instance.setSecurityRealm(hudsonRealm)
+instance.save()
 
-    // TODO: OK to evaluate every init?
-    def strategy = new FullControlOnceLoggedInAuthorizationStrategy()
-    instance.setAuthorizationStrategy(strategy)
-    instance.save()
-}
-
+println "--> Create or update admin user properties: ${webuserName}"
 def user = hudson.model.User.getById(webuserName, true);
 def password = hudson.security.HudsonPrivateSecurityRealm.Details.fromPlainPassword(webuserPassword)
 user.addProperty(password)

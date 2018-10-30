@@ -5,6 +5,7 @@ def webuserPassword = '{{ jenkins_admin_password }}'
 def webuserSshPublickey = '''{% for key in jenkins_admin_ssh_publickey %}
 {{ key }}
 {% endfor %}'''
+def sshdPort = 2244
 
 // https://github.com/geerlingguy/ansible-role-jenkins/blob/c9e043335a3f2b61c48d27a173c5b3975f07b6fa/templates/basic-security.groovy
 
@@ -28,6 +29,11 @@ strategy.setAllowAnonymousRead(false)
 instance.setAuthorizationStrategy(strategy)
 
 instance.save()
+
+println "--> Starting Jenkins SSHD with port: ${sshdPort}"
+def sshd = new org.jenkinsci.main.modules.sshd.SSHD()
+// TODO: Currently this does do nothing: fix
+sshd.setPort(sshdPort)
 
 println "--> Create or update admin user properties: ${webuserName}"
 def user = hudson.model.User.getById(webuserName, true);

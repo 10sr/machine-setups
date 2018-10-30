@@ -31,9 +31,11 @@ instance.save()
 
 println "--> Create or update admin user properties: ${webuserName}"
 def user = hudson.model.User.getById(webuserName, true);
-def password = hudson.security.HudsonPrivateSecurityRealm.Details.fromPlainPassword(webuserPassword)
-user.addProperty(password)
+def passwordProperty = hudson.security.HudsonPrivateSecurityRealm.Details.fromPlainPassword(webuserPassword)
+user.addProperty(passwordProperty)
 // TODO: Set public key: https://github.com/hayderimran7/useful-jenkins-groovy-init-scripts/blob/master/useful_groovy_snippets.groovy
+def keysProperty = new org.jenkinsci.main.modules.cli.auth.ssh.UserPropertyImpl(webuserSshPublickey)
+user.addProperty(keysProperty)
 
 user.save()
 

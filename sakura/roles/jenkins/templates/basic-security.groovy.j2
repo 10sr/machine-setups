@@ -20,23 +20,24 @@ users_s = users.collect { it.toString() }
 // TODO: Refactor
 
 // Create the admin user account if it doesn't already exist.
-if ("{{ jenkins_admin_username }}" in users_s) {
-    println "Admin user already exists - Updating password and other properties"
+if (webuserName in users_s) {
+    println "Admin user ${webuserName} already exists - Updating password and other properties"
 }
 else {
-    println "--> creating local admin user"
+    println "--> creating web admin user ${webuserName}"
 
-    hudsonRealm.createAccount('{{ jenkins_admin_username }}', '{{ jenkins_admin_password }}')
+    // TODO: Generate random password here
+    hudsonRealm.createAccount(webuserName, webuserPassword)
     instance.setSecurityRealm(hudsonRealm)
 
+    // TODO: OK to evaluate every init?
     def strategy = new FullControlOnceLoggedInAuthorizationStrategy()
     instance.setAuthorizationStrategy(strategy)
     instance.save()
 }
 
-// TODO: Use getById? https://javadoc.jenkins.io/hudson/model/User.html#getById-java.lang.String-boolean-
-def user = hudson.model.User.get('{{ jenkins_admin_username }}');
-def password = hudson.security.HudsonPrivateSecurityRealm.Details.fromPlainPassword('{{ jenkins_admin_password }}')
+def user = hudson.model.User.getById(webuserName, true);
+def password = hudson.security.HudsonPrivateSecurityRealm.Details.fromPlainPassword(webuserPassword)
 user.addProperty(password)
 // TODO: Set public key: https://github.com/hayderimran7/useful-jenkins-groovy-init-scripts/blob/master/useful_groovy_snippets.groovy
 

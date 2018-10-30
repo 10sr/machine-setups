@@ -205,6 +205,7 @@
       # jenkins_localuser_name
       # jenkins_daemonuser_name
       # jenkins_serveruser_name
+      # I think webuser_name / serveruser_name are good
       jenkins_admin_username: 10sr
       # web 経由のログインパスワード
       jenkins_admin_password: "{{ _vault.jenkins_admin_password}}"

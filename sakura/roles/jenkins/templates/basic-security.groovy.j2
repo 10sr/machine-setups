@@ -8,7 +8,8 @@ def webuserSshPublickey = '''{% for key in jenkins_admin_ssh_publickey %}
 
 // https://github.com/geerlingguy/ansible-role-jenkins/blob/c9e043335a3f2b61c48d27a173c5b3975f07b6fa/templates/basic-security.groovy
 
-import hudson.security.HudsonPrivateSecurityRealm, FullControlOnceLoggedInAuthorizationStrategy
+import hudson.security.HudsonPrivateSecurityRealm
+import hudson.security.FullControlOnceLoggedInAuthorizationStrategy
 import jenkins.model.Jenkins
 
 def instance = Jenkins.getInstance()

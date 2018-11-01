@@ -24,12 +24,15 @@
     recurse: yes
   become: yes
 
-- name: Add scirpt to setup login user
+- name: Add Jenkins init hook scripts
   template:
-    src: basic-security.groovy.j2
-    dest: "{{ jenkins_home }}/init.groovy.d/basic-security.groovy"
+    src: "{{ item }}.groovy.j2"
+    dest: "{{ jenkins_home }}/init.groovy.d/{{ item }}.groovy"
     owner: jenkins
     group: jenkins
+  with_items:
+    - basic-security
+    - plugins
   become: yes
   no_log: yes
   notify: JENKINS_RESTART

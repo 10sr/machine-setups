@@ -5,6 +5,7 @@ def webuserPassword = '{{ jenkins_admin_password }}'
 def webuserSshPublickey = '''{% for key in jenkins_admin_ssh_publickey %}
 {{ key }}
 {% endfor %}'''
+// TODO: Parametrize portnum
 def sshdPort = 2244
 
 

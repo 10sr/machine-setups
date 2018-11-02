@@ -35,33 +35,10 @@
     - plugins
   become: yes
   no_log: yes
-  notify: JENKINS_RESTART
+  notify: JENKINS_SAFERESTART
 
 
 - name: Start jenkins
   service:
     name: jenkins
   become: yes
-
-
-#   # TODO: Install plugins in init script
-# - name: Install jenkins plugins
-#   jenkins_plugin:
-#     name: "{{ item }}"
-#     jenkins_home: "{{ jenkins_home }}"
-#     url_username: "{{ jenkins_admin_username }}"
-#     url_password: "{{ jenkins_admin_password }}"
-#   with_items: "{{ jenkins_plugins }}"
-#   no_log: yes
-#   notify: JENKINS_RESTART
-#   ignore_errors: yes
-
-# https://support.cloudbees.com/hc/en-us/articles/219257077-CSRF-Protection-Explained
-# - name: Restart jenkins safely
-#   uri:
-#     url: http://localhost:8080/safeRestart
-#     method: POST
-#     force_basic_auth: yes
-#     user: "{{ jenkins_admin_username }}"
-#     password: "{{ jenkins_admin_password }}"
-#   when: _jenkins_plugin is changed

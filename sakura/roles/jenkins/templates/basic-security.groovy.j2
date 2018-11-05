@@ -1,7 +1,7 @@
 #!groovy
 
-def webuserName = '{{ jenkins_admin_username }}'
-def webuserPassword = '{{ jenkins_admin_password }}'
+def webuserName = '''{{ jenkins_admin_username }}'''
+def webuserPassword = '''{{ jenkins_admin_password }}'''
 def webuserSshPublickey = '''{% for key in jenkins_admin_ssh_publickey %}
 {{ key }}
 {% endfor %}'''
@@ -50,8 +50,14 @@ user.addProperty(keysProperty)
 
 user.save()
 
-// TODO: Skip setup wizard
+// Skip setup wizard
 // https://github.com/jenkinsci/docker/issues/310
+if (!instance.installState.isSetupComplete()) {
+  println '--> Neutering SetupWizard'
+  InstallState.INITIAL_SETUP_COMPLETED.initializeState()
+}
+
+instance.save()
 
 // https://github.com/geerlingguy/ansible-role-jenkins/blob/c9e043335a3f2b61c48d27a173c5b3975f07b6fa/templates/basic-security.groovy
 // https://pghalliday.com/jenkins/groovy/sonar/chef/configuration/management/2014/09/21/some-useful-jenkins-groovy-scripts.html

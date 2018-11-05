@@ -22,6 +22,11 @@ def ensurePlugin(pluginName) {
         println "--> Install ${pluginName}"
         deployment = updateCenter.getPlugin(pluginName).deploy(true)
         deployment.get()
+
+        pluginManager.getPlugin(pluginName).getDependencies().each {
+            println "--> Ensuring plugin ${it.shortName} as dependency of ${pluginName}"
+            ensurePlugin(it.shortName)
+        }
     }
 
     def plugin = pluginManager.getPlugin(pluginName)
@@ -30,10 +35,6 @@ def ensurePlugin(pluginName) {
         plugin.enable()
     }
 
-    plugin.getDependencies().each {
-        println "--> Ensuring plugin ${it.shortName} as dependency of ${pluginName}"
-        ensurePlugin(it.shortName)
-    }
     println "--> Ensuring plugin ${pluginName} ... done"
 }
 

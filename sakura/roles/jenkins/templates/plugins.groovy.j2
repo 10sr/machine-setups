@@ -11,20 +11,20 @@ import jenkins.model.Jenkins
 def instance  = Jenkins.getInstance()
 
 // https://qiita.com/fuku2014/items/995cf34afd126a627c22
-pm = instance.getPluginManager()
-uc = instance.getUpdateCenter()
+pluginManager = instance.getPluginManager()
+updateCenter = instance.getUpdateCenter()
 
-uc.updateAllSites()
+updateCenter.updateAllSites()
 
 def ensurePlugin(pluginName) {
     println "--> Ensuring plugin ${pluginName} ..."
-    if (! pm.getPlugin(pluginName)) {
+    if (! pluginManager.getPlugin(pluginName)) {
         println "--> Install ${pluginName}"
-        deployment = uc.getPlugin(pluginName).deploy(true)
+        deployment = updateCenter.getPlugin(pluginName).deploy(true)
         deployment.get()
     }
 
-    def plugin = pm.getPlugin(pluginName)
+    def plugin = pluginManager.getPlugin(pluginName)
     if (! plugin.isEnabled()) {
         println "--> Enable ${pluginName}"
         plugin.enable()

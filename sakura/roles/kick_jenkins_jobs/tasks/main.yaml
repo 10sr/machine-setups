@@ -11,6 +11,6 @@
   jenkins_job:
     config: "{{ lookup('template', 'templates/job.xml.j2') }}"
     name: "{{ kick_jenkins_jobs_name }}"
-    user: "{{ kick_jenkins_jobs_web_username }}"
-    password: "{{ kick_jenkins_jobs_web_password }}"
+    user: "{{ kick_jenkins_jobs_webuser_username }}"
+    password: "{{ kick_jenkins_jobs_webuser_password }}"
     url: http://localhost:8080

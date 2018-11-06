@@ -6,7 +6,7 @@
 - name: Setup jenkins user
   user:
     name: jenkins
-    password: "{{ jenkins_user_password | password_hash('sha512', jenkins_user_password_salt) }}"
+    password: "{{ jenkins_serveruser_password | password_hash('sha512', jenkins_serveruser_password_salt) }}"
     groups: sudo,docker
     append: yes
   become: yes

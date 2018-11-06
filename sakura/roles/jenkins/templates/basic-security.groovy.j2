@@ -1,8 +1,8 @@
 #!groovy
 
-def webuserName = '''{{ jenkins_admin_username }}'''
-def webuserPassword = '''{{ jenkins_admin_password }}'''
-def webuserSshPublickey = '''{% for key in jenkins_admin_ssh_publickey %}
+def webuserName = '''{{ jenkins_webuser_username }}'''
+def webuserPassword = '''{{ jenkins_webuser_password }}'''
+def webuserSshPublickey = '''{% for key in jenkins_webuser_ssh_publickey %}
 {{ key }}
 {% endfor %}'''
 // TODO: Parametrize portnum

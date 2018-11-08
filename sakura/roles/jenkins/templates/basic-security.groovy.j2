@@ -36,7 +36,7 @@ instance.save()
 
 // https://gist.github.com/hartzell/4a1923ec51350ffd2a3de4e5118fc2e3
 println "--> Starting Jenkins SSHD with port: ${sshdPort}"
-def sshd = new org.jenkinsci.main.modules.sshd.SSHD()
+def sshd = instance.getDescriptor("org.jenkinsci.main.modules.sshd.SSHD")
 sshd.setPort(sshdPort)
 sshd.save()
 

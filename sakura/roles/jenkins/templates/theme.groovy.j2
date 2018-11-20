@@ -1,2 +1,22 @@
-// TODO: Configure simple theme plugin
 // https://github.com/edx/jenkins-configuration/blob/master/src/main/groovy/4configureMailerPlugin.groovy
+// https://github.com/Ddam/ddstack/blob/3f037d031131b221f19f9c782cdba4c67f5defc7/devops/jenkins/ref/init.groovy.d/02-configure-simpletheme.groovy
+// https://github.com/jim-brighter/jenkins/blob/2b74a8b0b90ccb9dbc797e3e35bb9e1f3ca10a0a/init.groovy.d/startup.groovy
+
+def cssUrl = "https://cdn.rawgit.com/afonsof/jenkins-material-theme/gh-pages/dist/material-blue-grey.css"
+
+import jenkins.model.Jenkins
+
+import org.jenkinsci.plugins.simpletheme.CssUrlThemeElement
+import org.jenkinsci.plugins.simpletheme.ThemeElement
+
+Jenkins instance  = Jenkins.getInstance()
+
+// TODO: Skip when simple-theme-plugin is not installed yet
+def simpleThemeDecorator = instance.getDescriptor("org.codefirst.SimpleThemeDecorator")
+
+List<ThemeElement> themeElements = new ArrayList<ThemeElement>()
+themeElements.add(new CssUrlThemeElement(cssUrl))
+simpleThemeDecorator.setElements(themeElements)
+simpleThemeDecorator.save()
+
+println "--> Jenkins theme changed"

@@ -9,5 +9,5 @@
 
 - name: Restart Jenkins Safely
   command: ssh {{ jenkins_webuser_username }}@localhost -p 2244 safe-restart
-  beomce: no
+  become: no
   listen: JENKINS_SAFERESTART

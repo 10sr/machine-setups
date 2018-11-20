@@ -33,6 +33,7 @@
   with_items:
     - basic-security
     - plugins
+    - theme
   become: yes
   no_log: yes
   notify: JENKINS_SAFERESTART

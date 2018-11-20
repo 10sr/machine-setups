@@ -228,6 +228,9 @@
         - simple-theme-plugin
         - slack
 
+      # https://github.com/afonsof/jenkins-material-theme/
+      jenkins_theme_css_url: https://cdn.rawgit.com/afonsof/jenkins-material-theme/gh-pages/dist/material-blue-grey.css
+
     - role: kick_jenkins_jobs
       # TODO: Rename to jenkins_bootstrap_job
       kick_jenkins_jobs_name: kick-jenkins-jobs

@@ -2,7 +2,7 @@
 // https://github.com/Ddam/ddstack/blob/3f037d031131b221f19f9c782cdba4c67f5defc7/devops/jenkins/ref/init.groovy.d/02-configure-simpletheme.groovy
 // https://github.com/jim-brighter/jenkins/blob/2b74a8b0b90ccb9dbc797e3e35bb9e1f3ca10a0a/init.groovy.d/startup.groovy
 
-def cssUrl = "https://cdn.rawgit.com/afonsof/jenkins-material-theme/gh-pages/dist/material-blue-grey.css"
+def cssUrl = "{{ jenkins_theme_css_url }}"
 
 import jenkins.model.Jenkins
 

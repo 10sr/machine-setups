@@ -31,6 +31,8 @@
     owner: jenkins
     group: jenkins
   with_items:
+    # TODO: Add basic configurations
+    # TODO: Add num to order script
     - basic-security
     - plugins
     - theme

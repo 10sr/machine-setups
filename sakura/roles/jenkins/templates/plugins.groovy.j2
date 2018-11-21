@@ -1,12 +1,6 @@
 #!groovy
 
-def plugins = '''{% for plugin in jenkins_plugins %}
-{{ plugin }}
-{% endfor %}'''.split("\n")
-
-// def _plugins = {{ jenkins_plugins | to_json }}
-
-println plugins
+def plugins = '''{{ jenkins_plugins | join("\n") }}'''.split("\n")
 
 import jenkins.model.Jenkins
 

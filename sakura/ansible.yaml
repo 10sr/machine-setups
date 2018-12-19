@@ -208,7 +208,7 @@
       # I think webuser_name / serveruser_name are good
       jenkins_webuser_username: 10sr
       # web 経由のログインパスワード
-      jenkins_webuser_password: "{{ _vault.jenkins_admin_password}}"
+      jenkins_webuser_password: "{{ _vault.jenkins_webuser_password }}"
       # TODO: This value is too big so separete into file
       jenkins_webuser_ssh_publickey:
         - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCy90M0oZocY2AMrk8DUYNaHacamzOW+A+NNsXSTdLqj/k45pg6WiT8hnYBUXnVLJPoOQknFLFLKaC9YUX1iiz2aiH/aFn83W5og7NGlhkcFmti9tQwql7gB5/Y0N/DoRVWUXoi/Iy69LU7dMQQOAM9yvOwTl86djVOVpjhI/KPkPGpiddXjqruBcOpmymtfZJpFDqIskfBse7f+e0oYrYlZkTD8mxQyrjpacR0qvcRTJ6EE+bxqY8+ONA9hEahZ426au1mPni4L2DZrrG77gNwE2c4T/mMGrM7zw3MjZeZAtgHXwik0yw31eTHyJeDniDdEcFxL80nOJIk69YwcRM/ y_k@dw.local
@@ -219,7 +219,7 @@
 
 
       # マシン上のログインパスワード
-      jenkins_serveruser_password: "{{ _vault.jenkins_user_password }}"
+      jenkins_serveruser_password: "{{ _vault.jenkins_serveruser_password }}"
       jenkins_serveruser_password_salt: "{{ ansible_mounts.0.uuid.replace('-', '')[:16] }}"
       jenkins_plugins:
         - ansicolor
@@ -235,7 +235,7 @@
       # TODO: Rename to jenkins_bootstrap_job
       kick_jenkins_jobs_name: kick-jenkins-jobs
       kick_jenkins_jobs_webuser_username: 10sr
-      kick_jenkins_jobs_webuser_password: "{{ _vault.jenkins_admin_password }}"
+      kick_jenkins_jobs_webuser_password: "{{ _vault.jenkins_webuser_password }}"
       kick_jenkins_jobs_repository_url: https://github.com/10sr/machine-setups
       kick_jenkins_jobs_jobdsl_target: jenkins-jobs/src/jobs/example1Jobs.groovy
 

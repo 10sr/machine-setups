@@ -197,16 +197,7 @@
     - role: java_jre
 
     - role: jenkins
-      # TODO: jenkins_machineuser_name / jenkins_webuser_name
-      # jenkins_webaccount_name
-      # jenkins_weblogin_name / jenkins_machinelogin_name
-      # jenkins_linuxuser_name
-      # jenkins_localuser_name
-      # jenkins_daemonuser_name
-      # jenkins_serveruser_name
-      # I think webuser_name / serveruser_name are good
       jenkins_webuser_username: 10sr
-      # web 経由のログインパスワード
       jenkins_webuser_password: "{{ _vault.jenkins_webuser_password }}"
       # TODO: This value is too big so separete into file
       jenkins_webuser_ssh_publickey:
@@ -217,7 +208,6 @@
 
 
 
-      # マシン上のログインパスワード
       jenkins_serveruser_password: "{{ _vault.jenkins_serveruser_password }}"
       jenkins_serveruser_password_salt: "{{ ansible_mounts.0.uuid.replace('-', '')[:16] }}"
       jenkins_plugins:

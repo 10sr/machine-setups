@@ -48,10 +48,9 @@
 
     - name: Install some prerequisite packages
       apt:
-        name: "{{ item }}"
-      with_items:
-        - git
-        - nginx
+        name:
+          - git
+          - nginx
       become: yes
 
   roles:

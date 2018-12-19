@@ -1,11 +1,10 @@
 ---
 - name: Install required packages
   apt:
-    name: "{{ item }}"
+    name:
+      - python-jenkins
+      - python-lxml
   become: yes
-  with_items:
-    - python-jenkins
-    - python-lxml
 
 - name: Generate kick-jenkins-jobs
   jenkins_job:

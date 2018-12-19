@@ -1,11 +1,10 @@
 ---
 - apt:
-    name: "{{ item }}"
-  with_items:
-    - apt-transport-https
-    - ca-certificates
-    - curl
-    - software-properties-common
+    name:
+      - apt-transport-https
+      - ca-certificates
+      - curl
+      - software-properties-common
   become: yes
 
 - apt_key:

@@ -12,11 +12,10 @@
   become: yes
 
 - pip:
-    name: "{{ item }}"
+    name:
+      - docker
+      - docker-compose
     executable: /usr/bin/pip3
-  with_items:
-    - docker
-    - docker-compose
   become: yes
 
   # TODO: Parametrize group and user name

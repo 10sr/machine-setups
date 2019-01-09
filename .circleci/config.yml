@@ -1,5 +1,5 @@
 ---
-# Check https://circleci.com/docs/2.0 for more details
+# https://circleci.com/docs/2.0
 version: 2.1
 workflows:
   version: 2

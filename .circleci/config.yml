@@ -20,19 +20,17 @@ commands:
       directory:
         type: string
     steps:
-      - checkout
       - run:
-          name: Install dependencies
+          name: Install dependencies (<< parameters.directory >>)
           working_directory: << parameters.directory >>
           command: make install
       - run:
-          name: Run tests with python environment
+          name: Run tests with python environment (<< parameters.directory >>)
           working_directory: << parameters.directory >>
           command: make check
 
   test_java:
     steps:
-      - checkout
       - run:
           name: Install prerequisite
           command: sudo apt-get update && sudo apt-get install -y make
@@ -70,6 +68,7 @@ jobs:
       name: python
       tag: << parameters.docker_tag >>
     steps:
+      - checkout
       - test_python:
           directory: sakura
       - test_python:
@@ -79,4 +78,5 @@ jobs:
       name: openjdk
       tag: 8-jdk
     steps:
+      - checkout
       - test_java

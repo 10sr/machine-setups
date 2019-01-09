@@ -1,57 +1,82 @@
 ---
-# Check https://circleci.com/docs/2.0 for more details
-version: 2
+# https://circleci.com/docs/2.0
+version: 2.1
 workflows:
   version: 2
   test:
     jobs:
-      - test-py27
-      - test-py35
-      - test-py36
-      - test-java8
+      - test_python:
+          docker_tag: "2.7"
+      - test_python:
+          docker_tag: "3.5"
+      - test_python:
+          docker_tag: "3.6"
+      - test_java8
 
 # TOOD: Fix commands
-_test-python: &test-python
-  working_directory: ~/repo
-  steps:
-    - checkout
-    - run:
-        name: Run tests (sakura)
-        working_directory: sakura
-        command: make install check
-    - run:
-        name: Run tests (opti)
-        working_directory: opti
-        command: make install check
+commands:
+  test_python:
+    parameters:
+      directory:
+        type: string
+    steps:
+      - run:
+          name: Install dependencies (<< parameters.directory >>)
+          working_directory: << parameters.directory >>
+          command: make install
+      - run:
+          name: Run tests with python environment (<< parameters.directory >>)
+          working_directory: << parameters.directory >>
+          command: make check
 
-_test-java: &test-java
-  working_directory: ~/repo
-  steps:
-    - checkout
-    - run:
-        name: Install prerequisite
-        command: sudo apt-get update && sudo apt-get install -y make
-    - run:
-        name: Run tests (jenkins-jobs)
-        environment:
-          TERM: dumb
-        working_directory: jenkins-jobs
-        command: make test
+  test_java:
+    steps:
+      - run:
+          name: Install prerequisite
+          command: sudo apt-get update && sudo apt-get install -y make
+      - run:
+          name: Run tests (jenkins-jobs)
+          environment:
+            TERM: dumb
+          working_directory: jenkins-jobs
+          command: make test
+
+executors:
+  python:
+    parameters:
+      tag:
+        type: string
+        default: latest
+    docker:
+      - image: circleci/python:<< parameters.tag >>
+    working_directory: ~/repo
+  openjdk:
+    parameters:
+      tag:
+        type: string
+        default: latest
+    docker:
+      - image: circleci/openjdk:<< parameters.tag >>
+    working_directory: ~/repo
 
 jobs:
-  test-py27:
-    <<: *test-python
-    docker:
-      - image: circleci/python:2.7
-  test-py35:
-    <<: *test-python
-    docker:
-      - image: circleci/python:3.5
-  test-py36:
-    <<: *test-python
-    docker:
-      - image: circleci/python:3.6
-  test-java8:
-    <<: *test-java
-    docker:
-      - image: circleci/openjdk:8-jdk
+  test_python:
+    parameters:
+      docker_tag:
+        type: string
+    executor:
+      name: python
+      tag: << parameters.docker_tag >>
+    steps:
+      - checkout
+      - test_python:
+          directory: sakura
+      - test_python:
+          directory: opti
+  test_java8:
+    executor:
+      name: openjdk
+      tag: 8-jdk
+    steps:
+      - checkout
+      - test_java

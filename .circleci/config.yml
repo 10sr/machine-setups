@@ -71,8 +71,8 @@ jobs:
       - checkout
       - test_python:
           directory: sakura
-      - test_python:
-          directory: opti
+      # - test_python:
+      #     directory: opti
   test_java8:
     executor:
       name: openjdk

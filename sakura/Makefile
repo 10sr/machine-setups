@@ -16,7 +16,7 @@ THIS_REVISION_SUBJECT := $(shell git log --pretty=tformat:%s -n1)
 env_this_revision := \
 	THIS_REVISION_ID=$(THIS_REVISION_ID) \
 	THIS_REVISION_TIMESTAMP=$(THIS_REVISION_TIMESTAMP) \
-	THIS_REVISION_SUBJECT="$(THIS_REVISION_SUBJECT)"
+	THIS_REVISION_SUBJECT='$(THIS_REVISION_SUBJECT)'  # FIXME: This will fail if SUBJECT has quotes
 
 
 ANSIBLE_INSTALLED_VERSION := $(shell $(pipenv) run ansible --version | awk '/^ansible/ {print $$2 }')

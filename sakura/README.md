@@ -17,6 +17,6 @@ Current setups
 Usage
 -----
 
-Add `vault_pass.secret` with the vault password in it and issue:
+Add `vault_pass.secret` file with the vault password in it and issue:
 
     make play

@@ -231,6 +231,9 @@
       jenkins_nginx_proxy_port: 8080
       jenkins_nginx_proxy_server_name: "jk.{{ _domain_name }}"
 
+    - role: tshark
+      tshark_target_interface: ens3
+
   post_tasks:
     - file:
         state: link

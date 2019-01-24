@@ -6,6 +6,7 @@ import jenkins.model.Jenkins
 import org.jenkinsci.plugins.authorizeproject.ProjectQueueItemAuthenticator
 import org.jenkinsci.plugins.authorizeproject.strategy.AnonymousAuthorizationStrategy
 import org.jenkinsci.plugins.authorizeproject.strategy.TriggeringUsersAuthorizationStrategy
+import org.jenkinsci.plugins.authorizeproject.strategy.SpecificUsersAuthorizationStrategy
 import jenkins.security.QueueItemAuthenticatorConfiguration
 
 def instance = Jenkins.getInstance()
@@ -13,6 +14,7 @@ def instance = Jenkins.getInstance()
 def strategyMap = [
   (instance.getDescriptor(AnonymousAuthorizationStrategy.class).getId()): true,
   (instance.getDescriptor(TriggeringUsersAuthorizationStrategy.class).getId()): true,
+  (instance.getDescriptor(SpecificUsersAuthorizationStrategy.class).getId()): true,
 ]
 
 def authenticators = QueueItemAuthenticatorConfiguration.get().getAuthenticators()

@@ -36,6 +36,7 @@
     - basic-security
     - plugins
     - theme
+    - authorize-project
   become: yes
   no_log: yes
   notify: JENKINS_SAFERESTART

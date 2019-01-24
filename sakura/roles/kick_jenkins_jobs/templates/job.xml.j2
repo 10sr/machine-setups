@@ -4,7 +4,10 @@
   <keepDependencies>false</keepDependencies>
   <properties>
     <org.jenkinsci.plugins.authorizeproject.AuthorizeProjectProperty plugin="authorize-project@1.3.0">
-      <strategy class="org.jenkinsci.plugins.authorizeproject.strategy.TriggeringUsersAuthorizationStrategy"/>
+      <strategy class="org.jenkinsci.plugins.authorizeproject.strategy.SpecificUsersAuthorizationStrategy">
+        <userid>{{ kick_jenkins_jobs_webuser_username }}</userid>
+        <dontRestrictJobConfiguration>false</dontRestrictJobConfiguration>
+      </strategy>
     </org.jenkinsci.plugins.authorizeproject.AuthorizeProjectProperty>
   </properties>
   <scm class="hudson.plugins.git.GitSCM" plugin="git@3.9.1">

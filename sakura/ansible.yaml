@@ -206,10 +206,9 @@
         # Key of remote ansible normal user
         - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCgAL0Sasj/Z9SsNpfGib/kl4Y3ffaBDa9EIqONhBKqvbG2WxbP76r2LOrNQFZKM6VAjGd2raD24tT3kk/ZlA6JvjETFHIzPDyLMzqvnC9Q93qM8O2mHi7juVQXx0Oqs4M5Vvx+F3AlQFYDwOgjnxfTE2gEZadJabygOq5J7gQfxS5XaFc5nFFXpSrXOk0IAH4v3gKvLbVliLAhvkgebkjAv0m9ooxvX64/gNv50edB92KV8tfBpn5Oqm6hAyxa0r+XsBsC3612JKKHegIEnBaB/0PdMpWb6tbAg376tYu1AwSNUi5/lzJt6s8Fh1ZqdwO634B7eHeZN3mJojcwwnpV yuk@tk2-407-44672
 
-
-
       jenkins_serveruser_password: "{{ _vault.jenkins_serveruser_password }}"
       jenkins_serveruser_password_salt: "{{ ansible_mounts.0.uuid.replace('-', '')[:16] }}"
+
       jenkins_plugins:
         - ansicolor
         - job-dsl

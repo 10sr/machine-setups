@@ -12,6 +12,7 @@ import jenkins.security.QueueItemAuthenticatorConfiguration
 def instance = Jenkins.getInstance()
 
 def strategyMap = [
+  // TODO: Maybe config wont be updated even when this map is changed
   (instance.getDescriptor(AnonymousAuthorizationStrategy.class).getId()): true,
   (instance.getDescriptor(TriggeringUsersAuthorizationStrategy.class).getId()): true,
   (instance.getDescriptor(SpecificUsersAuthorizationStrategy.class).getId()): true,

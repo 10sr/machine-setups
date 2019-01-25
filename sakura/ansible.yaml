@@ -224,7 +224,7 @@
       jenkins_bootstrap_job_webuser_username: 10sr
       jenkins_bootstrap_job_webuser_password: "{{ _vault.jenkins_webuser_password }}"
       jenkins_bootstrap_job_repository_url: https://github.com/10sr/machine-setups
-      jenkins_bootstrap_job_jobdsl_target: sakura/jenkins-jobs/src/jobs/example1Jobs.groovy
+      jenkins_bootstrap_job_jobdsl_target: sakura/jenkins-jobs/src/jobs/*.groovy
 
     - role: jenkins_nginx_proxy
       jenkins_nginx_proxy_port: 8080

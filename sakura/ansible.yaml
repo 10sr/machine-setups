@@ -219,13 +219,12 @@
       # https://github.com/afonsof/jenkins-material-theme/
       jenkins_theme_css_url: https://cdn.rawgit.com/afonsof/jenkins-material-theme/gh-pages/dist/material-blue-grey.css
 
-    - role: kick_jenkins_jobs
-      # TODO: Rename to jenkins_bootstrap_job
-      kick_jenkins_jobs_name: kick-jenkins-jobs
-      kick_jenkins_jobs_webuser_username: 10sr
-      kick_jenkins_jobs_webuser_password: "{{ _vault.jenkins_webuser_password }}"
-      kick_jenkins_jobs_repository_url: https://github.com/10sr/machine-setups
-      kick_jenkins_jobs_jobdsl_target: sakura/jenkins-jobs/src/jobs/example1Jobs.groovy
+    - role: jenkins_bootstrap_job
+      jenkins_bootstrap_job_name: jenkins-bootstrap-job
+      jenkins_bootstrap_job_webuser_username: 10sr
+      jenkins_bootstrap_job_webuser_password: "{{ _vault.jenkins_webuser_password }}"
+      jenkins_bootstrap_job_repository_url: https://github.com/10sr/machine-setups
+      jenkins_bootstrap_job_jobdsl_target: sakura/jenkins-jobs/src/jobs/example1Jobs.groovy
 
     - role: jenkins_nginx_proxy
       jenkins_nginx_proxy_port: 8080

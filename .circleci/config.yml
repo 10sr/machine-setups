@@ -38,7 +38,7 @@ commands:
           name: Run tests (jenkins-jobs)
           environment:
             TERM: dumb
-          working_directory: jenkins-jobs
+          working_directory: sakura/jenkins-jobs
           command: make test
 
 executors:

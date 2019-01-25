@@ -10,7 +10,7 @@ job("$basePath/dowwner-check") {
         github repo
     }
     triggers {
-        scm 'H/5 * * * *'
+        scm 'H/15 * * * *'
     }
     steps {
         shell 'make installdeps check'

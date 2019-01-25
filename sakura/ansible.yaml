@@ -175,7 +175,7 @@
           command: docker-compose up --build
         plex0:
           json: plex0/pm2.json
-          state: started
+          state: stopped
           command: docker-compose up --build
 
     - role: mastodon_nginx_proxy

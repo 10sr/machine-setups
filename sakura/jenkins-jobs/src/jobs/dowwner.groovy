@@ -7,11 +7,11 @@ folder(basePath) {
 
 job("$basePath/dowwner-check") {
     scm {
-        github repo
+        github repo, 'refs/heads/master'
     }
-    // triggers {
-    //     scm 'H/15 * * * *'
-    // }
+    triggers {
+        scm 'H/15 * * * *'
+    }
     steps {
         shell 'make installdeps check'
     }

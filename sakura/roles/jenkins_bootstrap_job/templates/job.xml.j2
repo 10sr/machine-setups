@@ -5,7 +5,7 @@
   <properties>
     <org.jenkinsci.plugins.authorizeproject.AuthorizeProjectProperty plugin="authorize-project@1.3.0">
       <strategy class="org.jenkinsci.plugins.authorizeproject.strategy.SpecificUsersAuthorizationStrategy">
-        <userid>{{ kick_jenkins_jobs_webuser_username }}</userid>
+        <userid>{{ jenkins_bootstrap_jobs_webuser_username }}</userid>
         <dontRestrictJobConfiguration>false</dontRestrictJobConfiguration>
       </strategy>
     </org.jenkinsci.plugins.authorizeproject.AuthorizeProjectProperty>
@@ -14,7 +14,7 @@
     <configVersion>2</configVersion>
     <userRemoteConfigs>
       <hudson.plugins.git.UserRemoteConfig>
-        <url>{{ kick_jenkins_jobs_repository_url }}</url>
+        <url>{{ jenkins_bootstrap_jobs_repository_url }}</url>
       </hudson.plugins.git.UserRemoteConfig>
     </userRemoteConfigs>
     <branches>
@@ -39,7 +39,7 @@
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <javaposse.jobdsl.plugin.ExecuteDslScripts plugin="job-dsl@1.70">
-      <targets>{{ kick_jenkins_jobs_jobdsl_target }}</targets>
+      <targets>{{ jenkins_bootstrap_jobs_jobdsl_target }}</targets>
       <usingScriptText>false</usingScriptText>
       <sandbox>false</sandbox>
       <ignoreExisting>false</ignoreExisting>

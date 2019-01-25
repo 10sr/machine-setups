@@ -225,7 +225,7 @@
       kick_jenkins_jobs_webuser_username: 10sr
       kick_jenkins_jobs_webuser_password: "{{ _vault.jenkins_webuser_password }}"
       kick_jenkins_jobs_repository_url: https://github.com/10sr/machine-setups
-      kick_jenkins_jobs_jobdsl_target: jenkins-jobs/src/jobs/example1Jobs.groovy
+      kick_jenkins_jobs_jobdsl_target: sakura/jenkins-jobs/src/jobs/example1Jobs.groovy
 
     - role: jenkins_nginx_proxy
       jenkins_nginx_proxy_port: 8080

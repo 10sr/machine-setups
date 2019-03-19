@@ -182,6 +182,10 @@
           json: plex0/pm2.json
           state: stopped
           command: docker-compose up --build
+        gogs0:
+          json: gogs0/pm2.json
+          state: started
+          command: docker-compose up --build
 
     - role: mastodon_nginx_proxy
       mastodon_server_name: st.{{ _domain_name }}

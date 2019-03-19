@@ -1,0 +1,12 @@
+---
+version: '3'
+services:
+  app:
+    image: gogs/gogs:0.11.86
+    ports:
+      - "0.0.0.0:10022:22"
+      - "127.0.0.1:10080:3000"
+    environment: []
+    volumes:
+      - "./config.production.json:/var/lib/ghost/config.production.json:ro"
+      - "/var/lib/data/docker/gogs0/data:/data"

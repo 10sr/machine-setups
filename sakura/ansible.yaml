@@ -74,7 +74,9 @@
         - "nc.{{ _domain_name }}"
         - "px.{{ _domain_name }}"
         - "jk.{{ _domain_name }}"
+        - "gg.{{ _domain_name }}"
       letsencrypt_webroot: /var/nginx/main
+      letsencrypt_certname: "{{ _domain_name }}"
       letsencrypt_key_dir: /etc/letsencrypt/live/{{ _domain_name }}
       letsencrypt_ssl_key_dir: /etc/letsencrypt/live/{{ _domain_name }}
       letsencrypt_ssl_dhparam_path: /etc/ssl/private/dhparam.pem
@@ -84,6 +86,7 @@
       nginx_name_ssl_only:
         - "b.{{ _domain_name }}"
         - "nc.{{ _domain_name }}"
+        - "gg.{{ _domain_name }}"
       nginx_host_proxies:
         - name: gl.{{ _domain_name }}
           port: 8800
@@ -112,6 +115,8 @@
           port: 8888
         - name: "px.{{ _domain_name }}"
           port: 32400
+        - name: gg.{{ _domain_name }}
+          port: 10080
 
     - role: docker
       docker_ubuntu_codename: "{{ _ubuntu_codename }}"

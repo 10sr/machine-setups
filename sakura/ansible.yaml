@@ -235,6 +235,9 @@
       jenkins_bootstrap_job_repository_url: https://github.com/10sr/machine-setups.git
       jenkins_bootstrap_job_jobdsl_target: sakura/jenkins-jobs/src/jobs/*.groovy
 
+      jenkins_bootstrap_job_environments:
+        P_TXT_REPOSITORY_URL: "{{ _vault.p_txt_repository_url }}"
+
     - role: jenkins_nginx_proxy
       jenkins_nginx_proxy_port: 8080
       jenkins_nginx_proxy_server_name: "jk.{{ _domain_name }}"

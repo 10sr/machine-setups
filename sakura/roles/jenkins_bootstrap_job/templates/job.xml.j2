@@ -3,6 +3,18 @@
   <description></description>
   <keepDependencies>false</keepDependencies>
   <properties>
+    <hudson.model.ParametersDefinitionProperty>
+      <parameterDefinitions>
+        {% for k, v in jenkins_bootstrap_job_environments.items() -%}
+        <hudson.model.StringParameterDefinition>
+          <name>{{ k }}</name>
+          <description></description>
+          <defaultValue>{{ v }}</defaultValue>
+          <trim>false</trim>
+        </hudson.model.StringParameterDefinition>
+        {%- endfor %}
+      </parameterDefinitions>
+    </hudson.model.ParametersDefinitionProperty>
     <org.jenkinsci.plugins.authorizeproject.AuthorizeProjectProperty plugin="authorize-project@1.3.0">
       <strategy class="org.jenkinsci.plugins.authorizeproject.strategy.SpecificUsersAuthorizationStrategy">
         <userid>{{ jenkins_bootstrap_job_webuser_username }}</userid>

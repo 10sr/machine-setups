@@ -8,5 +8,6 @@ services:
       - "127.0.0.1:10080:3000"
     environment: []
     volumes:
-      - "./config.production.json:/var/lib/ghost/config.production.json:ro"
+      - "./start.sh:/start.sh:ro"
       - "/var/lib/data/docker/gogs0/data:/data"
+    command: sh /start.sh

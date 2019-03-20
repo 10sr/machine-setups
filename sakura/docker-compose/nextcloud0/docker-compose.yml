@@ -13,6 +13,7 @@ services:
     image: redis
 
   app:
+    # TODO: Do not build image, just mount and change CMD
     build:
       context: .
       dockerfile: nextcloud.Dockerfile

@@ -4,6 +4,7 @@ services:
   app:
     image: gogs/gogs:0.11.86
     ports:
+      # Just expose 10022 directly
       - "0.0.0.0:10022:22"
       - "127.0.0.1:10080:3000"
     environment: []

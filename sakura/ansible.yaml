@@ -75,6 +75,7 @@
         - "px.{{ _domain_name }}"
         - "jk.{{ _domain_name }}"
         - "gg.{{ _domain_name }}"
+        - "gt.{{ _domain_name }}"
       letsencrypt_webroot: /var/nginx/main
       letsencrypt_certname: "{{ _domain_name }}"
       letsencrypt_key_dir: /etc/letsencrypt/live/{{ _domain_name }}
@@ -87,6 +88,7 @@
         - "b.{{ _domain_name }}"
         - "nc.{{ _domain_name }}"
         - "gg.{{ _domain_name }}"
+        - "gt.{{ _domain_name }}"
       nginx_host_proxies:
         - name: gl.{{ _domain_name }}
           port: 8800
@@ -117,6 +119,8 @@
           port: 32400
         - name: gg.{{ _domain_name }}
           port: 10080
+        - name: gt.{{ _domain_name }}
+          port: 3300
 
     - role: docker
       docker_ubuntu_codename: "{{ _ubuntu_codename }}"
@@ -184,6 +188,10 @@
           command: docker-compose up --build
         gogs0:
           json: gogs0/pm2.json
+          state: started
+          command: docker-compose up --build
+        gitea0:
+          json: gitea0/pm2.json
           state: started
           command: docker-compose up --build
 

@@ -23,4 +23,6 @@
     state: "{{ values.state }}"
     executable: /home/docker/_pm2/node_modules/.bin/pm2
   become: yes
+  # Output of pm2 breaks Emacs term-mode buffer
+  no_log: yes
   become_user: docker

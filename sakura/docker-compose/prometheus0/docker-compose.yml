@@ -1,0 +1,13 @@
+---
+# TODO: Inject conf COOKIE_SECURE: true
+version: '3'
+services:
+  app:
+    image: prom/prometheus:v2.8.0
+    ports:
+      # Just expose 222 directly
+      - "127.0.0.1:9090:9090"
+    environment: {}
+    volumes:
+      - "./prometheus.yml:/etc/prometheus/prometheus.yml:ro"
+      - "/var/lib/data/docker/prometheus0/data:/prometheus"

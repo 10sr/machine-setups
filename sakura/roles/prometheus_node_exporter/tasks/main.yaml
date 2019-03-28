@@ -9,4 +9,5 @@
 - name: Start
   service:
     name: prometheus-node-exporter
+    state: stopped
   become: yes

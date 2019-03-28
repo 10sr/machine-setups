@@ -19,13 +19,9 @@ scrape_configs:
     static_configs:
       - targets: ['localhost:9090']
 
+  # https://prometheus.io/docs/guides/node-exporter/
   - job_name: 'node'
     scrape_interval: 15s
     static_configs:
       - targets:
-          - 'http://3ends.info:9100'
-    # params:
-    #   collect[]:
-    #     - filefd
-    #     - filesystem
-    #     - xfs
+          - 3ends.info:9100

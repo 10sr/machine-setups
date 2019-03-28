@@ -1,0 +1,12 @@
+---
+- name: Install
+  apt:
+    name: prometheus-node-exporter
+  become: yes
+
+# Overwrite /etc/default/prometheus-node-exporter
+
+- name: Start
+  service:
+    name: prometheus-node-exporter
+  become: yes

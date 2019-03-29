@@ -83,6 +83,14 @@
       letsencrypt_ssl_dhparam_path: /etc/ssl/private/dhparam.pem
 
     - role: nginx
+
+      nginx_basic_auth_htpasswd:
+        - path: /etc/nginx/prometheus_node_exporter.htpasswd
+          entries:
+            - name: prometheus_node_exporter
+              password: "{{ _vault.prometheus_node_exporter_password }}"
+
+      # non ssl
       nginx_default_root: /var/nginx/main
       nginx_name_ssl_only:
         - "b.{{ _domain_name }}"
@@ -93,6 +101,8 @@
         - name: gl.{{ _domain_name }}
           port: 8800
       nginx_proxy_upstreams: []
+
+      # ssl
       nginx_ssl_default_root: /var/nginx/main
       nginx_ssl_proxy_upstreams:
         - path: /10sr_bot

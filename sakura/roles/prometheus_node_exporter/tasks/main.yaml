@@ -6,6 +6,12 @@
 
 # Overwrite /etc/default/prometheus-node-exporter
 
+- name: Update parameters
+  template:
+    src: etc_default.j2
+    dest: /etc/default/prometheus-node-exporter
+  become: yes
+
 - name: Start
   service:
     name: prometheus-node-exporter

@@ -228,6 +228,8 @@
       mackerel_agent_apikey: "{{ _vault.mackerel_agent_apikey }}"
 
     - role: prometheus_node_exporter
+      prometheus_node_exporter_args: >-
+        -collector.diskstats.ignored-devices="^(ram|loop|fd)\\d+$"
 
     - role: java_jre
 

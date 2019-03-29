@@ -230,6 +230,7 @@
     - role: prometheus_node_exporter
       prometheus_node_exporter_args: >-
         -collector.diskstats.ignored-devices="^(ram|loop|fd)\\d+$"
+        -web.listen-address=localhost:9100
 
     - role: java_jre
 

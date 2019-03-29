@@ -4,16 +4,22 @@
     name: prometheus-node-exporter
   become: yes
 
-# Overwrite /etc/default/prometheus-node-exporter
-
 - name: Update parameters
   template:
     src: etc_default.j2
     dest: /etc/default/prometheus-node-exporter
   become: yes
+  register: _etc_default
+
+- name: Restart
+  service:
+    name: nginx
+    state: restarted
+  become: yes
+  when: _etc_default is changed
 
 - name: Start
   service:
     name: prometheus-node-exporter
-    state: stopped
+    state: started
   become: yes

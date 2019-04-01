@@ -8,7 +8,7 @@ services:
     environment: {}
     user: "1000"
     volumes:
-      - "./entrypoint.sh:/entrypoint.sh:ro"
+      # - "./entrypoint.sh:/entrypoint.sh:ro"
       - "./prometheus.yml:/etc/prometheus/prometheus.yml:ro"
       # TODO: chown 1000 this directory
       - "/var/lib/data/docker/prometheus0/data:/prometheus:Z"

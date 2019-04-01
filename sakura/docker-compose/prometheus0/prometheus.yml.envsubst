@@ -22,6 +22,10 @@ scrape_configs:
   # https://prometheus.io/docs/guides/node-exporter/
   - job_name: 'node'
     scrape_interval: 15s
+    scheme: https
+    basic_auth:
+      username: prometheus_node_exporter
+      password: $NODE_EXPORTER_PASSWORD
     static_configs:
       - targets:
-          - 3ends.info:9100
+          - prometheus-node-exporter.3ends.info:443

@@ -177,6 +177,8 @@
           MYSQL_DATABASE: nextcloud
           MYSQL_PASSWORD: "{{ _vault.nextcloud_mysql_password }}"
           VIRTUAL_HOST: "nc.{{ _domain_name }}"
+        prometheus0:
+          NODE_EXPORTER_PASSWORD: "{{ _vault.prometheus_node_exporter_password }}"
       docker_pm2:
         10sr_bot0:
           json: 10sr_bot0/pm2.json

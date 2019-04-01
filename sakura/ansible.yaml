@@ -223,6 +223,10 @@
           json: gitbucket0/pm2.json
           state: started
           command: docker-compose up --build
+        prometheus0:
+          json: prometheus0/pm2.json
+          state: started
+          command: sh ./up.sh
 
     - role: mastodon_nginx_proxy
       mastodon_server_name: st.{{ _domain_name }}

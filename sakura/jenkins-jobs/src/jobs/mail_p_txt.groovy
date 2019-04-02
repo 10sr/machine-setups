@@ -1,4 +1,4 @@
-String repo = System.getenv("P_TXT_REPOSITORY_URL")
+String repo = System.env["P_TXT_REPOSITORY_URL"]
 
 job("mail_p_txt") {
     scm {

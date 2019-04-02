@@ -5,9 +5,19 @@ job("mail_p_txt") {
         git repo
     }
     triggers {
-        scm 'H/5 * * * *'
+        scm 'H H * * *'
     }
     steps {
         shell 'cat p.txt'
     }
-}
+    publishers {
+        extendedEmail {
+            recipientList('8.slashes@gmail.com')
+            defaultSubject(JOB_NAME)
+            // defaultContent('Something broken')
+            contentType('text/plain')
+            triggers {
+                always()
+            }
+        }
+    }}

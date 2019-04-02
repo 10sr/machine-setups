@@ -14,7 +14,7 @@ job("mail_p_txt") {
         extendedEmail {
             // TODO: Set global sender address
             recipientList('8.slashes@gmail.com')
-            // defaultSubject('$JOB_NAME')
+            // TODO: Fix encoding
             defaultContent('''$DEFAULT_CONTENT
 
 $BUILD_LOG''')

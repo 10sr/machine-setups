@@ -18,7 +18,7 @@ job("mail_p_txt") {
             defaultContent('''$DEFAULT_CONTENT
 
 $BUILD_LOG''')
-            contentType('text/plain; charset=UTF-8')
+            contentType('text/plain')
             triggers {
                 always {
                     sendTo {

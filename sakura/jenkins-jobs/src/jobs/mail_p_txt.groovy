@@ -17,7 +17,7 @@ job("mail_p_txt") {
             // defaultSubject('$JOB_NAME')
             defaultContent('''$DEFAULT_CONTENT
 
-${BUILD_LOG}''')
+$BUILD_LOG''')
             contentType('text/plain')
             triggers {
                 always {

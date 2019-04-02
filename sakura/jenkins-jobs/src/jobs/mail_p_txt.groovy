@@ -17,7 +17,11 @@ job("mail_p_txt") {
             // defaultContent('Something broken')
             contentType('text/plain')
             triggers {
-                always()
+                always {
+                    sendTo {
+                        recipientList()
+                    }
+                }
             }
         }
     }}

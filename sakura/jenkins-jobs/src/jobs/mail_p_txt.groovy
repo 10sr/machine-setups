@@ -13,7 +13,7 @@ job("mail_p_txt") {
     publishers {
         extendedEmail {
             recipientList('8.slashes@gmail.com')
-            defaultSubject(JOB_NAME)
+            defaultSubject('$JOB_NAME')
             // defaultContent('Something broken')
             contentType('text/plain')
             triggers {

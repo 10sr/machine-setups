@@ -65,6 +65,7 @@ dependencies {
 
     // plugin dependencies
     testPlugins 'org.jenkins-ci.plugins:token-macro:2.7'
+    testPlugins 'org.jenkins-ci.plugins.workflow:workflow-step-api:2.19'
 }
 
 task resolveTestPlugins(type: Copy) {

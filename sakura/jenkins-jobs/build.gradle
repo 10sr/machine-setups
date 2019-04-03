@@ -28,7 +28,7 @@ configurations.all*.exclude group: 'xalan'
 dependencies {
     compile 'org.codehaus.groovy:groovy-all:2.4.11'
     compile "org.jenkins-ci.plugins:job-dsl-core:${jobDslVersion}"
-    compile 'org.kohsuke:github-api:1.93'
+    compile 'org.kohsuke:github-api:1.95'
 
     testCompile 'org.spockframework:spock-core:1.0-groovy-2.4'
     testCompile 'cglib:cglib-nodep:2.2.2' // used by Spock
@@ -44,23 +44,27 @@ dependencies {
     // Job DSL plugin including plugin dependencies
     testCompile "org.jenkins-ci.plugins:job-dsl:${jobDslVersion}"
     testCompile "org.jenkins-ci.plugins:job-dsl:${jobDslVersion}@jar"
-    testCompile 'org.jenkins-ci.plugins:structs:1.13@jar'
-    testCompile 'org.jenkins-ci.plugins:cloudbees-folder:5.12@jar'
-    testCompile 'org.jenkins-ci.plugins:ghprb:1.40.0@jar'
-    testCompile 'org.jenkins-ci.plugins:credentials:2.1.10@jar'
-    testCompile 'com.coravy.hudson.plugins.github:github:1.29.0@jar'
+    testCompile 'org.jenkins-ci.plugins:structs:1.17@jar'
+    testCompile 'org.jenkins-ci.plugins:cloudbees-folder:6.7@jar'
+    // testCompile 'org.jenkins-ci.plugins:ghprb:1.40.0@jar'
+    testCompile 'org.jenkins-ci.plugins:credentials:2.1.18@jar'
+    testCompile 'com.coravy.hudson.plugins.github:github:1.29.4@jar'
 
     // plugins to install in test instance
-    testPlugins 'org.jenkins-ci.plugins:ghprb:1.40.0'
-    testPlugins 'org.jenkins-ci.plugins:cloudbees-folder:5.12'
-    testPlugins 'org.jenkins-ci.plugins:credentials:2.1.10'
+    // testPlugins 'org.jenkins-ci.plugins:ghprb:1.40.0'
+    testPlugins 'org.jenkins-ci.plugins:cloudbees-folder:6.7'
+    testPlugins 'org.jenkins-ci.plugins:credentials:2.1.18'
 
-    // plugins used for auto-generated DSL. See example 9.
-    testPlugins 'org.jenkins-ci.plugins:cvs:2.13'
-    testPlugins 'org.jenkins-ci.plugins.workflow:workflow-cps-global-lib:2.7'
+    testPlugins 'com.coravy.hudson.plugins.github:github:1.29.4'
+    testPlugins 'org.jenkins-ci.plugins:email-ext:2.66'
+    // testPlugins 'org.jenkins-ci.plugins:scm-api:2.4.0'
+
+    // // plugins used for auto-generated DSL. See example 9.
+    // testPlugins 'org.jenkins-ci.plugins:cvs:2.13'
+    // testPlugins 'org.jenkins-ci.plugins.workflow:workflow-cps-global-lib:2.7'
 
     // plugin dependencies
-    testPlugins 'org.jenkins-ci.plugins:token-macro:2.5'
+    testPlugins 'org.jenkins-ci.plugins:token-macro:2.7'
 }
 
 task resolveTestPlugins(type: Copy) {

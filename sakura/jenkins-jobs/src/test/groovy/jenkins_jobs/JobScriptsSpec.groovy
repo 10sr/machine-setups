@@ -37,7 +37,8 @@ class JobScriptsSpec extends Specification {
     @Unroll
     void 'test script #file.name'(File file) {
         given:
-        JobManagement jm = new JenkinsJobManagement(System.out, [:], new File('.'))
+        // TODO: Load envVers from file
+        JobManagement jm = new JenkinsJobManagement(System.out, ["P_TXT_REPOSITORY_URL": "http://example.com/"], new File('.'))
 
         when:
         GeneratedItems items = new DslScriptLoader(jm).runScript(file.text)

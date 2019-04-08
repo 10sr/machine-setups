@@ -15,7 +15,14 @@ LC_ALL=C
 
 mkdir -p {{ letsencrypt_webroot }}
 
-./certbot-auto certonly --noninteractive --standalone --expand --keep-until-expiring --agree-tos -m {{ letsencrypt_register_email }} \
+./certbot-auto certonly \
+               --noninteractive \
+               --standalone \
+               --expand \
+               --keep-until-expiring \
+               --agree-tos \
+               --max-log-backups 100 \
+               -m {{ letsencrypt_register_email }} \
                --cert-name {{ letsencrypt_certname }} \
                -w {{ letsencrypt_webroot }} \
                {% for domain in letsencrypt_domain_names %}-d {{ domain }} {% endfor %}

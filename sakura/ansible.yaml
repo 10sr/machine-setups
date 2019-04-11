@@ -270,6 +270,7 @@
         - authorize-project
         - simple-theme-plugin
         - slack
+        - prometheus
 
       # https://github.com/afonsof/jenkins-material-theme/
       jenkins_theme_css_url: https://cdn.rawgit.com/afonsof/jenkins-material-theme/gh-pages/dist/material-blue-grey.css

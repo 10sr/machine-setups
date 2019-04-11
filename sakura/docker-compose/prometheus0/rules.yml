@@ -1,0 +1,8 @@
+---
+# https://kazuhira-r.hatenablog.com/entry/2019/02/11/205455
+groups:
+  - name: g1
+    rules:
+    - alert: NodeInstanceDown
+      expr: up{job='node'} == 0
+      for: 30s

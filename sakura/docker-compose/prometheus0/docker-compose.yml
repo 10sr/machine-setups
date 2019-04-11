@@ -1,7 +1,7 @@
 ---
 version: '3'
 services:
-  app:
+  prom:
     image: prom/prometheus:v2.8.0
     ports:
       - "127.0.0.1:9090:9090"
@@ -10,8 +10,9 @@ services:
     volumes:
       # - "./entrypoint.sh:/entrypoint.sh:ro"
       - "./prometheus.yml:/etc/prometheus/prometheus.yml:ro"
+      - "./rules.yml:/etc/prometheus/rules.yml:ro"
       # TODO: chown 1000 this directory
-      - "/var/lib/data/docker/prometheus0/data:/prometheus:Z"
+      - "/var/lib/data/docker/prometheus0/data:/prometheus"
     # entrypoint: sh /entrypoint.sh
     # command:
     #   # Same as default
@@ -19,3 +20,13 @@ services:
     #   - "-storage.local.path=/prometheus"
     #   - "-web.console.libraries=/etc/prometheus/console_libraries"
     #   - "-web.console.templates=/etc/prometheus/consoles"
+
+  am:
+    image: prom/alertmanager:v0.16.2
+    ports:
+      - "127.0.0.1:9093:9093"
+    user: "1000"
+    volumes:
+      - "./alertmanager.yml:/etc/alertmanager/alertmanager.yml:ro"
+      # TODO: chown 1000 this directory
+      - "/var/lib/data/docker/prometheus0/am:/alertmanager"

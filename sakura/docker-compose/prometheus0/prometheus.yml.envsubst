@@ -8,11 +8,20 @@ global:
   external_labels:
     monitor: 'codelab-monitor'
 
+alerting:
+  alertmanagers:
+    - scheme: http
+      static_configs:
+        - targets: ['am:9093']
+
+rule_files:
+  - rules.yml
+
 # A scrape configuration containing exactly one endpoint to scrape:
 # Here it's Prometheus itself.
 scrape_configs:
   # The job name is added as a label `job=<job_name>` to any timeseries scraped from this config.
-  - job_name: 'prometheus'
+  - job_name: prometheus
 
     # Override the global default and scrape targets from this job every 5 seconds.
     scrape_interval: 5s
@@ -21,7 +30,7 @@ scrape_configs:
       - targets: ['localhost:9090']
 
   # https://prometheus.io/docs/guides/node-exporter/
-  - job_name: 'node'
+  - job_name: node
     scrape_interval: 15s
     scheme: https
     basic_auth:

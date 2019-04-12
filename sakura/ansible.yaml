@@ -190,6 +190,11 @@
           VIRTUAL_HOST: "nc.{{ _domain_name }}"
         prometheus0:
           NODE_EXPORTER_PASSWORD: "{{ _vault.prometheus_node_exporter_password }}"
+          AM_EMAIL_TO: 8.slashes@gmail.com
+          AM_EMAIL_FROM: postmaster@m.3ends.info
+          AM_SMTP_SMARTHOST: smtp.mailgun.org:587
+          AM_SMTP_USERNAME: postmaster@m.3ends.info
+          AM_SMTP_PASSWORD: "{{ _vault.postfix_smtp_password }}"
       docker_pm2:
         10sr_bot0:
           json: 10sr_bot0/pm2.json

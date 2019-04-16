@@ -67,6 +67,7 @@ dependencies {
     // testPlugins 'org.jenkins-ci.plugins.workflow:workflow-cps-global-lib:2.7'
 
     // plugin dependencies
+    // TODO: Generate list from instance 
     testPlugins 'org.jenkins-ci.plugins:authentication-tokens:1.3'
     testPlugins 'io.jenkins.blueocean:blueocean-config:1.14.0'
     testPlugins 'org.jenkins-ci.plugins:ssh-credentials:1.15'

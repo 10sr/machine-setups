@@ -20,7 +20,7 @@ import spock.lang.Unroll
 class JobScriptsSpecAlternative extends Specification {
 
     MemoryJobManagement jobManagement = Spy(MemoryJobManagement) {
-        parameters = ["P_TXT_REPOSITORY_URL": "http://example.com/"]
+        parameters << ["P_TXT_REPOSITORY_URL": "http://example.com/"]
     }
 
     @Shared

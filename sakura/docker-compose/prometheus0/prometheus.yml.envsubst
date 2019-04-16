@@ -6,13 +6,15 @@ global:
   # Attach these labels to any time series or alerts when communicating with
   # external systems (federation, remote storage, Alertmanager).
   external_labels:
-    monitor: 'codelab-monitor'
+    monitor: codelab-monitor
 
 alerting:
   alertmanagers:
     - scheme: http
+      path_prefix: /am/
       static_configs:
-        - targets: ['am:9093']
+        - targets:
+            - am:9093
 
 rule_files:
   - rules.yml
@@ -22,12 +24,19 @@ rule_files:
 scrape_configs:
   # The job name is added as a label `job=<job_name>` to any timeseries scraped from this config.
   - job_name: prometheus
-
     # Override the global default and scrape targets from this job every 5 seconds.
     scrape_interval: 5s
-
+    metrics_path: /pt/metrics
     static_configs:
-      - targets: ['localhost:9090']
+      - targets:
+          - localhost:9090
+
+  - job_name: alertmanager
+    scrape_interval: 5s
+    metrics_path: /am/metrics
+    static_configs:
+      - targets:
+          - am:9093
 
   # https://prometheus.io/docs/guides/node-exporter/
   - job_name: node

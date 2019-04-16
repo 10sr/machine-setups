@@ -42,6 +42,8 @@ class JobScriptsSpecAlternative extends Specification {
     @Unroll
     void 'test script #file.name'(File file) {
         when:
+        java.util.LinkedHashMap<String, String> params = ["P_TXT_REPOSITORY_URL": "http://example.com/"]
+        jobManagement.parameters = params
         new DslScriptLoader(jobManagement).runScript(file.text)
         writeItems(outputDir)
 

@@ -232,6 +232,10 @@
           json: prometheus0/pm2.json
           state: started
           command: sh ./up.sh
+        cowrie0:
+          json: cowrie0/pm2.json
+          state: started
+          command: docker-compose up --build
 
     - role: mastodon_nginx_proxy
       mastodon_server_name: st.{{ _domain_name }}

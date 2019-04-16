@@ -19,7 +19,9 @@ import spock.lang.Unroll
  */
 class JobScriptsSpecAlternative extends Specification {
 
-    MemoryJobManagement jobManagement = Spy(MemoryJobManagement)
+    MemoryJobManagement jobManagement = Spy(MemoryJobManagement) {
+        parameters = ["P_TXT_REPOSITORY_URL": "http://example.com/"]
+    }
 
     @Shared
     private File outputDir = new File('./build/debug-xml')
@@ -42,8 +44,6 @@ class JobScriptsSpecAlternative extends Specification {
     @Unroll
     void 'test script #file.name'(File file) {
         when:
-        java.util.LinkedHashMap<String, String> params = ["P_TXT_REPOSITORY_URL": "http://example.com/"]
-        jobManagement.parameters = params
         new DslScriptLoader(jobManagement).runScript(file.text)
         writeItems(outputDir)
 

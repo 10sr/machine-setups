@@ -4,8 +4,8 @@ services:
   # TODO: Add nginx to proxy requests by path
   prom:
     image: prom/prometheus:v2.8.0
-    ports:
-      - "127.0.0.1:9090:9090"
+    # ports:
+    #   - "127.0.0.1:9090:9090"
     environment: {}
     user: "1000"
     volumes:
@@ -25,8 +25,8 @@ services:
 
   am:
     image: prom/alertmanager:v0.16.2
-    ports:
-      - "127.0.0.1:9093:9093"
+    # ports:
+    #   - "127.0.0.1:9093:9093"
     user: "1000"
     volumes:
       - "./alertmanager.yml:/etc/alertmanager/alertmanager.yml:ro"
@@ -41,8 +41,7 @@ services:
   nginx:
     image: nginx
     ports:
-      # - "127.0.0.1:"
-      - "9089:9089"
+      - "127.0.0.1:9089:9089"
     volumes:
       - ./nginx.conf.envsubst:/etc/nginx/nginx.conf.envsubst:ro
       - ./nginx_cmd.sh:/nginx_cmd.sh:ro

@@ -37,3 +37,16 @@ services:
       - --storage.path=/alertmanager
       - --web.external-url=https://pt.3ends.info/am/
       - --web.route-prefix=/am/
+
+  nginx:
+    image: nginx
+    ports:
+      # - "127.0.0.1:"
+      - "9089:9089"
+    volumes:
+      - ./nginx.conf.envsubst:/etc/nginx/nginx.conf.envsubst:ro
+      - ./nginx_cmd.sh:/nginx_cmd.sh:ro
+    command: sh /nginx_cmd.sh
+    depends_on:
+      - prom
+      - am

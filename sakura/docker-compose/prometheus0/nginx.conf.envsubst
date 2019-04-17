@@ -45,5 +45,8 @@ http {
       # proxy_set_header X-Real-IP $remote_addr;
       proxy_pass http://am:9093;
     }
+    location /{
+        return 303 /pt;
+    }
   }
 }

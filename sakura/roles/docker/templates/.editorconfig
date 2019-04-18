@@ -1,3 +1,3 @@
 [*.conf.j2]
 emacs_mode = ini
-emacs_mmm_classes = jinja2
+# emacs_mmm_classes = jinja2

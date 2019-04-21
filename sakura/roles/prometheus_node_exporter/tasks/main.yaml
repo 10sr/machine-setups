@@ -1,4 +1,6 @@
 ---
+- import_tasks: fetch.yaml
+
 - name: Install
   apt:
     name: prometheus-node-exporter
@@ -18,8 +20,8 @@
   become: yes
   when: _etc_default is changed
 
-- name: Start
+- name: Stop
   service:
     name: prometheus-node-exporter
-    state: started
+    state: stopped
   become: yes

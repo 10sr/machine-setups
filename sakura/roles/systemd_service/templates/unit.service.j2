@@ -1,0 +1,12 @@
+# {{ ansible_managed }}
+
+[Unit]
+Description = {{ description }}
+
+[Service]
+ExecStart = {{ execstart }}
+Restart = always
+Type = {{ type }}
+
+[Install]
+WantedBy = multi-user.target

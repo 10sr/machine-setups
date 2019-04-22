@@ -1,0 +1,22 @@
+---
+- name: Create unit file
+  template:
+    dest: /etc/systemd/system/{{ item.name }}.service
+    src: unit.service.j2
+  vars:
+    name: "{{ item.name }}"
+    description: "{{ item.unit.description }}"
+    execstart: "{{ item.unit.execstart }}"
+    type: "{{ item.unit.type }}"
+  loop: "{{ systemd_service_services }}"
+  become: yes
+
+# TODO: Restart when unit file updated
+
+- name: Set states
+  service:
+    name: "{{ item.name }}"
+    state: "{{ item.state }}"
+    enabled: "{{ item.enabled }}"
+  loop: "{{ systemd_service_services }}"
+  become: yes

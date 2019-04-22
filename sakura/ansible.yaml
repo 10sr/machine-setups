@@ -298,6 +298,20 @@
       jenkins_nginx_proxy_port: 8080
       jenkins_nginx_proxy_server_name: "jk.{{ _domain_name }}"
 
+    - role: systemd_service
+      systemd_service_services:
+        - name: local-prometheus-node-exporter
+          state: started
+          enabled: yes
+          unit:
+            description: prometheus node exporter
+            # TODO: Parametrize node_exporter path
+            execstart: >-
+              /opt/prometheus_node_exporter/node_exporter-0.17.0.linux-amd64/node_exporter
+              --web.listen-address=localhost:9100
+            type: simple
+
+
   post_tasks:
     - file:
         state: link

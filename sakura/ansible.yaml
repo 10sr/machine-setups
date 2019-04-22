@@ -299,6 +299,7 @@
       jenkins_nginx_proxy_server_name: "jk.{{ _domain_name }}"
 
     - role: systemd_service
+      # TODO: Start docker pm2
       systemd_service_services:
         - name: local-prometheus-node-exporter
           state: started

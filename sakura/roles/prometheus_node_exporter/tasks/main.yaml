@@ -33,5 +33,5 @@
       #!/bin/sh
       set -eux
       exec {{ prometheus_node_exporter_base_path }}/node_exporter-{{ prometheus_node_exporter_version }}.linux-amd64/node_exporter {{ prometheus_node_exporter_args }}
-    mode: "755"
+    mode: "0755"
   become: yes

@@ -1,2 +1,37 @@
 ---
-- import_tasks: fetch.yaml
+- name: Create directory
+  file:
+    path: "{{ prometheus_node_exporter_base_path }}"
+    state: directory
+  become: yes
+
+- name: Download tarball
+  get_url:
+    # TODO: Add checksum
+    url: https://github.com/prometheus/node_exporter/releases/download/v{{ prometheus_node_exporter_version }}/node_exporter-{{ prometheus_node_exporter_version }}.linux-amd64.tar.gz
+    dest: "{{ prometheus_node_exporter_base_path }}"
+  register: _fetch_result
+  become: yes
+
+- name: Unarchive tarall
+  # TODO: How to know extracted file path?
+  unarchive:
+    src: "{{ _fetch_result.dest }}"
+    dest: "{{ prometheus_node_exporter_base_path }}"
+    # list_files: yes
+    remote_src: yes
+  become: yes
+
+- name: Check file existence
+  command: file "{{ prometheus_node_exporter_base_path }}/node_exporter-{{ prometheus_node_exporter_version }}.linux-amd64/node_exporter"
+  changed_when: false
+
+- name: Add start script
+  copy:
+    dest: "{{ prometheus_node_exporter_script }}"
+    content: |
+      #!/bin/sh
+      set -eux
+      exec {{ prometheus_node_exporter_base_path }}/node_exporter-{{ prometheus_node_exporter_version }}.linux-amd64/node_exporter {{ prometheus_node_exporter_args }}
+    mode: "755"
+  become: yes

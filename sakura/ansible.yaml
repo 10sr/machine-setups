@@ -254,9 +254,11 @@
       mackerel_agent_apikey: "{{ _vault.mackerel_agent_apikey }}"
 
     - role: prometheus_node_exporter
+      # TODO: How to restart after update?
       prometheus_node_exporter_args: >-
-        -collector.diskstats.ignored-devices="^(ram|loop|fd)\\d+$"
-        -web.listen-address=localhost:9100
+        --collector.diskstats.ignored-devices="^(ram|loop|fd)\\d+$"
+        --web.listen-address=localhost:9100
+      prometheus_node_exporter_script: /usr/local/bin/prometheus_node_exporter.sh
 
     - role: java_jre
 
@@ -307,9 +309,7 @@
           unit:
             description: prometheus node exporter
             # TODO: Parametrize node_exporter path
-            execstart: >-
-              /opt/prometheus_node_exporter/node_exporter-0.17.0.linux-amd64/node_exporter
-              --web.listen-address=localhost:9100
+            execstart: /usr/local/bin/prometheus_node_exporter.sh
             type: simple
 
 

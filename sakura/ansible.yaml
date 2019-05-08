@@ -197,6 +197,11 @@
           AM_SMTP_SMARTHOST: smtp.mailgun.org:587
           AM_SMTP_USERNAME: postmaster@m.3ends.info
           AM_SMTP_PASSWORD: "{{ _vault.postfix_smtp_password }}"
+        trigger0:
+          TRIGGER_ALLOWED_HOST: localhost:8900  # TODO: Fix later
+          TRIGGER_PUSHBULLET_TOKEN: "{{ _vault.trigger_pushbullet_token }}"
+          TRIGGER_SECRET_KEY: "{{ _vault.trigger_secret_key }}"
+          TRIGGER_SUPERUSER_PASSWORD: "{{ _vault.trigger_superuser_password }}"
       docker_pm2:
         10sr_bot0:
           json: 10sr_bot0/pm2.json

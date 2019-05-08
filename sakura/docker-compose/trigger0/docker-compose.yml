@@ -1,0 +1,15 @@
+---
+version: '3'
+services:
+  app:
+    build: https://github.com/10sr/trigger.git#init
+    environment:
+      TRIGGER_SQLITE3: /trigger-data/db.sqlite3
+      TRIGGER_ENV: prod
+    env_file:
+      - ../trigger0.env
+    ports:
+      # Cannot use localhost here (only ip-addresses are allowed)
+      - "127.0.0.1:8900:8900"
+    volumes:
+      - "/var/lib/data/docker/trigger0/data:/trigger-data"

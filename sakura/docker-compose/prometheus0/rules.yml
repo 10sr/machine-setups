@@ -9,5 +9,5 @@ groups:
       for: 30s
 
     - alert: HighLA
-      expr: node_load1{job='node'} > 1
+      expr: node_load1{job='node'} > 2
       # for: 30s

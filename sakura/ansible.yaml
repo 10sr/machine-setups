@@ -60,7 +60,9 @@
     #   hostname: "{{ _domain_name }}"
     - role: locale
       locale_locales:
-        - ja_JP.UTF-8 UTF-8
+        - ja_JP.UTF-8
+        - en_US.UTF-8
+      locale_default: en_US.UTF-8
 
     - role: sosreport
 

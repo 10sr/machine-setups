@@ -124,6 +124,14 @@
             - "proxy_set_header X-Forwarded-Proto $scheme"
             - "proxy_set_header X-Real-IP $remote_addr"
             # - "proxy_redirect default"
+        - path: /trigger
+          port: 8980
+          additional_directives:
+            # TODO: All these are required?
+            - "proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for"
+            - "proxy_set_header Host $host"
+            - "proxy_set_header X-Forwarded-Proto $scheme"
+            - "proxy_set_header X-Real-IP $remote_addr"
       nginx_ssl_host_proxies:
         - name: "b.{{ _domain_name }}"
           port: 2368
@@ -198,7 +206,7 @@
           AM_SMTP_USERNAME: postmaster@m.3ends.info
           AM_SMTP_PASSWORD: "{{ _vault.postfix_smtp_password }}"
         trigger0:
-          TRIGGER_ALLOWED_HOST: localhost  # TODO: Fix later .{{ domain_name }}
+          TRIGGER_ALLOWED_HOST: ".{{ _domain_name }}"
           TRIGGER_PUSHBULLET_TOKEN: "{{ _vault.trigger_pushbullet_token }}"
           TRIGGER_SECRET_KEY: "{{ _vault.trigger_secret_key }}"
           TRIGGER_SUPERUSER_PASSWORD: "{{ _vault.trigger_superuser_password }}"
@@ -241,6 +249,10 @@
           command: sh ./up.sh
         cowrie0:
           json: cowrie0/pm2.json
+          state: started
+          command: docker-compose up --build
+        trigger0:
+          json: trigger0/pm2.json
           state: started
           command: docker-compose up --build
 

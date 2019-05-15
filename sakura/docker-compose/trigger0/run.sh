@@ -7,4 +7,4 @@ envsubst \
     </settings.toml.envsubst \
     >$TRIGGER_SETTINGS_TOML
 
-exec make migrate create_user runserver-viamanager
+exec make migrate create_superuser runserver-viamanager

@@ -2,7 +2,7 @@
 version: '3'
 services:
   app:
-    build: https://github.com/10sr/trigger.git#init
+    build: https://github.com/10sr/trigger.git#master
     environment: {}
     env_file:
       - ../trigger0.env

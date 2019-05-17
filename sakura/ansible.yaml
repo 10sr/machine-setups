@@ -214,47 +214,36 @@
           TRIGGER_SUPERUSER_PASSWORD: "{{ _vault.trigger_superuser_password }}"
       docker_pm2:
         10sr_bot0:
-          json: 10sr_bot0/pm2.json
           state: started
           command: docker-compose up --build
         ghost0:
-          json: ghost0/pm2.json
           state: started
           command: docker-compose up --build
         instiki0:
-          json: instiki0/pm2.json
           state: started
           command: docker-compose up --build
         mastodon0:
-          json: mastodon0/pm2.json
           state: started
           command: sh ./up.sh
         nextcloud0:
-          json: nextcloud0/pm2.json
           state: started
           command: docker-compose up --build
         plex0:
-          json: plex0/pm2.json
           state: stopped
           command: docker-compose up --build
         gitea0:
-          json: gitea0/pm2.json
           state: started
           command: docker-compose up --build
         gitbucket0:
-          json: gitbucket0/pm2.json
           state: started
           command: docker-compose up --build
         prometheus0:
-          json: prometheus0/pm2.json
           state: started
           command: sh ./up.sh
         cowrie0:
-          json: cowrie0/pm2.json
           state: started
           command: docker-compose up --build
         trigger0:
-          json: trigger0/pm2.json
           state: started
           command: docker-compose up --build
 

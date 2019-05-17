@@ -1,7 +1,7 @@
 ---
 - template:
     src: pm2.json.j2
-    dest: "/home/docker/docker-compose/{{ values.json }}"
+    dest: "/home/docker/docker-compose/{{ name }}/pm2.json"
     owner: docker
   vars:
     command: "{{ values.command }}"
@@ -19,7 +19,7 @@
 
 - pm2:
     name: "{{ name }}"
-    config: "/home/docker/docker-compose/{{ values.json }}"
+    config: "/home/docker/docker-compose/{{ name }}/pm2.json"
     state: "{{ values.state }}"
     executable: /home/docker/_pm2/node_modules/.bin/pm2
   become: yes

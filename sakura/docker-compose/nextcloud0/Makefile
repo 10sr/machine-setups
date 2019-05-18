@@ -1,4 +1,4 @@
-occ := docker-compose exec --rm --user www-data app php occ
+occ := docker-compose exec --user www-data app php occ
 
 db-add-missing-indices:
 	$(occ) db:add-missing-indices

@@ -142,6 +142,12 @@
             - "proxy_set_header X-Real-IP $remote_addr"
         - name: "nc.{{ _domain_name }}"
           port: 8888
+          additional_directives:
+            - "proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for"
+            - "proxy_set_header X-Forwarded-Host $host"
+            - "proxy_set_header X-Forwarded-Server $host"
+            - "proxy_set_header X-Forwarded-Proto $scheme"
+            - "proxy_set_header X-Real-IP $remote_addr"
         - name: "px.{{ _domain_name }}"
           port: 32400
         - name: gt.{{ _domain_name }}

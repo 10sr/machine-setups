@@ -13,18 +13,21 @@ services:
     image: redis
 
   app:
-    # TODO: Do not build image, just mount and change CMD
-    build:
-      context: .
-      dockerfile: nextcloud.Dockerfile
+    image: nextcloud:14-fpm
     volumes:
       - nextcloud:/var/www/html
+      - ./start.sh:/start.sh:ro
       - ./local.config.php:/local.config.php:ro
       - ./redis.config.php:/redis.config.php:ro
     environment:
       - MYSQL_HOST=db
+      - REDIS_HOST=redis
+      - NEXTCLOUD_UPDATE=1
     env_file:
       - ../nextcloud0.env
+    command:
+      - sh
+      - /start.sh
     depends_on:
       - db
       - redis
@@ -40,16 +43,14 @@ services:
       - app
 
   cron:
-    # Use /cron.sh
-    # https://github.com/nextcloud/docker/blob/2fbd72c96d943e0c67b56dcfb5e17bed835afaf0/.examples/docker-compose/insecure/mariadb-cron-redis/fpm/docker-compose.yml#L48
-    build:
-      context: .
-      dockerfile: cron.Dockerfile
-    user: www-data
-    env_file:
-      - ../nextcloud0.env
+    # https://github.com/nextcloud/docker/blob/2fbd72c96d943e0c67b56dcfb5e17bed835afaf0/.examples/docker-compose/insecure/mariadb-cron-redis/fpm/docker-compose.yml
+    image: nextcloud:14-fpm
+    # user: www-data
+    # env_file:
+    #   - ../nextcloud0.env
     volumes:
       - nextcloud:/var/www/html
+    entrypoint: /cron.sh
     depends_on:
       - db
       - redis

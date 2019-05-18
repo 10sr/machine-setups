@@ -1,1 +1,0 @@
-40 3,18,33,48 * * * * php -f /var/www/html/cron.php

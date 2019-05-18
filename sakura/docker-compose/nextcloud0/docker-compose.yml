@@ -40,6 +40,8 @@ services:
       - app
 
   cron:
+    # Use /cron.sh
+    # https://github.com/nextcloud/docker/blob/2fbd72c96d943e0c67b56dcfb5e17bed835afaf0/.examples/docker-compose/insecure/mariadb-cron-redis/fpm/docker-compose.yml#L48
     build:
       context: .
       dockerfile: cron.Dockerfile

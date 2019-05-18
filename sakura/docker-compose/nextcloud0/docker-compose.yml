@@ -13,7 +13,7 @@ services:
     image: redis
 
   app:
-    image: nextcloud:14-fpm
+    image: nextcloud:15-fpm
     volumes:
       - nextcloud:/var/www/html
       - ./start.sh:/start.sh:ro
@@ -44,7 +44,7 @@ services:
 
   cron:
     # https://github.com/nextcloud/docker/blob/2fbd72c96d943e0c67b56dcfb5e17bed835afaf0/.examples/docker-compose/insecure/mariadb-cron-redis/fpm/docker-compose.yml
-    image: nextcloud:14-fpm
+    image: nextcloud:15-fpm
     # user: www-data
     # env_file:
     #   - ../nextcloud0.env

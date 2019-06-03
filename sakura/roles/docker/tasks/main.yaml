@@ -37,6 +37,8 @@
   become: yes
 
 - copy:
+    # I want modes to be copied too.
+    # synchronize module can to this, but is is in preview state...
     dest: /home/docker/docker-compose/
     src: "{{ docker_compose_path }}/"
     owner: docker

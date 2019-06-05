@@ -9,5 +9,6 @@
     password: "{{ jenkins_serveruser_password | password_hash('sha512', jenkins_serveruser_password_salt) }}"
     groups: sudo,docker
     append: yes
+    generate_ssh_key: yes
   become: yes
   notify: JENKINS_RESTART

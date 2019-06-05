@@ -261,6 +261,9 @@
         trigger0:
           state: started
           command: docker-compose up --build
+        webtools0:
+          state: started
+          command: docker-compose up --build
 
     - role: mastodon_nginx_proxy
       mastodon_server_name: st.{{ _domain_name }}

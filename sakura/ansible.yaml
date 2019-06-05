@@ -132,6 +132,14 @@
             - "proxy_set_header X-Forwarded-Server $host"
             - "proxy_set_header X-Forwarded-Proto $scheme"
             - "proxy_set_header X-Real-IP $remote_addr"
+        - path: /webtools
+          port: 7700
+          additional_directives:
+            - "proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for"
+            - "proxy_set_header X-Forwarded-Host $host"
+            - "proxy_set_header X-Forwarded-Server $host"
+            - "proxy_set_header X-Forwarded-Proto $scheme"
+            - "proxy_set_header X-Real-IP $remote_addr"
       nginx_ssl_host_proxies:
         - name: "b.{{ _domain_name }}"
           port: 2368
@@ -216,6 +224,9 @@
           TRIGGER_PUSHBULLET_TOKEN: "{{ _vault.trigger_pushbullet_token }}"
           TRIGGER_SECRET_KEY: "{{ _vault.trigger_secret_key }}"
           TRIGGER_SUPERUSER_PASSWORD: "{{ _vault.trigger_superuser_password }}"
+        webtools0:
+          WEBTOOLS_ALLOWED_HOST: ".{{ _domain_name }}"
+          WEBTOOLS_SECRET_KEY: "{{ _vault.webtools_secret_key }}"
       docker_pm2:
         10sr_bot0:
           state: started

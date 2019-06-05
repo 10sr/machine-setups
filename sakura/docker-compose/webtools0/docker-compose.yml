@@ -1,0 +1,23 @@
+---
+version: '3'
+services:
+  redis:
+    image: redis
+
+  app:
+    build: https://github.com/10sr/webtools.git#master
+    environment: {}
+    env_file:
+      - ../webtools0.env
+    ports:
+      # Cannot use localhost here (only ip-addresses are allowed)
+      - "127.0.0.1:7700:7700"
+    volumes:
+      - "./settings.toml.envsubst:/settings.toml.envsubst:ro"
+      - "./run.sh:/run.sh:ro"
+      - "/var/lib/data/docker/webtools0/data:/webtools-data"
+    command:
+      - sh
+      - /run.sh
+    depends_on:
+      - redis

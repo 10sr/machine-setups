@@ -5,7 +5,7 @@ services:
     image: redis
 
   app:
-    build: https://github.com/10sr/webtools.git#master
+    image: quay.io/10sr/webtools
     environment: {}
     env_file:
       - ../webtools0.env

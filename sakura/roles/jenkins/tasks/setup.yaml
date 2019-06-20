@@ -42,7 +42,10 @@
   notify: JENKINS_SAFERESTART
 
 
+  # TODO: Temporarily disable Jenkins service
 - name: Start jenkins
   service:
     name: jenkins
+    state: stopped
+    enabled: false
   become: yes

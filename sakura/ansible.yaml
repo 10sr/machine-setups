@@ -232,8 +232,9 @@
         10sr_bot0:
           state: started
           command: docker-compose up --build
+        # TODO: Remove
         ghost0:
-          state: started
+          state: stopped
           command: docker-compose up --build
         instiki0:
           state: started

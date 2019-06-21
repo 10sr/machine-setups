@@ -1,8 +1,11 @@
 # -*- mode: toml -*-
 [webtools]
-ENV = "prod"
 DATABASE_URL = "sqlite:////webtools-data/db.sqlite3"
 SECRET_KEY = "$WEBTOOLS_SECRET_KEY"
 ALLOWED_HOST = "$WEBTOOLS_ALLOWED_HOST"
 USE_X_FORWARDED_HOST = true
 EXPORT_AS_BOOKMARK_REDIS_URL = "redis://redis:6379/1"
+
+# Disable HSTS
+SECURE_HSTS_SECONDS = 0
+SECURE_SSL_REDIRECT = false

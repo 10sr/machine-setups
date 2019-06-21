@@ -10,7 +10,7 @@ help:
 		awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
 
-THIS_REVISION_ID := $(shell git describe --always --long --dirty)
+THIS_REVISION_ID := $(shell git describe --all --always --long --dirty)
 THIS_REVISION_TIMESTAMP := $(shell git log --pretty=tformat:%ct -n1)
 THIS_REVISION_SUBJECT := $(shell git log --pretty=tformat:%s -n1)
 env_this_revision := \

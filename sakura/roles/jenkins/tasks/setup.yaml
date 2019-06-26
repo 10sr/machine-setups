@@ -63,7 +63,7 @@
   notify: JENKINS_SAFERESTART
 
 
-# - name: Start jenkins
-#   service:
-#     name: jenkins
-#   become: yes
+- name: Start jenkins
+  service:
+    name: jenkins
+  become: yes

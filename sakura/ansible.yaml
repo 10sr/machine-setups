@@ -329,15 +329,15 @@
         -Dhudson.DNSMultiCast.disabled=true
         -Dhudson.udp=-1
 
-    # - role: jenkins_bootstrap_job
-    #   jenkins_bootstrap_job_name: jenkins-bootstrap-job
-    #   jenkins_bootstrap_job_webuser_username: 10sr
-    #   jenkins_bootstrap_job_webuser_password: "{{ _vault.jenkins_webuser_password }}"
-    #   jenkins_bootstrap_job_repository_url: https://github.com/10sr/machine-setups.git
-    #   jenkins_bootstrap_job_jobdsl_target: sakura/jenkins-jobs/src/jobs/*.groovy
+    - role: jenkins_bootstrap_job
+      jenkins_bootstrap_job_name: jenkins-bootstrap-job
+      jenkins_bootstrap_job_webuser_username: 10sr
+      jenkins_bootstrap_job_webuser_password: "{{ _vault.jenkins_webuser_password }}"
+      jenkins_bootstrap_job_repository_url: https://github.com/10sr/machine-setups.git
+      jenkins_bootstrap_job_jobdsl_target: sakura/jenkins-jobs/src/jobs/*.groovy
 
-    #   jenkins_bootstrap_job_environments:
-    #     P_TXT_REPOSITORY_URL: "{{ _vault.p_txt_repository_url }}"
+      jenkins_bootstrap_job_environments:
+        P_TXT_REPOSITORY_URL: "{{ _vault.p_txt_repository_url }}"
 
     - role: jenkins_nginx_proxy
       jenkins_nginx_proxy_port: 8080

@@ -12,6 +12,7 @@
     # TODO: parameterize
     # TODO: Add checksum
     url: https://pkg.jenkins.io/debian-stable/binary/jenkins_2.176.1_all.deb
+    checksum: sha512:fdac7c1fd08a449bb10d8da098ce875601c947bdf08da36a0ae51bfef5b354b66714850149dd9b29d9e0f80c8de661bdfdb8886e9669022d1a40484b6030d4cc
     dest: /var/lib/machine-setups/roles/jenkins
   register: _fetch_result
   become: yes
@@ -20,6 +21,19 @@
   apt:
     deb: "{{ _fetch_result.dest }}"
     # when: _fetch_result is changed
+  become: yes
+
+- name: Add JAVA_ARGS
+  # https://wiki.jenkins.io/display/JENKINS/Features+controlled+by+system+properties
+  # Cannot use init groovy to set system properties
+  # To get properties, jenkins.util.SystemProperties can be used
+  # https://javadoc.jenkins.io/jenkins/util/SystemProperties.html
+  blockinfile:
+    path: /etc/default/jenkins
+    marker: "# {mark} Managed by machine-setups/sakura"
+    block: |
+      JAVA_ARGS="$JAVA_ARGS {{ jenkins_java_args }}"
+    insertafter: EOF
   become: yes
 
 - name: Create custom init scripts directory

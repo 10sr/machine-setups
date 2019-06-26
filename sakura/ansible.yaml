@@ -316,6 +316,19 @@
       # https://github.com/afonsof/jenkins-material-theme/
       jenkins_theme_css_url: https://cdn.rawgit.com/afonsof/jenkins-material-theme/gh-pages/dist/material-blue-grey.css
 
+      # jenkins_system_properties:
+      #   - key: hudson.DNSMultiCast.disabled
+      #     value: "true"
+      #   - key: hudson.udp
+      #     value: "-1"
+
+      # https://issues.jenkins-ci.org/browse/JENKINS-10160
+      # https://stackoverflow.com/questions/31740373/how-can-i-prevent-that-the-jenkins-log-gets-spammed-with-strange-messages
+      # https://www.ionutgavrilut.com/2018/jenkins-floods-with-DNS-errors/
+      jenkins_java_args: >-
+        -Dhudson.DNSMultiCast.disabled=true
+        -Dhudson.udp=-1
+
     # - role: jenkins_bootstrap_job
     #   jenkins_bootstrap_job_name: jenkins-bootstrap-job
     #   jenkins_bootstrap_job_webuser_username: 10sr

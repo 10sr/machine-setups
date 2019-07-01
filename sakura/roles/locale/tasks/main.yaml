@@ -7,6 +7,7 @@
 
 - name: Set default locale
   # Unset LANGUAGE, see locale(7) for this variable
+  # This seems to affect only to root user, not normal user
   command: update-locale LANG={{ locale_default }} LANGUAGE
   become: yes
   when: ansible_env.LANG | default("") != locale_default

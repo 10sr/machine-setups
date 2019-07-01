@@ -11,8 +11,8 @@
   get_url:
     # TODO: parameterize
     # TODO: Add checksum
-    url: https://pkg.jenkins.io/debian-stable/binary/jenkins_2.176.1_all.deb
-    checksum: sha512:fdac7c1fd08a449bb10d8da098ce875601c947bdf08da36a0ae51bfef5b354b66714850149dd9b29d9e0f80c8de661bdfdb8886e9669022d1a40484b6030d4cc
+    url: https://pkg.jenkins.io/debian/binary/jenkins_2.183_all.deb
+    checksum: sha512:096a3ff69eb9fb7279eb3756ef54077f16fefd704c1e2f83518367d06f029a9356b3083ec0f35a7d036da0ef68a6e94d09bde66d54cb910bbaa72afdceff32ac
     dest: /var/lib/machine-setups/roles/jenkins
   register: _fetch_result
   become: yes

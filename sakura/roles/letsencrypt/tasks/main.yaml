@@ -18,6 +18,7 @@
     force: yes
     # Why no?
     #update: no
+  diff: no
   become: yes
 
 - template:

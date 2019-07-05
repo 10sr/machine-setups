@@ -5,7 +5,7 @@ services:
     image: redis
 
   app:
-    image: quay.io/10sr/webtools:v0.0.5
+    image: quay.io/10sr/webtools:v0.0.7
     environment: {}
     env_file:
       - ../webtools0.env
@@ -21,3 +21,11 @@ services:
       - /run.sh
     depends_on:
       - redis
+
+  static:
+    image: nginx
+    ports:
+      - 127.0.0.1:7701:7701
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - /var/lib/data/docker/webtools0/data:/webtools-data:ro

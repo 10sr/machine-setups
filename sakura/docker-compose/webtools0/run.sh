@@ -7,4 +7,4 @@ envsubst \
     </settings.toml.envsubst \
     >$WEBTOOLS_SETTINGS_TOML
 
-exec make migrate gunicorn
+exec make migrate collectstatic gunicorn

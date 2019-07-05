@@ -141,6 +141,8 @@
             - "proxy_set_header X-Forwarded-Server $host"
             - "proxy_set_header X-Forwarded-Proto $scheme"
             - "proxy_set_header X-Real-IP $remote_addr"
+        - path: /webtools-static
+          port: 7701
       nginx_ssl_host_proxies:
         - name: "b.{{ _domain_name }}"
           port: 2368

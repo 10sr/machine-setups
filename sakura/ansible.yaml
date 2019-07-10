@@ -363,3 +363,10 @@
         dest: "{{ _revision_yaml }}"
         content: "{{ _this_revision | to_nice_yaml }}"
       become: yes
+
+    - name: Temporarily stop jenkins
+      service:
+        name: jenkins
+        status: stop
+        enabled: no
+      become: yes

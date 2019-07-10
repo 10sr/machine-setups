@@ -70,7 +70,6 @@
       letsencrypt_register_email: 8.slashes@gmail.com
       letsencrypt_domain_names:
         - "{{ _domain_name }}"
-        - b.{{ _domain_name }}
         - st.{{ _domain_name }}
         - minio.st.{{ _domain_name }}
         - nc.{{ _domain_name }}
@@ -101,7 +100,6 @@
       # non ssl
       nginx_default_root: /var/nginx/main
       nginx_name_ssl_only:
-        - "b.{{ _domain_name }}"
         - "nc.{{ _domain_name }}"
         - "gt.{{ _domain_name }}"
         - "gb.{{ _domain_name }}"
@@ -144,13 +142,6 @@
         - path: /webtools-static
           port: 7701
       nginx_ssl_host_proxies:
-        - name: "b.{{ _domain_name }}"
-          port: 2368
-          additional_directives:
-            - "proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for"
-            - "proxy_set_header Host $host"
-            - "proxy_set_header X-Forwarded-Proto $scheme"
-            - "proxy_set_header X-Real-IP $remote_addr"
         - name: "nc.{{ _domain_name }}"
           port: 8888
           additional_directives:
@@ -233,10 +224,6 @@
       docker_pm2:
         10sr_bot0:
           state: started
-          command: docker-compose up --build
-        # TODO: Remove
-        ghost0:
-          state: stopped
           command: docker-compose up --build
         instiki0:
           state: started

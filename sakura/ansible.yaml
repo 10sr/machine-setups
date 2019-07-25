@@ -54,6 +54,7 @@
       become: yes
 
   roles:
+    # TODO: Add vars: and move variable definitions there
     - role: timezone
       timezone_name: UTC
     # - role: hostname
@@ -282,51 +283,55 @@
     - role: java_jre
 
     - role: jenkins
-      jenkins_webuser_username: 10sr
-      jenkins_webuser_password: "{{ _vault.jenkins_webuser_password }}"
-      # TODO: This value is too big so separete into file
-      jenkins_webuser_ssh_publickey:
-        - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCy90M0oZocY2AMrk8DUYNaHacamzOW+A+NNsXSTdLqj/k45pg6WiT8hnYBUXnVLJPoOQknFLFLKaC9YUX1iiz2aiH/aFn83W5og7NGlhkcFmti9tQwql7gB5/Y0N/DoRVWUXoi/Iy69LU7dMQQOAM9yvOwTl86djVOVpjhI/KPkPGpiddXjqruBcOpmymtfZJpFDqIskfBse7f+e0oYrYlZkTD8mxQyrjpacR0qvcRTJ6EE+bxqY8+ONA9hEahZ426au1mPni4L2DZrrG77gNwE2c4T/mMGrM7zw3MjZeZAtgHXwik0yw31eTHyJeDniDdEcFxL80nOJIk69YwcRM/ y_k@dw.local
-        - ssh-dss AAAAB3NzaC1kc3MAAACBAPCPLZTNmb6QBrrERXD3gulK346Ik4SluA0YiXK//h4OSBEv22eAG9/prLviDxHVNYpViYLMFGGYAlbCl2m6O5bzN0BRKZVEaCug8WzSkYGUfFK4aXdWbJ1pzGZbWWp/kFOSTrv+oCz8BRvaEME2sC7boTWmhjV4PyJWMaoLOn4xAAAAFQDoyQ/E/PRdSAfmNcM+CM7iq9AReQAAAIEA6f8HI2HsrF2a9OC2m/RDAHDLC06hzLa4yMdWRsnyFIFtaccMpWA+z44H1pax4olQ20FS7RRuE6BLLYUUTTeFQ0NJiG+d+PPViozhV7tkpStcqGSBEULpWALCEB+CAmsGAPhQG+Niu/xHdl5RVPsyIiSNPn/LC6yGgNOJVy12b94AAACBAJqjG305JHNqFOA93+j+1lpYigJyL1YR5rQWTEFtM+ibCJgmykrk6LYfxCpi2ZzQAmWlph6ZFy9aSovdXfyIzQxA89LA46nmhHTCVLGZ9Xc2JgJeazQUMSAXPfIJ6Ru/6xuUjL9cmSv8AN8pDXQ49oNEMZETrNohCxLSx3fR37zM yuk@darwin-mba.local
-        # Key of remote ansible normal user
-        - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCgAL0Sasj/Z9SsNpfGib/kl4Y3ffaBDa9EIqONhBKqvbG2WxbP76r2LOrNQFZKM6VAjGd2raD24tT3kk/ZlA6JvjETFHIzPDyLMzqvnC9Q93qM8O2mHi7juVQXx0Oqs4M5Vvx+F3AlQFYDwOgjnxfTE2gEZadJabygOq5J7gQfxS5XaFc5nFFXpSrXOk0IAH4v3gKvLbVliLAhvkgebkjAv0m9ooxvX64/gNv50edB92KV8tfBpn5Oqm6hAyxa0r+XsBsC3612JKKHegIEnBaB/0PdMpWb6tbAg376tYu1AwSNUi5/lzJt6s8Fh1ZqdwO634B7eHeZN3mJojcwwnpV yuk@tk2-407-44672
+      when: no
+      vars:
+        jenkins_webuser_username: 10sr
+        jenkins_webuser_password: "{{ _vault.jenkins_webuser_password }}"
+        # TODO: This value is too big so separete into file
+        jenkins_webuser_ssh_publickey:
+          - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCy90M0oZocY2AMrk8DUYNaHacamzOW+A+NNsXSTdLqj/k45pg6WiT8hnYBUXnVLJPoOQknFLFLKaC9YUX1iiz2aiH/aFn83W5og7NGlhkcFmti9tQwql7gB5/Y0N/DoRVWUXoi/Iy69LU7dMQQOAM9yvOwTl86djVOVpjhI/KPkPGpiddXjqruBcOpmymtfZJpFDqIskfBse7f+e0oYrYlZkTD8mxQyrjpacR0qvcRTJ6EE+bxqY8+ONA9hEahZ426au1mPni4L2DZrrG77gNwE2c4T/mMGrM7zw3MjZeZAtgHXwik0yw31eTHyJeDniDdEcFxL80nOJIk69YwcRM/ y_k@dw.local
+          - ssh-dss AAAAB3NzaC1kc3MAAACBAPCPLZTNmb6QBrrERXD3gulK346Ik4SluA0YiXK//h4OSBEv22eAG9/prLviDxHVNYpViYLMFGGYAlbCl2m6O5bzN0BRKZVEaCug8WzSkYGUfFK4aXdWbJ1pzGZbWWp/kFOSTrv+oCz8BRvaEME2sC7boTWmhjV4PyJWMaoLOn4xAAAAFQDoyQ/E/PRdSAfmNcM+CM7iq9AReQAAAIEA6f8HI2HsrF2a9OC2m/RDAHDLC06hzLa4yMdWRsnyFIFtaccMpWA+z44H1pax4olQ20FS7RRuE6BLLYUUTTeFQ0NJiG+d+PPViozhV7tkpStcqGSBEULpWALCEB+CAmsGAPhQG+Niu/xHdl5RVPsyIiSNPn/LC6yGgNOJVy12b94AAACBAJqjG305JHNqFOA93+j+1lpYigJyL1YR5rQWTEFtM+ibCJgmykrk6LYfxCpi2ZzQAmWlph6ZFy9aSovdXfyIzQxA89LA46nmhHTCVLGZ9Xc2JgJeazQUMSAXPfIJ6Ru/6xuUjL9cmSv8AN8pDXQ49oNEMZETrNohCxLSx3fR37zM yuk@darwin-mba.local
+          # Key of remote ansible normal user
+          - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCgAL0Sasj/Z9SsNpfGib/kl4Y3ffaBDa9EIqONhBKqvbG2WxbP76r2LOrNQFZKM6VAjGd2raD24tT3kk/ZlA6JvjETFHIzPDyLMzqvnC9Q93qM8O2mHi7juVQXx0Oqs4M5Vvx+F3AlQFYDwOgjnxfTE2gEZadJabygOq5J7gQfxS5XaFc5nFFXpSrXOk0IAH4v3gKvLbVliLAhvkgebkjAv0m9ooxvX64/gNv50edB92KV8tfBpn5Oqm6hAyxa0r+XsBsC3612JKKHegIEnBaB/0PdMpWb6tbAg376tYu1AwSNUi5/lzJt6s8Fh1ZqdwO634B7eHeZN3mJojcwwnpV yuk@tk2-407-44672
 
-      jenkins_serveruser_password: "{{ _vault.jenkins_serveruser_password }}"
-      jenkins_serveruser_password_salt: "{{ ansible_mounts.0.uuid.replace('-', '')[:16] }}"
+        jenkins_serveruser_password: "{{ _vault.jenkins_serveruser_password }}"
+        jenkins_serveruser_password_salt: "{{ ansible_mounts.0.uuid.replace('-', '')[:16] }}"
 
-      jenkins_plugins:
-        - ansicolor
-        - job-dsl
-        - authorize-project
-        - simple-theme-plugin
-        - slack
-        - prometheus
+        jenkins_plugins:
+          - ansicolor
+          - job-dsl
+          - authorize-project
+          - simple-theme-plugin
+          - slack
+          - prometheus
 
-      # https://github.com/afonsof/jenkins-material-theme/
-      jenkins_theme_css_url: https://cdn.rawgit.com/afonsof/jenkins-material-theme/gh-pages/dist/material-blue-grey.css
+        # https://github.com/afonsof/jenkins-material-theme/
+        jenkins_theme_css_url: https://cdn.rawgit.com/afonsof/jenkins-material-theme/gh-pages/dist/material-blue-grey.css
 
-      # jenkins_system_properties:
-      #   - key: hudson.DNSMultiCast.disabled
-      #     value: "true"
-      #   - key: hudson.udp
-      #     value: "-1"
+        # jenkins_system_properties:
+        #   - key: hudson.DNSMultiCast.disabled
+        #     value: "true"
+        #   - key: hudson.udp
+        #     value: "-1"
 
-      # https://issues.jenkins-ci.org/browse/JENKINS-10160
-      # https://stackoverflow.com/questions/31740373/how-can-i-prevent-that-the-jenkins-log-gets-spammed-with-strange-messages
-      # https://www.ionutgavrilut.com/2018/jenkins-floods-with-DNS-errors/
-      jenkins_java_args: >-
-        -Dhudson.DNSMultiCast.disabled=true
-        -Dhudson.udp=-1
+        # https://issues.jenkins-ci.org/browse/JENKINS-10160
+        # https://stackoverflow.com/questions/31740373/how-can-i-prevent-that-the-jenkins-log-gets-spammed-with-strange-messages
+        # https://www.ionutgavrilut.com/2018/jenkins-floods-with-DNS-errors/
+        jenkins_java_args: >-
+          -Dhudson.DNSMultiCast.disabled=true
+          -Dhudson.udp=-1
 
     - role: jenkins_bootstrap_job
-      jenkins_bootstrap_job_name: jenkins-bootstrap-job
-      jenkins_bootstrap_job_webuser_username: 10sr
-      jenkins_bootstrap_job_webuser_password: "{{ _vault.jenkins_webuser_password }}"
-      jenkins_bootstrap_job_repository_url: https://github.com/10sr/machine-setups.git
-      jenkins_bootstrap_job_jobdsl_target: sakura/jenkins-jobs/src/jobs/*.groovy
+      when: no
+      vars:
+        jenkins_bootstrap_job_name: jenkins-bootstrap-job
+        jenkins_bootstrap_job_webuser_username: 10sr
+        jenkins_bootstrap_job_webuser_password: "{{ _vault.jenkins_webuser_password }}"
+        jenkins_bootstrap_job_repository_url: https://github.com/10sr/machine-setups.git
+        jenkins_bootstrap_job_jobdsl_target: sakura/jenkins-jobs/src/jobs/*.groovy
 
-      jenkins_bootstrap_job_environments:
-        P_TXT_REPOSITORY_URL: "{{ _vault.p_txt_repository_url }}"
+        jenkins_bootstrap_job_environments:
+          P_TXT_REPOSITORY_URL: "{{ _vault.p_txt_repository_url }}"
 
     - role: jenkins_nginx_proxy
       jenkins_nginx_proxy_port: 8080
@@ -362,11 +367,4 @@
       copy:
         dest: "{{ _revision_yaml }}"
         content: "{{ _this_revision | to_nice_yaml }}"
-      become: yes
-
-    - name: Temporarily stop jenkins
-      service:
-        name: jenkins
-        status: stop
-        enabled: no
       become: yes

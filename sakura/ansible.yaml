@@ -248,7 +248,7 @@
           state: started
           command: sh ./up.sh
         cowrie0:
-          state: started
+          state: stopped
           command: docker-compose up --build
         trigger0:
           state: started

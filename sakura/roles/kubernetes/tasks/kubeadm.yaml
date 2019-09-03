@@ -1,0 +1,26 @@
+---
+- name: Install dependencies
+  apt:
+    name:
+      - apt-transport-https
+      - curl
+  become: yes
+
+- name: Add apt key
+  apt_key:
+    url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
+    # id: 
+  become: yes
+
+- name: Add apt repository
+  apt_repository:
+    repo="deb https://apt.kubernetes.io/ kubernetes-{{ kubernetes_ubuntu_codename }} main"
+  become: yes
+
+- name: Install kubeadm and other packages
+  apt:
+    name:
+      - kubelet
+      - kubeadm
+      - kubectl
+  become: yes

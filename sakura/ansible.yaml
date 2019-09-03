@@ -349,6 +349,10 @@
             execstart: /usr/local/bin/prometheus_node_exporter.sh
             type: simple
 
+    - role: kubernetes
+      vars:
+        kubernetes_ubuntu_codename: "{{ _ubuntu_codename }}"
+
 
   post_tasks:
     - file:

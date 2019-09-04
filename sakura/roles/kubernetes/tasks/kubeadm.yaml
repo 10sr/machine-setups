@@ -9,7 +9,7 @@
 - name: Add apt key
   apt_key:
     url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
-    # id: 
+    # id:
   become: yes
 
 - name: Add apt repository

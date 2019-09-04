@@ -242,7 +242,7 @@
           state: started
           command: docker-compose up --build
         gitbucket0:
-          state: started
+          state: stopped
           command: docker-compose up --build
         prometheus0:
           state: started

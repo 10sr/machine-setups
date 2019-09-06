@@ -2,13 +2,13 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: yuk-playground
+  name: 10sr-playground
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: webtools-nodeport
-  namespace: yuk-playground
+  namespace: 10sr-playground
 spec:
   type: NodePort
   selector:
@@ -22,7 +22,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: nginx-nodeport
-  namespace: yuk-playground
+  namespace: 10sr-playground
 spec:
   type: NodePort
   selector:
@@ -36,7 +36,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: webtools-deployment
-  namespace: yuk-playground
+  namespace: 10sr-playground
   labels:
     app: webtools
 spec:
@@ -62,7 +62,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: nginx-deployment
-  namespace: yuk-playground
+  namespace: 10sr-playground
   labels:
     app: nginx
 spec:

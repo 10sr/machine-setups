@@ -12,6 +12,7 @@ workflows:
       - test_python:
           docker_tag: "3.6"
       - test_java8
+      - test_golang
 
 # TOOD: Fix commands
 commands:
@@ -41,6 +42,23 @@ commands:
           working_directory: sakura/jenkins-jobs
           command: make test
 
+  test_golang:
+    parameters:
+      directory:
+        type: string
+    steps:
+      - run:
+          name: Install prerequisite
+          command: sudo apt-get update && sudo apt-get install -y make
+      - run:
+          name: Install dependencies (<< parameters.directory >>)
+          working_directory: << parameters.directory >>
+          command: make installdeps
+      - run:
+          name: Run make check (<< parameters.directory >>)
+          working_directory: << parameters.directory >>
+          command: make check
+
 executors:
   python:
     parameters:
@@ -57,6 +75,15 @@ executors:
         default: latest
     docker:
       - image: circleci/openjdk:<< parameters.tag >>
+    working_directory: ~/repo
+
+  golang:
+    parameters:
+      tag:
+        type: string
+        default: latest
+    docker:
+      - image: circleci/golang:<< parameters.tag >>
     working_directory: ~/repo
 
 jobs:
@@ -80,3 +107,13 @@ jobs:
     steps:
       - checkout
       - test_java
+
+  test_golang:
+    executor:
+      name: golang
+    steps:
+      - checkout
+      - test_golang:
+          # There is no need to use golang image for this test,
+          # but there are no general-purpose circleci image
+          directory: sakura-kubernetes

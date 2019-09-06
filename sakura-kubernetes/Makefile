@@ -15,7 +15,7 @@ $(manifests): scp
 
 uname := $(shell uname)
 
-installdeps: kubeval/kubeval:
+installdeps: kubeval/kubeval
 
 kubeval/kubeval:
 	mkdir -p kubeval

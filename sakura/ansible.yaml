@@ -108,6 +108,8 @@
       nginx_host_proxies:
         - name: gl.{{ _domain_name }}
           port: 8800
+        - name: k8s-nginx.{{ _domain_name }}
+          port: 30080
       nginx_proxy_upstreams: []
 
       # ssl
@@ -348,6 +350,10 @@
             # TODO: Parametrize node_exporter path
             execstart: /usr/local/bin/prometheus_node_exporter.sh
             type: simple
+
+    - role: kubernetes
+      vars:
+        kubernetes_ubuntu_codename: "{{ _ubuntu_codename }}"
 
 
   post_tasks:

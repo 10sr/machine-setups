@@ -1,0 +1,9 @@
+---
+- name: Prepare /etc/default/kubelet
+  blockinfile:
+    path: /etc/default/kubelet
+    marker: "# {mark} Managed by machine-setups/sakura"
+    block: |
+      KUBELET_EXTRA_ARGS="--fail-swap-on=false"
+    create: yes
+  become: yes

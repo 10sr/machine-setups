@@ -77,7 +77,7 @@ executors:
       - image: circleci/openjdk:<< parameters.tag >>
     working_directory: ~/repo
 
-  openjdk:
+  ubuntu:
     parameters:
       tag:
         type: string

@@ -12,7 +12,7 @@ workflows:
       - test_python:
           docker_tag: "3.6"
       - test_java8
-      - test_make_check
+      - test_golang
 
 # TOOD: Fix commands
 commands:

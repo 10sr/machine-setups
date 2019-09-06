@@ -57,6 +57,22 @@ spec:
           env:
             - name: WEBTOOLS_SETTINGS_TOML
               value: ./settings_insecure.toml
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nginx-configmap
+  namespace: 10sr-playground
+data:
+  nginx_index_html: |
+    nginx of k8s
+    10sr-playground
+  nginx_cmd_sh: |
+    #!/bin/sh
+    set -eux
+    cp -pf /configmap_volume/nginx_index_html /usr/share/nginx/html/index.html
+    exec nginx -g "daemon off;"
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -78,5 +94,13 @@ spec:
       containers:
         - name: nginx
           image: nginx
+          command: [ "sh", "/configmap_volume/nginx_cmd_sh" ]
           ports:
             - containerPort: 80
+          volumeMounts:
+            - name: nginx-configmap-volume
+              mountPath: /configmap_volume
+      volumes:
+        - name: nginx-configmap-volume
+          configMap:
+            name: nginx-configmap

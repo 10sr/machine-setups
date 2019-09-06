@@ -15,6 +15,8 @@ $(manifests): scp
 
 uname := $(shell uname)
 
+installdeps: kubeval/kubeval:
+
 kubeval/kubeval:
 	mkdir -p kubeval
 	wget https://github.com/instrumenta/kubeval/releases/download/0.9.2/kubeval-$(uname)-amd64.tar.gz -O kubeval/kubeval.tgz

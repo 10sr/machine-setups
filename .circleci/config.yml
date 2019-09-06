@@ -42,7 +42,7 @@ commands:
           working_directory: sakura/jenkins-jobs
           command: make test
 
-  test_make_check:
+  test_golang:
     parameters:
       directory:
         type: string
@@ -77,13 +77,13 @@ executors:
       - image: circleci/openjdk:<< parameters.tag >>
     working_directory: ~/repo
 
-  ubuntu:
+  golang:
     parameters:
       tag:
         type: string
         default: latest
     docker:
-      - image: circleci/ubuntu:<< parameters.tag >>
+      - image: circleci/golang:<< parameters.tag >>
     working_directory: ~/repo
 
 jobs:
@@ -108,10 +108,12 @@ jobs:
       - checkout
       - test_java
 
-  test_make_check:
+  test_golang:
     executor:
-      name: ubuntu
+      name: golang
     steps:
       - checkout
-      - test_make_check:
+      - test_golang:
+          # There is no need to use golang image for this test,
+          # but there are no general-purpose circleci image
           directory: sakura-kubernetes

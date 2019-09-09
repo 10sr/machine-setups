@@ -9,8 +9,8 @@ scp:
 	ssh $(target) mkdir -p $(remote_dir)/
 	rsync -av --delete ./ "$(target):$(remote_dir)/"
 
-$(manifests): scp
-	ssh -t $(target) kubectl apply -f $(remote_dir)/$@.yaml
+# $(manifests): scp
+# 	ssh -t $(target) kubectl apply -f $(remote_dir)/$@.yaml
 
 
 uname := $(shell uname)
@@ -24,4 +24,4 @@ kubeval/kubeval:
 
 
 check: kubeval/kubeval
-	./kubeval/kubeval $(manifests_yaml)
+	# ./kubeval/kubeval $(manifests_yaml)

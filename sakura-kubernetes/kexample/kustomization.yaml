@@ -6,6 +6,7 @@ kind: Kustomization
 #   - base
 resources:
   - deployment.yaml
+  - service.yaml
 
 namespace: kexample
 commonLabels:

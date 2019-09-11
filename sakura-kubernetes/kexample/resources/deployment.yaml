@@ -19,6 +19,9 @@ spec:
         - name: nginx
           image: nginx
           command: [ "sh", "/configmap_volume/nginx_cmd.sh" ]
+          env:
+            - name: VOLUME_MOUNT_PATH
+              value: /configmap_volume
           ports:
             - containerPort: 80
           volumeMounts:

@@ -23,5 +23,7 @@ kubeval/kubeval:
 	cd kubeval && tar -vxf kubeval.tgz
 
 
-check: kubeval/kubeval
+check: # check-kubeval
+
+check-kubeval: kubeval/kubeval
 	# ./kubeval/kubeval $(manifests_yaml)

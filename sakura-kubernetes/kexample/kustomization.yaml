@@ -5,8 +5,8 @@ kind: Kustomization
 # bases:
 #   - base
 resources:
-  - deployment.yaml
-  - service.yaml
+  - resources/deployment.yaml
+  - resources/service.yaml
 
 namespace: kexample
 commonLabels:

@@ -109,7 +109,7 @@
         - name: gl.{{ _domain_name }}
           port: 8800
         - name: k8s-nginx.{{ _domain_name }}
-          port: 30080
+          port: 30081
       nginx_proxy_upstreams: []
 
       # ssl

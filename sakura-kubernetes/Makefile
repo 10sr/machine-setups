@@ -12,6 +12,9 @@ scp:
 $(manifests): scp
 	ssh -t $(target) kubectl apply -f $(remote_dir)/$@.yaml
 
+kexample: scp
+	ssh -t $(target) kubectl apply -k $(remote_dir)/kexample
+
 
 uname := $(shell uname)
 
@@ -23,5 +26,7 @@ kubeval/kubeval:
 	cd kubeval && tar -vxf kubeval.tgz
 
 
-check: kubeval/kubeval
-	./kubeval/kubeval $(manifests_yaml)
+check: # check-kubeval
+
+check-kubeval: kubeval/kubeval
+	# ./kubeval/kubeval $(manifests_yaml)

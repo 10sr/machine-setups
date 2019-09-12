@@ -13,10 +13,10 @@ $(manifests): scp
 	ssh -t $(target) kubectl apply -f $(remote_dir)/$@.yaml
 
 kexample: scp
-	ssh -t $(target) kubectl apply -k $(remote_dir)/kexample
+	ssh -t $(target) kubectl apply -k $(remote_dir)/$@
 
-exposed: scp
-	ssh -t $(target) kubectl apply -k $(remote_dir)/exposed
+exposed.webtools: scp
+	ssh -t $(target) kubectl apply -k $(remote_dir)/$@
 
 
 uname := $(shell uname)

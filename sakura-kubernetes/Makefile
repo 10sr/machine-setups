@@ -15,6 +15,9 @@ $(manifests): scp
 kexample: scp
 	ssh -t $(target) kubectl apply -k $(remote_dir)/kexample
 
+exposed: scp
+	ssh -t $(target) kubectl apply -k $(remote_dir)/exposed
+
 
 uname := $(shell uname)
 

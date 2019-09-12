@@ -21,15 +21,15 @@ exposed.webtools: scp
 
 uname := $(shell uname)
 
-installdeps: kubeval/kubeval
+installdeps: .kubeval/kubeval
 
-kubeval/kubeval:
-	mkdir -p kubeval
-	wget https://github.com/instrumenta/kubeval/releases/download/0.9.2/kubeval-$(uname)-amd64.tar.gz -O kubeval/kubeval.tgz
-	cd kubeval && tar -vxf kubeval.tgz
+.kubeval/kubeval:
+	mkdir -p .kubeval
+	wget https://github.com/instrumenta/kubeval/releases/download/0.9.2/kubeval-$(uname)-amd64.tar.gz -O .kubeval/kubeval.tgz
+	cd .kubeval && tar -vxf kubeval.tgz
 
 
 check: # check-kubeval
 
-check-kubeval: kubeval/kubeval
-	# ./kubeval/kubeval $(manifests_yaml)
+check-kubeval: .kubeval/kubeval
+	# ./.kubeval/kubeval $(manifests_yaml)

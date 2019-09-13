@@ -32,4 +32,4 @@ installdeps: .kubeval/kubeval
 check: # check-kubeval
 
 check-kubeval: .kubeval/kubeval
-	# ./.kubeval/kubeval $(manifests_yaml)
+	./.kubeval/kubeval $(manifests_yaml)

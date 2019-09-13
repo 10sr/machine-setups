@@ -13,10 +13,7 @@ commonLabels:
 namePrefix: webtools-
 
 configMapGenerator:
-  - name: configmap-from-envfile
-    env: configs.env
   - name: configmap-from-file-content
     files:
-      - files/data.txt
       - files/nginx_cmd.sh
       - files/nginx_index.html

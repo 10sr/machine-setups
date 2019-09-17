@@ -65,3 +65,33 @@ spec:
         - name: nfs-pvc01-volume
           persistentVolumeClaim:
             claimName: nfs-pvc01
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx2-deployment
+  labels:
+    app: nginx2
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: nginx2
+  template:
+    metadata:
+      labels:
+        app: nginx2
+    spec:
+      containers:
+        - name: nginx
+          image: nginx
+          ports:
+            - containerPort: 80
+          volumeMounts:
+            - name: nfs-pvc01-volume
+              mountPath: /nfs-pvc-volume
+      volumes:
+        - name: nfs-pvc01-volume
+          persistentVolumeClaim:
+            claimName: nfs-pvc01

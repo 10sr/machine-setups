@@ -17,3 +17,12 @@ configMapGenerator:
     files:
       - files/nginx_cmd.sh
       - files/nginx_index.html
+
+vars:
+  - name: REDIS_SERVICE_NAME
+    objref:
+      apiVersion: v1
+      kind: Service
+      name: redis-service
+    fieldref:
+      fieldpath: metadata.name

@@ -5,6 +5,22 @@ metadata:
   name: 10sr-playground
 ---
 apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: nfs-pvc01
+  namespace: 10sr-playground
+spec:
+  selector:
+    matchLabels:
+      type: nfs
+  resources:
+    requests:
+      storage: 1Gi
+  accessModes:
+    - ReadWriteMany
+
+---
+apiVersion: v1
 kind: Service
 metadata:
   name: webtools-nodeport
@@ -57,6 +73,13 @@ spec:
           env:
             - name: WEBTOOLS_SETTINGS_TOML
               value: ./settings_insecure.toml
+          volumeMounts:
+            - name: nfs-pvc01-volume
+              mountPath: /nfs-pvc-volume
+      volumes:
+        - name: nfs-pvc01-volume
+          persistentVolumeClaim:
+            claimName: nfs-pvc01
 
 ---
 apiVersion: v1
@@ -101,7 +124,12 @@ spec:
           volumeMounts:
             - name: nginx-configmap-volume
               mountPath: /configmap_volume
+            - name: nfs-pvc01-volume
+              mountPath: /nfs-pvc-volume
       volumes:
         - name: nginx-configmap-volume
           configMap:
             name: nginx-configmap
+        - name: nfs-pvc01-volume
+          persistentVolumeClaim:
+            claimName: nfs-pvc01

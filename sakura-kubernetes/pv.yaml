@@ -14,6 +14,7 @@ spec:
   # storageClassName: slow
   nfs:
     path: /nfs/kubernetes/pv01
+    # TODO: Parameterize
     server: 160.16.142.176
 ---
 apiVersion: v1
@@ -31,4 +32,5 @@ spec:
   # storageClassName: slow
   nfs:
     path: /nfs/kubernetes/pv02
+    # TODO: Parameterize
     server: 160.16.142.176

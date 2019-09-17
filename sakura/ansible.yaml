@@ -351,6 +351,12 @@
             execstart: /usr/local/bin/prometheus_node_exporter.sh
             type: simple
 
+    - role: nfs
+      vars:
+        nfs_path: /nfs/kubernetes
+        nfs_exports_content: |
+          /nfs/kubernetes tk2-407-44672.vs.sakura.ne.jp(rw,sync,no_root_squash,no_subtree_check)
+
     - role: kubernetes
       vars:
         kubernetes_ubuntu_codename: "{{ _ubuntu_codename }}"

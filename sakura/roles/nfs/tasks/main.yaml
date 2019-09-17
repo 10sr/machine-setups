@@ -1,0 +1,18 @@
+---
+- name: Install NFS server
+  apt:
+    name: nfs-kernel-server
+  become: yes
+
+- name: Create export directory
+  file:
+    path: "{{ nfs_path }}"
+    state: directory
+  become: yes
+
+  # TODO: Add restart on change
+- name: Configure /etc/exports
+  copy:
+    dest: /etc/exports
+    content: "{{ nfs_exports_content }}"
+  become: yes

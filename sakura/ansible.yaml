@@ -142,8 +142,8 @@
             - "proxy_set_header X-Forwarded-Server $host"
             - "proxy_set_header X-Forwarded-Proto $scheme"
             - "proxy_set_header X-Real-IP $remote_addr"
-        - path: /webtools-static
-          port: 7701
+        - path: /bucket-webtools-static
+          port: 9700
       nginx_ssl_host_proxies:
         - name: "nc.{{ _domain_name }}"
           port: 8888
@@ -224,6 +224,11 @@
         webtools0:
           WEBTOOLS_ALLOWED_HOST: ".{{ _domain_name }}"
           WEBTOOLS_SECRET_KEY: "{{ _vault.webtools_secret_key }}"
+          WEBTOOLS_AWS_ACCESS_KEY_ID: 66aa7319
+          WEBTOOLS_AWS_SECRET_ACCESS_KEY: "{{ _vault.webtools_minio_secret_key }}"
+          WEBTOOLS_AWS_S3_CUSTOM_DOMAIN_HOSTNAME: "{{ _domain_name }}"
+          MINIO_ACCESS_KEY: 66aa7319
+          MINIO_SECRET_KEY: "{{ _vault.webtools_minio_secret_key }}"
       docker_pm2:
         10sr_bot0:
           state: started

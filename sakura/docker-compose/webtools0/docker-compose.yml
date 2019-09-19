@@ -5,7 +5,7 @@ services:
     image: redis
 
   app:
-    image: quay.io/10sr/webtools:v0.0.7
+    image: quay.io/10sr/webtools:v0.0.9
     environment: {}
     env_file:
       - ../webtools0.env
@@ -21,11 +21,15 @@ services:
       - /run.sh
     depends_on:
       - redis
+      - minio
 
-  static:
-    image: nginx
+  minio:
+    image: minio/minio
+    env_file:
+      - ../webtools0.env
+    command: server /export
     ports:
-      - 127.0.0.1:7701:7701
+      - "0.0.0.0:9700:9000"
     volumes:
-      - ./nginx.conf:/etc/nginx/nginx.conf:ro
-      - /var/lib/data/docker/webtools0/data:/webtools-data:ro
+      - /var/lib/data/docker/webtools0/minio/export:/export
+      - /var/lib/data/docker/webtools0/minio/config:/root/.minio

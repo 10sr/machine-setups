@@ -21,6 +21,7 @@ services:
       - /run.sh
     depends_on:
       - redis
+      - minio
 
   static:
     image: nginx
@@ -36,7 +37,7 @@ services:
       - ../webtools0.env
     command: server /export
     ports:
-      - "127.0.0.1:9700:9000"
+      - "0.0.0.0:9700:9000"
     volumes:
       - /var/lib/data/docker/webtools0/minio/export:/export
       - /var/lib/data/docker/webtools0/minio/config:/root/.minio

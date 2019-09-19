@@ -353,9 +353,9 @@
 
     - role: nfs
       vars:
-        nfs_path: /nfs/kubernetes
+        nfs_path: /var/lib/data/nfs/kubernetes
         nfs_exports_content: |
-          /nfs/kubernetes tk2-407-44672.vs.sakura.ne.jp(rw,sync,no_root_squash,no_subtree_check)
+          /var/lib/data/nfs/kubernetes tk2-407-44672.vs.sakura.ne.jp(rw,sync,no_root_squash,no_subtree_check)
 
     - role: kubernetes
       vars:
@@ -367,6 +367,12 @@
         state: link
         src: /var/lib/data/docker/nextcloud0/html/data/10sr/files/www
         dest: /var/nginx/main/nc
+      become: yes
+
+    - name: Create kubernetes hostPath directory
+      file:
+        state: directory
+        path: /var/lib/data/kubernetes-hostpath
       become: yes
 
     - name: Write timestamp file

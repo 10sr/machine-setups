@@ -22,6 +22,3 @@ AWS_STORAGE_BUCKET_NAME = "bucket-webtools-static"
 AWS_LOCATION = "static"  # Minio requires this being nonempty string
 AWS_S3_ENDPOINT_URL = "http://minio:9000"
 AWS_S3_CUSTOM_DOMAIN = "$WEBTOOLS_AWS_S3_CUSTOM_DOMAIN_HOSTNAME/bucket-webtools-static"
-
-# TODO: Remove later
-STATIC_ROOT = "/webtools-data/statics/webtools-static/"

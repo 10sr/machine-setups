@@ -142,8 +142,6 @@
             - "proxy_set_header X-Forwarded-Server $host"
             - "proxy_set_header X-Forwarded-Proto $scheme"
             - "proxy_set_header X-Real-IP $remote_addr"
-        - path: /webtools-static
-          port: 7701
         - path: /bucket-webtools-static
           port: 9700
       nginx_ssl_host_proxies:

@@ -23,14 +23,6 @@ services:
       - redis
       - minio
 
-  static:
-    image: nginx
-    ports:
-      - 127.0.0.1:7701:7701
-    volumes:
-      - ./nginx.conf:/etc/nginx/nginx.conf:ro
-      - /var/lib/data/docker/webtools0/data:/webtools-data:ro
-
   minio:
     image: minio/minio
     env_file:

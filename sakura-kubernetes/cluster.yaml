@@ -1,3 +1,5 @@
+# Namespaces
+
 ---
 apiVersion: v1
 kind: Namespace
@@ -8,6 +10,10 @@ apiVersion: v1
 kind: Namespace
 metadata:
   name: exposed
+
+
+# PersistentVolumes
+
 ---
 apiVersion: v1
 kind: PersistentVolume
@@ -23,7 +29,7 @@ spec:
   persistentVolumeReclaimPolicy: Retain
   # storageClassName: slow
   nfs:
-    path: /nfs/kubernetes/pv01
+    path: /var/lib/data/nfs/kubernetes/pv01
     # TODO: Parameterize
     server: 160.16.142.176
 ---
@@ -41,6 +47,6 @@ spec:
   persistentVolumeReclaimPolicy: Retain
   # storageClassName: slow
   nfs:
-    path: /nfs/kubernetes/pv02
+    path: /var/lib/data/nfs/kubernetes/pv02
     # TODO: Parameterize
     server: 160.16.142.176

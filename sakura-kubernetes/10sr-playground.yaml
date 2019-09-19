@@ -139,4 +139,4 @@ spec:
         - name: nfs-volume
           nfs:
             server: 160.16.142.176
-            path: /nfs/kubernetes/deployment01
+            path: /var/lib/data/nfs/kubernetes/deployment01

@@ -126,6 +126,9 @@ spec:
               mountPath: /configmap_volume
             - name: nfs-pvc01-volume
               mountPath: /nfs-pvc-volume
+            - name: nfs-volume
+              mountPath: /nfs-volume
+              subPath: subpath
       volumes:
         - name: nginx-configmap-volume
           configMap:
@@ -133,3 +136,7 @@ spec:
         - name: nfs-pvc01-volume
           persistentVolumeClaim:
             claimName: nfs-pvc01
+        - name: nfs-volume
+          nfs:
+            server: 160.16.142.176
+            path: /nfs/kubernetes/deployment01

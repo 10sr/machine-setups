@@ -11,5 +11,15 @@ SECURE_HSTS_SECONDS = 0
 SECURE_SSL_REDIRECT = false
 
 # Static files
+STATIC_URL = "/bucket-webtools-static/static/"
+USE_S3 = true
+
+AWS_ACCESS_KEY_ID = "$WEBTOOLS_AWS_ACCESS_KEY_ID"
+AWS_SECRET_ACCESS_KEY = "$WEBTOOLS_AWS_SECRET_ACCESS_KEY"
+AWS_STORAGE_BUCKET_NAME = "bucket-webtools-static"
+AWS_LOCATION = "static"
+AWS_S3_ENDPOINT_URL = "http://minio:9000"
+
+
+# TODO: Remove later
 STATIC_ROOT = "/webtools-data/statics/webtools-static/"
-STATIC_URL = "/webtools-static/"

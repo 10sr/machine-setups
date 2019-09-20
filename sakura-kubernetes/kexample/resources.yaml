@@ -47,7 +47,7 @@ spec:
       containers:
         - name: nginx
           image: nginx
-          command: [ "sh", "/configmap_volume/nginx_cmd.sh" ]
+          args: [ "sh", "/configmap_volume/nginx_cmd.sh" ]
           env:
             - name: VOLUME_MOUNT_PATH
               value: /configmap_volume

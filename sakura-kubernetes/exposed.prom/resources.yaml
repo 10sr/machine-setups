@@ -1,0 +1,45 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: prom-service
+spec:
+  type: ClusterIP
+  selector:
+    service: prom
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: prom-deployment
+  labels:
+    service: prom
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      service: prom
+  template:
+    metadata:
+      labels:
+        service: prom
+    spec:
+      containers:
+        - name: prom
+          image: prom/prometheus:v2.8.0
+          user: "1000"
+          args:
+            - --config.file=/etc/prometheus/prometheus.yml
+            - --storage.tsdb.path=/prometheus
+            - --web.console.libraries=/etc/prometheus/console_libraries
+            - --web.console.templates=/etc/prometheus/consoles
+            - --web.external-url=https://pt.3ends.info/pt/
+            - --web.route-prefix=/pt/
+          volumeMounts:
+            - name: files-volume
+              mountPath: /files_volume
+      volumes:
+        - name: files-volume
+          configMap:
+            name: files-configmap

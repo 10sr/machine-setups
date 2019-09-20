@@ -26,3 +26,10 @@ vars:
       name: redis-service
     fieldref:
       fieldpath: metadata.name
+  - name: MINIO_SERVICE_NAME
+    objref:
+      apiVersion: v1
+      kind: Service
+      name: minio-service
+    fieldref:
+      fieldpath: metadata.name

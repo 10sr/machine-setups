@@ -48,20 +48,31 @@ spec:
         - name: nginx
           image: nginx
           args: [ "sh", "/configmap_volume/nginx_cmd.sh" ]
+          ports:
+            - containerPort: 80
           env:
             - name: VOLUME_MOUNT_PATH
               value: /configmap_volume
-          ports:
-            - containerPort: 80
+            - name: NOT_A_SENSITIVE_DATA
+              valueFrom:
+                secretKeyRef:
+                  name: secret-from-file
+                  key: not_a_sensitive_data.txt
           volumeMounts:
             - name: configmap-from-file-content-volume
               mountPath: /configmap_volume
+            - name: secret-from-file-volume
+              mountPath: /secret_volume
             - name: nfs-pvc01-volume
               mountPath: /nfs-pvc-volume
       volumes:
         - name: configmap-from-file-content-volume
           configMap:
             name: configmap-from-file-content
+        - name: secret-from-file-volume
+          secret:
+            secretName: secret-from-file
+            defaultMode: 256  # 0400 mode
         - name: nfs-pvc01-volume
           persistentVolumeClaim:
             claimName: nfs-pvc01

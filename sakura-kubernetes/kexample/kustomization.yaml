@@ -20,3 +20,9 @@ configMapGenerator:
       - files/data.txt
       - files/nginx_cmd.sh
       - files/nginx_index.html
+
+secretGenerator:
+  - name: secret-from-file
+    files:
+      - secrets/not_a_sensitive_data.txt
+    # type: kubernetes.io/tls

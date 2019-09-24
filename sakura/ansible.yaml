@@ -229,6 +229,7 @@
           WEBTOOLS_AWS_S3_CUSTOM_DOMAIN_HOSTNAME: "{{ _domain_name }}"
           MINIO_ACCESS_KEY: 66aa7319
           MINIO_SECRET_KEY: "{{ _vault.webtools_minio_secret_key }}"
+          # MINIO_DOMAIN: "{{ _domain_name }}"
       docker_pm2:
         10sr_bot0:
           state: started

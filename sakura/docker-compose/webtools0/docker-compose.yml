@@ -27,9 +27,9 @@ services:
     image: minio/minio
     env_file:
       - ../webtools0.env
-    command: server /export
+    command: server /export --address :9700
     ports:
-      - "0.0.0.0:9700:9000"
+      - "0.0.0.0:9700:9700"
     volumes:
       - /var/lib/data/docker/webtools0/minio/export:/export
       - /var/lib/data/docker/webtools0/minio/config:/root/.minio

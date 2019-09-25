@@ -26,6 +26,6 @@ secretGenerator:
     files:
       - secrets/not_a_sensitive_data.txt
     # type: kubernetes.io/tls
-  - name: secret-data
+  - name: secret-literals
     literals:
       - key1=not secret

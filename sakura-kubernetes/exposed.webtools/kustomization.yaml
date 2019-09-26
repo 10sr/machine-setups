@@ -22,7 +22,6 @@ secretGenerator:
   - name: secret-from-file
     files:
       - secrets/minio_secret_key
-    # type: kubernetes.io/tls
 
 vars:
   - name: REDIS_SERVICE_NAME

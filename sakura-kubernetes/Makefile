@@ -37,14 +37,6 @@ check: # check-kubeval
 check-kubeval: .kubeval/kubeval
 	./.kubeval/kubeval $(manifests_yaml)
 
-# _enc:
-# 	kubesec encrypt -i --key=AD4550BFA479ED8068A4E7BD3A20F06288D2DD34 kexample/secrets_resources.yaml 
-
-# _dec:
-# 	kubesec decrypt -i --debug kexample/secrets_resources.yaml
-
-# _e:
-# 	gpg2 -r AD4550BFA479ED8068A4E7BD3A20F06288D2DD34 -a --encrypt not_a_sensitive_data.txt
 
 GPG_KEYID := AD4550BFA479ED8068A4E7BD3A20F06288D2DD34
 

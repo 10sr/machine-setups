@@ -1,5 +1,2 @@
-[/passphrase.secret]
-insert_final_newline = false
-
 [*/secrets/*]
 insert_final_newline = false

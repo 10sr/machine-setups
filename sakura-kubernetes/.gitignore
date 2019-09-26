@@ -1,1 +1,4 @@
 .kubeval/
+
+*/secrets/*
+!*/secrets/*.asc

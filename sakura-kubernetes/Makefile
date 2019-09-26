@@ -9,13 +9,16 @@ scp:
 	ssh $(target) mkdir -p $(remote_dir)/
 	rsync -av --delete ./ "$(target):$(remote_dir)/"
 
+decrypt_remote: scp
+	ssh -t $(target) make -C $(remote_dir) decrypt_secrets
+
 $(manifests): scp
 	ssh -t $(target) kubectl apply -f $(remote_dir)/$@.yaml
 
 kexample: scp
 	ssh -t $(target) kubectl apply -k $(remote_dir)/$@
 
-exposed.webtools: scp
+exposed.webtools: scp decrypt_remote
 	ssh -t $(target) kubectl apply -k $(remote_dir)/$@
 
 
@@ -33,3 +36,35 @@ check: # check-kubeval
 
 check-kubeval: .kubeval/kubeval
 	./.kubeval/kubeval $(manifests_yaml)
+
+# _enc:
+# 	kubesec encrypt -i --key=AD4550BFA479ED8068A4E7BD3A20F06288D2DD34 kexample/secrets_resources.yaml 
+
+# _dec:
+# 	kubesec decrypt -i --debug kexample/secrets_resources.yaml
+
+# _e:
+# 	gpg2 -r AD4550BFA479ED8068A4E7BD3A20F06288D2DD34 -a --encrypt not_a_sensitive_data.txt
+
+GPG_KEYID := AD4550BFA479ED8068A4E7BD3A20F06288D2DD34
+
+encrypt_targets := $(shell find */secrets -type f '!' -name '*.asc')
+encrypt_dest := $(encrypt_targets:%=%.asc)
+
+encrypt_secrets: $(encrypt_dest)
+
+$(encrypt_dest): %.asc: %
+	gpg2 --recipient $(GPG_KEYID) --armor --encrypt $^
+
+
+
+decrypt_targets := $(shell find */secrets -type f -name '*.asc')
+decrypt_dest := $(decrypt_targets:%.asc=%)
+
+decrypt_secrets:
+	echo $(decrypt_dest)
+
+decrypt_secrets: $(decrypt_dest)
+
+$(decrypt_dest):
+	gpg2 --output $@ --decrypt $@.asc

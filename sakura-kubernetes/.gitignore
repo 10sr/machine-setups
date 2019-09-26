@@ -2,3 +2,5 @@
 
 */secrets/*
 !*/secrets/*.asc
+
+*.secret

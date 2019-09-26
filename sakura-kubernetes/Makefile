@@ -9,8 +9,8 @@ scp:
 	ssh $(target) mkdir -p $(remote_dir)/
 	rsync -av --delete ./ "$(target):$(remote_dir)/"
 
-decrypt_remote: scp
-	ssh -t $(target) make -C $(remote_dir) decrypt_secrets
+decrypt-remote: scp
+	ssh -t $(target) make -C $(remote_dir) decrypt-secrets
 
 $(manifests): scp
 	ssh -t $(target) kubectl apply -f $(remote_dir)/$@.yaml
@@ -18,7 +18,7 @@ $(manifests): scp
 kexample: scp
 	ssh -t $(target) kubectl apply -k $(remote_dir)/$@
 
-exposed.webtools: scp decrypt_remote
+exposed.webtools: scp decrypt-remote
 	ssh -t $(target) kubectl apply -k $(remote_dir)/$@
 
 
@@ -48,7 +48,7 @@ gpg_recipient_args := $(GPG_KEYS:%=--recipient %)
 encrypt_targets := $(shell find */secrets -type f '!' -name '*.asc')
 encrypt_dest := $(encrypt_targets:%=%.asc)
 
-encrypt_secrets: $(encrypt_dest)
+encrypt-secrets: $(encrypt_dest)
 
 $(encrypt_dest): %.asc: %
 	gpg2 $(gpg_recipient_args) --armor --encrypt $^
@@ -58,10 +58,7 @@ $(encrypt_dest): %.asc: %
 decrypt_targets := $(shell find */secrets -type f -name '*.asc')
 decrypt_dest := $(decrypt_targets:%.asc=%)
 
-decrypt_secrets:
-	echo $(decrypt_dest)
-
-decrypt_secrets: $(decrypt_dest)
+decrypt-secrets: $(decrypt_dest)
 
 $(decrypt_dest):
 	gpg2 --output $@ --decrypt $@.asc

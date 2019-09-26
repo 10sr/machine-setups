@@ -38,7 +38,11 @@ check-kubeval: .kubeval/kubeval
 	./.kubeval/kubeval $(manifests_yaml)
 
 
-GPG_KEYID := AD4550BFA479ED8068A4E7BD3A20F06288D2DD34
+GPG_KEYS := \
+  AD4550BFA479ED8068A4E7BD3A20F06288D2DD34 \
+  EE30A1A1AF0E0A44B07D5346E6CF633A3945E1B0
+
+gpg_recipient_args := $(GPG_KEYS:%=--recipient %)
 
 encrypt_targets := $(shell find */secrets -type f '!' -name '*.asc')
 encrypt_dest := $(encrypt_targets:%=%.asc)
@@ -46,7 +50,7 @@ encrypt_dest := $(encrypt_targets:%=%.asc)
 encrypt_secrets: $(encrypt_dest)
 
 $(encrypt_dest): %.asc: %
-	gpg2 --recipient $(GPG_KEYID) --armor --encrypt $^
+	gpg2 $(gpg_recipient_args) --armor --encrypt $^
 
 
 

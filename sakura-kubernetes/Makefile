@@ -41,7 +41,7 @@ check-kubeval: .kubeval/kubeval
 encrypt_targets := $(shell find */secrets -type f '!' -name '*.asc')
 encrypt_dest := $(encrypt_targets:%=%.asc)
 
-encrypt-secrets: $(encrypt_dest)
+encrypt_secrets: $(encrypt_dest)
 
 $(encrypt_dest): %.asc: %
 	gpg2 --cipher-algo AES256 --batch --passphrase-fd 0 --symmetric --armor $^ <passphrase.secret
@@ -51,7 +51,7 @@ $(encrypt_dest): %.asc: %
 decrypt_targets := $(shell find */secrets -type f -name '*.asc')
 decrypt_dest := $(decrypt_targets:%.asc=%)
 
-decrypt-secrets: $(decrypt_dest)
+decrypt_secrets: $(decrypt_dest)
 
 $(decrypt_dest):
 	gpg2 --batch --passphrase-fd 0 --output $@ --decrypt $@.asc <passphrase.secret

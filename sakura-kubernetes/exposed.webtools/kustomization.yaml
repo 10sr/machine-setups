@@ -18,6 +18,11 @@ configMapGenerator:
       - files/nginx_cmd.sh
       - files/nginx_index.html
 
+secretGenerator:
+  - name: secret-from-file
+    files:
+      - secrets/minio_secret_key
+
 vars:
   - name: REDIS_SERVICE_NAME
     objref:

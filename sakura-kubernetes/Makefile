@@ -9,13 +9,16 @@ scp:
 	ssh $(target) mkdir -p $(remote_dir)/
 	rsync -av --delete ./ "$(target):$(remote_dir)/"
 
+decrypt-remote: scp
+	ssh -t $(target) make -C $(remote_dir) decrypt-secrets
+
 $(manifests): scp
 	ssh -t $(target) kubectl apply -f $(remote_dir)/$@.yaml
 
 kexample: scp
 	ssh -t $(target) kubectl apply -k $(remote_dir)/$@
 
-exposed.webtools: scp
+exposed.webtools: scp decrypt-remote
 	ssh -t $(target) kubectl apply -k $(remote_dir)/$@
 
 
@@ -33,3 +36,29 @@ check: # check-kubeval
 
 check-kubeval: .kubeval/kubeval
 	./.kubeval/kubeval $(manifests_yaml)
+
+
+GPG_KEYS := \
+  B88675283D2C1119B42ABA9E19C1680735DE33FB \
+  EE30A1A1AF0E0A44B07D5346E6CF633A3945E1B0 \
+  192EAF31F20AC91E846CD712FAA457DB43F334D6
+
+gpg_recipient_args := $(GPG_KEYS:%=--recipient %)
+
+encrypt_targets := $(shell find */secrets -type f '!' -name '*.asc')
+encrypt_dest := $(encrypt_targets:%=%.asc)
+
+encrypt-secrets: $(encrypt_dest)
+
+$(encrypt_dest): %.asc: %
+	gpg2 $(gpg_recipient_args) --armor --encrypt $^
+
+
+
+decrypt_targets := $(shell find */secrets -type f -name '*.asc')
+decrypt_dest := $(decrypt_targets:%.asc=%)
+
+decrypt-secrets: $(decrypt_dest)
+
+$(decrypt_dest):
+	gpg2 --output $@ --decrypt $@.asc

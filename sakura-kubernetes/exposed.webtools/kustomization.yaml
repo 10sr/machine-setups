@@ -17,6 +17,8 @@ configMapGenerator:
     files:
       - files/nginx_cmd.sh
       - files/nginx_index.html
+      - files/settings.toml.envsubst
+      - files/webtools_command.sh
 
 secretGenerator:
   - name: secret-from-file

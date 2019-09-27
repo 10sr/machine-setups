@@ -6,7 +6,7 @@ metadata:
 spec:
   type: ClusterIP
   selector:
-    service: redis
+    app: redis
   ports:
     - port: 6379
 ---
@@ -17,7 +17,7 @@ metadata:
 spec:
   type: ClusterIP
   selector:
-    service: minio
+    app: minio
   ports:
     - port: 9000
 
@@ -27,16 +27,16 @@ kind: Deployment
 metadata:
   name: redis-deployment
   labels:
-    service: redis
+    app: redis
 spec:
   replicas: 1
   selector:
     matchLabels:
-      service: redis
+      app: redis
   template:
     metadata:
       labels:
-        service: redis
+        app: redis
     spec:
       containers:
         - name: redis
@@ -48,16 +48,16 @@ kind: Deployment
 metadata:
   name: minio-deployment
   labels:
-    service: minio
+    app: minio
 spec:
   replicas: 1
   selector:
     matchLabels:
-      service: minio
+      app: minio
   template:
     metadata:
       labels:
-        service: minio
+        app: minio
     spec:
       containers:
         - name: minio

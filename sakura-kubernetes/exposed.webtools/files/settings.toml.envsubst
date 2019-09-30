@@ -1,6 +1,6 @@
 # -*- mode: toml -*-
 [webtools]
-DATABASE_URL = "sqlite:////webtools-data/db.sqlite3"
+DATABASE_URL = "sqlite:///$WEBTOOLS_SQLITE3_PATH"
 SECRET_KEY = "$WEBTOOLS_SECRET_KEY"
 ALLOWED_HOST = "$WEBTOOLS_ALLOWED_HOST"
 USE_X_FORWARDED_HOST = true

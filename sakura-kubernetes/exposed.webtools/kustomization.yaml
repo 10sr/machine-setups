@@ -13,17 +13,26 @@ commonLabels:
 namePrefix: webtools-
 
 configMapGenerator:
-  - name: configmap-from-file-content
+  - name: configmap-files
     files:
       - files/nginx_cmd.sh
       - files/nginx_index.html
       - files/settings.toml.envsubst
       - files/webtools_command.sh
+  - name: configmap-for-env
+    literals:
+      - MINIO_ACCESS_KEY=17C2C6DB
+      - WEBTOOLS_SETTINGS_TOML_ENVSUBST=/configmap_files/settings.toml.envsubst
+      - WEBTOOLS_AWS_ACCESS_KEY_ID=17C2C6DB
+      - WEBTOOLS_SQLITE3_PATH=/db.sqlite3
+      - WEBTOOLS_ALLOWED_HOST=3ends.info
+      - WEBTOOLS_AWS_S3_CUSTOM_DOMAIN_HOSTNAME=3ends.info
 
 secretGenerator:
-  - name: secret-from-file
+  - name: secret-files
     files:
       - secrets/minio_secret_key
+      - secrets/webtools_secret_key
 
 vars:
   - name: REDIS_SERVICE_NAME

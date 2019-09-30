@@ -59,6 +59,54 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  name: webtools-deployment
+  labels:
+    app: webtools
+spec:
+  selector:
+    matchLabels:
+      app: webtools
+  template:
+    metadata:
+      labels:
+        app: webtools
+    spec:
+      containers:
+        - name: webtools
+          image: quay.io/10sr/webtools:v0.0.9
+          args:
+            - sh
+            - /configmap_files/webtools_command.sh
+          env:
+            - name: REDIS_SERVICE_NAME
+              value: $(REDIS_SERVICE_NAME)
+            - name: MINIO_SERVICE_NAME
+              value: $(MINIO_SERVICE_NAME)
+            - name: WEBTOOLS_AWS_SECRET_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: secret-files
+                  key: minio_secret_key
+            - name: WEBTOOLS_SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: secret-files
+                  key: webtools_secret_key
+          envFrom:
+            - configMapRef:
+                name: configmap-for-env
+          volumeMounts:
+            - name: configmap-files-volume
+              mountPath: /configmap_files
+      volumes:
+        - name: configmap-files-volume
+          configMap:
+            name: configmap-files
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
   name: minio-deployment
   labels:
     app: minio
@@ -80,17 +128,18 @@ spec:
             - /export
             - --address
             - 0.0.0.0:9000
-          ports:
-            - containerPort: 9000
-              hostPort: 9000
+          # ports:
+          #   - containerPort: 9000
+          #     hostPort: 9000
           env:
             - name: MINIO_SECRET_KEY
               valueFrom:
                 secretKeyRef:
-                  name: secret-from-file
+                  name: secret-files
                   key: minio_secret_key
-            - name: MINIO_ACCESS_KEY
-              value: 17C2C6DB
+          envFrom:
+            - configMapRef:
+                name: configmap-for-env
           volumeMounts:
             - name: export-hostpath
               mountPath: /export

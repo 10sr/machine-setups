@@ -1,7 +1,7 @@
 #!/bin/sh
 set -eux
 
-WEBTOOLS_SETTINGS_TOML=/settings.toml
+export WEBTOOLS_SETTINGS_TOML=/settings.toml
 
 envsubst \
     <$WEBTOOLS_SETTINGS_TOML_ENVSUBST \
@@ -11,6 +11,6 @@ env
 
 cat $WEBTOOLS_SETTINGS_TOML
 
-while true; do sleep 1000; done
+# while true; do sleep 1000; done
 
-#exec make migrate collectstatic gunicorn
+exec make migrate collectstatic gunicorn

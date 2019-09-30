@@ -134,7 +134,7 @@
             - "proxy_set_header X-Forwarded-Proto $scheme"
             - "proxy_set_header X-Real-IP $remote_addr"
         - path: /webtools
-          port: 7700
+          port: 30770
           additional_directives:
             - "client_max_body_size 10M"
             - "proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for"
@@ -143,7 +143,7 @@
             - "proxy_set_header X-Forwarded-Proto $scheme"
             - "proxy_set_header X-Real-IP $remote_addr"
         - path: /bucket-webtools-static
-          port: 9700
+          port: 30009
       nginx_ssl_host_proxies:
         - name: "nc.{{ _domain_name }}"
           port: 8888
@@ -238,7 +238,7 @@
           state: started
           command: docker-compose up --build
         mastodon0:
-          state: started
+          state: stopped
           command: sh ./up.sh
         nextcloud0:
           state: started
@@ -262,7 +262,7 @@
           state: started
           command: docker-compose up --build
         webtools0:
-          state: started
+          state: stopped
           command: docker-compose up --build
 
     - role: mastodon_nginx_proxy

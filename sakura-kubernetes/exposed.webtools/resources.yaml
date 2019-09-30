@@ -79,6 +79,7 @@ spec:
   selector:
     matchLabels:
       app: webtools
+  replicas: 2
   template:
     metadata:
       labels:
@@ -141,9 +142,6 @@ spec:
             - /export
             - --address
             - 0.0.0.0:9000
-          # ports:
-          #   - containerPort: 9000
-          #     hostPort: 9000
           env:
             - name: MINIO_SECRET_KEY
               valueFrom:

@@ -13,14 +13,19 @@ commonLabels:
 namePrefix: prom-
 
 configMapGenerator:
-  - name: files-configmap
+  - name: configmap-files
     files:
       - files/alertmanager.yml.envsubst
       - files/nginx.conf
-      - files/ngins_cmd.sh
+      - files/nginx_cmd.sh
+      - files/prom_envsubst.sh
       - files/prometheus.yml.envsubst
       - files/rules.yml
       - files/up.sh
+secretGenerator:
+  - name: secret-files
+    files:
+      - secrets/node_exporter_password
 
 vars:
   - name: PROM_SERVICE_NAME
@@ -30,3 +35,10 @@ vars:
       name: prom-service
     fieldref:
       fieldpath: metadata.name
+  # - name: AM_SERVICE_NAME
+  #   objref:
+  #     apiVersion: v1
+  #     kind: Service
+  #     name: am-service
+  #   fieldref:
+  #     fieldpath: metadata.name

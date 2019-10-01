@@ -7,6 +7,8 @@ spec:
   type: ClusterIP
   selector:
     app: prom
+  ports:
+    - port: 9090
 
 ---
 apiVersion: apps/v1
@@ -20,26 +22,67 @@ spec:
   selector:
     matchLabels:
       app: prom
+  replicas: 1
   template:
     metadata:
       labels:
         app: prom
     spec:
+      initContainers:
+        - name: envsubst
+          # Prepare own image?
+          image: dibi/envsubst
+          command:
+            - sh
+          args:
+            - /configmap_files/prom_envsubst.sh
+            - /configmap_files/prometheus.yml.envsubst
+            - /configfile/prometheus.yml
+          env:
+            - name: NODE_EXPORTER_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: secret-files
+                  key: node_exporter_password
+            - name: NODE_EXPORTER_HOSTNAME
+              value: prometheus-node-exporter.3ends.info
+            - name: AM_SERVICE_NAME
+              value: am
+              # value: $(AM_SERVICE_NAME)
+            - name: RULE_FILE
+              value: /configmap_files/rules.yml
+          volumeMounts:
+            - name: configmap-files-volume
+              mountPath: /configmap_files
+            - name: configfile-volume
+              mountPath: /configfile
       containers:
         - name: prom
           image: prom/prometheus:v2.8.0
-          user: "1000"
+          # user: "1000"
           args:
-            - --config.file=/etc/prometheus/prometheus.yml
-            - --storage.tsdb.path=/prometheus
+            - --config.file=/configfile/prometheus.yml
+            - --storage.tsdb.path=/storage
             - --web.console.libraries=/etc/prometheus/console_libraries
             - --web.console.templates=/etc/prometheus/consoles
             - --web.external-url=https://pt.3ends.info/pt/
             - --web.route-prefix=/pt/
           volumeMounts:
-            - name: files-volume
-              mountPath: /files_volume
+            - name: storage
+              mountPath: /storage
+            # - name: configmap-files-volume
+            #   mountPath: /configmap_files
+            - name: configfile-volume
+              mountPath: /configfile
       volumes:
-        - name: files-volume
+        # - name: storage
+        #   hostPath:
+        #     path: /var/lib/data/kubernetes-hostpath/exposed.prom/prom/storage
+        #     type: Directory
+        - name: storage  # OK to remove on restart?
+          emptyDir: {}
+        - name: configmap-files-volume
           configMap:
-            name: files-configmap
+            name: configmap-files
+        - name: configfile-volume
+          emptyDir: {}

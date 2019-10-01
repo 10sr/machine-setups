@@ -15,7 +15,7 @@ decrypt-remote: scp
 $(manifests): scp
 	ssh -t $(target) kubectl apply -f $(remote_dir)/$@.yaml
 
-kustomize_targets := kexample exposed.webtools
+kustomize_targets := kexample exposed.webtools exposed.prom
 
 $(kustomize_targets): scp decrypt-remote
 	ssh -t $(target) kubectl apply --kustomize $(remote_dir)/$@

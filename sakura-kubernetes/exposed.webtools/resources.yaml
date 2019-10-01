@@ -85,13 +85,15 @@ spec:
       labels:
         app: webtools
     spec:
-      containers:
-        - name: webtools
+      initContainers:
+        - name: prepare-settings-toml
           image: quay.io/10sr/webtools:v0.0.9
           args:
             - sh
-            - /configmap_files/webtools_command.sh
+            - /configmap_files/webtools_init.sh
           env:
+            - name: WEBTOOLS_SETTINGS_TOML
+              value: /init_volume/settings.toml
             - name: REDIS_SERVICE_NAME
               value: $(REDIS_SERVICE_NAME)
             - name: MINIO_SERVICE_NAME
@@ -112,10 +114,28 @@ spec:
           volumeMounts:
             - name: configmap-files-volume
               mountPath: /configmap_files
+            - name: init-volume
+              mountPath: /init_volume
+      containers:
+        - name: webtools
+          image: quay.io/10sr/webtools:v0.0.9
+          args:
+            - make
+            - migrate
+            - collectstatic
+            - gunicorn
+          env:
+            - name: WEBTOOLS_SETTINGS_TOML
+              value: /init_volume/settings.toml
+          volumeMounts:
+            - name: init-volume
+              mountPath: /init_volume
       volumes:
         - name: configmap-files-volume
           configMap:
             name: configmap-files
+        - name: init-volume
+          emptyDir: {}
 
 ---
 apiVersion: apps/v1

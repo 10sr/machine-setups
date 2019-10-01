@@ -18,7 +18,8 @@ configMapGenerator:
       - files/nginx_cmd.sh
       - files/nginx_index.html
       - files/settings.toml.envsubst
-      - files/webtools_command.sh
+      # - files/webtools_command.sh
+      - files/webtools_init.sh
   - name: configmap-for-env
     literals:
       - MINIO_ACCESS_KEY=17C2C6DB

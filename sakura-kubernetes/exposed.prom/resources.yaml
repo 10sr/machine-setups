@@ -11,6 +11,18 @@ spec:
     - port: 9090
 
 ---
+apiVersion: v1
+kind: Service
+metadata:
+  name: am-service
+spec:
+  type: ClusterIP
+  selector:
+    app: am
+  ports:
+    - port: 9093
+
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -67,6 +79,75 @@ spec:
             - --web.console.templates=/etc/prometheus/consoles
             - --web.external-url=https://pt.3ends.info/pt/
             - --web.route-prefix=/pt/
+          volumeMounts:
+            - name: storage-volume
+              mountPath: /storage
+            - name: configfile-volume
+              mountPath: /configfile
+      volumes:
+        # - name: storage-volume
+        #   hostPath:
+        #     path: /var/lib/data/kubernetes-hostpath/exposed.prom/prom/storage
+        #     type: Directory
+        - name: storage-volume  # OK to remove on restart?
+          emptyDir: {}
+        - name: configmap-files-volume
+          configMap:
+            name: configmap-files
+        - name: configfile-volume
+          emptyDir: {}
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: am-deployment
+  labels:
+    app: am
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: am
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: am
+    spec:
+      initContainers:
+        - name: envsubst
+          # Prepare own image?
+          image: dibi/envsubst
+          command:
+            - sh
+          args:
+            - /configmap_files/am_envsubst.sh
+            - /configmap_files/alertmanager.yml.envsubst
+            - /configfile/alertmanager.yml
+          env:
+            - name: AM_SMTP_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: secret-files
+                  key: am_smtp_password
+          envFrom:
+            - configMapRef:
+                name: configmap-for-env
+          volumeMounts:
+            - name: configmap-files-volume
+              mountPath: /configmap_files
+            - name: configfile-volume
+              mountPath: /configfile
+      containers:
+        - name: am
+          image: prom/alertmanager:v0.16.2
+          # user: "1000"
+          args:
+            - --config.file=/configfile/alertmanager.yml
+            - --storage.path=/storage
+            - --web.external-url=https://pt.3ends.info/am/
+            - --web.route-prefix=/am/
           volumeMounts:
             - name: storage-volume
               mountPath: /storage

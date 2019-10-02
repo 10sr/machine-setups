@@ -15,17 +15,26 @@ namePrefix: prom-
 configMapGenerator:
   - name: configmap-files
     files:
+      - files/prometheus.yml.envsubst
       - files/alertmanager.yml.envsubst
+      - files/prom_envsubst.sh
+      - files/am_envsubst.sh
       - files/nginx.conf
       - files/nginx_cmd.sh
-      - files/prom_envsubst.sh
-      - files/prometheus.yml.envsubst
       - files/rules.yml
-      - files/up.sh
+  - name: configmap-for-env
+    literals:
+      - AM_EMAIL_TO=8.slashes@gmail.com
+      - AM_EMAIL_FROM=postmaster@m.3ends.info
+      - AM_SMTP_SMARTHOST=smtp.mailgun.org:587
+      - AM_SMTP_USERNAME=postmaster@m.3ends.info
+      - NODE_EXPORTER_HOSTNAME=prometheus-node-exporter.3ends.info
+      - RULE_FILE=/configmap_files/rules.yml
 secretGenerator:
   - name: secret-files
     files:
       - secrets/node_exporter_password
+      - secrets/am_smtp_password
 
 vars:
   - name: PROM_SERVICE_NAME

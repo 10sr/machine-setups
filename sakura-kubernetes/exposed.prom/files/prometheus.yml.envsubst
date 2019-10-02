@@ -14,10 +14,10 @@ alerting:
       path_prefix: /am/
       static_configs:
         - targets:
-            - am:9093
+            - $AM_SERVICE_NAME:9093
 
 rule_files:
-  - rules.yml
+  - $RULE_FILE
 
 # A scrape configuration containing exactly one endpoint to scrape:
 # Here it's Prometheus itself.
@@ -36,7 +36,7 @@ scrape_configs:
     metrics_path: /am/metrics
     static_configs:
       - targets:
-          - am:9093
+          - $AM_SERVICE_NAME:9093
 
   # https://prometheus.io/docs/guides/node-exporter/
   - job_name: node
@@ -47,4 +47,4 @@ scrape_configs:
       password: $NODE_EXPORTER_PASSWORD
     static_configs:
       - targets:
-          - prometheus-node-exporter.3ends.info:443
+          - $NODE_EXPORTER_HOSTNAME:443

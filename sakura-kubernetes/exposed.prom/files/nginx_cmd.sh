@@ -1,12 +1,12 @@
 #!/bin/sh
 set -eux
 
-# envsubst \
-    #   '$NGINX_SERVER_NAME' \
-    #   </etc/nginx/nginx.conf.envsubst \
-    #   >/etc/nginx/nginx.conf
+in=$1
+out=/etc/nginx/nginx.conf
 
-# Currently there are no substitution
-cp -v /etc/nginx/nginx.conf /etc/nginx/nginx.conf
+envsubst \
+    '$PROM_SERVICE_NAME $AM_SERVICE_NAME' \
+    <$in \
+    >$out
 
 exec nginx -g 'daemon off;'

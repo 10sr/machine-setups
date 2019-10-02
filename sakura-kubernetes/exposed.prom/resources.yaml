@@ -95,6 +95,8 @@ spec:
           volumeMounts:
             - name: storage-volume
               mountPath: /storage
+            - name: configmap-files-volume
+              mountPath: /configmap_files
             - name: configfile-volume
               mountPath: /configfile
       volumes:

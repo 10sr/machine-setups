@@ -30,7 +30,8 @@ configMapGenerator:
       - AM_SMTP_USERNAME=postmaster@m.3ends.info
       - NODE_EXPORTER_HOSTNAME=prometheus-node-exporter.3ends.info
       - RULE_FILE=/configmap_files/rules.yml
-      - GF_SERVER_ROOT_URL=https://pt.3ends.info/gf
+      #- GF_SERVER_ROOT_URL=https://pt.3ends.info/gf
+      - GF_SECURITY_COOKIE_SECURE=true
 secretGenerator:
   - name: secret-files
     files:

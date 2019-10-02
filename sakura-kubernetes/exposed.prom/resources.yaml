@@ -28,11 +28,12 @@ kind: Service
 metadata:
   name: grafana-service
 spec:
-  type: ClusterIP
+  type: NodePort
   selector:
     app: grafana
   ports:
     - port: 3000
+      nodePort: 30003
 
 ---
 apiVersion: v1

@@ -46,6 +46,7 @@ http {
       proxy_pass http://$AM_SERVICE_NAME:9093;
     }
     location /{
+        absolute_redirect off;
         return 303 /pt;
     }
   }

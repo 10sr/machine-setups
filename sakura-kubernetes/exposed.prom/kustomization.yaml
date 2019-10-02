@@ -44,10 +44,10 @@ vars:
       name: prom-service
     fieldref:
       fieldpath: metadata.name
-  # - name: AM_SERVICE_NAME
-  #   objref:
-  #     apiVersion: v1
-  #     kind: Service
-  #     name: am-service
-  #   fieldref:
-  #     fieldpath: metadata.name
+  - name: AM_SERVICE_NAME
+    objref:
+      apiVersion: v1
+      kind: Service
+      name: am-service
+    fieldref:
+      fieldpath: metadata.name

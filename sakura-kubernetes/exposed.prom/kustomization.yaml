@@ -19,7 +19,7 @@ configMapGenerator:
       - files/alertmanager.yml.envsubst
       - files/prom_envsubst.sh
       - files/am_envsubst.sh
-      - files/nginx.conf
+      - files/nginx.conf.envsubst
       - files/nginx_cmd.sh
       - files/rules.yml
   - name: configmap-for-env

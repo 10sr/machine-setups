@@ -26,6 +26,18 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
+  name: grafana-service
+spec:
+  type: ClusterIP
+  selector:
+    app: grafana
+  ports:
+    - port: 3000
+
+---
+apiVersion: v1
+kind: Service
+metadata:
   name: nginx-nodeport
 spec:
   type: NodePort
@@ -212,6 +224,8 @@ spec:
               value: $(PROM_SERVICE_NAME)
             - name: AM_SERVICE_NAME
               value: $(AM_SERVICE_NAME)
+            - name: GRAFANA_SERVICE_NAME
+              value: $(GRAFANA_SERVICE_NAME)
           volumeMounts:
             - name: configmap-files-volume
               mountPath: /configmap_files
@@ -219,3 +233,42 @@ spec:
         - name: configmap-files-volume
           configMap:
             name: configmap-files
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: grafana-deployment
+  labels:
+    app: grafana
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: grafana
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: grafana
+    spec:
+      containers:
+        - name: grafana
+          image: grafana/grafana
+          env:
+            - name: GF_SECURITY_ADMIN_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: secret-files
+                  key: grafana_security_admin_password
+          envFrom:
+            - configMapRef:
+                name: configmap-for-env
+      # TODO: Add data volume
+      #     volumeMounts:
+      #       - name: configmap-files-volume
+      #         mountPath: /configmap_files
+      # volumes:
+      #   - name: configmap-files-volume
+      #     configMap:
+      #       name: configmap-files

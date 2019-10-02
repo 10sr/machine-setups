@@ -45,6 +45,9 @@ http {
       # proxy_set_header X-Real-IP $remote_addr;
       proxy_pass http://$AM_SERVICE_NAME:9093;
     }
+    location /gf {
+      proxy_pass http://$GRAFANA_SERVICE_NAME:3000;
+    }
     location /{
         absolute_redirect off;
         return 303 /pt;

@@ -68,18 +68,16 @@ spec:
             - --web.external-url=https://pt.3ends.info/pt/
             - --web.route-prefix=/pt/
           volumeMounts:
-            - name: storage
+            - name: storage-volume
               mountPath: /storage
-            # - name: configmap-files-volume
-            #   mountPath: /configmap_files
             - name: configfile-volume
               mountPath: /configfile
       volumes:
-        # - name: storage
+        # - name: storage-volume
         #   hostPath:
         #     path: /var/lib/data/kubernetes-hostpath/exposed.prom/prom/storage
         #     type: Directory
-        - name: storage  # OK to remove on restart?
+        - name: storage-volume  # OK to remove on restart?
           emptyDir: {}
         - name: configmap-files-volume
           configMap:

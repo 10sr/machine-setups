@@ -30,11 +30,14 @@ configMapGenerator:
       - AM_SMTP_USERNAME=postmaster@m.3ends.info
       - NODE_EXPORTER_HOSTNAME=prometheus-node-exporter.3ends.info
       - RULE_FILE=/configmap_files/rules.yml
+      #- GF_SERVER_ROOT_URL=https://pt.3ends.info/gf
+      - GF_SECURITY_COOKIE_SECURE=true
 secretGenerator:
   - name: secret-files
     files:
       - secrets/node_exporter_password
       - secrets/am_smtp_password
+      - secrets/grafana_security_admin_password
 
 vars:
   - name: PROM_SERVICE_NAME
@@ -49,5 +52,12 @@ vars:
       apiVersion: v1
       kind: Service
       name: am-service
+    fieldref:
+      fieldpath: metadata.name
+  - name: GRAFANA_SERVICE_NAME
+    objref:
+      apiVersion: v1
+      kind: Service
+      name: grafana-service
     fieldref:
       fieldpath: metadata.name

@@ -5,7 +5,7 @@ in=$1
 out=/etc/nginx/nginx.conf
 
 envsubst \
-    '$PROM_SERVICE_NAME $AM_SERVICE_NAME' \
+    '$PROM_SERVICE_NAME $AM_SERVICE_NAME $GRAFANA_SERVICE_NAME' \
     <$in \
     >$out
 

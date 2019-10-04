@@ -79,7 +79,7 @@ spec:
   selector:
     matchLabels:
       app: webtools
-  replicas: 2
+  replicas: 1
   template:
     metadata:
       labels:

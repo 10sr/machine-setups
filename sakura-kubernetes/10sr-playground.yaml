@@ -125,6 +125,10 @@ spec:
             httpGet:
               path: /
               port: 80
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 80
           volumeMounts:
             - name: nginx-configmap-volume
               mountPath: /configmap_volume

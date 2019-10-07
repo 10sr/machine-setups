@@ -121,6 +121,10 @@ spec:
           args: [ "sh", "/configmap_volume/nginx_cmd_sh" ]
           ports:
             - containerPort: 80
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 80
           volumeMounts:
             - name: nginx-configmap-volume
               mountPath: /configmap_volume

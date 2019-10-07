@@ -70,10 +70,9 @@ spec:
       initContainers:
         - name: envsubst
           # Prepare own image?
-          image: dibi/envsubst
-          command:
-            - sh
+          image: iankoulski/envsubst
           args:
+            - sh
             - /configmap_files/prom_envsubst.sh
             - /configmap_files/prometheus.yml.envsubst
             - /configfile/prometheus.yml
@@ -146,10 +145,9 @@ spec:
       initContainers:
         - name: envsubst
           # Prepare own image?
-          image: dibi/envsubst
-          command:
-            - sh
+          image: iankoulski/envsubst
           args:
+            - sh
             - /configmap_files/am_envsubst.sh
             - /configmap_files/alertmanager.yml.envsubst
             - /configfile/alertmanager.yml

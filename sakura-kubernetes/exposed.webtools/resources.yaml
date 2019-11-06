@@ -87,7 +87,7 @@ spec:
     spec:
       initContainers:
         - name: prepare-settings-toml
-          image: quay.io/10sr/webtools:v0.0.10
+          image: quay.io/10sr/webtools:v0.0.11
           args:
             - sh
             - /configmap_files/webtools_init.sh
@@ -118,7 +118,7 @@ spec:
               mountPath: /init_volume
       containers:
         - name: webtools
-          image: quay.io/10sr/webtools:v0.0.10
+          image: quay.io/10sr/webtools:v0.0.11
           env:
             - name: WEBTOOLS_SETTINGS_TOML
               value: /init_volume/settings.toml

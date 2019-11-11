@@ -43,6 +43,8 @@ ISSUE_INDEXER_PATH = /data/gitea/indexers/issues.bleve
 PROVIDER_CONFIG = /data/gitea/sessions
 PROVIDER        = file
 COOKIE_SECURE   = true
+GC_INTERVAL_TIME = 7776000  # 60 * 60 * 60 * 24 * 90 = 90 days
+SESSION_LIFE_TIME = 7776000  # 60 * 60 * 60 * 24 * 90 = 90 days
 
 [picture]
 AVATAR_UPLOAD_PATH      = /data/gitea/avatars

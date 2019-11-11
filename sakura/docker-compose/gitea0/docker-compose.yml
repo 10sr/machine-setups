@@ -12,7 +12,10 @@ services:
       USER_UID: 1000
       USER_GID: 1000
       DISABLE_REGISTRATION: "true"
+    env_file:
+      - ../gitea0.env
     volumes:
+      - "./app.ini.envsubst:/app.ini.envsubst:ro"
       - "./start.sh:/start.sh:ro"
       - "/var/lib/data/docker/gitea0/data:/data"
     command: sh /start.sh

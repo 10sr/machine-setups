@@ -233,6 +233,11 @@
           MINIO_ACCESS_KEY: 66aa7319
           MINIO_SECRET_KEY: "{{ _vault.webtools_minio_secret_key }}"
           # MINIO_DOMAIN: "{{ _domain_name }}"
+        gitea0:
+          SERVER_LFS_JWT_SECRET: "{{ _vault.gitea_server_lfs_jwt_secret }}"
+          SECURITY_SECRET_KEY: "{{ _vault.gitea_security_secret_key }}"
+          SECURITY_INTERNAL_TOKEN: "{{ _vault.gitea_security_internal_token }}"
+          OAUTH2_JWT_SECRET: "{{ _vault.gitea_oauth2_jwt_secret }}"
       docker_pm2:
         10sr_bot0:
           state: started

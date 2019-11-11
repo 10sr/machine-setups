@@ -1,20 +1,14 @@
 #!/bin/sh
-set -eu
+set -eux
 
-# conf=/data/gogs/conf/app.ini
-# test -f $conf
+conf_envsubst=/app.ini.envsubst
+conf=/data/gitea/conf/app.ini
+test -f $conf_envsubst
 
-# if ! grep ^LANGS $conf
-# then
-#     cat <<'__EOC__' >>$conf
+# Is there a way to assert variables are defined?
+envsubst \
+    '$SERVER_LFS_JWT_SECRET $SECURITY_SECRET_KEY $SECURITY_INTERNAL_TOKEN $OAUTH2_JWT_SECRET' \
+    <$conf_envsubst >$conf
 
-# # Disable languages other than english
-# # https://gogs.io/docs/features/i18n
-# [i18n]
-# LANGS = en-US
-# NAMES = English
-# __EOC__
-# fi
 
-# Run original CMD
 exec /bin/s6-svscan /etc/s6/

@@ -2,6 +2,9 @@
 # TODO: Inject conf COOKIE_SECURE: true
 version: '3'
 services:
+  redis:
+    image: redis
+
   app:
     image: gitea/gitea:1.8
     ports:
@@ -19,3 +22,5 @@ services:
       - "./start.sh:/start.sh:ro"
       - "/var/lib/data/docker/gitea0/data:/data"
     command: sh /start.sh
+    depends_on:
+      - redis

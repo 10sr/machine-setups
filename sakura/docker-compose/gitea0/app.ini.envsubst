@@ -40,8 +40,8 @@ SSL_MODE = disable
 ISSUE_INDEXER_PATH = /data/gitea/indexers/issues.bleve
 
 [session]
-PROVIDER_CONFIG = /data/gitea/sessions
-PROVIDER        = file
+PROVIDER_CONFIG = network=tcp,addr=redis:6379,db=0,pool_size=20,idle_timeout=180
+PROVIDER        = redis
 COOKIE_SECURE   = true
 GC_INTERVAL_TIME = 7776000  # 60 * 60 * 24 * 90 = 90 days
 SESSION_LIFE_TIME = 7776000  # 60 * 60 * 24 * 90 = 90 days

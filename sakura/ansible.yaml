@@ -375,6 +375,18 @@
       vars:
         kubernetes_ubuntu_codename: "{{ _ubuntu_codename }}"
 
+    - role: gitea_ssh_passthrough
+      when: no
+      vars:
+        user:
+          name: gitea
+          group_name: gitea
+          uid: 987
+          gid: 987
+          home: /home/gitea
+        container_ssh_port: 222
+        container_volume_path: /var/lib/data/docker/gitea0/data
+
 
   post_tasks:
     - file:

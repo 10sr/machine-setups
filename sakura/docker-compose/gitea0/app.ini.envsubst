@@ -2,7 +2,7 @@
 
 APP_NAME = Gitea: Git with a cup of tea
 RUN_MODE = prod
-RUN_USER = git
+RUN_USER = gitea
 
 [repository]
 ROOT = /data/git/repositories

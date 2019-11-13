@@ -1,0 +1,5 @@
+---
+default:
+  hosts:
+    fugen01:
+      ansible_host: tk2-217-18018.vs.sakura.ne.jp

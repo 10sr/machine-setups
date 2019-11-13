@@ -1,0 +1,10 @@
+---
+- name: Setup fugen
+  hosts: default
+  vars:
+    _hoe: fue
+
+  pre_tasks:
+    - name: debug
+      debug:
+        msg: "{{ _hoe }} {{ inventory_hostname }} {{ ansible_host }}"

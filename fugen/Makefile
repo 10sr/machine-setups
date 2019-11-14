@@ -5,7 +5,7 @@ default: help
 .PHONY: help check play facts hosts install check-ansible-version
 
 help:
-	@echo sakura ansible | (figlet || cat) | (lolcat || cat)
+	@echo fugen ansible | (figlet || cat) | (lolcat || cat)
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | \
 		awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
@@ -34,7 +34,7 @@ play: .venv check-ansible-version  ## Invoke ansible-playbook
 	${pipenv} run env $(env_this_revision) ansible-playbook -vv ansible.yaml
 
 facts: .venv  ## Show fact
-	${pipenv} run ansible -m setup sakura
+	${pipenv} run ansible -m setup default
 
 hosts:
 	${pipenv} run ansible all --list-hosts

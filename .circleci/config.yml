@@ -40,7 +40,9 @@ commands:
           environment:
             TERM: dumb
           working_directory: sakura/jenkins-jobs
-          command: make test
+          # Disable temporarily: currently jenkins-jobs is not used
+          # command: make test
+          command: "true"
 
   test_golang:
     parameters:

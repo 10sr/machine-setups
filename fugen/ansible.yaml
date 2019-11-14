@@ -5,6 +5,40 @@
     _hoe: fue
 
   pre_tasks:
+    - name: Include all vault variables
+      include_vars:
+        dir: ./vault/
+        name: _vault
+      no_log: yes
+
+    - name: Set ansible_become_pass
+      set_fact:
+        ansible_become_pass: "{{ _vault.ansible_become_pass }}"
+        cachable: yes
+      no_log: yes
+
     - name: debug
       debug:
         msg: "{{ _hoe }} {{ inventory_hostname }} {{ ansible_host }}"
+
+    - name: Add nignx repo
+      yum_repository:
+        name: nginx
+        description: Nginx repository
+        # TODO: Parametrize os version
+        baseurl: http://nginx.org/packages/mainline/centos/7/$basearch/
+        enabled: no
+        gpgcheck: no  # TODO: Fix?
+      become: yes
+
+    - name: Install nginx
+      yum:
+        name: nginx
+        enablerepo: nginx
+      become: yes
+
+
+    - name: Start nginx
+      service:
+        name: nginx
+      become: yes

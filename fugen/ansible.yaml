@@ -7,8 +7,12 @@
       conn_name: eth1
       ifname: eth1
       gw4: 172.16.100.1
-      ip_v4: 172.16.100.100
       subnetmask_prefix: 24
+    internal_hosts:
+      # Keys should be ansible target hosts (inventory_hostname)
+      fugen01:
+        name: fugen01.3ends.info
+        ipv4: 172.16.100.100
 
   pre_tasks:
     - name: Include all vault variables
@@ -25,7 +29,7 @@
 
     - name: debug
       debug:
-        msg: "{{ _hoe }} {{ inventory_hostname }} {{ ansible_host }}"
+        msg: "{{ _hoe }} {{ inventory_hostname }} {{ ansible_host }} {{ internal_hosts[inventory_hostname].name }}"
 
     - name: Add nignx repo
       yum_repository:
@@ -73,7 +77,7 @@
         conn_name: "{{ internal_network.conn_name }}"
         ifname: "{{ internal_network.ifname }}"
         type: ethernet
-        ip4: "{{ internal_network.ip_v4 }}/{{ internal_network.subnetmask_prefix }}"
+        ip4: "{{ internal_hosts[inventory_hostname].ipv4 }}/{{ internal_network.subnetmask_prefix }}"
         gw4: "{{ internal_network.gw4 }}"
         state: present
         autoconnect: yes

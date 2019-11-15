@@ -95,4 +95,5 @@
       become: yes
 
   roles:
+    # TODO: Install to only one host
     - role: cloudera_manager

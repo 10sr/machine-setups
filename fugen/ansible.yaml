@@ -61,6 +61,7 @@
         enabled: no
       become: yes
 
+    # internal_network
     - name: Install packages for nmcli module
       package:
         name:
@@ -92,3 +93,6 @@
         replace: 'BOOTPROTO=static'
         backup: yes
       become: yes
+
+  roles:
+    - role: cloudera_manager

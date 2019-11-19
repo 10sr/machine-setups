@@ -1,0 +1,32 @@
+---
+- name: Install packages for nmcli module
+  package:
+    name:
+      - NetworkManager-glib
+      - nm-connection-editor
+      - libsemanage-python
+      - policycoreutils-python
+  become: yes
+
+  # This modify network-script BOOTPROTO=static back to BOOTPROTO=dhcp?
+  # TODO: This task always flag up changed?
+- name: Configure internal network
+  nmcli:
+    conn_name: "{{ internal_network.conn_name }}"
+    ifname: "{{ internal_network.ifname }}"
+    type: ethernet
+    ip4: "{{ internal_hosts[inventory_hostname].ipv4 }}/{{ internal_network.subnetmask_prefix }}"
+    gw4: "{{ internal_network.gw4 }}"
+    state: present
+    autoconnect: yes
+  become: yes
+
+  # TODO: Restart network service
+  # https://github.com/ansible/ansible/issues/36615#issuecomment-403239275
+- name: ansible bug fix for static ip
+  replace:
+    path: /etc/sysconfig/network-scripts/ifcfg-{{ internal_network.ifname }}
+    regexp: 'BOOTPROTO=dhcp'
+    replace: 'BOOTPROTO=static'
+    backup: yes
+  become: yes

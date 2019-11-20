@@ -1,6 +1,6 @@
 ---
-- name: Setup fugen
-  hosts: cm
+- name: Base Configurations
+  hosts: default
   vars:
     _internal_network:
       conn_name: eth1
@@ -66,6 +66,23 @@
       vars:
         internal_network: "{{ _internal_network }}"
         internal_hosts: "{{ _internal_hosts }}"
-    # TODO: Install to only one host
 
+
+- name: Cloudera Manager
+  hosts: cm
+
+  pre_tasks:
+    - name: Include all vault variables
+      include_vars:
+        dir: ./vault/
+        name: _vault
+      no_log: yes
+
+    - name: Set ansible_become_pass
+      set_fact:
+        ansible_become_pass: "{{ _vault.ansible_become_pass }}"
+        cachable: yes
+      no_log: yes
+
+  roles:
     - role: cloudera_manager

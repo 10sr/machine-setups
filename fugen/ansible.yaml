@@ -67,6 +67,10 @@
         internal_network: "{{ _internal_network }}"
         internal_hosts: "{{ _internal_hosts }}"
 
+    # - role: hosts
+    #   vars:
+    #     hosts: "{{ _internal_hosts }}"
+
 
 - name: Cloudera Manager
   hosts: cm

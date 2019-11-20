@@ -15,7 +15,7 @@
     conn_name: "{{ internal_network.conn_name }}"
     ifname: "{{ internal_network.ifname }}"
     type: ethernet
-    ip4: "{{ internal_hosts[inventory_hostname].ipv4 }}/{{ internal_network.subnetmask_prefix }}"
+    ip4: "{{ internal_network_ip4 }}/{{ internal_network.subnetmask_prefix }}"
     gw4: "{{ internal_network.gw4 }}"
     state: present
     autoconnect: yes

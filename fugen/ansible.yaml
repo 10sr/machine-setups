@@ -65,7 +65,7 @@
     - role: internal_network
       vars:
         internal_network: "{{ _internal_network }}"
-        internal_hosts: "{{ _internal_hosts }}"
+        internal_network_ip4: "{{ _internal_hosts[inventory_hostname].ipv4 }}"
 
     # - role: hosts
     #   vars:

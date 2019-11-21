@@ -23,8 +23,8 @@
   # TODO: is it ok?
   changed_when: '"do exist" not in __ret.Exists'
 
-  # TODO: Restart network service
   # https://github.com/ansible/ansible/issues/36615#issuecomment-403239275
+  # TODO: Restart network service
 - name: ansible bug fix for static ip
   replace:
     path: /etc/sysconfig/network-scripts/ifcfg-{{ internal_network.ifname }}

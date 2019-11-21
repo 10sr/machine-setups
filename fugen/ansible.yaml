@@ -67,9 +67,9 @@
         internal_network: "{{ _internal_network }}"
         internal_network_ip4: "{{ _internal_hosts[inventory_hostname].ipv4 }}"
 
-    # - role: hosts
-    #   vars:
-    #     hosts: "{{ _internal_hosts }}"
+    - role: etc_hosts
+      vars:
+        etc_hosts_hosts: "{{ _internal_hosts }}"
 
 
 - name: Cloudera Manager

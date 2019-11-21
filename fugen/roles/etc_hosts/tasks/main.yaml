@@ -1,0 +1,12 @@
+---
+- name: Update /etc/hosts
+  blockinfile:
+    path: /etc/hosts
+    marker: "# {mark} Managed by machine-setups/fugen"
+    block: |
+      {% for k, v in etc_hosts_hosts.items() %}
+      {{ v.ipv4 }} {{ v.name }}
+      {% endfor %}
+    insertafter: EOF
+  become: yes
+    

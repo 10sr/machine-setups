@@ -9,7 +9,6 @@
   become: yes
 
   # This modify network-script BOOTPROTO=static back to BOOTPROTO=dhcp?
-  # TODO: This task always flag up changed?
 - name: Configure internal network
   nmcli:
     conn_name: "{{ internal_network.conn_name }}"
@@ -20,6 +19,9 @@
     state: present
     autoconnect: yes
   become: yes
+  register: __ret
+  # TODO: is it ok?
+  changed_when: '"do exist" not in __ret.Exists'
 
   # TODO: Restart network service
   # https://github.com/ansible/ansible/issues/36615#issuecomment-403239275

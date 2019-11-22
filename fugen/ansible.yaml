@@ -73,7 +73,10 @@
 
 
 - name: Cloudera Manager
-  hosts: cm
+  # Use name instead of "role", because there are very few hosts
+  # and one host do many things
+  hosts: fugen01
+  # hosts: cm
 
   pre_tasks:
     - name: Include all vault variables
@@ -89,4 +92,5 @@
       no_log: yes
 
   roles:
+    - role: cdh-mariadb
     - role: cloudera_manager

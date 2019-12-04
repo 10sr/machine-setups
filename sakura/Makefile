@@ -6,8 +6,7 @@ default: help
 
 help:
 	@echo sakura ansible | (figlet || cat) | (lolcat || cat)
-	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | \
-		awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
+	@awk 'BEGIN {FS = ":.*?## "}; /^[a-zA-Z_-]+:.*?##/{printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}' $(MAKEFILE_LIST)
 
 
 THIS_REVISION_ID := $(shell git describe --all --always --long --dirty)

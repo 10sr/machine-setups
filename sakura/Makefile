@@ -61,5 +61,5 @@ check-ansible-version:
 
 molecule_role_targets := sosreport
 
-molecule-test:
+molecule-test:  ## Run molecule role tests
 	set -eux; for role in $(molecule_role_targets); do (cd roles/$$role && ${pipenv} run molecule test); done

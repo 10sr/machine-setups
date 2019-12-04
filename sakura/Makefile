@@ -30,6 +30,9 @@ check: ansible-lint molecule-test  ## Run check
 install:  ## Install depending packages
 	${pipenv} install
 
+install-dev:
+	${pipenv} install --dev
+
 play: .venv check-ansible-version  ## Invoke ansible-playbook
 	${pipenv} run env $(env_this_revision) ansible-playbook -vv ansible.yaml
 

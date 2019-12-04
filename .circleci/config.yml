@@ -24,7 +24,7 @@ commands:
       - run:
           name: Install dependencies (<< parameters.directory >>)
           working_directory: << parameters.directory >>
-          command: make install
+          command: make install-dev
       - run:
           name: Run tests with python environment (<< parameters.directory >>)
           working_directory: << parameters.directory >>

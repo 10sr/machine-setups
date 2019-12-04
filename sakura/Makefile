@@ -22,7 +22,7 @@ env_this_revision := \
 ANSIBLE_INSTALLED_VERSION := $(shell $(pipenv) run ansible --version | awk '/^ansible/ {print $$2 }')
 
 
-check: ansible-lint molecule-test  ## Run check
+check: ansible-lint  ## Run check
 
 .venv:
 	${pipenv} install

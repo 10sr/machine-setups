@@ -53,3 +53,11 @@ ansible-lint: .venv  ## Run ansible-lint
 
 check-ansible-version:
 	grep '^ansible = "==$(ANSIBLE_INSTALLED_VERSION)"$$' Pipfile
+
+
+# Molecule
+
+molecule_role_targets := sosreport
+
+molecule-test:
+	set -eux; for role in $(molecule_role_targets); do (cd roles/$$role && ${pipenv} run molecule test); done

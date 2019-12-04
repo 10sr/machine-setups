@@ -8,6 +8,10 @@ molecule = {extras = ["driver"],version = "*"}
 docker-py = "*"
 
 [packages]
-ansible = "==2.7.4"
+ansible = "==2.9.1"
 ansible-lint = "*"
 passlib = "*"
+# Pin pyyaml version:
+# yaml.representer.RepresenterError: ('cannot represent an object', AnsibleUndefined)
+# https://github.com/ansible/ansible-lint/issues/562
+pyyaml = "==3.13"

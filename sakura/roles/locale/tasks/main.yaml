@@ -5,9 +5,16 @@
   with_items: "{{ locale_locales }}"
   become: yes
 
+- name: Check current default locale
+  # -F: Fixed string, -x: match the whole line
+  command: grep -Fx LANG={{ locale_default }} /etc/default/locale
+  failed_when: no
+  changed_when: no
+  register: _locale_default_check
+
 - name: Set default locale
   # Unset LANGUAGE, see locale(7) for this variable
   # This seems to affect only to root user, not normal user
   command: update-locale LANG={{ locale_default }} LANGUAGE
   become: yes
-  when: ansible_env.LANG | default("") != locale_default
+  when: _locale_default_check.rc > 0

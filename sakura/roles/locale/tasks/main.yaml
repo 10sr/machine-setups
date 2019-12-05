@@ -1,4 +1,9 @@
 ---
+- name: Install packags
+  package:
+    name: locales
+  become: yes
+
 - name: Update locales
   locale_gen:
     name: "{{ item }}"

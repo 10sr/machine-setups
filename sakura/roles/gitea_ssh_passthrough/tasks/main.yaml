@@ -1,0 +1,44 @@
+---
+- name: Create dir for gitea command file
+  file:
+    state: directory
+    path: /app/gitea/
+  become: yes
+
+- name: Create gitea command file
+  template:
+    src: gitea.sh.j2
+    dest: /app/gitea/gitea
+    mode: "0755"
+  become: yes
+
+- name: Add the user for gitea ssh access
+  user:
+    name: "{{ gitea_ssh_passthrough_user.name }}"
+    uid: "{{ gitea_ssh_passthrough_user.uid }}"
+    group: "{{ gitea_ssh_passthrough_user.group }}"
+    generate_ssh_key: yes
+  become: yes
+
+- name: Create authorized_keys symlink
+  file:
+    state: link
+    src: "{{ gitea_ssh_passthrough_container_data_dir }}/git/.ssh/authorized_keys"
+    dest: "{{ gitea_ssh_passthrough_user.home }}/.ssh/authorized_keys"
+    owner: "{{ gitea_ssh_passthrough_user.name }}"
+    group: "{{ gitea_ssh_passthrough_user.group }}"
+  become: yes
+
+- name: Get id_rsa content
+  command: cat "{{ gitea_ssh_passthrough_user.home }}/.ssh/authorized_keys"
+  register: _cat_id_rsa_result
+  changed_when: no
+  become: yes
+
+- name: Add own ssh key to authorized_keys
+  lineinfile:
+    path: "{{ gitea_ssh_passthrough_container_data_dir }}/git/.ssh/authorized_keys"
+    line: >-
+      no-port-forwarding,no-X11-forwarding,no-agent-forwarding,no-pty
+      {{ _cat_id_rsa_result.stdout }}
+  become: yes

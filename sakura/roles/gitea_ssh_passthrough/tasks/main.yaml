@@ -12,12 +12,21 @@
     mode: "0755"
   become: yes
 
+- name: Add the user group for gitea ssh access
+  group:
+    name: "{{ gitea_ssh_passthrough_user.group }}"
+    gid: "{{ gitea_ssh_passthrough_user.gid }}"
+  become: yes
+
 - name: Add the user for gitea ssh access
   user:
     name: "{{ gitea_ssh_passthrough_user.name }}"
     uid: "{{ gitea_ssh_passthrough_user.uid }}"
     group: "{{ gitea_ssh_passthrough_user.group }}"
     generate_ssh_key: yes
+    # NOTE: Cannot login via ssh without setting password !
+    password: ""
+    update_password: on_create
   become: yes
 
 - name: Create authorized_keys symlink
@@ -28,9 +37,10 @@
     owner: "{{ gitea_ssh_passthrough_user.name }}"
     group: "{{ gitea_ssh_passthrough_user.group }}"
   become: yes
+  become_user: "{{ gitea_ssh_passthrough_user.name }}"
 
 - name: Get id_rsa content
-  command: cat "{{ gitea_ssh_passthrough_user.home }}/.ssh/authorized_keys"
+  command: cat "{{ gitea_ssh_passthrough_user.home }}/.ssh/id_rsa.pub"
   register: _cat_id_rsa_result
   changed_when: no
   become: yes

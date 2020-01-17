@@ -238,6 +238,10 @@
           SECURITY_SECRET_KEY: "{{ _vault.gitea_security_secret_key }}"
           SECURITY_INTERNAL_TOKEN: "{{ _vault.gitea_security_internal_token }}"
           OAUTH2_JWT_SECRET: "{{ _vault.gitea_oauth2_jwt_secret }}"
+          # Must be consistent with gitea_ssh_passthrough
+          USER: gitea
+          USER_UID: 1002
+          USER_GID: 1002
       docker_pm2:
         10sr_bot0:
           state: started
@@ -375,17 +379,17 @@
       vars:
         kubernetes_ubuntu_codename: "{{ _ubuntu_codename }}"
 
-    # - role: gitea_ssh_passthrough
-    #   when: no
-    #   vars:
-    #     user:
-    #       name: gitea
-    #       group_name: gitea
-    #       uid: 987
-    #       gid: 987
-    #       home: /home/gitea
-    #     container_ssh_port: 222
-    #     container_volume_path: /var/lib/data/docker/gitea0/data
+    - role: gitea_ssh_passthrough
+      # when: no
+      vars:
+        gitea_ssh_passthrough_user:
+          name: gitea
+          uid: 1002
+          group: gitea
+          gid: 1002
+          home: /home/gitea
+        gitea_ssh_passthrough_container_ssh_port: 222
+        gitea_ssh_passthrough_container_data_dir: /var/lib/data/docker/gitea0/data
 
 
   post_tasks:

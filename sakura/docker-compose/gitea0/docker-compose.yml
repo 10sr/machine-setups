@@ -12,9 +12,6 @@ services:
       - "0.0.0.0:222:22"
       - "127.0.0.1:3300:3000"
     environment:
-      USER: gitea
-      USER_UID: 1000
-      USER_GID: 1000
       DISABLE_REGISTRATION: "true"
     env_file:
       - ../gitea0.env

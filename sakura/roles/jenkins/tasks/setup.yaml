@@ -9,10 +9,8 @@
 
 - name: Fetch jenkins package
   get_url:
-    # TODO: parameterize
-    url: https://pkg.jenkins.io/debian/binary/jenkins_2.183_all.deb
-    # url: https://pkg.jenkins.io/debian-stable/binary/jenkins_2.176.1_all.deb
-    checksum: sha512:6d66b39a0b9f7f40b5436f7e609e62dcba75fe8111d6486b7d9dcb11d5d24f30ddd7181ed86f3ffa70dc767d3c948b36cfdf248ede0fb5b1f583d19e7666759b
+    url: "{{ jenkins_deb.url }}"
+    checksum: sha512:{{ jenkins_deb.sha512 }}
     dest: /var/lib/machine-setups/roles/jenkins
   register: _fetch_result
   become: yes

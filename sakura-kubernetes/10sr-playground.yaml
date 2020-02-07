@@ -21,6 +21,15 @@ spec:
 
 ---
 apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: sa1
+  namespace: 10sr-playground
+# False to disable pod token automount
+automountServiceAccountToken: true
+
+---
+apiVersion: v1
 kind: Service
 metadata:
   name: webtools-nodeport
@@ -115,6 +124,9 @@ spec:
       labels:
         app: nginx
     spec:
+      serviceAccountName: sa1
+      # Overwrite serviceaccount automount config
+      automountServiceAccountToken :true
       containers:
         - name: nginx
           image: nginx

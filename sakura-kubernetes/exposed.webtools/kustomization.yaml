@@ -55,4 +55,4 @@ vars:
 images:
   - name: webtools
     newName: quay.io/10sr/webtools
-    newTag: v0.0.17
+    newTag: v0.0.18

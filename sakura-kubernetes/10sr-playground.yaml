@@ -29,6 +29,23 @@ metadata:
 automountServiceAccountToken: true
 
 ---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: role1
+  namespace: 10sr-playground
+rules:
+  - apiGroups:
+      - apps
+      - extensions
+    resources:
+      - replicasets
+      - deployments
+      - deployments/scale
+    verbs:
+      - "*"
+
+---
 apiVersion: v1
 kind: Service
 metadata:
@@ -106,6 +123,7 @@ data:
     cp -pf /configmap_volume/nginx_index_html /usr/share/nginx/html/index.html
     echo `hostname` >>/usr/share/nginx/html/index.html
     exec nginx -g "daemon off;"
+
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -126,7 +144,7 @@ spec:
     spec:
       serviceAccountName: sa1
       # Overwrite serviceaccount automount config
-      automountServiceAccountToken :true
+      automountServiceAccountToken: true
       containers:
         - name: nginx
           image: nginx

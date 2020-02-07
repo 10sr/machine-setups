@@ -46,6 +46,24 @@ rules:
       - "*"
 
 ---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: rolebind1
+  namespace: 10sr-playground
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  # ここに Role 以外が入ることはありうる？
+  kind: Role
+  name: role1
+subjects:
+  - kind: ServiceAccount
+    name: sa1
+    # RoleBinding 自身以外の namespace はここで参照可能なのか？
+    namespace: 10sr-playground
+  
+
+---
 apiVersion: v1
 kind: Service
 metadata:

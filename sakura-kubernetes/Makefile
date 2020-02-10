@@ -61,3 +61,10 @@ decrypt-secrets: $(decrypt_dest)
 
 $(decrypt_dest):
 	gpg2 --output $@ --decrypt $@.asc
+
+
+###########
+# Dashboard
+
+dashboard: scp
+	ssh -t $(target) make -C $(remote_dir)/dashboard

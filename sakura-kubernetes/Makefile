@@ -1,6 +1,6 @@
 target := sakura
 
-manifests_yaml := $(shell find * -name '*.yaml')
+manifests_yaml := $(wildcard *.yaml)
 manifests := $(manifests_yaml:%.yaml=%)
 
 remote_dir := kubernetes_manifests

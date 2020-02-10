@@ -81,6 +81,7 @@
         - prometheus-node-exporter.{{ _domain_name }}
         - pt.{{ _domain_name }}
         - gf.{{ _domain_name }}
+        - k8s.{{ _domain_name }}
       letsencrypt_webroot: /var/nginx/main
       letsencrypt_certname: "{{ _domain_name }}"
       letsencrypt_key_dir: /etc/letsencrypt/live/{{ _domain_name }}
@@ -106,6 +107,7 @@
         - "gt.{{ _domain_name }}"
         - "gb.{{ _domain_name }}"
         - "pt.{{ _domain_name }}"
+        - "k8s.{{ _domain_name }}"
       nginx_host_proxies:
         - name: gl.{{ _domain_name }}
           port: 8800
@@ -172,6 +174,8 @@
             - auth_basic_user_file /etc/nginx/prometheus_web.htpasswd
         - name: gf.{{ _domain_name }}
           port: 30003
+        - name: k8s.{{ _domain_name }}
+          port: 30090
 
     - role: docker
       docker_ubuntu_codename: "{{ _ubuntu_codename }}"

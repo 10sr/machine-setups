@@ -8,7 +8,7 @@ $(manifests):
 	kubectl apply -f $@.yaml
 
 
-metrics-server: metrics-server/deploy/1.8+
+metrics-server: metrics-server/deploy/kubernetes/
 	kubectl apply -f $^
 
 dashboard: dashboard/aio/deploy/alternative.yaml

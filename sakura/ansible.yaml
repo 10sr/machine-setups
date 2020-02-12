@@ -99,6 +99,10 @@
           entries:
             - name: pt
               password: "{{ _vault.prometheus_web_password }}"
+        - path: /etc/nginx/kubernetes_dashboard.htpasswd
+          entries:
+            - name: dash
+              password: "{{ _vault.kubernetes_dashboard_password }}"
 
       # non ssl
       nginx_default_root: /var/nginx/main
@@ -176,6 +180,9 @@
           port: 30003
         - name: k8s.{{ _domain_name }}
           port: 30090
+          additional_directives:
+            - auth_basic "dash"
+            - auth_basic_user_file /etc/nginx/kubernetes_dashboard.htpasswd
 
     - role: docker
       docker_ubuntu_codename: "{{ _ubuntu_codename }}"

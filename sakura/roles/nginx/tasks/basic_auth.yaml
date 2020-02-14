@@ -11,4 +11,4 @@
     password: "{{ item.1.password }}"
   loop: "{{ nginx_basic_auth_htpasswd | subelements('entries') }}"
   become: yes
-  nolog: yes
+  no_log: yes

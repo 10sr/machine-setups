@@ -10,6 +10,9 @@ $(manifests):
 
 metrics-server: metrics-server/deploy/kubernetes/
 	kubectl apply -f $^
+	kubectl patch -n kube-system \
+		deployment metrics-server \
+		--patch "$$(cat metrics-server-patch-ec824ec.yaml)"
 
 dashboard: dashboard/aio/deploy/alternative.yaml
 	kubectl apply -f $^

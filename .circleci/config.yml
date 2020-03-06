@@ -5,11 +5,8 @@ workflows:
   version: 2
   test:
     jobs:
-      # TODO: add python 3.7
       - test_python:
-          docker_tag: "3.5"
-      - test_python:
-          docker_tag: "3.6"
+          docker_tag: "3.7"
       - test_java8
       - test_golang
 

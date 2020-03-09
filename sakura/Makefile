@@ -18,9 +18,6 @@ env_this_revision := \
 	THIS_REVISION_SUBJECT='$(THIS_REVISION_SUBJECT)'  # FIXME: This will fail if SUBJECT has quotes
 
 
-ANSIBLE_INSTALLED_VERSION := $(shell $(pipenv) run ansible --version | awk '/^ansible/ {print $$2 }')
-
-
 check: ansible-lint  ## Run check
 
 .venv:
@@ -54,7 +51,7 @@ ansible-lint: .venv  ## Run ansible-lint
 	${pipenv} run ansible-lint ansible.yaml --nocolor -p
 
 check-ansible-version:
-	grep '^ansible = "==$(ANSIBLE_INSTALLED_VERSION)"$$' Pipfile
+	PIP_USER= ./check_ansible_version.py
 
 
 # Molecule

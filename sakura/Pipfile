@@ -12,8 +12,4 @@ toml = "*"
 ansible = "==2.9.2"
 ansible-lint = "*"
 passlib = "*"
-# Pin pyyaml version:
-# yaml.representer.RepresenterError: ('cannot represent an object', AnsibleUndefined)
-# https://github.com/ansible/ansible-lint/issues/562
-pyyaml = "==3.13"
 ansible-modules-pm2 = {git = "https://github.com/10sr/ansible-modules-pm2.git"}

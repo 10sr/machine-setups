@@ -403,6 +403,10 @@
         gitea_ssh_passthrough_container_ssh_port: 222
         gitea_ssh_passthrough_container_data_dir: /var/lib/data/docker/gitea0/data
 
+    - role: mysql
+      when: no
+      vars: {}
+
 
   post_tasks:
     - file:

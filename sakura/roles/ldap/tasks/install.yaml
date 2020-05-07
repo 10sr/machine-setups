@@ -1,0 +1,5 @@
+---
+- name: Install Open LDAP Server
+  apt:
+    name: slapd
+  become: yes

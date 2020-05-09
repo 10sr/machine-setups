@@ -3,3 +3,8 @@
   apt:
     name: slapd
   become: yes
+
+- name: Install LDAP command package
+  apt:
+    name: ldap-utils
+  become: yes

@@ -1,0 +1,7 @@
+dn: ou=People,dc=3ends,dc=info
+objectClass: organizationalUnit
+ou: People
+
+dn: ou=Services,dc=3ends,dc=info
+objectClass: organizationalUnit
+ou: Services

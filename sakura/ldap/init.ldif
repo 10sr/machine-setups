@@ -1,0 +1,9 @@
+dn: dc=3ends,dc=info
+objectClass: organization
+objectClass: dcObject
+o: 3ENDS_INFO
+dc: 3ends
+
+dn: cn=Manager,dc=3ends,dc=info
+objectClass: organizationalRole
+cn: Manager

@@ -1,0 +1,25 @@
+---
+- name: Create slapd.conf
+  # NOTE: Not ldap.conf!
+  template:
+    src: slapd.conf.j2
+    dest: /etc/ldap/slapd.conf
+    backup: yes
+  become: yes
+  register: _slapd_conf
+
+- name: Create ldap data directory
+  file:
+    state: directory
+    path: "{{ ldap_directory }}"
+    owner: openldap
+    group: openldap
+  become: yes
+
+- name: Create slapd.d directory
+  file:
+    state: directory
+    path: /etc/ldap/slapd.d
+    owner: openldap
+    group: openldap
+  become: yes

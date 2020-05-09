@@ -407,7 +407,8 @@
       vars: {}
 
     - role: ldap
-      vars: {}
+      vars:
+        ldap_rootpw: "{{ _vault.ldap_rootpw }}"
 
 
   post_tasks:

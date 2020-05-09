@@ -1,0 +1,5 @@
+---
+ldap_backend: mdb
+ldap_suffix: "dc=3ends,dc=info"
+ldap_rootpw: "{{ REQUIRE_OVERRIDE }}"
+ldap_directory: /var/lib/ldap

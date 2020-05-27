@@ -404,7 +404,12 @@
         gitea_ssh_passthrough_container_data_dir: /var/lib/data/docker/gitea0/data
 
     - role: mysql
-      vars: {}
+      vars:
+        mysql_users:
+          - name: "10sr"
+            password: "{{ _vault.mysql_password_10sr }}"
+            priv: "*.*:ALL"
+            host: "%"
 
     - role: ldap
       vars:

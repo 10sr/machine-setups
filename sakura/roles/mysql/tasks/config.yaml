@@ -1,0 +1,15 @@
+---
+- name: Install pymysql
+  apt:
+    name: python-pymysql
+  become: yes
+
+- name: Add users
+  mysql_user:
+    name: "{{ item.name }}"
+    password: "{{ item.password }}"
+    priv: "{{ item.priv }}"
+    host: "{{ item.host }}"
+    login_unix_socket: /var/run/mysqld/mysqld.sock
+  loop: "{{ mysql_users }}"
+  become: yes

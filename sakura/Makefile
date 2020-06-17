@@ -53,6 +53,8 @@ ansible-lint: .venv  ## Run ansible-lint
 check-ansible-version:
 	PIP_USER= ./check_ansible_version.py
 
+yamllint: .venv  ## Run yamllint
+	${pipenv} run yamllint -f parsable .
 
 # Molecule
 

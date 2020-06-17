@@ -7,6 +7,7 @@ url = "https://pypi.python.org/simple"
 molecule = {extras = ["driver"],version = "*"}
 docker-py = "*"
 toml = "*"
+yamllint = "*"
 
 [packages]
 ansible = "==2.9.2"

@@ -1,0 +1,12 @@
+# FIle name must end with .gcp.yaml
+---
+projects:
+  - spheric-tea-232305
+keyed_groups:
+  # Create groups from labels
+  - prefix: label
+    key: labels
+
+plugin: gcp_compute
+auth_kind: serviceaccount
+service_account_file: serviceaccount.json

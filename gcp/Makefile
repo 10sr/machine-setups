@@ -1,10 +1,7 @@
 # user ?= $(shell whoami)
-user ?= usr_8_slashes_gmail_com
-# # What should this be?
-# # How are public keys managed in compute engine machines?
-# private_key ?= $(HOME)/.ssh/google_compute_engine
+user ?= 10sr
 
-gcp_project := spheric-tea-232305
+gcp_project := praxis-practice-289116
 
 pipenv_run := pipenv run
 
@@ -16,13 +13,10 @@ update-config:
 	# gcloud compute config-ssh --project $(gcp_project)
 
 setup: update-config
-	# $(pipenv_run) ansible --user $(user) --private-key $(private_key) all -m setup
 	$(pipenv_run) ansible --user $(user) all -m setup
 	# $(pipenv_run) ansible all -m setup
 
 ping: update-config
-	# $(pipenv_run) ansible --user $(user) --private-key $(private_key) all -m ping
-	# $(pipenv_run) ansible --private-key $(private_key) all -m ping
 	$(pipenv_run) ansible --user $(user) all -m ping
 	# $(pipenv_run) ansible all -m ping
 

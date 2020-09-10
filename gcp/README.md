@@ -5,11 +5,13 @@ GCP Ansible
 Setup Connection
 ----------------
 
-よくわかってないが、以下を参照すれば良さそう？
+主に Google Cloud Platform の Web UI で、以下の手順を行う。
 
-- https://cloud.google.com/compute/docs/instances/connecting-advanced?hl=ja
-
-手順としては、以下の２つを行った気がする。
-
--  Compute Engine > metadata で `enable-oslogin`: `TRUE` を設定する
-- `gcloud compute os-login ssh-keys add --key-file .ssh/id_rsa.pub --ttl 0 --project spheric-tea-232305` を実行する
+1. 「VM インスタンス」のページから、 VM に紐ついたサービスアカウントを確認する
+2. 「IAM と管理」の「サービスアカウント」から、確認したサービスアカウントをクリックする
+3. 「キー」の「鍵を追加」から、「新しい鍵を作成」をクリックする
+4. 「キーのタイプ」に「JSON」を選択し、作成する
+5. JSON がダウンロードできるので、このディレクトリに `ss.sa.json` という名前で保存する
+6. 「Compure Engine」の「メタデータ」をクリックする
+7. 「SSH 認証鍵」から「編集」をクリックする
+8. 実行しようとしているマシンの公開鍵を入力し、ユーザ名を設定して保存をクリックする

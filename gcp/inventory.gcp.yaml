@@ -1,7 +1,7 @@
 # FIle name must end with .gcp.yaml
 ---
 projects:
-  - spheric-tea-232305
+  - praxis-practice-289116
 keyed_groups:
   # Create groups from labels
   - prefix: label
@@ -9,4 +9,4 @@ keyed_groups:
 
 plugin: gcp_compute
 auth_kind: serviceaccount
-service_account_file: spheric-tea.sa.json
+service_account_file: pp.sa.json

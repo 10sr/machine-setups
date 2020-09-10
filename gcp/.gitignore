@@ -1,2 +1,2 @@
-serviceaccount.json
+*.sa.json
 *.secret

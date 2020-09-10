@@ -9,4 +9,4 @@ keyed_groups:
 
 plugin: gcp_compute
 auth_kind: serviceaccount
-service_account_file: serviceaccount.json
+service_account_file: spheric-tea.sa.json

@@ -1,0 +1,6 @@
+---
+- name: gcp debug
+  hosts: all
+  tasks:
+    - debug:
+        msg: "Hostname: {{ ansible_nodename }}"

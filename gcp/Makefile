@@ -13,12 +13,10 @@ update-config:
 	# gcloud compute config-ssh --project $(gcp_project)
 
 setup: update-config
-	$(pipenv_run) ansible --user $(user) all -m setup
-	# $(pipenv_run) ansible all -m setup
+	$(pipenv_run) ansible all -m setup
 
 ping: update-config
-	$(pipenv_run) ansible --user $(user) all -m ping
-	# $(pipenv_run) ansible all -m ping
+	$(pipenv_run) ansible all -m ping
 
 play:
-	$(pipenv_run) ansible-playbook --user $(user) ansible.yaml
+	$(pipenv_run) ansible-playbook ansible.yaml

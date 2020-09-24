@@ -8,8 +8,7 @@ Setup Connection
 事前準備として Google Cloud Platform の Web UI で以下の手順を行う。
 
 
-Serviceaccount の設定
----------------------
+### Serviceaccount の設定
 
 プロジェクトについて一度行う。
 
@@ -20,8 +19,7 @@ Serviceaccount の設定
 5. JSON がダウンロードできるので、このディレクトリに `ss.sa.json` という名前で保存する
 
 
-インスタンス共通の公開鍵の設定
------------------------------
+### インスタンス共通の公開鍵の設定
 
 Ansible を実行するホストごとに行う。
 

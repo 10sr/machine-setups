@@ -7,8 +7,16 @@
 
 - name: Setup front host
   hosts: label_role_front
+  pre_tasks:
+    - name: Include all vault variables
+      include_vars:
+        dir: ./vault/
+        name: _vault
+      no_log: yes
   roles:
     - name: traefik
+      vars:
+        traefik_gcloud_sa_content: "{{ _vault.gcp_sa_dns_admin }}"
 
 - name: Setup jenkins host
   hosts: label_jenkins_on

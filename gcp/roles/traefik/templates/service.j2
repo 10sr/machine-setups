@@ -9,6 +9,9 @@ Restart=on-failure
 ExecStart=/usr/local/bin/traefik --configFile=/etc/traefik/traefik.toml
 ExecReload=/bin/kill -HUP $MAINPID
 KillSignal=SIGINT
+{% for k, v in environments.items() %}
+Environment={{ k }}={{ v }}
+{% endfor %}
  
 [Install]
 WantedBy=multi-user.target

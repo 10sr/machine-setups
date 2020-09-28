@@ -5,6 +5,12 @@
     state: directory
   become: yes
 
+- name: Create directory for data files
+  file:
+    path: /var/lib/traefik
+    state: directory
+  become: yes
+
 
 - name: Create dynamic provider file
   template:
@@ -16,6 +22,12 @@
   template:
     src: traefik.toml.j2
     dest: /etc/traefik/traefik.toml
+  become: yes
+
+- name: Create service account file for gcloud DNS
+  copy:
+    content: "{{ traefik_gcloud_sa_content }}"
+    dest: /etc/traefik/sa.json
   become: yes
 
 - name: Start traefik service

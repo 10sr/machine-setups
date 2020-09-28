@@ -35,4 +35,7 @@
   template:
     src: service.j2
     dest: /etc/systemd/system/traefik.service
+  vars:
+    environments:
+      GCE_SERVICE_ACCOUNT_FILE: /etc/traefik/sa.json
   become: yes

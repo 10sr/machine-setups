@@ -7,9 +7,14 @@
     #   url = "http://<private-ip-server-2>:<private-port-server-2>/"
 
 
-[http.routers]
-  [http.routers.router-jenkins]
-    entryPoints = ["web"]
-    # entryPoints = ["websecure", "web"]
-    rule = "Host(`jk.halt2.net`)"
-    service = "jenkins"
+# [http.routers]
+[http.routers.router-jenkins]
+# entryPoints = ["web"]
+entryPoints = ["web-secure", "web"]
+rule = "Host(`jk.halt2.net`)"
+service = "jenkins"
+[http.routers.router-jenkins.tls]
+certResolver = "letsencrypt"
+[[http.routers.router-jenkins.tls.domains]]
+main = "halt2.net"
+sans = ["*.halt2.net"]

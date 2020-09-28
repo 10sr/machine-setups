@@ -1,18 +1,17 @@
 [accessLog]
-  format = "common"
+format = "common"
 
 
 # [api]
 #   dashboard = true
 #   debug = true
 
-# [entryPoints]
-  [entryPoints.web]
-    address = ":80"
-  # [entryPoints.web-secure]
-  #   address = ":443"
-  # [entryPoints.dashboard]
-  #   address = ":8080"
+[entryPoints.web]
+address = ":80"
+[entryPoints.web-secure]
+address = ":443"
+# [entryPoints.dashboard]
+# address = ":8080"
 
 # [certificatesResolvers.sample.acme]
 #   email = "myemail@example.com"
@@ -22,7 +21,19 @@
 #     # used during the challenge
 #     entryPoint = "web"
 
-# [providers]
-  [providers.file]
-    filename = "/etc/traefik/providers.toml"
+
+[certificatesResolvers.letsencrypt.acme]
+email = "8.slashes@gmail.com"
+storage = "/var/lib/traefik/acme.json"
+# entryPoint = "web-secure"
+[certificatesResolvers.letsencrypt.acme.dnsChallenge]
+provider = "gcloud"
+delayBeforeCheck = 0
+# [[acme.domains]]
+# main = "halt2.net"
+# sans = ["*.halt2.net"]
+
+
+[providers.file]
+filename = "/etc/traefik/providers.toml"
 

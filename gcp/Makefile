@@ -13,3 +13,10 @@ ping:
 
 play:
 	$(pipenv_run) ansible-playbook -vv ansible.yaml
+
+encrypt-all:
+	find vault/ -type f | xargs grep -L 'ANSIBLE_VAULT;' | xargs -n 1 ${pipenv_run} ansible-vault encrypt
+
+
+decrypt-all:
+	find vault/ -type f | xargs grep -l 'ANSIBLE_VAULT;' | xargs -n 1 ${pipenv_run} ansible-vault decrypt

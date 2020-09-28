@@ -1,13 +1,9 @@
-[http.services]
-  [http.services.jenkins.loadBalancer]
-
-    [[http.services.jenkins.loadBalancer.servers]]
-      url = "http://jenkins01:8080/"
-    # [[http.services.jenkins.loadBalancer.servers]]
-    #   url = "http://<private-ip-server-2>:<private-port-server-2>/"
+[[http.services.jenkins.loadBalancer.servers]]
+url = "http://jenkins01:8080/"
+# [[http.services.jenkins.loadBalancer.servers]]
+#   url = "http://<private-ip-server-2>:<private-port-server-2>/"
 
 
-# [http.routers]
 [http.routers.router-jenkins]
 # entryPoints = ["web"]
 entryPoints = ["web-secure", "web"]

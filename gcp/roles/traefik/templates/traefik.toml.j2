@@ -13,14 +13,6 @@ address = ":443"
 # [entryPoints.dashboard]
 # address = ":8080"
 
-# [certificatesResolvers.sample.acme]
-#   email = "myemail@example.com"
-#   storage = "acme.json"
-
-#   [certificatesResolvers.sample.acme.httpChallenge]
-#     # used during the challenge
-#     entryPoint = "web"
-
 
 [certificatesResolvers.letsencrypt.acme]
 email = "8.slashes@gmail.com"
@@ -29,9 +21,6 @@ storage = "/var/lib/traefik/acme.json"
 [certificatesResolvers.letsencrypt.acme.dnsChallenge]
 provider = "gcloud"
 delayBeforeCheck = 0
-# [[acme.domains]]
-# main = "halt2.net"
-# sans = ["*.halt2.net"]
 
 
 [providers.file]

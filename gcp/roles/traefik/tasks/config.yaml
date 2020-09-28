@@ -17,3 +17,9 @@
     src: traefik.toml.j2
     dest: /etc/traefik/traefik.toml
   become: yes
+
+- name: Start traefik service
+  service:
+    name: traefik
+    enabled: true
+  become: yes

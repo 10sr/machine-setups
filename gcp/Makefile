@@ -12,4 +12,4 @@ ping:
 	$(pipenv_run) ansible all -m ping
 
 play:
-	$(pipenv_run) ansible-playbook ansible.yaml
+	$(pipenv_run) ansible-playbook -vv ansible.yaml

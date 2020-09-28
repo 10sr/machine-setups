@@ -1,0 +1,32 @@
+---
+- name: Create directory for archive files
+  file:
+    # TODO: Parameterize
+    path: /var/lib/machine-setups/roles/traefik
+    state: directory
+  become: yes
+
+
+- name: Fetch traefik archive
+  get_url:
+    url: "{{ traefik_archive.url }}"
+    checksum: sha256:{{ traefik_archive.sha256 }}
+    dest: /var/lib/machine-setups/roles/traefik
+  register: _fetch_result
+  become: yes
+
+- name: Copy traefik executable
+  shell:
+    cmd: |
+      set -eux
+      cd "$(mktemp -d)"
+      tar -xvf {{ _fetch_result.dest }}
+      cp -pf ./traefik /usr/local/bin/traefik
+    creates: /usr/local/bin/traefik
+  become: yes
+
+- name: chmod
+  file:
+    path: /usr/local/bin/traefik
+    mode: "0755"
+  become: yes

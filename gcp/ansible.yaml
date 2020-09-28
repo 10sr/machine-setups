@@ -5,6 +5,11 @@
     - debug:
         msg: "Hostname: {{ ansible_nodename }}"
 
+- name: Setup front host
+  hosts: label_role_front
+  roles:
+    - name: traefik
+
 - name: Setup jenkins host
   hosts: label_jenkins_on
   pre_tasks:
@@ -13,7 +18,7 @@
   roles:
     - name: java_jre
 
-    - role: jenkins
+    - name: jenkins
       vars:
         jenkins_deb:
           url: https://pkg.jenkins.io/debian-stable/binary/jenkins_2.204.1_all.deb

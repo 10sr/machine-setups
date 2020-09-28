@@ -1,0 +1,6 @@
+---
+- name: Assert java installed
+  command: java -version
+  changed_when: false
+
+- import_tasks: install.yaml

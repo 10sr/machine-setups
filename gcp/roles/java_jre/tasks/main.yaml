@@ -1,0 +1,5 @@
+---
+- name: Install JRE
+  apt:
+    name: default-jre-headless
+  become: yes

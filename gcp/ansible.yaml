@@ -4,3 +4,17 @@
   tasks:
     - debug:
         msg: "Hostname: {{ ansible_nodename }}"
+
+- name: Setup jenkins host
+  hosts: label_jenkins_on
+  pre_tasks:
+    - debug:
+        msg: "Hostname: {{ ansible_nodename }}"
+  roles:
+    - name: java_jre
+
+    - role: jenkins
+      vars:
+        jenkins_deb:
+          url: https://pkg.jenkins.io/debian-stable/binary/jenkins_2.204.1_all.deb
+          sha512: 76caa3218b72a8eea8dd98352ab862a935d832cc7d563a2db3da39ceaab4f0c3c47b6a036d7630a7a89da8af83c15bf647085138f7632fdceeccab5924cca466

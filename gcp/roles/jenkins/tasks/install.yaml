@@ -1,0 +1,22 @@
+---
+- name: Create directory for archive files
+  file:
+    # TODO: Parameterize
+    path: /var/lib/machine-setups/roles/jenkins
+    state: directory
+  become: yes
+
+
+- name: Fetch jenkins package
+  get_url:
+    url: "{{ jenkins_deb.url }}"
+    checksum: sha512:{{ jenkins_deb.sha512 }}
+    dest: /var/lib/machine-setups/roles/jenkins
+  register: _fetch_result
+  become: yes
+
+- name: Install jenkins
+  apt:
+    deb: "{{ _fetch_result.dest }}"
+    # when: _fetch_result is changed
+  become: yes

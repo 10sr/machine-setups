@@ -1,0 +1,28 @@
+[accessLog]
+  format = "common"
+
+
+# [api]
+#   dashboard = true
+#   debug = true
+
+# [entryPoints]
+  [entryPoints.web]
+    address = ":80"
+  # [entryPoints.web-secure]
+  #   address = ":443"
+  # [entryPoints.dashboard]
+  #   address = ":8080"
+
+# [certificatesResolvers.sample.acme]
+#   email = "myemail@example.com"
+#   storage = "acme.json"
+
+#   [certificatesResolvers.sample.acme.httpChallenge]
+#     # used during the challenge
+#     entryPoint = "web"
+
+# [providers]
+  [providers.file]
+    filename = "/etc/traefik/providers.toml"
+

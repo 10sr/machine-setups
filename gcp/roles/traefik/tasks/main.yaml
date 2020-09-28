@@ -1,2 +1,9 @@
 ---
 - import_tasks: install.yaml
+- import_tasks: config.yaml
+
+# - name: Put index.html
+#   copy:
+#     src: index.html
+#     dest: /var/www/traefik/index.html
+#   become: yes

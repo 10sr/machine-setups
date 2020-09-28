@@ -1,0 +1,19 @@
+---
+- name: Create directory for config files
+  file:
+    path: /etc/traefik
+    state: directory
+  become: yes
+
+
+- name: Create dynamic provider file
+  template:
+    src: providers.toml.j2
+    dest: /etc/traefik/providers.toml
+  become: yes
+
+- name: Create static config file
+  template:
+    src: traefik.toml.j2
+    dest: /etc/traefik/traefik.toml
+  become: yes

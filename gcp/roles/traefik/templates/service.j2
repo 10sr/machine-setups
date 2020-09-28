@@ -1,0 +1,14 @@
+# https://www.casleyconsulting.co.jp/blog/engineer/240/
+[Unit]
+Description=traefik proxy
+Requires=network-online.target
+After=network-online.target
+ 
+[Service]
+Restart=on-failure
+ExecStart=/usr/local/bin/traefik --configFile=/etc/traefik/traefik.toml
+ExecReload=/bin/kill -HUP $MAINPID
+KillSignal=SIGINT
+ 
+[Install]
+WantedBy=multi-user.target

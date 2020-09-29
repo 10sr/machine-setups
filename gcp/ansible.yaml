@@ -18,6 +18,9 @@
       vars:
         traefik_gcloud_sa_content: "{{ _vault.gcp_sa_dns_admin }}"
 
+    - name: k3s
+      vars: {}
+
 - name: Setup jenkins host
   hosts: label_jenkins_on
   pre_tasks:

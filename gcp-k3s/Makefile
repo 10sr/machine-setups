@@ -1,4 +1,4 @@
-target := misc-e2small
+target := front01
 
 manifests_yaml := $(wildcard *.yaml)
 manifests := $(manifests_yaml:%.yaml=%)

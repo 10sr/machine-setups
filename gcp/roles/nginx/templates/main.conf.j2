@@ -1,0 +1,21 @@
+server {
+    listen 80 default_server;
+    listen [::]:80 default_server;
+    server_name _;
+
+    root {{ nginx_default_root }};
+    index index.html;
+    autoindex on;
+
+{% for upstream in nginx_proxy_upstreams | default([]) %}
+
+    location {{ upstream.path }}/ {
+{% for directive in upstream.additional_directives | default([]) %}
+        {{ directive }};
+{% endfor %}
+        proxy_pass http://127.0.0.1:{{ upstream.port }};
+
+    }
+
+{% endfor %}
+}

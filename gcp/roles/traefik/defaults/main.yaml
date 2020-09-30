@@ -1,3 +1,0 @@
-traefik_archive:
-  url: https://github.com/traefik/traefik/releases/download/v2.3.0/traefik_v2.3.0_linux_amd64.tar.gz
-  sha256: e46e767fec5ca02f2a8276330850fe0fe22faccbfe760287622cd40b0fe12e54

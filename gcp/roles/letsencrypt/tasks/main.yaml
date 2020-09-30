@@ -1,0 +1,65 @@
+# ---
+# - name: Assert nginx installed
+#   command: nginx -v
+#   changed_when: false
+
+# - name: Assert git installed
+#   command: which git
+#   changed_when: false
+
+# - name: Create /opt directory
+#   file:
+#     dest: /opt
+#     state: directory
+#   become: yes
+
+# - name: Clone certbot repository
+#   git:
+#     repo: https://github.com/certbot/certbot.git
+#     dest: /opt/letsencrypt_certbot
+#     force: yes
+#     # Why no?
+#     #update: no
+#   diff: no
+#   become: yes
+
+- name: Install certbot
+  apt:
+    name: certbot
+  become: yes
+
+- template:
+    src: _certbot-auto.sh.j2
+    dest: /usr/local/bin/_certbot-auto.sh
+  become: yes
+  register: _certbot_auto_sh
+
+# - command: sh /usr/local/bin/_certbot-auto.sh
+#   # args:
+#   #   creates: "{{ letsencrypt_key_dir }}"
+#   become: yes
+#   when: _certbot_auto_sh is changed
+
+- template:
+    src: update_letsencrypt_cert.sh.j2
+    dest: /etc/cron.weekly/update-letsencrypt-cert
+    mode: "0755"
+  become: yes
+
+# http://qiita.com/ww24/items/9fa19594b4e3a8eb9b6f
+- command: openssl dhparam -out {{ letsencrypt_ssl_dhparam_path }} 2048
+  args:
+    creates: "{{ letsencrypt_ssl_dhparam_path }}"
+  become: yes
+
+- template:
+    src: ssl.conf.j2
+    dest: /etc/nginx/conf.d/ssl.conf
+  become: yes
+  register: _ssl_conf
+
+- service:
+    name: nginx
+    state: restarted
+  become: yes
+  when: _ssl_conf is changed

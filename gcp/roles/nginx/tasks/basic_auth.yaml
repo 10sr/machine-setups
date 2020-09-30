@@ -1,0 +1,14 @@
+---
+- name: Install package for htpasswd module
+  apt:
+    name: python-passlib
+  become: yes
+
+- name: Create htpasswd files
+  htpasswd:
+    path: "{{ item.0.path }}"
+    name: "{{ item.1.name }}"
+    password: "{{ item.1.password }}"
+  loop: "{{ nginx_basic_auth_htpasswd | subelements('entries') }}"
+  become: yes
+  no_log: yes

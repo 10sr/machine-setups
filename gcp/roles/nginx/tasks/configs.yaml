@@ -1,0 +1,27 @@
+---
+- file:
+    path: /etc/nginx/sites-enabled/default
+    state: absent
+  become: yes
+  register: _remove_site_default
+
+- template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+  become: yes
+  with_items:
+    - src: main.conf.j2
+      dest: /etc/nginx/conf.d/main.conf
+    - src: main_proxies.conf.j2
+      dest: /etc/nginx/conf.d/main_proxies.conf
+    - src: main_ssl.conf.j2
+      dest: /etc/nginx/conf.d/main_ssl.conf
+    - src: main_ssl_proxies.conf.j2
+      dest: /etc/nginx/conf.d/main_ssl_proxies.conf
+  register: _nginx_confs
+
+- service:
+    name: nginx
+    state: restarted
+  become: yes
+  when: _remove_site_default is changed or _nginx_confs is changed

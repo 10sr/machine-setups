@@ -1,0 +1,24 @@
+{% for proxy in nginx_host_proxies | default([]) %}
+server {
+    listen 80;
+    listen [::]:80;
+
+    client_max_body_size 0;
+
+    server_name {{ proxy.name }};
+
+    location / {
+{% for directive in proxy.additional_directives | default([]) %}
+        {{ directive }};
+{% endfor %}
+        proxy_pass http://localhost:{{ proxy.port }};
+    }
+}
+{% endfor %}
+
+server {
+    listen 80;
+    listen [::]:80;
+    server_name  {{ nginx_name_ssl_only | default([]) | join(" ") }};
+    return 303 https://$host$request_uri;
+}

@@ -1,0 +1,9 @@
+#!/bin/sh
+set -eux
+# {{ ansible_managed }}
+
+# /opt/letsencrypt_certbot/certbot-auto renew \
+#                                       --max-log-backups 100 \
+#                                       --pre-hook "service nginx stop" \
+#                                       --post-hook "service nginx start"
+certbot renew

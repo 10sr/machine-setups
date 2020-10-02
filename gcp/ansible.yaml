@@ -102,7 +102,7 @@
           - prometheus
 
         # https://github.com/afonsof/jenkins-material-theme/
-        jenkins_theme_css_url: https://cdn.rawgit.com/afonsof/jenkins-material-theme/gh-pages/dist/material-blue-grey.css
+        jenkins_theme_css_url: https://cdn.rawgit.com/afonsof/jenkins-material-theme/gh-pages/dist/material-cyan.css
 
         # https://issues.jenkins-ci.org/browse/JENKINS-10160
         # https://stackoverflow.com/questions/31740373/how-can-i-prevent-that-the-jenkins-log-gets-spammed-with-strange-messages

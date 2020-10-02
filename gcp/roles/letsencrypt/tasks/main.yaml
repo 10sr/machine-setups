@@ -28,7 +28,8 @@
     name: certbot
   become: yes
 
-- template:
+- name: Create certbot script
+  template:
     src: _certbot-auto.sh.j2
     dest: /usr/local/bin/_certbot-auto.sh
   become: yes
@@ -40,25 +41,42 @@
 #   become: yes
 #   when: _certbot_auto_sh is changed
 
-- template:
+# `sudo sh /usr/local/bin/_certbot-auto.sh` will create this directory
+# Run this before proceeding
+- name: Check key directory
+  command: file {{ letsencrypt_key_dir }}
+  changed_when: false
+
+- name: Add cron schedule of certbot renew
+  template:
     src: update_letsencrypt_cert.sh.j2
     dest: /etc/cron.weekly/update-letsencrypt-cert
     mode: "0755"
   become: yes
 
 # http://qiita.com/ww24/items/9fa19594b4e3a8eb9b6f
-- command: openssl dhparam -out {{ letsencrypt_ssl_dhparam_path }} 2048
+- name: generate dhparam file
+  command: openssl dhparam -out {{ letsencrypt_ssl_dhparam_path }} 2048
   args:
     creates: "{{ letsencrypt_ssl_dhparam_path }}"
   become: yes
 
-- template:
+- name: Remove ssl config in nginx.conf
+  replace:
+    path: /etc/nginx/nginx.conf
+    regexp: '^(\s*)(ssl_.*)$'
+    replace: '\1# \2'
+  become: yes
+
+- name: Create nginx ssl config file
+  template:
     src: ssl.conf.j2
     dest: /etc/nginx/conf.d/ssl.conf
   become: yes
   register: _ssl_conf
 
-- service:
+- name: Restart nginx
+  service:
     name: nginx
     state: restarted
   become: yes

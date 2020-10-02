@@ -1,7 +1,7 @@
 ---
 - import_tasks: install.yaml
 - import_tasks: default_root.yaml
-- import_tasks: basic_auth.yaml
+# - import_tasks: basic_auth.yaml
 - import_tasks: configs.yaml
 
 - service:

@@ -11,7 +11,7 @@ server {
 {% for directive in proxy.additional_directives | default([]) %}
         {{ directive }};
 {% endfor %}
-        proxy_pass http://localhost:{{ proxy.port }};
+        proxy_pass http://{{ proxy.pass }};
     }
 }
 {% endfor %}

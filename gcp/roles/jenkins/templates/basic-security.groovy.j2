@@ -1,0 +1,69 @@
+#!groovy
+
+def webuserName = '''{{ jenkins_webuser_username }}'''
+def webuserPassword = '''{{ jenkins_webuser_password }}'''
+def webuserSshPublickey = '''{% for key in jenkins_webuser_ssh_publickey %}
+{{ key }}
+{% endfor %}'''
+// TODO: Parametrize portnum
+def sshdPort = 2244
+
+
+import hudson.security.HudsonPrivateSecurityRealm
+// import hudson.security.captcha.CaptchaSupport
+import hudson.security.FullControlOnceLoggedInAuthorizationStrategy
+import jenkins.model.Jenkins
+
+def instance = Jenkins.getInstance()
+
+
+
+// SecurityRealm that performs authentication by looking up User
+// def captcha = new CaptchaSupport()
+println "--> Set SecurityRealm to HudsonPrivateSecurityRealm(false, false, null)"
+def hudsonRealm = new HudsonPrivateSecurityRealm(false, false, null)
+instance.setSecurityRealm(hudsonRealm)
+
+
+// AuthorizationStrategy that grants full-control to authenticated user and optionally read access to anonymous users
+println "--> Set AuthorizationStrategy to FullControlOnceLoggedInAuthorizationStrategy without anonymous read"
+def strategy = new FullControlOnceLoggedInAuthorizationStrategy()
+strategy.setAllowAnonymousRead(false)
+instance.setAuthorizationStrategy(strategy)
+
+instance.save()
+
+
+// https://gist.github.com/hartzell/4a1923ec51350ffd2a3de4e5118fc2e3
+println "--> Starting Jenkins SSHD with port: ${sshdPort}"
+def sshd = instance.getDescriptor("org.jenkinsci.main.modules.sshd.SSHD")
+sshd.setPort(sshdPort)
+sshd.save()
+
+
+println "--> Create or update admin user properties: ${webuserName}"
+def user = hudson.model.User.getById(webuserName, true);
+def passwordProperty = hudson.security.HudsonPrivateSecurityRealm.Details.fromPlainPassword(webuserPassword)
+user.addProperty(passwordProperty)
+def keysProperty = new org.jenkinsci.main.modules.cli.auth.ssh.UserPropertyImpl(webuserSshPublickey)
+user.addProperty(keysProperty)
+
+user.save()
+
+// Skip setup wizard
+// https://github.com/jenkinsci/docker/issues/310
+if (!instance.installState.isSetupComplete()) {
+  println '--> Neutering SetupWizard'
+  InstallState.INITIAL_SETUP_COMPLETED.initializeState()
+}
+
+instance.save()
+
+// https://github.com/geerlingguy/ansible-role-jenkins/blob/c9e043335a3f2b61c48d27a173c5b3975f07b6fa/templates/basic-security.groovy
+// https://pghalliday.com/jenkins/groovy/sonar/chef/configuration/management/2014/09/21/some-useful-jenkins-groovy-scripts.html
+// https://github.com/edx/jenkins-configuration/tree/master/src/main/groovy
+// https://github.com/jenkinsci/docker/blob/587b2856cd225bb152c4abeeaaa24934c75aa460/Dockerfile
+// https://wiki.jenkins.io/display/JENKINS/Jenkins+Script+Console
+// https://github.com/hayderimran7/useful-jenkins-groovy-init-scripts/blob/master/useful_groovy_snippets.groovy
+// https://qiita.com/fuku2014/items/995cf34afd126a627c22
+// https://github.com/coreos/jenkins-os/blob/master/init.groovy

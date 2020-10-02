@@ -1,0 +1,36 @@
+#!groovy
+
+// Required to allow jenkins-jobs to actually generate jobs
+// https://stackoverflow.com/questions/46796161/jenkins-add-project-default-build-authorization-programmatically/48268605#48268605
+
+import jenkins.model.Jenkins
+import org.jenkinsci.plugins.authorizeproject.ProjectQueueItemAuthenticator
+import org.jenkinsci.plugins.authorizeproject.strategy.AnonymousAuthorizationStrategy
+import org.jenkinsci.plugins.authorizeproject.strategy.TriggeringUsersAuthorizationStrategy
+import org.jenkinsci.plugins.authorizeproject.strategy.SpecificUsersAuthorizationStrategy
+import jenkins.security.QueueItemAuthenticatorConfiguration
+
+def instance = Jenkins.getInstance()
+
+def strategyMap = [
+  // TODO: Maybe config wont be updated even when this map is changed
+  (instance.getDescriptor(AnonymousAuthorizationStrategy.class).getId()): true,
+  (instance.getDescriptor(TriggeringUsersAuthorizationStrategy.class).getId()): true,
+  (instance.getDescriptor(SpecificUsersAuthorizationStrategy.class).getId()): true,
+]
+
+def authenticators = QueueItemAuthenticatorConfiguration.get().getAuthenticators()
+def shouldConfigureProjectAuthenticator = true
+for(authenticator in authenticators) {
+  if(authenticator instanceof ProjectQueueItemAuthenticator) {
+    // Only add if it does not already exist
+    shouldConfigureProjectAuthenticator = false
+  }
+}
+
+if(shouldConfigureProjectAuthenticator) {
+  println "--> Add ProjectQueueItemAuthenticator to authenticators"
+  authenticators.add(new ProjectQueueItemAuthenticator(strategyMap))
+}
+
+instance.save()

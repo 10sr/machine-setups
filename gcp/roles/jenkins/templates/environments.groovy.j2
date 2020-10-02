@@ -1,0 +1,14 @@
+#!groovy
+
+// https://stackoverflow.com/questions/44156430/set-jenkins-global-variables-init-groovy-d
+
+import jenkins.*
+import jenkins.model.*
+def instance = Jenkins.getInstance()
+println "--> setting Global properties (Environment variables)..."
+def globalProps = hudson.model.Hudson.instance.globalNodeProperties
+def props = globalProps.getAll(hudson.slaves.EnvironmentVariablesNodeProperty.class)
+for (prop in props) {
+  println prop.envVars
+}
+instance.save()

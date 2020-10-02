@@ -1,0 +1,45 @@
+---
+- name: Add JAVA_ARGS
+  # https://wiki.jenkins.io/display/JENKINS/Features+controlled+by+system+properties
+  # Cannot use init groovy to set system properties
+  # To get properties, jenkins.util.SystemProperties can be used
+  # https://javadoc.jenkins.io/jenkins/util/SystemProperties.html
+  blockinfile:
+    path: /etc/default/jenkins
+    marker: "# {mark} Managed by machine-setups/sakura"
+    block: |
+      JAVA_ARGS="$JAVA_ARGS {{ jenkins_java_args }}"
+    insertafter: EOF
+  become: yes
+
+- name: Create custom init scripts directory
+  file:
+    path: "{{ jenkins_home }}/init.groovy.d"
+    state: directory
+    owner: jenkins
+    group: jenkins
+    recurse: yes
+  become: yes
+
+- name: Add Jenkins init hook scripts
+  template:
+    src: "{{ item }}.groovy.j2"
+    dest: "{{ jenkins_home }}/init.groovy.d/{{ item }}.groovy"
+    owner: jenkins
+    group: jenkins
+  with_items:
+    # TODO: Add basic configurations
+    # TODO: Add num to order script
+    - basic-security
+    - plugins
+    - theme
+    - authorize-project
+  become: yes
+  # no_log: yes
+  notify: JENKINS_SAFERESTART
+
+
+- name: Start jenkins
+  service:
+    name: jenkins
+  become: yes

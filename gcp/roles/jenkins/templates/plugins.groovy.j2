@@ -1,0 +1,44 @@
+#!groovy
+
+def plugins = '''{{ jenkins_plugins | join("\n") }}'''.split("\n")
+
+import jenkins.model.Jenkins
+
+def instance  = Jenkins.getInstance()
+
+// https://qiita.com/fuku2014/items/995cf34afd126a627c22
+pluginManager = instance.getPluginManager()
+updateCenter = instance.getUpdateCenter()
+
+updateCenter.updateAllSites()
+
+def ensurePlugin(pluginName) {
+    println "--> Ensuring plugin ${pluginName} ..."
+    if (! pluginManager.getPlugin(pluginName)) {
+        println "--> Install ${pluginName}"
+        deployment = updateCenter.getPlugin(pluginName).deploy(true)
+        deployment.get()
+
+        pluginManager.getPlugin(pluginName).getDependencies().each {
+            println "--> Ensuring plugin ${it.shortName} as dependency of ${pluginName}"
+            ensurePlugin(it.shortName)
+        }
+    }
+
+    def plugin = pluginManager.getPlugin(pluginName)
+    if (! plugin.isEnabled()) {
+        println "--> Enable ${pluginName}"
+        plugin.enable()
+    }
+
+    println "--> Ensuring plugin ${pluginName} ... done"
+}
+
+plugins.each {
+    println "--> Plugin: ${it}"
+    ensurePlugin(it)
+}
+
+
+// TODO: Need to restart when new plugin is instaled?
+// https://github.com/coreos/jenkins-os/blob/master/init.groovy#L34

@@ -46,6 +46,12 @@
             pass: "127.0.0.1:30080"
           - name: jk.{{ _domain_name }}
             pass: "jenkins01:8080"
+            additional_directives:
+              - "proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for"
+              - "proxy_set_header X-Forwarded-Host $host"
+              - "proxy_set_header X-Forwarded-Server $host"
+              - "proxy_set_header X-Forwarded-Proto $scheme"
+              - "proxy_set_header X-Real-IP $remote_addr"
 
     - role: letsencrypt
       # need this?
@@ -62,13 +68,45 @@
 - name: Setup jenkins host
   hosts: label_jenkins_on
   pre_tasks:
-    - debug:
-        msg: "Hostname: {{ ansible_nodename }}"
+    - name: Include all vault variables
+      include_vars:
+        dir: ./vault/
+        name: _vault
+      no_log: yes
+
   roles:
     - name: java_jre
 
     - name: jenkins
       vars:
         jenkins_deb:
-          url: https://pkg.jenkins.io/debian-stable/binary/jenkins_2.204.1_all.deb
-          sha512: 76caa3218b72a8eea8dd98352ab862a935d832cc7d563a2db3da39ceaab4f0c3c47b6a036d7630a7a89da8af83c15bf647085138f7632fdceeccab5924cca466
+          url: https://pkg.jenkins.io/debian-stable/binary/jenkins_2.249.1_all.deb
+          sha512: 3fa05ff20b46493aac8ebe67f96938e2c88833945dbefa8f89499bc484542d352dfbe5cbd56cc1f910ad238fd589bb14aa8f1b90d024bf264f7b83cf8152eac0
+
+        jenkins_webuser_username: admin
+        jenkins_webuser_password: "{{ _vault.jenkins_webuser_password }}"
+        # TODO: This value is too big so separete into file
+        jenkins_webuser_ssh_publickey:
+          # Key of remote ansible normal user
+          - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCtbZCbsB2JSHD8DSShyZOC0SMIx3aDMO30IxGsyGTc+B42QmSoSuD3k1MU1edQ0JRoxpSPCHQrd+Sn+sgPiDzagK9jHsrzwr4nvqVNZ3XOXEjFe9Alf3qkIAbGEHk63HzuA/g3CsXfhPpUPWdG3CnbiddDLfkWCdcI5eTH7tdewuwKF+yh9VbDl9ZPV7P5EInAvQDtxhJnRjOYJ5b3TIYGNeGeo5mFUncKUO3nhi1EWiOquJAo0X2a8ieDEBL5RIqzT/AgKZ+qW2Xh1OvF9v7RpGGPcLHaT50gwieFsaRzJuShMCvaO+XmL4DTg7J7d4o/GfzervDHuzH8cF1AQLV7 admin@jenkins01
+
+        # jenkins_serveruser_password: "{{ _vault.jenkins_serveruser_password }}"
+        # jenkins_serveruser_password_salt: "{{ ansible_mounts.0.uuid.replace('-', '')[:16] }}"
+
+        jenkins_plugins:
+          - ansicolor
+          # - job-dsl
+          # - authorize-project
+          - simple-theme-plugin
+          - slack
+          - prometheus
+
+        # https://github.com/afonsof/jenkins-material-theme/
+        jenkins_theme_css_url: https://cdn.rawgit.com/afonsof/jenkins-material-theme/gh-pages/dist/material-blue-grey.css
+
+        # https://issues.jenkins-ci.org/browse/JENKINS-10160
+        # https://stackoverflow.com/questions/31740373/how-can-i-prevent-that-the-jenkins-log-gets-spammed-with-strange-messages
+        # https://www.ionutgavrilut.com/2018/jenkins-floods-with-DNS-errors/
+        jenkins_java_args: >-
+          -Dhudson.DNSMultiCast.disabled=true
+          -Dhudson.udp=-1

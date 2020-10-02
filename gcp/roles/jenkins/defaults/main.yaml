@@ -2,5 +2,5 @@
 jenkins_home: /var/lib/jenkins
 jenkins_cli_path: /var/cache/jenkins/war/WEB-INF/jenkins-cli.jar
 jenkins_deb:
-  url: "{{ __SPECIFIED__ }}"
+  url: "{{ __UNSPECIFIED__ }}"
   sha512: "{{ __UNSPECIFIED__ }}"

@@ -1,9 +1,13 @@
 ---
-- name: gcp debug
+- name: Configure all hosts
   hosts: all
   tasks:
     - debug:
         msg: "Hostname: {{ ansible_nodename }}"
+    - name: Uninstall nano
+      package:
+        name: nano
+        state: absent
 
 - name: Setup front host
   hosts: label_role_front

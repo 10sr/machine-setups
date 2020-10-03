@@ -3,7 +3,10 @@
   hosts: all
   tasks:
     - debug:
-        msg: "Hostname: {{ ansible_nodename }}"
+        msg: |
+          Hostname: {{ ansible_nodename }}
+          Name: {{ hostvars[inventory_hostname]["name"] }}
+
     - name: Uninstall nano
       package:
         name: nano

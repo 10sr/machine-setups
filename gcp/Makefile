@@ -3,7 +3,7 @@ gcp_project := praxis-practice-289116
 pipenv_run := pipenv run
 
 list-inventory:
-	$(pipenv_run) ansible-inventory --list
+	$(pipenv_run) ansible-inventory --graph
 
 setup:
 	$(pipenv_run) ansible all -m setup

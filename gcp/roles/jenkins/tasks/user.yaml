@@ -1,0 +1,7 @@
+---
+- name: Configure jenkins user
+  user:
+    name: jenkins
+    generate_ssh_key: yes
+  become: yes
+  notify: JENKINS_RESTART

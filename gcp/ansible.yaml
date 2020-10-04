@@ -11,11 +11,21 @@
       package:
         name: nano
         state: absent
+      become: yes
+
+    - name: Install utils
+      package:
+        name:
+          # dig
+          - dnsutils
+          - netcat
+      become: yes
 
 - name: Setup front host
   hosts: label_role_front
   vars:
     _domain_name: halt2.net
+
   pre_tasks:
     - name: Include all vault variables
       include_vars:
@@ -72,7 +82,7 @@
       letsencrypt_ssl_key_dir: /etc/letsencrypt/live/{{ _domain_name }}
       letsencrypt_ssl_dhparam_path: /etc/ssl/private/dhparam.pem
 
-- name: Setup jenkins host
+- name: Setup jenkins
   hosts: label_jenkins_on
   pre_tasks:
     - name: Include all vault variables
@@ -83,6 +93,7 @@
 
   roles:
     - name: java_jre
+      vars: {}
 
     - name: jenkins
       vars:
@@ -117,3 +128,10 @@
         jenkins_java_args: >-
           -Dhudson.DNSMultiCast.disabled=true
           -Dhudson.udp=-1
+
+# - name: Setup postfix
+#   hosts: label_postfix_on
+#   roles:
+#     - name: postfix
+#       vars:
+#         postfix_root_alias: 8.slashes@gmail.com

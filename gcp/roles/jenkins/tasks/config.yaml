@@ -33,6 +33,7 @@
     - basic-security
     - plugins
     - theme
+    - email-ext
     # - authorize-project
   become: yes
   # no_log: yes

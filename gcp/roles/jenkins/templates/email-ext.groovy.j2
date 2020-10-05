@@ -1,0 +1,21 @@
+#!groovy
+// https://nickcharlton.net/posts/configuring-jenkins-email-ext-plugin-groovy.html
+
+def smtpServer = "{{ jenkins_smtp_server }}"
+def smtpPort = "{{ jenkins_smtp_port }}"
+def defaultRecipients = "{{ jenkins_default_recipients }}"
+
+import jenkins.model.Jenkins
+
+def instance = Jenkins.getInstance()
+def emailExt = instance.getDescriptor(
+  "hudson.plugins.emailext.ExtendedEmailPublisher")
+
+emailExt.setSmtpServer(smtpServer)
+emailExt.setSmtpPort(smtpPort)
+emailExt.setCharset("utf-8")
+emailExt.setDefaultRecipients(defaultRecipients)
+
+emailExt.save()
+
+println "--> Extended Email Configured"

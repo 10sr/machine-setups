@@ -122,6 +122,10 @@
         # https://github.com/afonsof/jenkins-material-theme/
         jenkins_theme_css_url: https://cdn.rawgit.com/afonsof/jenkins-material-theme/gh-pages/dist/material-cyan.css
 
+        jenkins_smtp_server: front01
+        jenkins_smtp_port: 25
+        jenkins_default_recipients: "8.slashes@gmail.com"
+
         # https://issues.jenkins-ci.org/browse/JENKINS-10160
         # https://stackoverflow.com/questions/31740373/how-can-i-prevent-that-the-jenkins-log-gets-spammed-with-strange-messages
         # https://www.ionutgavrilut.com/2018/jenkins-floods-with-DNS-errors/

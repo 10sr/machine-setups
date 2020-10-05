@@ -129,9 +129,22 @@
           -Dhudson.DNSMultiCast.disabled=true
           -Dhudson.udp=-1
 
-# - name: Setup postfix
-#   hosts: label_postfix_on
-#   roles:
-#     - name: postfix
-#       vars:
-#         postfix_root_alias: 8.slashes@gmail.com
+- name: Setup postfix
+  hosts: label_postfix_on
+  pre_tasks:
+    - name: Include all vault variables
+      include_vars:
+        dir: ./vault/
+        name: _vault
+      no_log: yes
+
+  roles:
+    - name: postfix
+      vars:
+        # Allow relay from asia-northeast01 VPC
+        postfix_mynetwork: "127.0.0.0/8 [::ffff:127.0.0.0]/104 [::1]/128 10.146.0.0/20"
+        postfix_smtp_hostname: smtp.mailgun.org
+        postfix_smtp_port: 587
+        postfix_smtp_login: postmaster@m.halt2.net
+        postfix_smtp_password: "{{ _vault.mailgun_smtp_password }}"
+        postfix_root_alias: 8.slashes@gmail.com

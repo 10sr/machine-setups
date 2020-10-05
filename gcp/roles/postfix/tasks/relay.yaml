@@ -1,0 +1,46 @@
+---
+- lineinfile:
+    dest: /etc/postfix/main.cf
+    regexp: "^{{ item.key }} ?="
+    line: "{{ item.key }}={{ item.value }}"
+  with_dict:
+    # myhostname: "{{ postfix_myhostname }}"
+    # myorigin: "{{ postfix_myorigin }}"
+    mynetworks: "{{ postfix_mynetwork }}"
+    relayhost: "[{{ postfix_smtp_hostname }}]:{{ postfix_smtp_port }}"
+    smtp_use_tls: "yes"
+    smtp_sasl_auth_enable: "yes"
+    smtp_sasl_password_maps: hash:/etc/postfix/sasl_password
+    # smtp_sasl_security_options: noanonymous
+    smtp_sasl_tls_security_options: noanonymous
+    smtp_sasl_mechanism_filter: plain
+    # smtp_tls_CApath: /etc/ssl/certs/ca-certificates.crt
+    # smtp_tls_security_level: may
+    smtp_tls_loglevel: 1
+  become: yes
+  register: _postfix_maincf
+
+- file:
+    dest: /etc/postfix/sasl_password
+    mode: "0600"
+    state: touch
+    owner: root
+    group: root
+  become: yes
+
+- lineinfile:
+    dest: /etc/postfix/sasl_password
+    line: "[{{ postfix_smtp_hostname }}]:{{ postfix_smtp_port }} {{ postfix_smtp_login }}:{{ postfix_smtp_password }}"
+  become: yes
+  register: _sasl_password
+
+- command: postmap /etc/postfix/sasl_password
+  become: yes
+  when: _sasl_password.changed
+
+- service:
+    name: postfix
+    state: restarted
+  when: _postfix_maincf.changed or _sasl_password.changed
+  become: yes
+

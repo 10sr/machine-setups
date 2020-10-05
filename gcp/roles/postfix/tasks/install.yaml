@@ -1,0 +1,6 @@
+---
+- name: Install postfix
+  apt:
+    name: postfix
+  become: yes
+

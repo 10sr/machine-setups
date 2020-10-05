@@ -1,0 +1,21 @@
+---
+
+- import_tasks: install.yaml
+- import_tasks: relay.yaml
+
+# - name: Fix config for gmail
+#   lineinfile:
+#     dest: /etc/postfix/main.cf
+#     regexp: "^inet_protocols "
+#     line: "inet_protocols = ipv4"
+#   become: yes
+#   register: _postfix_inet_protocols
+
+# - name: Restart postfix
+#   service:
+#     name: postfix
+#     state: restarted
+#   become: yes
+#   when: _postfix_inet_protocols is changed
+
+- import_tasks: alias.yaml

@@ -36,4 +36,5 @@ restart:
 
 # TODO: Create job to fetch all job XMLs
 get-job:
-	$(ssh) $(jenkins) get-job env >env.xml
+	test -n "$(job)"
+	$(ssh) $(jenkins) get-job $(job) >$(job).xml

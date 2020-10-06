@@ -1,14 +1,27 @@
 #!groovy
+// https://github.com/bineshkammily/adop-docker-compose-ps-master/blob/8d947ff6e28904376e6d8a4ab44fe5eab33dc0c6/jenkins/resources/init.groovy.d/set_global_vars.groovy
 
-// https://stackoverflow.com/questions/44156430/set-jenkins-global-variables-init-groovy-d
+import hudson.model.*;
+import jenkins.model.*;
 
-import jenkins.*
-import jenkins.model.*
-def instance = Jenkins.getInstance()
-println "--> setting Global properties (Environment variables)..."
-def globalProps = hudson.model.Hudson.instance.globalNodeProperties
-def props = globalProps.getAll(hudson.slaves.EnvironmentVariablesNodeProperty.class)
-for (prop in props) {
-  println prop.envVars
+instance = Jenkins.getInstance()
+globalNodeProperties = instance.getGlobalNodeProperties()
+envVarsNodePropertyList = globalNodeProperties.getAll(hudson.slaves.EnvironmentVariablesNodeProperty.class)
+
+newEnvVarsNodeProperty = null
+envVars = null
+
+if ( envVarsNodePropertyList == null || envVarsNodePropertyList.size() == 0 ) {
+  newEnvVarsNodeProperty = new hudson.slaves.EnvironmentVariablesNodeProperty();
+  globalNodeProperties.add(newEnvVarsNodeProperty)
+  envVars = newEnvVarsNodeProperty.getEnvVars()
+} else {
+  envVars = envVarsNodePropertyList.get(0).getEnvVars()
 }
+
+// put Global env vars here
+{% for k, v in jenkins_global_environment_variables.items()  %}
+envVars.put("{{ k }}", "{{ v }}")
+{% endfor %}
+
 instance.save()

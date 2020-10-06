@@ -133,6 +133,9 @@
           -Dhudson.DNSMultiCast.disabled=true
           -Dhudson.udp=-1
 
+        jenkins_global_environment_variables:
+          P_TXT_REPOSITORY: "{{ _vault.p_txt_repository }}"
+
 - name: Setup postfix
   hosts: label_postfix_on
   pre_tasks:

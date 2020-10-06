@@ -59,7 +59,7 @@
       </configuredTriggers>
       <contentType>default</contentType>
       <defaultSubject>$DEFAULT_SUBJECT</defaultSubject>
-      <defaultContent>$DEFAULT_CONTENT
+      <defaultContent>$BUILD_URL
 
 $BUILD_LOG</defaultContent>
       <attachmentsPattern></attachmentsPattern>

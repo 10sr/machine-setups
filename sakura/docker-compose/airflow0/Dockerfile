@@ -15,4 +15,4 @@ ARG AIRFLOW_VERSION=1.9.0
 # werkzeug==0.15.2 is required to avoid ImportError: cannot import name 'import_string' from 'werkzeug' error
 # https://blog.csdn.net/weixin_41759152/article/details/105990535
 # pasword subpackage is required for password login
-RUN pip install apache-airflow[mysql,password]==${AIRFLOW_VERSION} werkzeug==0.15.2 cryptography
+RUN pip install apache-airflow[mysql,password,crypto]==${AIRFLOW_VERSION} werkzeug==0.15.2

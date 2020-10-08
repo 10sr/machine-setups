@@ -1,0 +1,32 @@
+---
+version: '3'
+
+services:
+  scheduler:
+    build: .
+    command: airflow scheduler
+    env_file:
+      - ../airflow0.env
+    environment:
+      - AIRFLOW_HOME=/airflow
+    volumes:
+      - ./airflow.cfg:/airflow/ariflow.cfg:ro
+      - ./dags:/airflow/dags:ro
+      # - ./plugins:/airflow/plugins:ro
+      - /var/lib/data/docker/airflow0/logs:/airflow/logs
+
+  webserver:
+    build: .
+    command: airflow webserver
+    ports:
+      - "127.0.0.1:8999:8080"
+    env_file:
+      - ../airflow0.env
+    environment:
+      - AIRFLOW_HOME=/airflow
+    volumes:
+      - ./create_user.py:/create_user.py:ro
+      - ./airflow.cfg:/airflow/ariflow.cfg:ro
+      - ./dags:/airflow/dags:ro
+      # - ./plugins:/airflow/plugins:ro
+      - /var/lib/data/docker/airflow0/logs:/airflow/logs

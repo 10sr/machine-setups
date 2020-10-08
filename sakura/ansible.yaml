@@ -71,6 +71,7 @@
       letsencrypt_register_email: 8.slashes@gmail.com
       letsencrypt_domain_names:
         - "{{ _domain_name }}"
+        - af.{{ _domain_name }}
         - st.{{ _domain_name }}
         - minio.st.{{ _domain_name }}
         - nc.{{ _domain_name }}
@@ -107,6 +108,7 @@
       # non ssl
       nginx_default_root: /var/nginx/main
       nginx_name_ssl_only:
+        - "af.{{ _domain_name }}"
         - "nc.{{ _domain_name }}"
         - "gt.{{ _domain_name }}"
         - "gb.{{ _domain_name }}"
@@ -152,6 +154,8 @@
         - path: /bucket-webtools-static
           port: 30009
       nginx_ssl_host_proxies:
+        - name: "af.{{ _domain_name }}"
+          port: 8999
         - name: "nc.{{ _domain_name }}"
           port: 8888
           additional_directives:
@@ -188,6 +192,14 @@
       docker_ubuntu_codename: "{{ _ubuntu_codename }}"
       docker_compose_path: ./docker-compose
       docker_compose_env:
+        airflow0:
+          AIRFLOW__CORE__SQL_ALCHEMY_CONN: mysql+mysqldb://airflow:{{ _vault.mysql_password_airflow }}@172.17.0.1:3306/airflow?charset=ascii
+          # mariadb dialect will be available after:
+          # https://github.com/sqlalchemy/sqlalchemy/commit/cd03b8f0cecbf72ecd6c99c4d3a6338c8278b40d
+          # AIRFLOW__CORE__SQL_ALCHEMY_CONN: mariadb+mysqldb://airflow:{{ _vault.mysql_password_airflow }}@172.17.0.1:3306/airflow?charset=ascii
+          AIRFLOW__WEBSERVER__BASE_URL: https://af.{{ _domain_name }}
+        ghost0:
+          NGINX_SERVER_NAME: "b.{{ _domain_name }}"
         ghost0:
           NGINX_SERVER_NAME: "b.{{ _domain_name }}"
         instiki0:
@@ -405,10 +417,19 @@
 
     - role: mysql
       vars:
+        mysql_databases:
+          - name: airflow
+            # Avoid 1071 error
+            # https://stackoverflow.com/questions/42260618/apache-airflow-mysql-specified-key-was-too-long-max-key-length-is-1000-bytes
+            encoding: ascii
         mysql_users:
           - name: "10sr"
             password: "{{ _vault.mysql_password_10sr }}"
             priv: "*.*:ALL"
+            host: "%"
+          - name: "airflow"
+            password: "{{ _vault.mysql_password_airflow }}"
+            priv: "airflow.*:ALL"
             host: "%"
 
     - role: ldap

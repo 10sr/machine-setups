@@ -1,7 +1,34 @@
 ---
+- name: Configure
+  lineinfile:
+    dest: /etc/mysql/mariadb.conf.d/50-server.cnf
+    regexp: "^{{ item.key }}\\s*="
+    line: "{{ item.key }} = {{ item.value }}"
+  with_items:
+    - key: bind-address
+      value: 0.0.0.0
+  become: yes
+  register: _mysql_conf
+
+- name: Restart mysql
+  service:
+    name: mysql
+    state: restarted
+  when: _mysql_conf is changed
+  become: yes
+
+
 - name: Install pymysql
   apt:
     name: python-pymysql
+  become: yes
+
+- name: Add databases
+  mysql_db:
+    name: "{{ item.name }}"
+    encoding: "{{ item.encoding | default(omit) }}"
+    login_unix_socket: /var/run/mysqld/mysqld.sock
+  loop: "{{ mysql_databases }}"
   become: yes
 
 - name: Add users
@@ -13,3 +40,17 @@
     login_unix_socket: /var/run/mysqld/mysqld.sock
   loop: "{{ mysql_users }}"
   become: yes
+
+
+# - name: Set variables
+#   mysql_variables:
+#     variable: "{{ item.key }}"
+#     value: "{{ item.value }}"
+#     login_unix_socket: /var/run/mysqld/mysqld.sock
+#   with_dict:
+#     # # https://yakst.com/ja/posts/734
+#     # innodb_large_prefix: "ON"
+#   become: yes
+
+
+# TODO: explicit_defaults_for_timestamp = 1 in mysqld

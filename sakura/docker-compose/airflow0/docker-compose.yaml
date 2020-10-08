@@ -10,7 +10,7 @@ services:
     environment:
       - AIRFLOW_HOME=/airflow
     volumes:
-      - ./airflow.cfg:/airflow/ariflow.cfg:ro
+      - ./airflow.cfg:/airflow/airflow.cfg:ro
       - ./dags:/airflow/dags:ro
       # - ./plugins:/airflow/plugins:ro
       - /var/lib/data/docker/airflow0/logs:/airflow/logs
@@ -26,7 +26,7 @@ services:
       - AIRFLOW_HOME=/airflow
     volumes:
       - ./create_user.py:/create_user.py:ro
-      - ./airflow.cfg:/airflow/ariflow.cfg:ro
+      - ./airflow.cfg:/airflow/airflow.cfg:ro
       - ./dags:/airflow/dags:ro
       # - ./plugins:/airflow/plugins:ro
       - /var/lib/data/docker/airflow0/logs:/airflow/logs

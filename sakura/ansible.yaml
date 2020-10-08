@@ -198,6 +198,7 @@
           # https://github.com/sqlalchemy/sqlalchemy/commit/cd03b8f0cecbf72ecd6c99c4d3a6338c8278b40d
           # AIRFLOW__CORE__SQL_ALCHEMY_CONN: mariadb+mysqldb://airflow:{{ _vault.mysql_password_airflow }}@172.17.0.1:3306/airflow?charset=ascii
           AIRFLOW__WEBSERVER__BASE_URL: https://af.{{ _domain_name }}
+          AIRFLOW__CORE__FERNET_KEY: "{{ _vault.airflow_fernet_key }}"
         ghost0:
           NGINX_SERVER_NAME: "b.{{ _domain_name }}"
         ghost0:

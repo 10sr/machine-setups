@@ -10,7 +10,8 @@ user = PasswordUser(models.User())
 
 user.username = input("Username: ")
 user.email = input("Email: ")
-user.password = getpass()
+# https://stackoverflow.com/questions/48075826/airflow-authentication-setups-fails-with-attributeerror-cant-set-attribute
+user._set_password = getpass()
 
 session = settings.Session()
 session.add(user)

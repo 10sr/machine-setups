@@ -5,6 +5,7 @@ services:
   scheduler:
     build: .
     command: airflow scheduler
+    restart: always
     env_file:
       - ../airflow0.env
     environment:
@@ -18,6 +19,7 @@ services:
   webserver:
     build: .
     command: airflow webserver
+    restart: always
     ports:
       - "127.0.0.1:8999:8080"
     env_file:

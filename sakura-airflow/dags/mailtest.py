@@ -10,21 +10,26 @@ task_default_args = {
     'owner': 'admin',
     'depends_on_past': False,
     'start_date': days_ago(2),
-    'email': ['airflow@example.com'],
-    'email_on_failure': False,
-    'email_on_retry': False,
+    'email': ['8.slashes@gmail.com'],
+    'email_on_failure': True,
+    'email_on_retry': True,
     'retries': 1,
     'retry_delay': timedelta(minutes=5),
 }
 dag = DAG(
-    'test2',
+    'mailtest',
     default_args=task_default_args,
-    description='Test2 DAG',
-    schedule_interval=timedelta(days=1),
+    description='Mail Test',
+    schedule_interval=None,
 )
 
 t1 = BashOperator(
-    task_id='print_date',
-    bash_command='set -eux -o pipefail; date; hostname; whoami',
+    task_id='task_failures',
+    bash_command=("set -eux -o pipefail; " +
+                  "date; " +
+                  "hostname; " +
+                  "whoami; " +
+                  "echo 'run_id={{ run_id }} dag_run={{ dag_run }}'; " +
+                  "false; "),
     dag=dag,
 )

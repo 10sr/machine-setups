@@ -199,6 +199,12 @@
           # AIRFLOW__CORE__SQL_ALCHEMY_CONN: mariadb+mysqldb://airflow:{{ _vault.mysql_password_airflow }}@172.17.0.1:3306/airflow?charset=ascii
           AIRFLOW__WEBSERVER__BASE_URL: https://af.{{ _domain_name }}
           AIRFLOW__CORE__FERNET_KEY: "{{ _vault.airflow_fernet_key }}"
+          AIRFLOW__SMTP__SMTP_HOST: smtp.mailgun.org
+          AIRFLOW__SMTP__SMTP_STARTTLS: True
+          AIRFLOW__SMTP__SMTP_USER: postmaster@m.3ends.info
+          AIRFLOW__SMTP__SMTP_PASSWORD: "{{ _vault.postfix_smtp_password }}"
+          AIRFLOW__SMTP__SMTP_PORT: 587
+          AIRFLOW__SMTP__SMTP_MAIL_FROM: airflow@m.3ends.info
         ghost0:
           NGINX_SERVER_NAME: "b.{{ _domain_name }}"
         ghost0:

@@ -15,6 +15,7 @@ services:
       - ./dags:/airflow/dags:ro
       # - ./plugins:/airflow/plugins:ro
       - /var/lib/data/docker/airflow0/logs:/airflow/logs
+      - /var/run/docker.sock:/var/run/docker.sock
 
   webserver:
     build: .

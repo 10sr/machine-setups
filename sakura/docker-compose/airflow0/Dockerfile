@@ -1,6 +1,23 @@
-# Python3.7 cannot run airflow 1.9.0 because of async symbol
-# FROM python:3.7
 FROM python:3.6
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+
+# Install docker
+# https://docs.docker.com/engine/install/debian/
+RUN apt update
+RUN apt install -y \
+        apt-transport-https \
+        ca-certificates \
+        curl \
+        gnupg-agent \
+        software-properties-common
+
+RUN curl -fsSL https://download.docker.com/linux/debian/gpg | apt-key add -
+RUN add-apt-repository \
+        "deb [arch=amd64] https://download.docker.com/linux/debian $(lsb_release -cs) stable"
+RUN apt update
+RUN apt install -y docker-ce-cli
+
+
 
 # Airflow 1.10 系は initdb 時に explicit_defaults_for_timestamp = 1 を設定しようとするが、
 # 現在の MariaDB Ver 10.0.38-MariaDB-0ubuntu0.16.04.1 はこれをサポートしていない。

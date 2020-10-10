@@ -33,7 +33,7 @@ t_bash_test = BashOperator(
 t_docker_test = DockerOperator(
     task_id='t_docker_test',
     image="debian",
-    command='set -eux -o pipefail; env; date; hostname; whoami',
+    command="['bash', '-c', 'set -eux -o pipefail; env; date; hostname; whoami']",
     dag=dag,
 )
 

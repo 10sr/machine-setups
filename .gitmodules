@@ -1,6 +1,6 @@
 [submodule "sakura-kubernetes/dashboard/metrics-server"]
-	path = sakura-kubernetes/dashboard/metrics-server
+	path = _sakura-kubernetes/dashboard/metrics-server
 	url = https://github.com/kubernetes-sigs/metrics-server.git
 [submodule "sakura-kubernetes/dashboard/dashboard"]
-	path = sakura-kubernetes/dashboard/dashboard
+	path = _sakura-kubernetes/dashboard/dashboard
 	url = https://github.com/kubernetes/dashboard.git

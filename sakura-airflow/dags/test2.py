@@ -2,6 +2,7 @@ from datetime import timedelta
 
 from airflow import DAG
 from airflow.operators.bash_operator import BashOperator
+from airflow.operators.docker_operator import DockerOperator
 from airflow.utils.dates import days_ago
 
 # These args will get passed on to each operator
@@ -23,8 +24,23 @@ dag = DAG(
     schedule_interval=timedelta(days=1),
 )
 
-t1 = BashOperator(
-    task_id='print_date',
-    bash_command='set -eux -o pipefail; date; hostname; whoami',
+t_bash_test = BashOperator(
+    task_id='t_bash_test',
+    bash_command='set -eux -o pipefail; env; date; hostname; whoami',
     dag=dag,
 )
+
+t_docker_test = DockerOperator(
+    task_id='t_docker_test',
+    image="debian",
+    command='set -eux -o pipefail; env; date; hostname; whoami',
+    dag=dag,
+)
+
+t_post_cmd = BashOperator(
+    task_id='t_post_cmd',
+    bash_command='echo "SUCCESS!"',
+    dag=dag,
+)
+
+[t_bash_test, t_docker_test] >> t_post_cmd

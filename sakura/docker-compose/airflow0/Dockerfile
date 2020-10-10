@@ -33,3 +33,6 @@ ARG AIRFLOW_VERSION=1.9.0
 # https://blog.csdn.net/weixin_41759152/article/details/105990535
 # pasword subpackage is required for password login
 RUN pip install apache-airflow[mysql,password,crypto]==${AIRFLOW_VERSION} werkzeug==0.15.2
+
+# docker.Client has been renamed in 2.0.0
+RUN pip install docker-py[tls]==1.10.6

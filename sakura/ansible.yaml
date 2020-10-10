@@ -409,9 +409,9 @@
         nfs_exports_content: |
           /var/lib/data/nfs/kubernetes tk2-407-44672.vs.sakura.ne.jp(rw,sync,no_root_squash,no_subtree_check)
 
-    - role: kubernetes
-      vars:
-        kubernetes_ubuntu_codename: "{{ _ubuntu_codename }}"
+    # - role: kubernetes
+    #   vars:
+    #     kubernetes_ubuntu_codename: "{{ _ubuntu_codename }}"
 
     - role: gitea_ssh_passthrough
       # when: no

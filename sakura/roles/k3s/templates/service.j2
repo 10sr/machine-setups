@@ -25,4 +25,4 @@ Restart=always
 RestartSec=5s
 ExecStartPre=-/sbin/modprobe br_netfilter
 ExecStartPre=-/sbin/modprobe overlay
-ExecStart=/usr/local/bin/k3s server
+ExecStart=/usr/local/bin/k3s server --write-kubeconfig-mode 664

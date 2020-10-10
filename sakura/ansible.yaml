@@ -412,6 +412,8 @@
     # - role: kubernetes
     #   vars:
     #     kubernetes_ubuntu_codename: "{{ _ubuntu_codename }}"
+    - name: k3s
+      vars: {}
 
     - role: gitea_ssh_passthrough
       # when: no

@@ -1,0 +1,29 @@
+---
+# - name: Create directory for archive files
+#   file:
+#     # TODO: Parameterize
+#     path: /var/lib/machine-setups/roles/k3s
+#     state: directory
+#   become: yes
+
+
+- name: Fetch k3s executable archive
+  get_url:
+    url: "{{ k3s_executable.url }}"
+    checksum: sha256:{{ k3s_executable.sha256 }}
+    dest: /usr/local/bin/k3s
+  register: _fetch_result
+  become: yes
+
+
+- name: chmod
+  file:
+    path: /usr/local/bin/k3s
+    mode: "0755"
+  become: yes
+
+- name: Create service unit file
+  template:
+    src: service.j2
+    dest: /etc/systemd/system/k3s.service
+  become: yes

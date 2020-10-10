@@ -1,0 +1,3 @@
+k3s_executable:
+  url: https://github.com/rancher/k3s/releases/download/v1.19.2%2Bk3s1/k3s
+  sha256: 1d2d845a9ec45545479ef75bad77d0837e03edb18be3b5f4186fd86762f22a60

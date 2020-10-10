@@ -2,5 +2,6 @@
 - name: Start k3s service
   service:
     name: k3s
+    state: started
     enabled: true
   become: yes

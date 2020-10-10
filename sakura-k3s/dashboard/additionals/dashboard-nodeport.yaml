@@ -1,0 +1,20 @@
+---
+# 以下を参考に作成
+# https://github.com/kubernetes/dashboard/blob/v2.0.0-beta8/aio/deploy/alternative.yaml#L32
+kind: Service
+apiVersion: v1
+metadata:
+  # TODO: label はつけるべき？
+  # labels:
+  #   k8s-app: kubernetes-dashboard
+  name: kubernetes-dashboard-nodeport
+  namespace: kubernetes-dashboard
+spec:
+  type: NodePort
+  selector:
+    k8s-app: kubernetes-dashboard
+  ports:
+    - protocol: TCP
+      port: 9090
+      targetPort: 9090
+      nodePort: 30090

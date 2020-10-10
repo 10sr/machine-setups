@@ -1,0 +1,182 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis-service
+spec:
+  type: ClusterIP
+  selector:
+    app: redis
+  ports:
+    - port: 6379
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: minio-service
+spec:
+  type: ClusterIP
+  selector:
+    app: minio
+  ports:
+    - port: 9000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: minio-nodeport
+spec:
+  type: NodePort
+  selector:
+    app: minio
+  ports:
+    - protocol: TCP
+      port: 9000
+      nodePort: 30009
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: webtools-nodeport
+spec:
+  type: NodePort
+  selector:
+    app: webtools
+  ports:
+    - protocol: TCP
+      port: 7700
+      nodePort: 30770
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis-deployment
+  labels:
+    app: redis
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: redis
+  template:
+    metadata:
+      labels:
+        app: redis
+    spec:
+      containers:
+        - name: redis
+          image: redis
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webtools-deployment
+  labels:
+    app: webtools
+spec:
+  selector:
+    matchLabels:
+      app: webtools
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: webtools
+    spec:
+      initContainers:
+        - name: prepare-settings-toml
+          image: webtools
+          args:
+            - sh
+            - /configmap_files/webtools_init.sh
+          env:
+            - name: WEBTOOLS_SETTINGS_TOML
+              value: /init_volume/settings.toml
+            - name: REDIS_SERVICE_NAME
+              value: $(REDIS_SERVICE_NAME)
+            - name: MINIO_SERVICE_NAME
+              value: $(MINIO_SERVICE_NAME)
+            - name: WEBTOOLS_AWS_SECRET_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: secret-files
+                  key: minio_secret_key
+            - name: WEBTOOLS_SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: secret-files
+                  key: webtools_secret_key
+          envFrom:
+            - configMapRef:
+                name: configmap-for-env
+          volumeMounts:
+            - name: configmap-files-volume
+              mountPath: /configmap_files
+            - name: init-volume
+              mountPath: /init_volume
+      containers:
+        - name: webtools
+          image: webtools
+          env:
+            - name: WEBTOOLS_SETTINGS_TOML
+              value: /init_volume/settings.toml
+          volumeMounts:
+            - name: init-volume
+              mountPath: /init_volume
+      volumes:
+        - name: configmap-files-volume
+          configMap:
+            name: configmap-files
+        - name: init-volume
+          emptyDir: {}
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: minio-deployment
+  labels:
+    app: minio
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: minio
+  template:
+    metadata:
+      labels:
+        app: minio
+    spec:
+      containers:
+        - name: minio
+          image: minio/minio
+          args:
+            - server
+            - /export
+            - --address
+            - 0.0.0.0:9000
+          env:
+            - name: MINIO_SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: secret-files
+                  key: minio_secret_key
+          envFrom:
+            - configMapRef:
+                name: configmap-for-env
+          volumeMounts:
+            - name: export-hostpath
+              mountPath: /export
+            - name: config-hostpath
+              mountPath: /root/.minio
+      volumes:
+        - name: export-hostpath
+          hostPath:
+            path: /var/lib/data/kubernetes-hostpath/exposed.webtools/minio/export
+            type: Directory
+        - name: config-hostpath
+          hostPath:
+            path: /var/lib/data/kubernetes-hostpath/exposed.webtools/minio/config
+            type: Directory

@@ -1,0 +1,56 @@
+user www-data;
+worker_processes  2;
+
+error_log  /var/log/nginx/error.log warn;
+pid        /var/run/nginx.pid;
+
+
+events {
+  worker_connections  1024;
+}
+
+
+http {
+  include       /etc/nginx/mime.types;
+  default_type  application/octet-stream;
+
+  # log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
+  # '$status $body_bytes_sent "$http_referer" '
+  # '"$http_user_agent" "$http_x_forwarded_for"';
+
+  # access_log  /var/log/nginx/access.log  main;
+
+  sendfile        on;
+  #tcp_nopush     on;
+
+  keepalive_timeout  65;
+
+  #gzip  on;
+
+  server {
+    listen 9089;
+    server_name _;
+
+    location /pt {
+      # proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+      # proxy_set_header Host $host;
+      # proxy_set_header X-Forwarded-Proto $scheme;
+      # proxy_set_header X-Real-IP $remote_addr;
+      proxy_pass http://$PROM_SERVICE_NAME:9090;
+    }
+    location /am {
+      # proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+      # proxy_set_header Host $host;
+      # proxy_set_header X-Forwarded-Proto $scheme;
+      # proxy_set_header X-Real-IP $remote_addr;
+      proxy_pass http://$AM_SERVICE_NAME:9093;
+    }
+    location /gf {
+      proxy_pass http://$GRAFANA_SERVICE_NAME:3000;
+    }
+    location /{
+        absolute_redirect off;
+        return 303 /pt;
+    }
+  }
+}

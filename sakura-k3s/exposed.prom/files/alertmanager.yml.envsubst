@@ -1,0 +1,34 @@
+# -*- mode: yaml; -*-
+---
+#global: {}
+
+# https://www.techscore.com/blog/2017/12/07/prometheus-monitoring-setting/
+route:
+  # receiver: ルート名の指定
+  receiver: email
+  # group_by: アラートを同じ種類とみなす条件
+  # この場合、アラート名で判定されます
+  group_by: [NodeInstanceDown]
+  # group_wait: 同じ種類のアラートを1つのアラート群としてにまとめる時間
+  group_wait:      10s
+  # group_interval: 同じ種類のアラートが発生した時に次回通知するまでの時間
+  group_interval:  5m
+  # repeat_interval:正常に発砲されたアラートが再度通知されるまでの時間
+  repeat_interval: 1h
+
+  #routes:
+
+receivers:
+  - name: httppost
+    webhook_configs:
+      - url: 'http://3ends.info'
+        send_resolved: true
+
+  - name: email
+    email_configs:
+      - send_resolved: true
+        to: $AM_EMAIL_TO
+        from: $AM_EMAIL_FROM
+        smarthost: $AM_SMTP_SMARTHOST
+        auth_username: "$AM_SMTP_USERNAME"
+        auth_password: "$AM_SMTP_PASSWORD"

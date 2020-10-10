@@ -1,0 +1,13 @@
+# Manifest patch for dashboard/dashboard/aio/deploy/alternative.yaml v2.0.0-rc5
+# resources.
+
+---
+spec:
+  template:
+    spec:
+      containers:
+        - name: kubernetes-dashboard
+          args:
+            - --namespace=kubernetes-dashboard
+            - --enable-skip-login
+            # - --insecure-bind-address 0.0.0.0

@@ -1,0 +1,17 @@
+# Namespaces
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: kexample
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: exposed
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: internal

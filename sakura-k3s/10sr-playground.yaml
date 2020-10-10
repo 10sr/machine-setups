@@ -1,0 +1,171 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: 10sr-playground
+
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: sa1
+  namespace: 10sr-playground
+# False to disable pod token automount
+automountServiceAccountToken: true
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: role1
+  namespace: 10sr-playground
+rules:
+  - apiGroups:
+      - apps
+      - extensions
+    resources:
+      - replicasets
+      - deployments
+      - deployments/scale
+    verbs:
+      - "*"
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: rolebind1
+  namespace: 10sr-playground
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  # ここに Role 以外が入ることはありうる？
+  kind: Role
+  name: role1
+subjects:
+  - kind: ServiceAccount
+    name: sa1
+    # RoleBinding 自身以外の namespace はここで参照可能なのか？
+    namespace: 10sr-playground
+  
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: webtools-nodeport
+  namespace: 10sr-playground
+spec:
+  type: NodePort
+  selector:
+    app: webtools
+  ports:
+    - protocol: TCP
+      port: 7700
+      nodePort: 30077
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-nodeport
+  namespace: 10sr-playground
+spec:
+  type: NodePort
+  selector:
+    app: nginx
+  ports:
+    - protocol: TCP
+      port: 80
+      nodePort: 30080
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webtools-deployment
+  namespace: 10sr-playground
+  labels:
+    app: webtools
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: webtools
+  template:
+    metadata:
+      labels:
+        app: webtools
+    spec:
+      containers:
+        - name: webtools
+          image: quay.io/10sr/webtools:v0.0.8
+          ports:
+            - containerPort: 7700
+          env:
+            - name: WEBTOOLS_SETTINGS_TOML
+              value: ./settings_insecure.toml
+          volumeMounts:
+            - name: nfs-pvc01-volume
+              mountPath: /nfs-pvc-volume
+      volumes:
+        - name: nfs-pvc01-volume
+          persistentVolumeClaim:
+            claimName: nfs-pvc01
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nginx-configmap
+  namespace: 10sr-playground
+data:
+  nginx_index_html: |
+    nginx of k8s
+    10sr-playground
+  nginx_cmd_sh: |
+    #!/bin/sh
+    set -eux
+    cp -pf /configmap_volume/nginx_index_html /usr/share/nginx/html/index.html
+    echo `hostname` >>/usr/share/nginx/html/index.html
+    exec nginx -g "daemon off;"
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+  namespace: 10sr-playground
+  labels:
+    app: nginx
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      serviceAccountName: sa1
+      # Overwrite serviceaccount automount config
+      automountServiceAccountToken: true
+      containers:
+        - name: nginx
+          image: nginx
+          args: [ "sh", "/configmap_volume/nginx_cmd_sh" ]
+          ports:
+            - containerPort: 80
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 80
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 80
+          volumeMounts:
+            - name: nginx-configmap-volume
+              mountPath: /configmap_volume
+      volumes:
+        - name: nginx-configmap-volume
+          configMap:
+            name: nginx-configmap

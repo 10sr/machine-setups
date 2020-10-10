@@ -1,0 +1,31 @@
+---
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+# bases:
+#   - base
+resources:
+  - resources.yaml
+
+namespace: kexample
+commonLabels:
+  kustomize: kexample
+nameSuffix: -kexample
+
+configMapGenerator:
+  - name: configmap-from-envfile
+    env: configs.env
+  - name: configmap-from-file-content
+    files:
+      - files/data.txt
+      - files/nginx_cmd.sh
+      - files/nginx_index.html
+
+secretGenerator:
+  - name: secret-from-file
+    files:
+      - secrets/not_a_sensitive_data.txt
+    # type: kubernetes.io/tls
+  - name: secret-literals
+    literals:
+      - key1=not secret

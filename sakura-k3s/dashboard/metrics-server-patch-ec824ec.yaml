@@ -1,0 +1,13 @@
+# Manifest patch for metrics-server/deploy/kubernetes ec824ec
+# resources.
+
+---
+spec:
+  template:
+    spec:
+      containers:
+        - name: metrics-server
+          args:
+          - --cert-dir=/tmp
+          - --secure-port=4443
+          - --kubelet-insecure-tls

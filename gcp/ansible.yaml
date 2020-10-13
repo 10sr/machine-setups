@@ -39,8 +39,8 @@
     #   become: yes
 
   roles:
-    - name: k3s
-      vars: {}
+    # - name: k3s
+    #   vars: {}
 
     - name: nginx
       vars:

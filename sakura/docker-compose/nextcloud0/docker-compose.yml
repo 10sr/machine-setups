@@ -2,6 +2,7 @@ version: '3'
 
 services:
   db:
+    # Use mariadb running on host 
     image: mariadb:10
     command: ["--innodb-buffer-pool-size=128M", "--expire-logs-days=5"]
     volumes:

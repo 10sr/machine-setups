@@ -207,8 +207,6 @@
           AIRFLOW__SMTP__SMTP_MAIL_FROM: airflow@m.3ends.info
         ghost0:
           NGINX_SERVER_NAME: "b.{{ _domain_name }}"
-        ghost0:
-          NGINX_SERVER_NAME: "b.{{ _domain_name }}"
         instiki0:
           NGINX_SERVER_NAME: "{{ _domain_name }}"
         10sr_bot0:

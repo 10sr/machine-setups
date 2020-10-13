@@ -6,7 +6,7 @@ services:
     image: redis
 
   app:
-    image: gitea/gitea:1.9
+    image: gitea/gitea:1.12
     ports:
       # Just expose 222 directly
       - "0.0.0.0:222:22"

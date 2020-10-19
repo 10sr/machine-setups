@@ -1,5 +1,5 @@
 ---
-version: '3'
+version: '3.4'
 
 services:
   scheduler:
@@ -23,6 +23,12 @@ services:
     restart: always
     ports:
       - "127.0.0.1:8999:8080"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080"]
+      interval: 1m30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
     env_file:
       - ../airflow0.env
     environment:

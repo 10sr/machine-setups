@@ -4,3 +4,6 @@
 [submodule "sakura-kubernetes/dashboard/dashboard"]
 	path = _sakura-kubernetes/dashboard/dashboard
 	url = https://github.com/kubernetes/dashboard.git
+[submodule "gcp-kubespray/kubespray"]
+	path = gcp-kubespray/kubespray
+	url = https://github.com/kubernetes-sigs/kubespray.git

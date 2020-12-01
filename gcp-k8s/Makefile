@@ -1,4 +1,4 @@
-target := front01
+target := k8s-master01
 
 manifests_yaml := $(wildcard *.yaml)
 manifests := $(manifests_yaml:%.yaml=%)
@@ -7,7 +7,7 @@ remote_dir := kubernetes_manifests
 
 ssh :=  gcloud --project "praxis-practice-289116" beta compute ssh --zone "asia-northeast1-b" $(target) --
 scp := gcloud  --project "praxis-practice-289116" beta compute scp --zone "asia-northeast1-b"
-kubectl := sudo k3s kubectl
+kubectl := sudo kubectl
 
 scp:
 	$(ssh) mkdir -p $(remote_dir)/

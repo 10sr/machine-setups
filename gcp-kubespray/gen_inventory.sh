@@ -10,12 +10,13 @@ gcloud="gcloud --project praxis-practice-289116 --zone asia-northeast1-b "
 
 {
     echo "[all]"
+    login_user=`whoami`
     for node in $nodes_master $nodes_node
     do
         #external_ip=`gcloud compute instances describe $node --format='get(networkInterfaces[0].accessConfigs.natIP)' --project praxis-practice-289116 --zone asia-northeast1-b `
         external_name=$node.asia-northeast1-b.praxis-practice-289116
         internal_ip=`gcloud compute instances describe $node --format='get(networkInterfaces[0].networkIP)' --project praxis-practice-289116 --zone asia-northeast1-b `
-        echo $node ansible_host=$external_name ip=$internal_ip
+        echo $node ansible_host=$external_name ansible_user=$login_user ip=$internal_ip
     done
 
     echo "[kube-master]"

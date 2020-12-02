@@ -9,12 +9,11 @@ inventory/hosts.ini:
 
 cluster: inventory/hosts.ini ssh-config check-connection
 	cd kubespray/ && \
-		pipenv run env ANSIBLE_STDOUT_CALLBACK=yaml \
+		pipenv run env ANSIBLE_CONFIG=$(ROOT_DIR)/ansible.cfg \
 			ansible-playbook \
 			-i $(ROOT_DIR)/inventory/hosts.ini \
-			--ssh-common-args "-F $(ROOT_DIR)/ssh-config -o StrictHostKeyChecking=no" \
+			--ssh-common-args "-F $(ROOT_DIR)/ssh-config" \
 			--become \
-			--timeout 60 \
 			-vv \
 			cluster.yml
 

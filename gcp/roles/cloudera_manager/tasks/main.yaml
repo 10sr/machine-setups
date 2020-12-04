@@ -1,0 +1,41 @@
+---
+- name: Assert environment
+  assert:
+    that:
+      - ansible_os_family == 'Centos'
+
+- name: Add repo file
+  yum_repository:
+    name: cloudera_manager
+    description: Cloudera Manager Repository
+    # TODO: Parametrize os version
+    baseurl: https://archive.cloudera.com/cm5/redhat/7/x86_64/cm/5/
+    gpgkey: https://archive.cloudera.com/cm5/redhat/7/x86_64/cm/RPM-GPG-KEY-cloudera
+    enabled: no
+    gpgcheck: yes
+  become: yes
+
+# - name: Assert java
+#   command: which java
+#   changed_when: no
+
+- name: Install mysql-connector for /usr/share/cmf/schema/scm_prepare_database.sh
+  package:
+    name: mysql-connector-java
+    update_cache: yes
+  become: yes
+
+- name: Install pstree, required for cloudera-scm-server start
+  package:
+    name: psmisc
+    update_cache: yes
+  become: yes
+
+- name: Install cloudera manager packages
+  yum:
+    name:
+      - cloudera-manager-server
+      - cloudera-manager-daemons
+    update_cache: yes
+    enablerepo: cloudera_manager
+  become: yes

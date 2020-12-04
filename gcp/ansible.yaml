@@ -13,12 +13,13 @@
         state: absent
       become: yes
 
-    - name: Install utils
+    - name: Install utils (Debian)
       package:
         name:
           # dig
           - dnsutils
           - netcat
+      when: ansible_os_family == 'Debian'
       become: yes
 
 - name: Setup front host
@@ -33,14 +34,7 @@
         name: _vault
       no_log: yes
 
-    # - name: Install packages
-    #   apt:
-    #     name: git
-    #   become: yes
-
   roles:
-    # - name: k3s
-    #   vars: {}
 
     - name: nginx
       vars:
@@ -155,3 +149,16 @@
         postfix_smtp_login: postmaster@m.halt2.net
         postfix_smtp_password: "{{ _vault.mailgun_smtp_password }}"
         postfix_root_alias: 8.slashes@gmail.com
+
+- name: Setup Cloudera Manager
+  hosts: label_role_cdh_cm
+  pre_tasks:
+    - name: Include all vault variables
+      include_vars:
+        dir: ./vault/
+        name: _vault
+      no_log: yes
+
+  roles:
+    - name: cloudera_manager
+      vars: {}

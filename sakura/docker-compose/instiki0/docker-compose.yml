@@ -3,7 +3,7 @@ version: "3"
 services:
   app:
     build:
-      context: https://github.com/parasew/instiki.git
+      context: "https://github.com/parasew/instiki.git#0.30.2"
     container_name: instiki0
     command: sh /start.sh ./instiki --path=/wiki --environment=production
     ports:

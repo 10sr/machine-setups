@@ -1,0 +1,43 @@
+# https://blog.framinal.life/entry/2020/04/16/022042
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: try-metallb
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: nginx-metallb
+  name: nginx-metallb
+  namespace: try-metallb
+spec:
+  selector:
+    matchLabels:
+      app: nginx-metallb
+  template:
+    metadata:
+      labels:
+        app: nginx-metallb
+    spec:
+      containers:
+      - image: nginx
+        name: nginx-metallb
+        ports:
+        - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-metallb
+  namespace: try-metallb
+spec:
+  type: LoadBalancer
+  selector:
+    app: nginx-metallb
+  ports:
+    - name: http
+      port: 80
+      targetPort: 80

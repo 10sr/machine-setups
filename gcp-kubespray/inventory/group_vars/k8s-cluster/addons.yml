@@ -127,7 +127,7 @@ cert_manager_enabled: false
 # MetalLB deployment
 metallb_enabled: true
 metallb_ip_range:
-  - "10.146.15.0-10.146.15.254"
+  - "10.146.15.1-10.146.15.254"
 metallb_version: v0.9.3
 metallb_protocol: "layer2"
 # metallb_port: "7472"

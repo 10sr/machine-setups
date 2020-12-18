@@ -2,6 +2,8 @@
 ---
 projects:
   - praxis-practice-289116
+filters:
+  - status != TERMINATED
 keyed_groups:
   # Create groups from labels
   - prefix: label

@@ -1,4 +1,4 @@
-target := k8s-master01
+target := k8s-master02
 
 kustomize_targets := exposed.webtools
 

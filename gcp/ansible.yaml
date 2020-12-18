@@ -48,14 +48,19 @@
         nginx_host_proxies:
           - name: k8s-nginx.{{ _domain_name }}
             # TODO: Proxy to three hosts
-            pass: "k8s-master01:30080"
+            pass: "k8s-master02:30080"
+          - name: k8s-helloapp.{{ _domain_name }}
+            # TODO: Proxy to three hosts
+            pass: "k8s-master02:30081"
 
         # ssl
         nginx_ssl_default_root: /var/nginx/main
         nginx_ssl_path_proxies: []
         nginx_ssl_host_proxies:
           - name: k8s-nginx.{{ _domain_name }}
-            pass: "k8s-master01:30080"
+            pass: "k8s-master02:30080"
+          - name: k8s-helloapp.{{ _domain_name }}
+            pass: "k8s-master02:30081"
           - name: jk.{{ _domain_name }}
             pass: "jenkins01:8080"
             additional_directives:

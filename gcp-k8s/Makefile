@@ -1,5 +1,7 @@
 target := k8s-master01
 
+kustomize_targets := exposed.webtools
+
 manifests_yaml := $(wildcard *.yaml)
 manifests := $(manifests_yaml:%.yaml=%)
 
@@ -18,8 +20,6 @@ decrypt-remote: scp
 
 $(manifests): scp
 	$(ssh) -t $(kubectl) apply -f $(remote_dir)/$@.yaml
-
-# kustomize_targets := kexample exposed.webtools exposed.prom
 
 $(kustomize_targets): scp decrypt-remote
 	$(ssh) -t $(kubectl) apply --kustomize $(remote_dir)/$@
@@ -41,30 +41,30 @@ check-kubeval: .kubeval/kubeval
 	./.kubeval/kubeval $(manifests_yaml)
 
 
-# GPG_KEYS := \
+GPG_KEYS := hoehoe
 #   B88675283D2C1119B42ABA9E19C1680735DE33FB \
 #   EE30A1A1AF0E0A44B07D5346E6CF633A3945E1B0 \
 #   192EAF31F20AC91E846CD712FAA457DB43F334D6
 
-# gpg_recipient_args := $(GPG_KEYS:%=--recipient %)
+gpg_recipient_args := $(GPG_KEYS:%=--recipient %)
 
-# encrypt_targets := $(shell find */secrets -type f '!' -name '*.asc')
-# encrypt_dest := $(encrypt_targets:%=%.asc)
+encrypt_targets := $(shell find */secrets -type f '!' -name '*.asc')
+encrypt_dest := $(encrypt_targets:%=%.asc)
 
-# encrypt-secrets: $(encrypt_dest)
+encrypt-secrets: $(encrypt_dest)
 
-# $(encrypt_dest): %.asc: %
-# 	gpg2 $(gpg_recipient_args) --armor --encrypt $^
+$(encrypt_dest): %.asc: %
+	gpg2 $(gpg_recipient_args) --armor --encrypt $^
 
 
 
-# decrypt_targets := $(shell find */secrets -type f -name '*.asc')
-# decrypt_dest := $(decrypt_targets:%.asc=%)
+decrypt_targets := $(shell find */secrets -type f -name '*.asc')
+decrypt_dest := $(decrypt_targets:%.asc=%)
 
-# decrypt-secrets: $(decrypt_dest)
+decrypt-secrets: $(decrypt_dest)
 
-# $(decrypt_dest):
-# 	gpg2 --output $@ --decrypt $@.asc
+$(decrypt_dest):
+	gpg2 --output $@ --decrypt $@.asc
 
 
 # ###########

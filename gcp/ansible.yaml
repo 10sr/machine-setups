@@ -152,7 +152,7 @@
         postfix_root_alias: 8.slashes@gmail.com
 
 - name: Setup Cloudera Manager
-  hosts: label_role_cdh_cm
+  hosts: label_role_cdh_util
   pre_tasks:
     - name: Include all vault variables
       include_vars:

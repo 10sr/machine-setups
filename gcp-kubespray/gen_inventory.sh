@@ -1,10 +1,8 @@
 #!/bin/bash
 set -euxo pipefail
 
-# nodes_master=k8s-master02
-# nodes_node="k8s-node03 k8s-node04"
-nodes_master=k8s-master01
-nodes_node="k8s-node01 k8s-node02"
+nodes_master=k8s-master02
+nodes_node="k8s-node03 k8s-node04"
 # Assign three nodes
 nodes_etcd="$nodes_master $nodes_node"
 

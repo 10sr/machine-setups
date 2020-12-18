@@ -4,6 +4,13 @@ gcp-kubespray
     make cluster
 
 
+Network Plugin
+--------------
+
+Calico だと確率的に NodePort  経由のアクセスがタイムアウトするので Flannel を
+使っている。
+
+
 MetalLB
 -------
 

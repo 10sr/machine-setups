@@ -26,8 +26,8 @@ configMapGenerator:
       - WEBTOOLS_SETTINGS_TOML_ENVSUBST=/configmap_files/settings.toml.envsubst
       - WEBTOOLS_AWS_ACCESS_KEY_ID=17C2C6DB
       - WEBTOOLS_SQLITE3_PATH=/db.sqlite3
-      - WEBTOOLS_ALLOWED_HOST=3ends.info
-      - WEBTOOLS_AWS_S3_CUSTOM_DOMAIN_HOSTNAME=3ends.info
+      - WEBTOOLS_ALLOWED_HOST=halt2.net
+      - WEBTOOLS_AWS_S3_CUSTOM_DOMAIN_HOSTNAME=halt2.net
 
 secretGenerator:
   - name: secret-files

@@ -7,8 +7,8 @@ manifests := $(manifests_yaml:%.yaml=%)
 
 remote_dir := kubernetes_manifests
 
-ssh :=  gcloud --project "praxis-practice-289116" beta compute ssh --zone "asia-northeast1-b" $(target) --
-scp := gcloud  --project "praxis-practice-289116" beta compute scp --zone "asia-northeast1-b"
+ssh := gcloud --project "praxis-practice-289116" beta compute ssh --zone "asia-northeast1-b" $(target) --
+scp := gcloud --project "praxis-practice-289116" beta compute scp --zone "asia-northeast1-b"
 kubectl := sudo kubectl
 
 scp:
@@ -41,7 +41,7 @@ check-kubeval: .kubeval/kubeval
 	./.kubeval/kubeval $(manifests_yaml)
 
 
-GPG_KEYS := hoehoe
+GPG_KEYS := 62AC0DD763376B69D3D2C2A6F9E23285A57E4750
 #   B88675283D2C1119B42ABA9E19C1680735DE33FB \
 #   EE30A1A1AF0E0A44B07D5346E6CF633A3945E1B0 \
 #   192EAF31F20AC91E846CD712FAA457DB43F334D6

@@ -166,17 +166,17 @@ spec:
           envFrom:
             - configMapRef:
                 name: configmap-for-env
-          volumeMounts:
-            - name: export-hostpath
-              mountPath: /export
-            - name: config-hostpath
-              mountPath: /root/.minio
-      volumes:
-        - name: export-hostpath
-          hostPath:
-            path: /var/lib/data/kubernetes-hostpath/exposed.webtools/minio/export
-            type: Directory
-        - name: config-hostpath
-          hostPath:
-            path: /var/lib/data/kubernetes-hostpath/exposed.webtools/minio/config
-            type: Directory
+          # volumeMounts:
+          #   - name: export-hostpath
+          #     mountPath: /export
+          #   - name: config-hostpath
+          #     mountPath: /root/.minio
+      # volumes:
+      #   - name: export-hostpath
+      #     hostPath:
+      #       path: /var/lib/data/kubernetes-hostpath/exposed.webtools/minio/export
+      #       type: Directory
+      #   - name: config-hostpath
+      #     hostPath:
+      #       path: /var/lib/data/kubernetes-hostpath/exposed.webtools/minio/config
+      #       type: Directory

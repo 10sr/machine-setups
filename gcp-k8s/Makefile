@@ -67,6 +67,11 @@ $(decrypt_dest):
 	gpg2 --output $@ --decrypt $@.asc
 
 
+mk-hostpath-dir:
+	$(ssh) sudo mkdir -p /var/lib/data/kubernetes-hostpath/exposed.webtools/minio/export
+	$(ssh) sudo mkdir -p /var/lib/data/kubernetes-hostpath/exposed.webtools/minio/config
+
+
 # ###########
 # # Dashboard
 

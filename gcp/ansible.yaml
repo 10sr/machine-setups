@@ -55,7 +55,18 @@
 
         # ssl
         nginx_ssl_default_root: /var/nginx/main
-        nginx_ssl_path_proxies: []
+        nginx_ssl_path_proxies:
+          - path: /webtools
+            pass: "k8s-master02:30770"
+            additional_directives:
+              - "client_max_body_size 10M"
+              - "proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for"
+              - "proxy_set_header X-Forwarded-Host $host"
+              - "proxy_set_header X-Forwarded-Server $host"
+              - "proxy_set_header X-Forwarded-Proto $scheme"
+              - "proxy_set_header X-Real-IP $remote_addr"
+          - path: /bucket-webtools-static
+            pass: "k8s-master02:30009"
         nginx_ssl_host_proxies:
           - name: k8s-nginx.{{ _domain_name }}
             pass: "k8s-master02:30080"

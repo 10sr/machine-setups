@@ -13,6 +13,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
+  # TODO: remove
   name: minio-service
 spec:
   type: ClusterIP
@@ -24,6 +25,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
+  # Fix name
   name: minio-nodeport
 spec:
   type: NodePort
@@ -31,7 +33,7 @@ spec:
     app: webtools
   ports:
     - protocol: TCP
-      port: 9000
+      port: 80
       nodePort: 30009
 ---
 apiVersion: v1
@@ -125,28 +127,20 @@ spec:
           volumeMounts:
             - name: init-volume
               mountPath: /init_volume
-        - name: minio
-          # TODO: Stop using minio
-          image: minio/minio
-          args:
-            - server
-            - /export
-            - --address
-            - 0.0.0.0:9000
-          env:
-            - name: MINIO_SECRET_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: secret-files
-                  key: minio_secret_key
-          envFrom:
-            - configMapRef:
-                name: configmap-for-env
+            - name: nginx-volume
+              mountPath: /usr/share/nginx/html/
+        - name: nginx
+          image: nginx
+          volumeMounts:
+            - name: nginx-volume
+              mountPath: /usr/share/nginx/html/
       volumes:
         - name: configmap-files-volume
           configMap:
             name: configmap-files
         - name: init-volume
+          emptyDir: {}
+        - name: nginx-volume
           emptyDir: {}
 
 # ---

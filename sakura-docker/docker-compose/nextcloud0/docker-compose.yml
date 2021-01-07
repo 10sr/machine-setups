@@ -1,4 +1,4 @@
-version: '3'
+version: '3.4'
 
 services:
   db:
@@ -30,7 +30,7 @@ services:
     environment:
       - MYSQL_HOST=db
       - REDIS_HOST=redis
-      - NEXTCLOUD_UPDATE=1
+      # - NEXTCLOUD_UPDATE=1
     env_file:
       - ../nextcloud0.env
     command:

@@ -1,0 +1,17 @@
+---
+version: '3'
+services:
+  app:
+    image: gitlab/gitlab-ce:latest
+    ports:
+      - '127.0.0.1:8800:80'
+      # - '127.0.0.1:443:443'
+      - '0.0.0.0:2222:22'
+    environment:
+      GITLAB_OMNIBUS_CONFIG: |
+        external_url 'https://gl.3ends.info'
+        gitlab_rails['gitlab_shell_ssh_port'] = 2222
+    volumes:
+      - '/var/lib/data/docker/gitlab0/config:/etc/gitlab'
+      - '/var/lib/data/docker/gitlab0/logs:/var/log/gitlab'
+      - '/var/lib/data/docker/gitlab0/data:/var/opt/gitlab'

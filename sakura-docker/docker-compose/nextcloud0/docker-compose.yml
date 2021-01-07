@@ -1,0 +1,72 @@
+version: '3'
+
+services:
+  db:
+    # Use mariadb running on host 
+    image: mariadb:10
+    command: ["--innodb-buffer-pool-size=128M", "--expire-logs-days=5"]
+    volumes:
+      - /var/lib/data/docker/nextcloud0/mariadb:/var/lib/mysql
+    env_file:
+      - ../nextcloud0.env
+
+  redis:
+    image: redis
+
+  app:
+    image: nextcloud:16-fpm
+    restart: always
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://web:8888"]
+      interval: 3m
+      timeout: 15s
+      retries: 3
+      start_period: 1m
+    volumes:
+      - nextcloud:/var/www/html
+      - ./start.sh:/start.sh:ro
+      - ./local.config.php:/local.config.php:ro
+      - ./redis.config.php:/redis.config.php:ro
+    environment:
+      - MYSQL_HOST=db
+      - REDIS_HOST=redis
+      - NEXTCLOUD_UPDATE=1
+    env_file:
+      - ../nextcloud0.env
+    command:
+      - sh
+      - /start.sh
+    depends_on:
+      - db
+      - redis
+
+  web:
+    image: nginx
+    ports:
+      - 127.0.0.1:8888:8888
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - nextcloud:/var/www/html:ro
+    depends_on:
+      - app
+
+  cron:
+    # https://github.com/nextcloud/docker/blob/2fbd72c96d943e0c67b56dcfb5e17bed835afaf0/.examples/docker-compose/insecure/mariadb-cron-redis/fpm/docker-compose.yml
+    image: nextcloud:16-fpm
+    # user: www-data
+    # env_file:
+    #   - ../nextcloud0.env
+    volumes:
+      - nextcloud:/var/www/html
+    entrypoint: /cron.sh
+    depends_on:
+      - db
+      - redis
+
+volumes:
+  nextcloud:
+    driver: local
+    driver_opts:
+      type: none
+      device: /var/lib/data/docker/nextcloud0/html
+      o: bind

@@ -1,0 +1,41 @@
+---
+version: '3.4'
+
+services:
+  scheduler:
+    build: .
+    command: airflow scheduler
+    restart: always
+    env_file:
+      - ../airflow0.env
+    environment:
+      - AIRFLOW_HOME=/airflow
+    volumes:
+      - ./airflow.cfg:/airflow/airflow.cfg:ro
+      - ./dags:/airflow/dags:ro
+      # - ./plugins:/airflow/plugins:ro
+      - /var/lib/data/docker/airflow0/logs:/airflow/logs
+      - /var/run/docker.sock:/var/run/docker.sock
+
+  webserver:
+    build: .
+    command: airflow webserver
+    restart: always
+    ports:
+      - "127.0.0.1:8999:8080"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080"]
+      interval: 1m30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    env_file:
+      - ../airflow0.env
+    environment:
+      - AIRFLOW_HOME=/airflow
+    volumes:
+      - ./create_user.py:/create_user.py:ro
+      - ./airflow.cfg:/airflow/airflow.cfg:ro
+      - ./dags:/airflow/dags:ro
+      # - ./plugins:/airflow/plugins:ro
+      - /var/lib/data/docker/airflow0/logs:/airflow/logs

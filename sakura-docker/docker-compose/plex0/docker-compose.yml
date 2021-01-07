@@ -1,0 +1,35 @@
+---
+version: '3'
+services:
+  plex:
+    image: plexinc/pms-docker
+    ports:
+      - 32400:32400/tcp
+      - 3005:3005/tcp
+      - 8324:8324/tcp
+      - 32469:32469/tcp
+      - 1900:1900/udp
+      - 32410:32410/udp
+      - 32412:32412/udp
+      - 32413:32413/udp
+      - 32414:32414/udp
+    volumes:
+      - /var/lib/data/docker/plex0/config:/config
+      - /var/lib/data/docker/plex0/transcode:/transcode
+      - /var/lib/data/docker/plex0/data:/data
+    environment:
+      ADVERTISE_IP: https://px.3ends.info
+      TZ: Asia/Tokyo
+
+  # nginx:
+  #   image: nginx
+  #   ports:
+  #     - "127.0.0.1:2369:2369"
+  #   volumes:
+  #     - ./nginx.conf.envsubst:/etc/nginx/nginx.conf.envsubst:ro
+  #     - ./nginx_cmd.sh:/nginx_cmd.sh:ro
+  #   env_file:
+  #     - ../ghost0.env
+  #   command: sh /nginx_cmd.sh
+  #   depends_on:
+  #     - app

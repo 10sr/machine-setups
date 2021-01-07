@@ -1,0 +1,35 @@
+---
+version: '3'
+services:
+  redis:
+    image: redis
+
+  app:
+    image: quay.io/10sr/webtools:v0.0.9
+    environment: {}
+    env_file:
+      - ../webtools0.env
+    ports:
+      # Cannot use localhost here (only ip-addresses are allowed)
+      - "127.0.0.1:7700:7700"
+    volumes:
+      - "./settings.toml.envsubst:/settings.toml.envsubst:ro"
+      - "./run.sh:/run.sh:ro"
+      - "/var/lib/data/docker/webtools0/data:/webtools-data"
+    command:
+      - sh
+      - /run.sh
+    depends_on:
+      - redis
+      - minio
+
+  minio:
+    image: minio/minio
+    env_file:
+      - ../webtools0.env
+    command: server /export --address :9700
+    ports:
+      - "0.0.0.0:9700:9700"
+    volumes:
+      - /var/lib/data/docker/webtools0/minio/export:/export
+      - /var/lib/data/docker/webtools0/minio/config:/root/.minio

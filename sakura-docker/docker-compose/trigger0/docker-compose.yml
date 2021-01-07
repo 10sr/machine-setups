@@ -1,0 +1,18 @@
+---
+version: '3'
+services:
+  app:
+    build: https://github.com/10sr/trigger.git#master
+    environment: {}
+    env_file:
+      - ../trigger0.env
+    ports:
+      # Cannot use localhost here (only ip-addresses are allowed)
+      - "127.0.0.1:8980:8980"
+    volumes:
+      - "./settings.toml.envsubst:/settings.toml.envsubst:ro"
+      - "./run.sh:/run.sh:ro"
+      - "/var/lib/data/docker/trigger0/data:/trigger-data"
+    command:
+      - sh
+      - /run.sh

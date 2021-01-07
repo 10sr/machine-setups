@@ -30,19 +30,19 @@
     append: yes
   become: yes
 
-- file:
-    dest: /home/docker/docker-compose/
-    state: directory
-    owner: docker
-  become: yes
+# - file:
+#     dest: /home/docker/docker-compose/
+#     state: directory
+#     owner: docker
+#   become: yes
 
-- copy:
-    # I want modes to be copied too.
-    # synchronize module can to this, but is is in preview state...
-    dest: /home/docker/docker-compose/
-    src: "{{ docker_compose_path }}/"
-    owner: docker
-  become: yes
+# - copy:
+#     # I want modes to be copied too.
+#     # synchronize module can to this, but is is in preview state...
+#     dest: /home/docker/docker-compose/
+#     src: "{{ docker_compose_path }}/"
+#     owner: docker
+#   become: yes
 
 - template:
     dest: "/home/docker/docker-compose/{{ item.key }}.env"

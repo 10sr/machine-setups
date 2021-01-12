@@ -2,7 +2,9 @@
 - name: Assert environment
   assert:
     that:
-      - ansible_os_family == 'Centos'
+      - >-
+        ansible_os_family == 'Centos'
+        or ansible_os_family == 'RedHat'
 
 - name: Add repo file
   yum_repository:
@@ -19,11 +21,12 @@
 #   command: which java
 #   changed_when: no
 
-- name: Install mysql-connector for /usr/share/cmf/schema/scm_prepare_database.sh
-  package:
-    name: mysql-connector-java
-    update_cache: yes
-  become: yes
+# This is not available on Centos8 now
+# - name: Install mysql-connector for /usr/share/cmf/schema/scm_prepare_database.sh
+#   package:
+#     name: mysql-connector-java
+#     update_cache: yes
+#   become: yes
 
 - name: Install pstree, required for cloudera-scm-server start
   package:

@@ -192,6 +192,7 @@
       docker_ubuntu_codename: "{{ _ubuntu_codename }}"
       docker_compose_path: ./docker-compose
       docker_compose_env:
+        # TODO: Move to sakura-docker
         airflow0:
           AIRFLOW__CORE__SQL_ALCHEMY_CONN: mysql+mysqldb://airflow:{{ _vault.mysql_password_airflow }}@172.17.0.1:3306/airflow?charset=ascii
           # mariadb dialect will be available after:

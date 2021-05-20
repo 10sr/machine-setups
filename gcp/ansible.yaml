@@ -92,6 +92,7 @@
       letsencrypt_key_dir: /etc/letsencrypt/live/{{ _domain_name }}
       letsencrypt_ssl_key_dir: /etc/letsencrypt/live/{{ _domain_name }}
       letsencrypt_ssl_dhparam_path: /etc/ssl/private/dhparam.pem
+      letsencrypt_google_dns_sa_cred_json: "{{ _vault.letsencrypt_google_dns_sa_cred_json }}"
 
 - name: Setup jenkins
   hosts: label_jenkins_on

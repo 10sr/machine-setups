@@ -1,0 +1,5 @@
+---
+# letsencrypt の google dns プラグインが google cloud dns の TXT エントリ
+# を書き換えるために使用するサービスアカウントの認証情報のファイルパス
+# https://certbot-dns-google.readthedocs.io/en/stable/
+letsencrypt_google_dns_sa_cred_file: /etc/letsencrypt/google_dns_sa_cred.json

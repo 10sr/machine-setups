@@ -24,8 +24,10 @@
 #   become: yes
 
 - name: Install certbot
-  apt:
-    name: certbot
+  package:
+    name:
+      - certbot
+      - python3-certbot-dns-google
   become: yes
 
 - name: Create certbot script
@@ -34,6 +36,13 @@
     dest: /usr/local/bin/_certbot-auto.sh
   become: yes
   register: _certbot_auto_sh
+
+- name: Create google dns sa cred file
+  copy:
+    dest: "{{ letsencrypt_google_dns_sa_cred_file }}"
+    content: "{{ letsencrypt_google_dns_sa_cred_json }}"
+    mode: "0600"
+  become: yes
 
 # - command: sh /usr/local/bin/_certbot-auto.sh
 #   # args:

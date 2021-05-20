@@ -30,10 +30,18 @@ LC_ALL=C
 # systemctl start nginx
 
 
-certbot certonly --manual \
-    --preferred-challenges dns-01 \
-    --keep-until-expiring \
-    --max-log-backups 100 \
-    -m {{ letsencrypt_register_email }} \
-    --cert-name {{ letsencrypt_certname }} \
-    {% for domain in letsencrypt_domain_names %}-d "{{ domain }}" {% endfor %}
+# certbot certonly --manual \
+#     --preferred-challenges dns-01 \
+#     --keep-until-expiring \
+#     --max-log-backups 100 \
+#     -m {{ letsencrypt_register_email }} \
+#     --cert-name {{ letsencrypt_certname }} \
+#     {% for domain in letsencrypt_domain_names %}-d "{{ domain }}" {% endfor %}
+
+certbot certonly --dns-google \
+        --dns-google-credentials {{ letsencrypt_google_dns_sa_cred_file }} \
+        --keep-until-expiring \
+        --max-log-backups 100 \
+        -m {{ letsencrypt_register_email }} \
+        --cert-name {{ letsencrypt_certname }} \
+        {% for domain in letsencrypt_domain_names %}-d "{{ domain }}" {% endfor %}

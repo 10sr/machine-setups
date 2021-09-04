@@ -124,6 +124,11 @@
       # ssl
       nginx_ssl_default_root: /var/nginx/main
       nginx_ssl_proxy_upstreams:
+        # いま ldap のパスワードがあまり強くないので潰しておく
+        # ssh -L 8800:localhost:8800 sakura を実行し
+        # http://localhost:8800/phpldapadmin/ にアクセスすればいける
+        # - path: /phpldapadmin
+        #   port: 8800
         - path: /10sr_bot
           port: 5000
         - path: /wiki

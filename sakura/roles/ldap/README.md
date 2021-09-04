@@ -13,8 +13,8 @@ LDPA サーバのインストールと初期設定を行う。
 ----------
 
 1. systemctl stop slapd
-2. mv /etc/ldap/slapd.d{,.bak
-3. mv /var/lib/ldap{,.bak}}
+2. mv /etc/ldap/slapd.d{,.bak}
+3. mv /var/lib/ldap{,.bak}
 4. Playbook 実行
 5. cd /etc/ldap && sudo -u openldap slaptest -f slapd.conf -F slapd.d
 

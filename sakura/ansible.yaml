@@ -402,11 +402,16 @@
         - name: local-prometheus-node-exporter
           state: started
           enabled: yes
-          unit:
-            description: prometheus node exporter
-            # TODO: Parametrize node_exporter path
-            execstart: /usr/local/bin/prometheus_node_exporter.sh
-            type: simple
+          unitfile:
+            unit:
+              Description: prometheus node exporter
+            service:
+              # TODO: Parametrize node_exporter path
+              ExecStart: /usr/local/bin/prometheus_node_exporter.sh
+              Restart: always
+              Type: simple
+            install:
+              WantedBy: multi-user.target
 
     - role: nfs
       vars:

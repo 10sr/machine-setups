@@ -1,12 +1,16 @@
 # {{ ansible_managed }}
 
 [Unit]
-Description = {{ description }}
+{% for key, value in unit.items() %}
+{{ key }} = {{ value }}
+{% endfor %}
 
 [Service]
-ExecStart = {{ execstart }}
-Restart = always
-Type = {{ type }}
+{% for key, value in service.items() %}
+{{ key }} = {{ value }}
+{% endfor %}
 
 [Install]
-WantedBy = multi-user.target
+{% for key, value in install.items() %}
+{{ key }} = {{ value }}
+{% endfor %}

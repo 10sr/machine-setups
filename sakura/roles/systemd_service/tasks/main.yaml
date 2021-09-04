@@ -4,10 +4,9 @@
     dest: /etc/systemd/system/{{ item.name }}.service
     src: unit.service.j2
   vars:
-    name: "{{ item.name }}"
-    description: "{{ item.unit.description }}"
-    execstart: "{{ item.unit.execstart }}"
-    type: "{{ item.unit.type }}"
+    unit: "{{ item.unitfile.unit }}"
+    service: "{{ item.unitfile.service }}"
+    install: "{{ item.unitfile.install }}"
   loop: "{{ systemd_service_services }}"
   become: yes
 

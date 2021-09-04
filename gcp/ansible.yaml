@@ -110,9 +110,9 @@
     - name: jenkins
       vars:
         jenkins_deb:
-          url: https://pkg.jenkins.io/debian-stable/binary/jenkins_2.277.4_all.deb
+          url: https://pkg.jenkins.io/debian-stable/binary/jenkins_2.303.1_all.deb
           # curl -L URL | shasum -a 512
-          sha512: 753dc5f77c54f4c05d06f59990a9dc71d6f25ee0a610146017c2ce6afed3e1dabffc9e954ebe09d5adb7af3f750bc533177a74c82ef988de8a40a62321abeecf
+          sha512: d70eb85c06621ab72876fb56f60b54a5f273435979cd8d629a2696dbff2c997a82d640438d7af10279f528aff932a6bcbdb6638c9e5cd39ccd0ceca70bcd4f44
 
         jenkins_webuser_username: admin
         jenkins_webuser_password: "{{ _vault.jenkins_webuser_password }}"

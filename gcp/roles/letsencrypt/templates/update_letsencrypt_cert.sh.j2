@@ -1,4 +1,4 @@
-#!/bin/sh
+!/bin/sh
 set -eux
 # {{ ansible_managed }}
 
@@ -9,3 +9,5 @@ set -eux
 certbot renew \
         --max-log-backups 100 \
         --post-hook "systemctl restart nginx"
+# post-hook is not executed?
+systemctl restart nginx

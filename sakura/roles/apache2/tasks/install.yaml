@@ -1,0 +1,5 @@
+---
+- name: Install
+  apt:
+    name: apache2
+  become: yes

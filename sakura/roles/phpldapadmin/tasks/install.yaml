@@ -1,0 +1,5 @@
+---
+- name: Install phpldapadmin
+  apt:
+    name: phpldapadmin
+  become: yes

@@ -452,6 +452,12 @@
       vars:
         ldap_rootpw: "{{ _vault.ldap_rootpw }}"
 
+    - role: apache2
+      vars: {}
+
+    - role: phpldapadmin
+      vars: {}
+
 
   post_tasks:
     - file:

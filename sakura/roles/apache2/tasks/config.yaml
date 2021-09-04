@@ -1,0 +1,14 @@
+---
+- name: Configure ports
+  template:
+    src: ports.conf.j2
+    dest: /etc/apache2/ports.conf
+  become: yes
+  register: _ports_conf
+
+- name: Restart apache2
+  service:
+    name: apache2
+    state: restarted
+  when: _ports_conf is changed
+  become: yes

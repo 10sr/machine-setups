@@ -276,6 +276,7 @@
           USER: gitea
           USER_UID: 1002
           USER_GID: 1002
+      # TODO: Migrate to systemctl
       docker_pm2:
         10sr_bot0:
           state: started

@@ -3,7 +3,7 @@ version: '3.4'
 services:
   db:
     # Use mariadb running on host 
-    image: mariadb:10
+    image: mariadb:10.4.6
     command: ["--innodb-buffer-pool-size=128M", "--expire-logs-days=5"]
     volumes:
       - /var/lib/data/docker/nextcloud0/mariadb:/var/lib/mysql

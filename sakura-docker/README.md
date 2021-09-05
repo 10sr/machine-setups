@@ -1,7 +1,7 @@
 sakura-airflow
 ==============
 
-Sakura af.3ends.info DAG definitions.
+Sakura docker-compose definitions.
 
 
 1. Create sudo_password.secret

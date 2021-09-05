@@ -14,6 +14,7 @@ services:
     image: redis
 
   app:
+    # Do not forget to change version of cron image!
     image: nextcloud:17-fpm
     restart: always
     healthcheck:
@@ -52,7 +53,7 @@ services:
 
   cron:
     # https://github.com/nextcloud/docker/blob/2fbd72c96d943e0c67b56dcfb5e17bed835afaf0/.examples/docker-compose/insecure/mariadb-cron-redis/fpm/docker-compose.yml
-    image: nextcloud:16-fpm
+    image: nextcloud:17-fpm
     # user: www-data
     # env_file:
     #   - ../nextcloud0.env

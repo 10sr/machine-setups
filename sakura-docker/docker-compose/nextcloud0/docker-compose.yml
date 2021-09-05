@@ -14,7 +14,7 @@ services:
     image: redis
 
   app:
-    image: nextcloud:16-fpm
+    image: nextcloud:17-fpm
     restart: always
     healthcheck:
       test: ["CMD", "curl", "-f", "http://web:8888"]

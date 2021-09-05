@@ -45,8 +45,7 @@ Command
 
 
 設定ディレクトリを検索するには以下。
-
-- ここで上と同様の `-D "cn=Manager,dc=3ends,dc=info"` が使用できないのは権限がないため？
+ここで上と同様の `-D "cn=Manager,dc=3ends,dc=info"` が使用できないのは権限がないため？
 
     ldapsearch -Y EXTERNAL -H ldapi:/// -b 'cn=config' '(objectclass=*)' dn
 

@@ -17,3 +17,19 @@ Terminology
 - **rootdn**  LDAP ディレクトリ管理者。
   データのブートストラップに必要で、特に初期構築時はこの DN を Bind DN として使用する。
   `cn=Manager,dc=3ends,dc=info` のように `cn=Manager` という名前を使うのが一般的。
+
+
+Command
+-------
+
+例えば、 ldap にエントリを追加するには以下のコマンドを実行する。
+
+    ldapadd -x -D "cn=Manager,dc=3ends,dc=info" -W -f people-service.ldif
+
+ここで、それぞれ以下の意味がある
+
+- `ldapadd` エントリを追加する
+- `-x` SASL ではなく単純な認証を使用する（？）
+- `-D "cn=Manager,dc=3ends,dc=info"` 与えた DN を binddn として使用する（LDAP にアクセスする DN として使用する）
+- `-W` パスワードを引数で与えるのではなくプロンプトから入力させる
+- `-f people-service.ldif` 追加するエントリが記述されたファイルを与える

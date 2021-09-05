@@ -26,7 +26,7 @@ Command
 
     ldapadd -x -W -D "cn=Manager,dc=3ends,dc=info" -f people-service.ldif
 
-ここで、それぞれ以下の意味がある
+ここで、それぞれ以下の意味がある。
 
 - `ldapadd` エントリを追加する
 - `-x` SASL ではなく単純な認証を使用する（？）
@@ -42,3 +42,13 @@ Command
 - `-b 'dc=3ends,dc=info'` 検索を行うディレクトリ
 - `'(objectClass=*)'` 検索条件
 - `dn` 表示する属性
+
+
+設定ディレクトリを検索するには以下。
+
+- ここで上と同様の `-D "cn=Manager,dc=3ends,dc=info"` が使用できないのは権限がないため？
+
+    ldapsearch -Y EXTERNAL -H ldapi:/// -b 'cn=config' '(objectclass=*)' dn
+
+- `-Y EXTERNAL` SASL 認証として EXTERNAL を使用する
+- `-H ldapi:///` ローカルの LDAP にアクセスする

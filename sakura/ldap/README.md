@@ -24,12 +24,21 @@ Command
 
 例えば、 ldap にエントリを追加するには以下のコマンドを実行する。
 
-    ldapadd -x -D "cn=Manager,dc=3ends,dc=info" -W -f people-service.ldif
+    ldapadd -x -W -D "cn=Manager,dc=3ends,dc=info" -f people-service.ldif
 
 ここで、それぞれ以下の意味がある
 
 - `ldapadd` エントリを追加する
 - `-x` SASL ではなく単純な認証を使用する（？）
-- `-D "cn=Manager,dc=3ends,dc=info"` 与えた DN を binddn として使用する（LDAP にアクセスする DN として使用する）
 - `-W` パスワードを引数で与えるのではなくプロンプトから入力させる
+- `-D "cn=Manager,dc=3ends,dc=info"` 与えた DN を binddn として使用する（LDAP にアクセスする DN として使用する）
 - `-f people-service.ldif` 追加するエントリが記述されたファイルを与える
+
+
+以下のコマンドで検索できる。
+
+    ldapsearch -x -W -D "cn=Manager,dc=3ends,dc=info" -b 'dc=3ends,dc=info' '(objectClass=*)' dn
+
+- `-b 'dc=3ends,dc=info'` 検索を行うディレクトリ
+- `'(objectClass=*)'` 検索条件
+- `dn` 表示する属性

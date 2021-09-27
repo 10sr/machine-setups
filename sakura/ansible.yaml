@@ -297,7 +297,7 @@
           state: stopped
           command: docker-compose up --build
         gitea0:
-          state: started
+          state: stopped
           command: docker-compose up --build
         gitbucket0:
           state: stopped
@@ -418,11 +418,27 @@
           unitfile:
             unit:
               Description: webtools0 docker-compose
-              After: network.target
-              Requires: network.target
+              After: docker.service
+              Requires: docker.service
             service:
               ExecStart: /usr/local/bin/docker-compose up --build
               WorkingDirectory: /home/docker/docker-compose/webtools0
+              User: docker
+              Restart: always
+              Type: simple
+            install:
+              WantedBy: multi-user.target
+        - name: gitea0
+          state: started
+          enabled: yes
+          unitfile:
+            unit:
+              Description: gitea0 docker-compose
+              After: docker.service
+              Requires: docker.service
+            service:
+              ExecStart: /usr/local/bin/docker-compose up --build
+              WorkingDirectory: /home/docker/docker-compose/gitea0
               User: docker
               Restart: always
               Type: simple

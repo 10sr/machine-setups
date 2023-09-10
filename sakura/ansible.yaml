@@ -286,10 +286,10 @@
       # TODO: Migrate to systemctl
       docker_pm2:
         10sr_bot0:
-          state: started
+          state: stopped
           command: docker-compose up --build
         airflow0:
-          state: started
+          state: stopped
           command: docker-compose up --build
         instiki0:
           state: started

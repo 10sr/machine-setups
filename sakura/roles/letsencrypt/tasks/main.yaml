@@ -26,6 +26,11 @@
     name: snapd
   become: yes
 
+- name: Install certbot
+  snap:
+    name: certbot
+    classic: true
+  become: true
 
 - template:
     src: _certbot-auto.sh.j2

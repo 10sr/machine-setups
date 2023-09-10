@@ -51,7 +51,7 @@ ansible-lint: .venv  ## Run ansible-lint
 	${pipenv} run ansible-lint ansible.yaml --nocolor -p
 
 check-ansible-version:
-	PIP_USER= ./check_ansible_version.py
+	PIP_USER= ${pipenv} run python3 ./check_ansible_version.py
 
 
 # Molecule

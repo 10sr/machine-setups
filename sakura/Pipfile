@@ -17,3 +17,7 @@ passlib = "*"
 # https://github.com/ansible/ansible-lint/issues/562
 pyyaml = "==3.13"
 ansible-modules-pm2 = "*"
+
+[requires]
+
+python_version = "3.7"

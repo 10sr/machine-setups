@@ -6,8 +6,6 @@ set -eux
 
 cd /opt/letsencrypt_certbot
 
-./certbot-auto --os-packages-only --noninteractive
-
 systemctl stop nginx
 
 # https://github.com/certbot/certbot/issues/3104#issuecomment-224078564 fix
@@ -15,16 +13,16 @@ LC_ALL=C
 
 mkdir -p {{ letsencrypt_webroot }}
 
-./certbot-auto certonly \
-               --noninteractive \
-               --standalone \
-               --expand \
-               --keep-until-expiring \
-               --agree-tos \
-               --max-log-backups 100 \
-               -m {{ letsencrypt_register_email }} \
-               --cert-name {{ letsencrypt_certname }} \
-               -w {{ letsencrypt_webroot }} \
-               {% for domain in letsencrypt_domain_names %}-d {{ domain }} {% endfor %}
+/snap/bin/certbot certonly \
+                  --noninteractive \
+                  --standalone \
+                  --expand \
+                  --keep-until-expiring \
+                  --agree-tos \
+                  --max-log-backups 100 \
+                  -m {{ letsencrypt_register_email }} \
+                  --cert-name {{ letsencrypt_certname }} \
+                  -w {{ letsencrypt_webroot }} \
+                  {% for domain in letsencrypt_domain_names %}-d {{ domain }} {% endfor %}
 
 systemctl start nginx

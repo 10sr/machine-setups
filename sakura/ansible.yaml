@@ -17,36 +17,42 @@
 
   pre_tasks:
     - name: Include all vault variables
+      tags: always
       include_vars:
         dir: ./vault/
         name: _vault
       no_log: yes
 
     - name: Set ansible_become_pass
+      tags: always
       set_fact:
         ansible_become_pass: "{{ _vault.ansible_become_pass }}"
         cachable: yes
       no_log: yes
 
     - name: Load previous revision
+      tags: always
       # Do nothing when the file does not exist
       shell: "! test -f {{ _revision_timestamp_file }} || cat {{ _revision_timestamp_file }}"
       register: _shell_previous_revision_timestamp
       changed_when: no
 
     - name: Check revision timestamp
+      tags: always
       assert:
         that:
           - _this_revision_timestamp|int > 0
           - _shell_previous_revision_timestamp.stdout|int <= _this_revision_timestamp|int
 
     - name: Check codename
+      tags: always
       assert:
         that:
           - _ubuntu_codename == ansible_lsb.codename
           - _ubuntu_codename == ansible_distribution_release
 
     - name: Install some prerequisite packages
+      tags: always
       apt:
         name:
           - git
@@ -68,6 +74,7 @@
     - role: sosreport
 
     - role: letsencrypt
+      tags: letsencrypt
       letsencrypt_register_email: 8.slashes@gmail.com
       letsencrypt_domain_names:
         - "{{ _domain_name }}"
@@ -503,25 +510,30 @@
 
 
   post_tasks:
-    - file:
+    - name: Create link for nextcloud www
+      tags: always
+      file:
         state: link
         src: /var/lib/data/docker/nextcloud0/html/data/10sr/files/www
         dest: /var/nginx/main/nc
       become: yes
 
     - name: Create kubernetes hostPath directory
+      tags: always
       file:
         state: directory
         path: /var/lib/data/kubernetes-hostpath
       become: yes
 
     - name: Write timestamp file
+      tags: always
       copy:
         content: "{{ _this_revision_timestamp }}"
         dest: "{{ _revision_timestamp_file }}"
       become: yes
 
     - name: Create last revision file
+      tags: always
       copy:
         dest: "{{ _revision_yaml }}"
         content: "{{ _this_revision | to_nice_yaml }}"

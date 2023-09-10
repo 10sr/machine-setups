@@ -1,3 +1,5 @@
+tags ?= all
+
 pipenv := env PIPENV_VENV_IN_PROJECT=1 pipenv
 
 default: help
@@ -30,7 +32,7 @@ install-dev:
 	${pipenv} install --dev
 
 play: .venv check-ansible-version  ## Invoke ansible-playbook
-	${pipenv} run env $(env_this_revision) ansible-playbook -vv ansible.yaml
+	${pipenv} run env $(env_this_revision) ansible-playbook -vv ansible.yaml --tags $(tags)
 
 facts: .venv  ## Show fact
 	${pipenv} run ansible -m setup sakura

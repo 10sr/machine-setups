@@ -12,13 +12,20 @@
     state: directory
   become: yes
 
-- git:
-    repo: https://github.com/certbot/certbot.git
-    dest: /opt/letsencrypt_certbot
-    force: yes
-    update: no
-  diff: no
+# - git:
+#     repo: https://github.com/certbot/certbot.git
+#     dest: /opt/letsencrypt_certbot
+#     force: yes
+#     update: no
+#   diff: no
+#   become: yes
+
+# TODO: Move to snapd role
+- name: Install snapd
+  apt:
+    name: snapd
   become: yes
+
 
 - template:
     src: _certbot-auto.sh.j2

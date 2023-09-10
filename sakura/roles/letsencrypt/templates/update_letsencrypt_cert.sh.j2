@@ -2,11 +2,11 @@
 set -eux
 # {{ ansible_managed }}
 
-cd /opt/letsencrypt_certbot/certbot-auto
+cd /opt/letsencrypt_certbot/
 
 git remote prune origin
 git fetch -f
-git checkout -d origin/master
+git checkout origin/master
 
 /opt/letsencrypt_certbot/certbot-auto renew \
                                       --max-log-backups 100 \

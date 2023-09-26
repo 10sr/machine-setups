@@ -6,9 +6,9 @@ verify_ssl = true
 [dev-packages]
 
 [packages]
-ansible = "*"
-google-auth = "*"
-requests = "*"
+ansible = "==2.9.13"
+google-auth = "==1.21.1"
+requests = "==2.24.0"
 
 [requires]
 python_version = "3.8"

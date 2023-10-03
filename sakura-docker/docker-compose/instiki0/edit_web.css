@@ -1,0 +1,48 @@
+/* https://3ends.info/wiki/main/edit_web から入力する */
+
+body {
+    background-color: #f9f9f9;
+}
+
+h1 {
+    border-style : none none double none;
+    border-width : 0.15em;
+    padding-bottom: 0.1em;
+    margin-top : 3em;
+}
+
+h2 {
+    border-style : none none solid none;
+    border-width : 0.05em;
+    padding-bottom: 0.1em;
+    margin-top : 2em;
+}
+
+h3 {
+    border-style : none none dashed none;
+    border-width : 0.05em;
+    padding-bottom: 0.1em;
+    margin-top : 1em;
+}
+
+#revision {
+    margin-top: 3rem;
+    margin-bottom: 3rem;
+}
+
+/* http://philarcher.org/diary/2013/headingnumbers/ */
+
+
+body {counter-reset: h2}
+h2 {counter-reset: h3}
+h3 {counter-reset: h4}
+h4 {counter-reset: h5}
+h5 {counter-reset: h6}
+
+h2:before {counter-increment: h2; content: counter(h2) ". "}
+h3:before {counter-increment: h3; content: counter(h2) "." counter(h3) ". "}
+h4:before {counter-increment: h4; content: counter(h2) "." counter(h3) "." counter(h4) ". "}
+h5:before {counter-increment: h5; content: counter(h2) "." counter(h3) "." counter(h4) "." counter(h5) ". "}
+h6:before {counter-increment: h6; content: counter(h2) "." counter(h3) "." counter(h4) "." counter(h5) "." counter(h6) ". "}
+
+h2.nocount:before, h3.nocount:before, h4.nocount:before, h5.nocount:before, h6.nocount:before { content: ""; counter-increment: none } 

@@ -1,23 +1,46 @@
---- a/config/environment.rb	2018-07-15 19:23:45.000000000 +0900
-+++ b/config/environment.rb	2018-07-15 20:14:53.000000000 +0900
-@@ -27,7 +27,8 @@
-   end  
-   config.action_controller.session = { 
-     :key => "instiki_session",
--    :secret => secret
-+    :secret => secret,
-+    :secure => Rails.env.production?
-    } 
- 
-   # Don't do file system STAT calls to check to see if the templates have changed.
---- a/app/controllers/application_controller.rb	2018-07-15 19:23:45.000000000 +0900
-+++ b/app/controllers/application_controller.rb	2018-07-15 21:12:23.000000000 +0900
-@@ -130,7 +130,7 @@
+commit 3e3cf2b4477ecae004a9cf14f507669c2f794c5f (HEAD -> securecookie)
+Author: 10sr <8.slashes@gmail.com>
+Date:   2018-07-18 13:32:44 +0900
+
+    Add secure flag to cookies
+
+diff --git a/app/controllers/application_controller.rb b/app/controllers/application_controller.rb
+index 2e76f60e1..5b3d5ddc8 100644
+--- a/app/controllers/application_controller.rb
++++ b/app/controllers/application_controller.rb
+@@ -130,7 +130,7 @@ class ApplicationController < ActionController::Base
  
    def password_check(password)
      if password == @web.password
 -      cookies.signed[CGI.escape(@web_name)] = password
-+      cookies.signed[CGI.escape(@web_name)] = {:value => password, :secure => Rails.env.production?}
++      cookies.signed[CGI.escape(@web_name)] = { :value => password, :secure => Rails.env.production? }
        true
      else
        false
+diff --git a/app/controllers/wiki_controller.rb b/app/controllers/wiki_controller.rb
+index 599c9aeee..bc7298c18 100644
+--- a/app/controllers/wiki_controller.rb
++++ b/app/controllers/wiki_controller.rb
+@@ -368,7 +368,7 @@ EOL
+       the_content = params['content'].purify
+       prev_content = ''
+       filter_spam(the_content)
+-      cookies['author'] = { :value => author_name.dup.as_bytes, :expires => Time.utc(2030) }
++      cookies['author'] = { :value => author_name.dup.as_bytes, :expires => Time.utc(2030), :secure => Rails.env.production? }
+       if @page
+         new_name = params['new_name'] ? params['new_name'].purify.strip.truncate(242-@web_name.gsub(/\./, '%2E').length) : @page_name
+         new_name = @page_name if new_name.empty?
+diff --git a/config/environment.rb b/config/environment.rb
+index 077a23c37..bb07ba75d 100644
+--- a/config/environment.rb
++++ b/config/environment.rb
+@@ -28,7 +28,8 @@ Rails::Initializer.run do |config|
+   config.action_controller.session = { 
+     :key => "instiki_session",
+     :secret => secret,
+-    :same_site => 'Lax'
++    :same_site => 'Lax',
++    :secure => Rails.env.production?
+    } 
+ 
+   # Don't do file system STAT calls to check to see if the templates have changed.

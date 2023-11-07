@@ -316,7 +316,8 @@
           state: stopped
           command: docker-compose up --build
         trigger0:
-          state: started
+          # FIXME: broken
+          state: stopped
           command: docker-compose up --build
         webtools0:
           state: stopped

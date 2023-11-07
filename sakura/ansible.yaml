@@ -292,7 +292,7 @@
           state: stopped
           command: docker-compose up --build
         instiki0:
-          state: started
+          state: stopped
           command: docker-compose up --build
         mastodon0:
           state: stopped

@@ -1,0 +1,8 @@
+# 通常 terraform は tf という拡張子のファイルをフラットに読み込む。
+# しかし、拡張子を覗いて `override` であるか `_override` で終わるファイルは特殊な扱いであり、
+# 他の設定のあとに読み込まれ値を上書きする。
+# https://runebook.dev/ja/docs/terraform/configuration/override
+# ここでは state ファイルの保存先を一時的にローカルに設定するために使用している。
+terraform {
+  backend "local" {}
+}
